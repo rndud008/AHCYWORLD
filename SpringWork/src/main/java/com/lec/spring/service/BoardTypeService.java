@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BoardTypeService {
+
     private final BoardTypeRepository boardTypeRepository;
 
     public BoardTypeService(BoardTypeRepository boardTypeRepository) {
