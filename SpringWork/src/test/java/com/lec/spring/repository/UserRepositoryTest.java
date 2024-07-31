@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -26,7 +24,7 @@ class UserRepositoryTest {
                 .username("user1".toUpperCase())
                 .password(passwordEncoder.encode("1234"))
                 .role("ROLE_MEMBER")
-                .birthDay(LocalDateTime.now())
+                .birthDay(LocalDate.now())
                 .email("sss@mail.com")
                 .gender("MALE")
                 .name("신우섭")
@@ -38,7 +36,7 @@ class UserRepositoryTest {
                 .username("user2".toUpperCase())
                 .password(passwordEncoder.encode("1234"))
                 .role("ROLE_MEMBER")
-                .birthDay(LocalDateTime.now())
+                .birthDay(LocalDate.now())
                 .email("www00@mail.com")
                 .gender("FEMALE")
                 .name("신")
@@ -50,7 +48,7 @@ class UserRepositoryTest {
                 .username("admin1".toUpperCase())
                 .password(passwordEncoder.encode("1234"))
                 .role("ROLE_MEMBER,ROLE_ADMIN")
-                .birthDay(LocalDateTime.now())
+                .birthDay(LocalDate.now())
                 .email("admin@mail.com")
                 .gender("MALE")
                 .name("우우")
@@ -58,8 +56,17 @@ class UserRepositoryTest {
                 .build();
 
 
-        userRepository.saveAllAndFlush((List.of(user1, user2, admin1)));
-//        userRepository.saveAllAndFlush(List.of(user1, user2, admin1));
+        userRepository.saveAllAndFlush(List.of(user1, user2, admin1));
+
+        user1 = userRepository.findById(1L).orElse(null);
+        user2 = userRepository.findById(2L).orElse(null);
+        admin1 = userRepository.findById(3L).orElse(null);
+
+        user1.setAcorn(300L);
+        user2.setAcorn(1000L);
+        admin1.setAcorn(10000L);
+
+        userRepository.saveAllAndFlush(List.of(user1, user2, admin1));
     }
 
 

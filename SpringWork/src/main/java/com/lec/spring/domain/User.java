@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -35,7 +36,7 @@ public class User extends BaseEntity{
 
     @Column(nullable = false,updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime birthDay;
+    private LocalDate birthDay;
 
     @Column(nullable = false)
     private String gender;
