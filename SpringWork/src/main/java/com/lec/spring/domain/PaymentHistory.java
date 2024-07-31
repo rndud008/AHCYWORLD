@@ -17,11 +17,11 @@ public class PaymentHistory {
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;          // 유저 아이디
 
     @ManyToOne
-    @Column(nullable = true)
+    @JoinColumn(name = "friend_user_id")
     private User friendUser;    // 친구 아이디(null 허용)
 
     @Column(nullable = false)

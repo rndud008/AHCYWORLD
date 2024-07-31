@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "attachment_id")
+@Entity
 public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

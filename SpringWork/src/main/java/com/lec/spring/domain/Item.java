@@ -30,7 +30,7 @@ public class Item {
     @ColumnDefault(value = "0")
     private Long price;         // 도토리 가격
 
-    @ColumnDefault(value = "show")
+    @ColumnDefault(value = "'visible'")
     private String status;      // 상품 'show','hidden' 상태
 
     private String bgmImg;      // 노래 이미지

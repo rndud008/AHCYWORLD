@@ -28,8 +28,7 @@ public class GuestBook extends BaseEntity {
     @Column(nullable = false)
     private String content;
     // 작성일은 베이스엔티티
-
-    @ColumnDefault(value = "show")
+    @ColumnDefault(value = "'visible'")
     @Column(insertable = false)
     private String status;      // 기본은 show 상태 (show, hidden) : 일촌관계에 따라 보여주는 상태 변경.
 }
