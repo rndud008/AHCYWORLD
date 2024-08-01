@@ -17,13 +17,13 @@ public class Folder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private BoardType boardType;
 
     @Column(nullable = false)
     private String name;        // 폴더 이름
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Hompy hompy;
 
     @ColumnDefault(value = "'전체공개'")

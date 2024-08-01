@@ -118,7 +118,7 @@ class PostTest {
         attachmentRepository.save(attachment);
         // 첨부파일 저장.
 
-        post1.setAttachment(attachmentRepository.findByPost(post1).orElse(null));
+        post1.setImageList(attachmentRepository.findByPost(post1).orElse(null));
         // 첨부파일 저장후 optional<List<Attachment>> 로 null 인지 check
         postRepository.save(post1);
         // post를 수정.
@@ -140,7 +140,7 @@ class PostTest {
         attachmentRepository.save(attachment1);
         // 첨부파일 저장.
 
-        post2.setAttachment(attachmentRepository.findByPost(post2).orElse(null));
+        post2.setImageList(attachmentRepository.findByPost(post2).orElse(null));
         // 첨부파일 저장후 optional<List<Attachment>> 로 null 인지 check
         postRepository.save(post2);
         // post를 수정.

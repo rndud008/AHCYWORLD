@@ -23,7 +23,11 @@ public class Post extends BaseEntity{
     @JoinColumn(name = "post_id")
     private List<Attachment> ImageList = new ArrayList<>();
 
-    @ManyToOne
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id")
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(optional = false)
     private Folder folder;
 
     @Column(nullable = false)

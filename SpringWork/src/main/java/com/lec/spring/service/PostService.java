@@ -1,8 +1,6 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
-import com.lec.spring.domain.Pagenation;
-import com.lec.spring.domain.Post;
+import com.lec.spring.domain.*;
 import com.lec.spring.repository.AttachmentRepository;
 import com.lec.spring.repository.FolderRepository;
 import com.lec.spring.repository.PostRepository;
@@ -165,16 +163,11 @@ public class PostService {
     }
 
     @Transactional
-    public int write(Post post, Map<String,MultipartFile> files){
+    public int write(Post post, Map<String,MultipartFile> files, Folder folder){
         int result = 0;
 
-        // 현재 로그인한 작성자 정보 accesstoken 을  사용하여 읽어올 예정.
-
-        // accessToken 으로 읽어온 user 정보를 DB 에 실제로 존재하는지 확인.
-
-        // 현재 작성자가 해당홈피의 주인인지 check?
-
-        // 글작성자 세팅
+        // 폴더 세팅?
+        post.setFolder(folder);
 
         // 글저장
         post = postRepository.saveAndFlush(post);
@@ -199,13 +192,13 @@ public class PostService {
 
     // 게시판 리스트, (사진첩, 동영상 디테일 리스트).
     @Transactional(readOnly = true)
-    public Pagenation list(Integer page,String url){
+    public Pagenation list(Integer page,String url,Folder folder){
         Pagenation pagenation = new Pagenation();
 
         // 현재 페이지
         if(page == null || page < 1) page =1;
 
-        Page<Post> postPage = postRepository.findAll(PageRequest.of(page-1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+        Page<Post> postPage = postRepository.findByFolder(folder,PageRequest.of(page-1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
 
         long cnt = postPage.getTotalElements();
         int totalPage = postPage.getTotalPages();
@@ -218,7 +211,7 @@ public class PostService {
         if(cnt > 0){
             if(page > totalPage) page = totalPage;
 
-            int fromRow = (page-1) * PAGE_ROWS;
+//            int fromRow = (page-1) * PAGE_ROWS;
 
             startPage = (((page-1)/WRITE_PAGE) *WRITE_PAGE) +1;
             endPage = startPage + WRITE_PAGE -1;
@@ -242,6 +235,7 @@ public class PostService {
                 .build();
     }
 
+    // 게시물 정보 가져오기
     @Transactional
     public Post selectedById(Long id){
         Post post = postRepository.findById(id).orElse(null);
@@ -249,6 +243,7 @@ public class PostService {
         return post;
     }
 
+    // 게시물 정보 업데이트
     @Transactional
     public int update(Post post, Map<String, MultipartFile> files, Long[] delFile){
         int result = 0;
@@ -278,6 +273,7 @@ public class PostService {
         return result;
     }
 
+    // 게시물 삭제
     @Transactional
     public int deleteById(Long id){
         int result = 0;
@@ -297,6 +293,12 @@ public class PostService {
             result =1;
         }
         return result;
+    }
+
+    // 게시물 스크랩.
+    public Post scrapPost(Post post, Hompy hompy,Folder folder){
+
+        return null;
     }
 
 

@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
@@ -17,17 +18,18 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(corsAllowedOrigins);
 
-        @Configuration
-        public static class LocalMvcConfiguration implements WebMvcConfigurer{
-            @Value("${app.upload.path}")
-            private String uploadDir;
+    }
 
-            @Override
-            public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry
-                        .addResourceHandler("*/upload/**")
-                        .addResourceLocations("file:"+uploadDir+"/");
-            }
+    @Configuration
+    public static class LocalMvcConfiguration implements WebMvcConfigurer {
+        @Value("${app.upload.path}")
+        private String uploadDir;
+
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry
+                    .addResourceHandler("*/upload/**")
+                    .addResourceLocations("file:" + uploadDir+"/");
         }
-    
+    }
 }

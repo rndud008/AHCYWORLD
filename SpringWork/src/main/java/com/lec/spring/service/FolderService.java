@@ -9,6 +9,9 @@ import com.lec.spring.repository.HompyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class FolderService {
     private final BoardTypeRepository boardTypeRepository;
@@ -21,38 +24,30 @@ public class FolderService {
         this.hompyRepository = hompyRepository;
     }
 
-    @Transactional
-    public int insert(String folderName, long boardTypeId, long hompyId){
-        int result = 0;
-        Folder folder = new Folder();
-        boolean check = !folderName.trim().isEmpty();
+    public Folder findByHompy(Hompy hompy) {
+        return folderRepository.findByHompy(hompy).orElse(null);
+    }
 
-        if(check){
-            Hompy hompy = hompyRepository.findById(hompyId).orElse(null);
-            BoardType boardType = boardTypeRepository.findById(boardTypeId).orElse(null);
-
-            folder.setName(folderName);
-            folder.setHompy(hompy);
-            folder.setBoardType(boardType);
-
-            folderRepository.save(folder);
-            result = 1;
-        }
-
-        return result;
+    public Folder findById(Long id) {
+        return folderRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public Folder update(Folder folder){
-        int result = 0;
-        boolean check = !folder.getName().trim().isEmpty();
-        if(!check){
-            return null;
-        }
+    public int write(Folder folder, Hompy hompy, BoardType boardType) {
+
+        folder.setHompy(hompy);
+        folder.setBoardType(boardType);
+        folderRepository.save(folder);
+
+        return 1;
+    }
+
+    @Transactional
+    public Folder update(Folder folder) {
 
         Folder originFolder = folderRepository.findById(folder.getId()).orElse(null);
 
-        if(originFolder != null){
+        if (originFolder != null) {
 
             originFolder.setName(folder.getName());
             originFolder.setStatus(folder.getStatus());
@@ -63,14 +58,19 @@ public class FolderService {
     }
 
     @Transactional
-    public int remove(Long folderId){
+    public int deleteById(Long folderId) {
         int result = 0;
 
-        if(folderRepository.existsById(folderId)){
+        if (folderRepository.existsById(folderId)) {
             folderRepository.deleteById(folderId);
             result = 1;
         }
 
         return result;
     }
+
+    public List<Folder> folderListByBoardType(BoardType boardType){
+        return folderRepository.findByBoardType(boardType).orElse(null);
+    }
+
 }
