@@ -1,5 +1,6 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,10 +16,12 @@ public class Comment extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @ToString.Exclude
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     private Post post;
 
     @Column(nullable = false)
