@@ -16,9 +16,15 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "post_id")
-    private Long post_id;
+    @ManyToOne
+    private Post post;
+
     private String sourceName;
     private String fileName;
+
+    @Column(insertable = false)
     private Long scrap;
+
+    @Transient
+    private boolean isImage;
 }

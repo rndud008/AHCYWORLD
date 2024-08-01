@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @NoArgsConstructor
@@ -24,4 +25,7 @@ public class Folder {
 
     @ManyToOne
     private Hompy hompy;
+
+    @ColumnDefault(value = "'전체공개'")
+    private String status; // 폴더 공개범위 (전체공개, 일촌공개, 비공개)
 }
