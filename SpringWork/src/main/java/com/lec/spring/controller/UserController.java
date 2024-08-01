@@ -20,7 +20,7 @@ public class UserController {
     @PostMapping("/join")
     public String join(@RequestBody UserDTO joinUser) {
         User user = User.builder()
-                .username(joinUser.getUsername())
+                .username(joinUser.getUsername().toUpperCase())
                 .password(joinUser.getPassword())
                 .email(joinUser.getEmail())
                 .name(joinUser.getName())

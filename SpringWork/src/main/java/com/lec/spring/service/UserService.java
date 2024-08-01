@@ -6,8 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -37,7 +35,7 @@ public class UserService {
         user.setName(name);
         user.setGender(gender);
         user.setBirthDay(birthDay);
-        user.setRole("ROLE_MEMBER");
+        user.setRole("MEMBER");
         return userRepository.saveAndFlush(user);
     }
 
