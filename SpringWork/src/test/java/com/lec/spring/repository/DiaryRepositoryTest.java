@@ -32,7 +32,7 @@ class DiaryRepositoryTest {
                 .password("password")
                 .name("Test User")
                 .email("aaa@aaa.com")
-                .birthDay(LocalDateTime.now())
+                .birthDay(LocalDate.now())
                 .gender("Male")
                 .acorn(0L)
                 .role("ROLE_MEMBER")
