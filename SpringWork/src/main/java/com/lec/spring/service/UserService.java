@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import java.time.LocalDate;
 
-
 @Service
 public class UserService {
 
@@ -44,7 +43,7 @@ public class UserService {
         user.setName(name);
         user.setGender(gender);
         user.setBirthDay(birthDay);
-        user.setRole("ROLE_MEMBER");
+        user.setRole("MEMBER");
         return userRepository.saveAndFlush(user);
     }
 

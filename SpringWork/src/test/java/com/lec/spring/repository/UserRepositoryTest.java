@@ -20,22 +20,22 @@ class UserRepositoryTest {
 
     @Test
     void registerTest() {
-        User user1 = User.builder()
-                .username("user1".toUpperCase())
+        User admin1 = User.builder()
+                .username("admin1".toUpperCase())
                 .password(passwordEncoder.encode("1234"))
-                .role("ROLE_MEMBER")
+                .role("ADMIN,MEMBER")
                 .birthDay(LocalDate.now())
                 .email("sss@mail.com")
                 .gender("MALE")
                 .name("신우섭")
-                .acorn(300L)
+                .acorn(30000L)
                 .build();
 
 
-        User user2 = User.builder()
-                .username("user2".toUpperCase())
+        User user1 = User.builder()
+                .username("user1".toUpperCase())
                 .password(passwordEncoder.encode("1234"))
-                .role("ROLE_MEMBER")
+                .role("MEMBER")
                 .birthDay(LocalDate.now())
                 .email("www00@mail.com")
                 .gender("FEMALE")
@@ -44,15 +44,15 @@ class UserRepositoryTest {
                 .build();
 
 
-        User admin1 = User.builder()
-                .username("admin1".toUpperCase())
+        User user2 = User.builder()
+                .username("user2".toUpperCase())
                 .password(passwordEncoder.encode("1234"))
-                .role("ROLE_MEMBER,ROLE_ADMIN")
+                .role("MEMBER")
                 .birthDay(LocalDate.now())
                 .email("admin@mail.com")
                 .gender("MALE")
                 .name("우우")
-                .acorn(30000L)
+                .acorn(300L)
                 .build();
 
 
