@@ -38,4 +38,5 @@ public class Hompy {
     private String menuColor; // 배경, 글자, 테두리 설정.
 
     private String menuStatus;  // 게시판, 사진첩, 동영상, 방명록 (show, hidden 설정.)
+
 }

@@ -2,6 +2,7 @@ show tables;
 
 drop table if exists attachment_id;
 
+select * from friend;
 select * from ah_user;
 
 delete
@@ -10,3 +11,4 @@ where username="user3"
 ;
 
 select * from diary;
+select * from hompy;
