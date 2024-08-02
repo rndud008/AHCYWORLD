@@ -22,9 +22,6 @@ public class Attachment {
     private String sourceName;
     private String fileName;
 
-    @Column(insertable = false)
-    private Long scrap;
-
     @Transient
     private boolean isImage;
 }

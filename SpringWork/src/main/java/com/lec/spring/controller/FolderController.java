@@ -74,7 +74,14 @@ public class FolderController {
         return "";
     }
 
-    private ResponseEntity<?> validateRequest(Hompy hompy, BoardType boardType, Long hompyId){
+    private ResponseEntity<?> validateRequest(Folder folder, Hompy hompy, BoardType boardType, Long hompyId, Hompy miniHompy){
+        if(folder != null){
+            boolean nameCheck = !folder.getName().trim().isEmpty();
+            if(!nameCheck){
+                return new ResponseEntity<>("폴더 이름이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+            } // status 400
+        }
+
         if (hompy == null) {
             return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
         } // status 401
@@ -83,10 +90,18 @@ public class FolderController {
             return new ResponseEntity<>("요청된 보드 타입이 유효하지 않음", HttpStatus.BAD_REQUEST);
         } // status 400
 
-        boolean hompyCheck = hompyId.equals(hompy.getId());
-        if(!hompyCheck){
-            return new ResponseEntity<>("Hompy ID 불일치", HttpStatus.BAD_REQUEST);
-        } // status 400
+        if(hompyId != null){
+            boolean hompyCheck = hompyId.equals(hompy.getId());
+            if(!hompyCheck){
+                return new ResponseEntity<>("Hompy ID 불일치", HttpStatus.BAD_REQUEST);
+            } // status 400
+        }
+
+        if(miniHompy == null){
+            return new ResponseEntity<>("miniHompy 존재 하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+
 
         return null; // 모든 검증을 통과한경우.
     }
@@ -104,17 +119,12 @@ public class FolderController {
             , @RequestBody Folder folder
             , HttpServletRequest request){
 
-        boolean nameCheck = !folder.getName().trim().isEmpty();
-        if(!nameCheck){
-            return new ResponseEntity<>("폴더 이름이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Hompy hompy = check(request);
 
         String name = boardTypeName(boardName);
         BoardType boardType = boardTypeService.findByName(name);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardType,hompyId);
+        ResponseEntity<?> validateResponse = validateRequest(folder, hompy, boardType, hompyId, hompy);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -131,17 +141,12 @@ public class FolderController {
             , @RequestBody Folder folder
             , HttpServletRequest request){
 
-        boolean nameCheck = !folder.getName().trim().isEmpty();
-        if(!nameCheck){
-            return new ResponseEntity<>("폴더 이름이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Hompy hompy = check(request);
 
         String name = boardTypeName(boardName);
         BoardType boardType = boardTypeService.findByName(name);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardType,hompyId);
+        ResponseEntity<?> validateResponse = validateRequest(folder, hompy, boardType, hompyId, hompy);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -163,7 +168,7 @@ public class FolderController {
         String name = boardTypeName(boardName);
         BoardType boardType = boardTypeService.findByName(name);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardType,hompyId);
+        ResponseEntity<?> validateResponse = validateRequest(null, hompy, boardType, hompyId, hompy);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -176,28 +181,21 @@ public class FolderController {
     public ResponseEntity<?> list(
             @PathVariable Long hompyId
             , @PathVariable String boardName
-            , @RequestBody Folder folder
             , HttpServletRequest request){
 
-        boolean nameCheck = !folder.getName().trim().isEmpty();
-        if(!nameCheck){
-            return new ResponseEntity<>("폴더 이름이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Hompy hompy = check(request);
+        Hompy miniHompy = hompyService.findById(hompyId);
 
         String name = boardTypeName(boardName);
         BoardType boardType = boardTypeService.findByName(name);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardType,hompyId);
+        ResponseEntity<?> validateResponse = validateRequest(null, hompy, boardType, null, miniHompy);
 
         if (validateResponse != null) {
             return validateResponse;
         }
 
-        return new ResponseEntity<>(folderService.folderListByBoardType(boardType), HttpStatus.OK);// status 200
+        return new ResponseEntity<>(folderService.folderListByBoardType(boardType,miniHompy), HttpStatus.OK);// status 200
     }
-
-
 
 }

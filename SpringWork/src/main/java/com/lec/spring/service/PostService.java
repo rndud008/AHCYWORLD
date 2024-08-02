@@ -1,10 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.*;
-import com.lec.spring.repository.AttachmentRepository;
-import com.lec.spring.repository.FolderRepository;
-import com.lec.spring.repository.PostRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,8 +19,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -39,12 +38,14 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final AttachmentRepository attachmentRepository;
+    private final CommentRepository commentRepository;
 
-    public PostService(FolderRepository folderRepository, PostRepository postRepository, UserRepository userRepository, AttachmentRepository attachmentRepository) {
+    public PostService(FolderRepository folderRepository, PostRepository postRepository, UserRepository userRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository) {
         this.folderRepository = folderRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.attachmentRepository = attachmentRepository;
+        this.commentRepository = commentRepository;
     }
 
     private Attachment upload(MultipartFile multipartFile){
@@ -238,9 +239,8 @@ public class PostService {
     // 게시물 정보 가져오기
     @Transactional
     public Post selectedById(Long id){
-        Post post = postRepository.findById(id).orElse(null);
 
-        return post;
+        return postRepository.findById(id).orElse(null);
     }
 
     // 게시물 정보 업데이트
@@ -295,10 +295,57 @@ public class PostService {
         return result;
     }
 
-    // 게시물 스크랩.
-    public Post scrapPost(Post post, Hompy hompy,Folder folder){
+    // 게시물 폴더 이동.
+    @Transactional
+    public Post movePost(Post post, Folder moveFolder){
+        post.setFolder(moveFolder);
 
-        return null;
+        return post;
+    }
+
+
+    // 게시물 스크랩.
+    @Transactional
+    public Post scrapPost(Post post,Folder scrapFolder,List<Attachment> attachmentList){
+
+        Post originPost = postRepository.findById(post.getId()).orElse(null);
+        Post copyPost = Post.builder()
+                .subject(originPost.getSubject())
+                .content(originPost.getContent())
+                .folder(scrapFolder)
+                .build();
+
+        postRepository.saveAndFlush(copyPost);
+        List<Attachment> copyAttachmentList = new ArrayList<>();
+
+        if(attachmentList != null){
+            for (Attachment attachment : attachmentList) {
+                Attachment copyAttachment = Attachment.builder()
+                        .post(copyPost)
+                        .sourceName(attachment.getSourceName())
+                        .fileName(attachment.getFileName())
+                        .build();
+
+                attachmentRepository.saveAndFlush(copyAttachment);
+                copyAttachmentList.add(copyAttachment);
+            }
+            setImage(copyAttachmentList);
+            copyPost.setImageList(copyAttachmentList);
+            postRepository.save(copyPost);
+        }
+
+        originPost.setScrap(originPost.getScrap() + 1);
+        postRepository.saveAndFlush(originPost);
+
+        Comment comment = Comment.builder()
+                .post(originPost)
+                .user(copyPost.getFolder().getHompy().getUser())
+                .content("퍼가요!")
+                .build();
+
+        commentRepository.save(comment);
+
+        return copyPost;
     }
 
 

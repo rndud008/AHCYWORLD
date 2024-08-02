@@ -6,6 +6,7 @@ import com.lec.spring.domain.Hompy;
 import com.lec.spring.repository.BoardTypeRepository;
 import com.lec.spring.repository.FolderRepository;
 import com.lec.spring.repository.HompyRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,8 +70,8 @@ public class FolderService {
         return result;
     }
 
-    public List<Folder> folderListByBoardType(BoardType boardType){
-        return folderRepository.findByBoardType(boardType).orElse(null);
+    public List<Folder> folderListByBoardType(BoardType boardType,Hompy miniHompy){
+        return folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
     }
 
 }

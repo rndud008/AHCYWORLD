@@ -40,5 +40,9 @@ public class Post extends BaseEntity{
     @ColumnDefault(value = "0")
     private Long viewCnt;
 
+    @Column(insertable = false)
+    @ColumnDefault(value = "0")
+    private Long scrap;
+
     // 작성일은 BaseEntity
 }
