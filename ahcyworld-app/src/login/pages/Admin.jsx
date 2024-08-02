@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { LoginContext } from "../context/LoginContextProvider";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import * as Swal from "../apis/alert";
 import Header from "../components/Header/Header";
 
 const Admin = () => {
@@ -15,14 +15,14 @@ const Admin = () => {
             });
             return;
         }
-        console.log(roles);
+        // console.log(roles);
         if (!roles.isAdmin) {
             Swal.alert("권한이 없습니다.", "이전 화면으로 이동합니다.", "warning", () => {
                 navigate(-1);
             });
             return;
         }
-        console.log(roles);
+        // console.log(roles);
     }, []);
 
     return (
