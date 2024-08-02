@@ -164,6 +164,7 @@ const LoginContextProvider = ({ children }) => {
         setRoles(null);
 
         Cookies.remove("accessToken");
+        // Cookies.remove("rememberId");
 
         api.defaults.headers.common.Authorization = undefined;
     };
