@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,15 @@ public class Post extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
-
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
-    private List<Attachment> attachment = new ArrayList<>();
+    private List<Attachment> ImageList = new ArrayList<>();
 
-    @ManyToOne
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id")
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(optional = false)
     private Folder folder;
 
     @Column(nullable = false)
@@ -34,6 +36,13 @@ public class Post extends BaseEntity{
     @Column(nullable = false)
     private String content;
 
+    @Column(insertable = false)
+    @ColumnDefault(value = "0")
     private Long viewCnt;
+
+    @Column(insertable = false)
+    @ColumnDefault(value = "0")
+    private Long scrap;
+
     // 작성일은 BaseEntity
 }

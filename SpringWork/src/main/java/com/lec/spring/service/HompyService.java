@@ -14,6 +14,10 @@ public class HompyService {
         this.hompyRepository = hompyRepository;
     }
 
+    public Hompy findById(Long id){
+        return hompyRepository.findById(id).orElse(null);
+    }
+
     // 특정 User에 해당하는 Hompy 조회
     public Hompy findHompyByuser(User user) {
         return hompyRepository.findByUser(user);

@@ -15,8 +15,8 @@ const Join = () => {
         try {
             response = await auth.join(form);
         } catch (error) {
-            console.log(`${error}`);
-            console.log(`회원 가입 요청중 에러가 발생했습니다.`);
+            // console.log(`${error}`);
+            // console.log(`회원 가입 요청중 에러가 발생했습니다.`);
             return;
         }
 
