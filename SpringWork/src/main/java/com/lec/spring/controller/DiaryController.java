@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cyworld/cy/diaries")
@@ -30,11 +31,16 @@ public class DiaryController {
     @CrossOrigin
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id) {
-        Diary diary = diaryService.findById(id);
-        if (diary == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Diary diary = diaryService.findById(id);
+//            System.out.println("diary = " + diary);
+            if (diary == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(diary, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(diary, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -49,7 +55,7 @@ public class DiaryController {
     public ResponseEntity<?> detailByDate(@PathVariable String date) {
         try {
             LocalDate localDate = LocalDate.parse(date);        // 날짜형식 변환
-            Diary diary = diaryService.findByDate(localDate);
+            List<Diary> diary = diaryService.findByDate(localDate);
             if (diary == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -60,13 +66,17 @@ public class DiaryController {
     }
 
     @CrossOrigin
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Diary diary) {
-        int result = diaryService.update(diary);
-        if (result == 0){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Diary diary) {
+        try {
+            Diary updateDiary = diaryService.update(id, diary);
+            if (updateDiary == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(diary, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin

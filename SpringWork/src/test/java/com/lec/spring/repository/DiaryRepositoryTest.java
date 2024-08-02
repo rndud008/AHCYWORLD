@@ -26,26 +26,33 @@ class DiaryRepositoryTest {
 
     @Test
     void test() {
-        User user = User.builder()
-                .id(1L)
-                .username("testuser")
-                .password("password")
-                .name("Test User")
-                .email("aaa@aaa.com")
-                .birthDay(LocalDate.now())
-                .gender("Male")
-                .acorn(0L)
-                .role("ROLE_MEMBER")
-                .build();
-        userRepository.saveAndFlush(user);
+        User user1 = userRepository.findById(1L).orElse(null);
+        User user2 = userRepository.findById(2L).orElse(null);
+        User user3 = userRepository.findById(3L).orElse(null);
 
         Hompy hompy = Hompy.builder()
-                .user(user)
+                .user(user1)
                 .title("My Hompy")
                 .profilePicture("profile.jpg")
                 .statusMessage("Hello!")
                 .build();
+
+        Hompy hompy2 = Hompy.builder()
+                .user(user2)
+                .title("My Hompy2")
+                .profilePicture("profile1.jpg")
+                .statusMessage("Hello! my World")
+                .build();
+
+        Hompy hompy3 = Hompy.builder()
+                .user(user3)
+                .title("My Hompy3")
+                .profilePicture("profile2.jpg")
+                .statusMessage("Hello! my World!!Come on~")
+                .build();
         hompyRepository.saveAndFlush(hompy);
+        hompyRepository.saveAndFlush(hompy2);
+        hompyRepository.saveAndFlush(hompy3);
 
         Diary diary = Diary.builder()
                 .hompy(hompy)
@@ -54,7 +61,23 @@ class DiaryRepositoryTest {
                 .eventDate(LocalDate.now())
                 .build();
 
+        Diary diary2 = Diary.builder()
+                .hompy(hompy2)
+                .content("test content2")
+                .keyWord("TEST2")
+                .eventDate(LocalDate.now())
+                .build();
+
+        Diary diary3 = Diary.builder()
+                .hompy(hompy3)
+                .content("test content3")
+                .keyWord("TEST3")
+                .eventDate(LocalDate.now())
+                .build();
+
         diaryRepository.saveAndFlush(diary);
+        diaryRepository.saveAndFlush(diary2);
+        diaryRepository.saveAndFlush(diary3);
 
         System.out.println(diary);
     }

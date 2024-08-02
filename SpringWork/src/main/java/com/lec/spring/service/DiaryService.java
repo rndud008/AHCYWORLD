@@ -36,22 +36,20 @@ public class DiaryService {
     }
 
     // 달력 안의 내용 출력
-    public Diary findByDate(LocalDate date) {
-        return diaryRepository.findByEventDate(date).orElse(null);
+    public List<Diary> findByDate(LocalDate date) {
+        return diaryRepository.findByEventDate(date);
     }
 
-    public int update(Diary diary) {
-        int result = 0;
-
-        Diary d = diaryRepository.findById(diary.getId()).orElse(null);
+    public Diary update(Long id, Diary diary) {
+        Diary d = diaryRepository.findById(id).orElse(null);
         if (d != null){
             d.setContent(diary.getContent());
             d.setKeyWord(diary.getKeyWord());
+            d.setEventDate(diary.getEventDate());
 
-            diaryRepository.saveAndFlush(d);
-            result = 1;
+            return diaryRepository.saveAndFlush(d);
         }
-        return result;
+        return null;
     }
 
     public int delete(Long id){
