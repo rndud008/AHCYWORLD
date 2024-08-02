@@ -9,6 +9,4 @@ from ah_user
 where username="user3"
 ;
 
-
-
-
+select * from diary;
