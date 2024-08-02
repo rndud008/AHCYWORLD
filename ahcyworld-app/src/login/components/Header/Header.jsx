@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import { LoginContext } from "../../context/LoginContextProvider";
 
 const Header = () => {
     const { isLogin, logout, userInfo } = useContext(LoginContext);
+    // console.log("isLogin: ", isLogin);
+    // console.log("logout: ", logout);
+    // console.log("userInfo: ", userInfo);
 
     return (
         <>
@@ -37,7 +39,7 @@ const Header = () => {
                                 Admin
                             </Link>
                             <Button variant='primary' onClick={() => logout()}>
-                                로그아웃({userInfo.id}:{userInfo.username}:{userInfo.role})
+                                로그아웃
                             </Button>
                         </>
                     )}
