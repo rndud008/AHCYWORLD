@@ -43,7 +43,7 @@ public class UserService {
         user.setName(name);
         user.setGender(gender);
         user.setBirthDay(birthDay);
-        user.setRole("MEMBER");
+        user.setRole("ROLE_MEMBER");
         return userRepository.saveAndFlush(user);
     }
 

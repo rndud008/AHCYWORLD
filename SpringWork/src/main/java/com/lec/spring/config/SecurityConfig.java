@@ -1,5 +1,6 @@
 package com.lec.spring.config;
 
+import com.lec.spring.jwt.JWTFilter;
 import com.lec.spring.jwt.JWTUtil;
 import com.lec.spring.jwt.LoginFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,6 +68,9 @@ public class SecurityConfig {
         http
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http
+                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),

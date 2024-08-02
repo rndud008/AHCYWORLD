@@ -17,7 +17,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
 
-    private JWTFilter(JWTUtil jwtUtil) {
+    public JWTFilter(JWTUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 
@@ -42,6 +42,7 @@ public class JWTFilter extends OncePerRequestFilter {
         Long id = jwtUtil.getId((token));
         String username = jwtUtil.getUsername(token);
         String role = jwtUtil.getRole(token);
+        System.out.println(role);
 
         User user = User.builder()
                 .id(id)
