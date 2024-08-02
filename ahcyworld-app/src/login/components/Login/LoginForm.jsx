@@ -60,7 +60,7 @@ const LoginForm = () => {
                         {!rememberUserId ? (
                             <input type='checkbox' id='remember-id' name='rememberId' value='0' />
                         ) : (
-                            <input type='checkbox' id='remember-id' name='rememberId' value='0' defaultChecked />
+                            <input type='checkbox' id='remember-id' name='rememberId' value='0' defaultChecked  />
                         )}
                         <span className='slider'></span>
                     </label>

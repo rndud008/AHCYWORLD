@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 public class Friend {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
