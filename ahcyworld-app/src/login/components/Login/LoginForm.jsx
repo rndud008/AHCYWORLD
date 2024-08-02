@@ -13,9 +13,9 @@ const LoginForm = () => {
         const password = e.target.password.value;
         const rememberId = e.target.rememberId.value;
 
-        console.log(e.target.username.value);
-        console.log(e.target.password.value);
-        console.log(e.target.rememberId.checked);
+        // console.log(e.target.username.value);
+        // console.log(e.target.password.value);
+        // console.log(e.target.rememberId.checked);
 
         login(username, password, rememberId); // 로그인 진행!
     };
@@ -23,7 +23,7 @@ const LoginForm = () => {
     useEffect(() => {
         // 쿠키에 저장된 username(아이디) 가져오기
         const rememberId = Cookies.get("rememberId");
-        console.log(`쿠키 rememberId : ${rememberId}`);
+        // console.log(`쿠키 rememberId : ${rememberId}`);
         setRememberUserId(rememberId);
     }, []);
 
@@ -60,7 +60,7 @@ const LoginForm = () => {
                         {!rememberUserId ? (
                             <input type='checkbox' id='remember-id' name='rememberId' value='0' />
                         ) : (
-                            <input type='checkbox' id='remember-id' name='rememberId' value='0' defaultChecked />
+                            <input type='checkbox' id='remember-id' name='rememberId' value='0' defaultChecked  />
                         )}
                         <span className='slider'></span>
                     </label>
@@ -78,4 +78,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
