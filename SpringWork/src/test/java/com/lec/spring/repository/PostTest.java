@@ -4,6 +4,7 @@ import com.lec.spring.domain.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +24,9 @@ class PostTest {
     private PostRepository postRepository;
     @Autowired
     private AttachmentRepository attachmentRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Test
     void test(){
@@ -48,7 +52,7 @@ class PostTest {
         User user = new User();
 
         user.setUsername("k1");
-        user.setPassword("1234");
+        user.setPassword(passwordEncoder.encode("1234"));
         user.setName("testK1");
         user.setEmail("test1@test.com");
         user.setBirthDay(LocalDate.parse("1991-12-12"));
@@ -103,7 +107,7 @@ class PostTest {
 
         //게시판 타입 -> 사진첩
         Post post1 = new Post();
-        post1.setFolder(folder);
+        post1.setFolder(folder1);
         post1.setSubject("해성이가 집에 갔다.");
         post1.setContent("집에서 얼마나 했을까?");
 
@@ -125,7 +129,7 @@ class PostTest {
 
         //게시판 타입 -> 동영상
         Post post2 = new Post();
-        post2.setFolder(folder);
+        post2.setFolder(folder2);
         post2.setSubject("해성이가 집에 갔다.");
         post2.setContent("집에서 얼마나 했을까?");
 
@@ -139,6 +143,8 @@ class PostTest {
 
         attachmentRepository.save(attachment1);
         // 첨부파일 저장.
+
+
 
         post2.setImageList(attachmentRepository.findByPost(post2).orElse(null));
         // 첨부파일 저장후 optional<List<Attachment>> 로 null 인지 check

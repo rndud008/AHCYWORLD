@@ -18,7 +18,7 @@ public class Folder {
     private Long id;
 
     @ManyToOne(optional = false)
-    private BoardType boardType;
+    private BoardType boardType ;
 
     @Column(nullable = false)
     private String name;        // 폴더 이름
@@ -28,4 +28,5 @@ public class Folder {
 
     @ColumnDefault(value = "'전체공개'")
     private String status; // 폴더 공개범위 (전체공개, 일촌공개, 비공개)
+
 }
