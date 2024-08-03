@@ -31,13 +31,15 @@ const DiaryWritePage = () => {
             e.stopPropagation();
         } else {
             axios
-                .post("http://localhost:8080/cyworld/cy/diaries/save", formData)
+                .post("http://localhost:8080/cyworld/cy/diaries/save", formData, {
+                    headers: "application/json"
+                })
                 .then((response) => {
-                    console.log("Diary saved", response.data);
+                    console.log("다이어리 저장 완료", response.data);
                     navigate("/list");
                 })
                 .catch((error) => {
-                    console.error("Saving Error", error);
+                    console.error("다이어리 저장 실패", error);
                 });
         }
     };

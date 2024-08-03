@@ -13,21 +13,18 @@ const DiaryUpdatePage = () => {
         content: "",
         eventDate: ""
     });
-    const [loading, setLoading] = useState(true);
 
     // 다이어리 정보를 가져오는 useEffect
     useEffect(() => {
         axios.get(`http://localhost:8080/cyworld/cy/diaries/detail/${id}`)
             .then(response => {
                 setDiary(response.data);
-                setLoading(false);
-                console.log("id:", id);
-                console.log("diary:", response.data);
+                // console.log("id:", id);
+                // console.log("diary:", response.data);
             })
             .catch(error => {
                 console.error("다이어리 데이터가 없어...", error);
-                setLoading(false);
-                console.log("id:", id);
+                // console.log("id:", id);
             });
     }, []);
 
@@ -50,17 +47,13 @@ const DiaryUpdatePage = () => {
             }
         })
             .then(response => {
-                console.log("Diary updated", response.data);
+                console.log("폼 제출 됐엉", response.data);
                 navigate('/list'); // 수정 후 리스트 페이지로 이동
             })
             .catch(error => {
-                console.error("There was an error updating the diary!", error);
+                console.error("폼 제출이 안 됐어...", error);
             });
     };
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
@@ -82,7 +75,7 @@ const DiaryUpdatePage = () => {
                         <Form.Control
                             as="textarea"
                             name="content"
-                            rows={3}
+                            rows={5}
                             value={diary.content}
                             onChange={handleChange}
                             required
