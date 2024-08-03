@@ -1,0 +1,85 @@
+/* 달력 */
+.react-calendar {
+    width: 500px;
+    height: auto;
+    margin: 0 auto;
+    border: none;
+}
+
+/* 상단 네비게이션 (년, 월) */
+.react-calendar__navigation {
+    background: rgb(248, 219, 224); /* 직접 색상 값을 사용 */
+    border-bottom: 4px solid brown;
+    height: 90px;
+    border: 2px solid black;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 0.5px;
+}
+
+.react-calendar__navigation span {
+    font-size: 24px;
+    font-weight: 600;
+    color: brown;
+}
+
+.react-calendar__navigation button {
+    background-color: initial; /* 기본 색상 */
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: pink; /* hover와 focus 시에만 색상 변경 */
+    border-radius: 20px 20px 0 0;
+}
+
+/* 월 달력 (네비게이션 제외) */
+.react-calendar__month-view {
+    padding: 12px 32px;
+    border: 2px solid black;
+}
+
+.react-calendar__month-view abbr {
+    color: brown;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* 요일 */
+.react-calendar__month-view__weekdays abbr {
+    font-size: 18px;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+/* 일 (각 타일) */
+.react-calendar__tile {
+    text-align: center;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: wheat;
+    border-radius: 14px;
+}
+
+.react-calendar__tile--active {
+    background-color: transparent; /* 선택된 타일의 기본 배경색 제거 */
+    color: inherit; /* 선택된 타일의 글자색을 상속받도록 설정 */
+    border-radius: 14px;
+}
+
+.react-calendar__tile--now {
+    background: thistle; /* 오늘 날짜 타일의 배경색 설정 */
+    border-radius: 14px;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: wheat; /* 오늘 날짜 타일이 hover 및 focus 시의 배경색 */
+    border-radius: 14px;
+}

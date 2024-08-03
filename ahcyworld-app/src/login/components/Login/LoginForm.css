@@ -71,21 +71,20 @@
     transition: all 0.3s;
   }
   
+  .btn-login{
+    height: 50px;
+    width: 400px;
+
+    border: 1px;
+    border-radius: 15px;
+    background-color: #e66e28;
+    color: #fff;
+    font-size: 30px;
+  }
   
   .btn-login:hover {
-    outline: 1px solid #f48982;
-  }
-  
-  
-  .btn--form:hover {
-    background-color: #fdf2e9;
-    color: #f48982;
-  }
-  
-  
-  
-  
-  
+    outline: 1px solid #e66e28;
+  } 
   
   /* 토글 버튼 */
   .form-check {

@@ -6,6 +6,7 @@ import com.lec.spring.repository.DiaryRepository;
 import com.lec.spring.repository.HompyRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,17 +19,11 @@ public class DiaryService {
         this.hompyRepository = hompyRepository;
     }
 
-    public int write(Diary diary) {
-        int result = 0;
-        Hompy hompy = hompyRepository.findById(diary.getHompy().getId()).orElse(null);
-        if (hompy != null && hompy.getUser().getId().equals(diary.getHompy().getId())){
-            diaryRepository.saveAndFlush(diary);
-            result = 1;
-        }
-        return result;
-    }
-
     public Diary save(Diary diary) {
+        Hompy hompy = hompyRepository.findById(diary.getHompy().getId()).orElseThrow(() -> new RuntimeException("Hompy not found"));
+        if (!hompy.getUser().getId().equals(diary.getHompy().getId())){
+            throw new RuntimeException("User ID missMatch");
+        }
         return diaryRepository.saveAndFlush(diary);
     }
 
@@ -40,18 +35,21 @@ public class DiaryService {
         return diaryRepository.findAll();
     }
 
-    public int update(Diary diary) {
-        int result = 0;
+    // 달력 안의 내용 출력
+    public List<Diary> findByDate(LocalDate date) {
+        return diaryRepository.findByEventDate(date);
+    }
 
-        Diary d = diaryRepository.findById(diary.getId()).orElse(null);
+    public Diary update(Long id, Diary diary) {
+        Diary d = diaryRepository.findById(id).orElse(null);
         if (d != null){
             d.setContent(diary.getContent());
             d.setKeyWord(diary.getKeyWord());
+            d.setEventDate(diary.getEventDate());
 
-            diaryRepository.saveAndFlush(d);
-            result = 1;
+            return diaryRepository.saveAndFlush(d);
         }
-        return result;
+        return null;
     }
 
     public int delete(Long id){

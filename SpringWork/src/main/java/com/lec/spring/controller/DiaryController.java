@@ -8,8 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+
 @RestController
-@RequestMapping("/cyworld/cy")
+@RequestMapping("/cyworld/cy/diaries")
 public class DiaryController {
 
     public final DiaryService diaryService;
@@ -19,32 +23,69 @@ public class DiaryController {
     }
 
     @CrossOrigin
-    @PostMapping("/diary/save")
+    @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Diary diary) {
         return new ResponseEntity<>(diaryService.save(diary), HttpStatus.CREATED);
     }
 
     @CrossOrigin
-    @GetMapping("/diary/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id) {
-        return new ResponseEntity<>(diaryService.findById(id), HttpStatus.OK);
+        try {
+            Diary diary = diaryService.findById(id);
+//            System.out.println("diary = " + diary);
+            if (diary == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(diary, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @CrossOrigin
-    @GetMapping("/diary")
+    @GetMapping("/list")
     public ResponseEntity<?> list() {
         return new ResponseEntity<>(diaryService.findAll(), HttpStatus.OK);
     }
 
+    // 달력의 내용 출력
     @CrossOrigin
-    @PutMapping("/diary")
-    public ResponseEntity<?> update(@RequestBody Diary diary) {
-        return new ResponseEntity<>(diaryService.update(diary), HttpStatus.OK);
+    @GetMapping("/detail-by-date/{date}")
+    public ResponseEntity<?> detailByDate(@PathVariable String date) {
+        try {
+            LocalDate localDate = LocalDate.parse(date);        // 날짜형식 변환
+            List<Diary> diary = diaryService.findByDate(localDate);
+            if (diary == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(diary, HttpStatus.OK);
+        }catch (DateTimeParseException e) {
+            return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @CrossOrigin
-    @DeleteMapping("/diary/{id}")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Diary diary) {
+        try {
+            Diary updateDiary = diaryService.update(id, diary);
+            if (updateDiary == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(diary, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(diaryService.delete(id), HttpStatus.OK);
+        int result = diaryService.delete(id);
+        if (result == 0){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
