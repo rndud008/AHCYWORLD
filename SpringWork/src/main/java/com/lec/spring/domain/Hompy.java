@@ -28,15 +28,18 @@ public class Hompy {
     private String title;
 
     @ColumnDefault(value = "0")
+    @Column(insertable = false)
     private Long todayVisitor;
 
     @ColumnDefault(value = "0")
+    @Column(insertable = false)
     private Long totalVisitor;
+
 
     private String profile;
 
     private String menuColor; // 배경, 글자, 테두리 설정.
 
-    private String menuStatus;  // 게시판, 사진첩, 동영상, 방명록 (show, hidden 설정.)
+    private String menuStatus;  // 게시판, 사진첩, 동영상, 방명록 (visible, invisible 설정.)
 
 }

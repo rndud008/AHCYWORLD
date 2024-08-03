@@ -6,7 +6,9 @@ import com.lec.spring.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -29,7 +31,29 @@ public class UserController {
                 .build();
         user = userService.join(user);
         if (user == null) return "JOIN FAILED";
+        else{
 
-        return "JOIN SUCCESS";
+            return "JOIN SUCCESS";
+        }
+    }
+
+    @GetMapping("/check-username")
+    public Map<String, Boolean> checkUsername(@RequestParam String username) {
+        boolean available = userService.usernameAvailable(username);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("available", available);
+
+        return response;
+    }
+
+    @GetMapping("/check-email")
+    public Map<String, Boolean> checkEmail(@RequestParam String email) {
+        boolean available = userService.emailAvailable(email);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("available", available);
+
+        return response;
     }
 }

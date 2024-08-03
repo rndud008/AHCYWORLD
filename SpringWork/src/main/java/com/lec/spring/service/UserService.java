@@ -1,6 +1,8 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final HompyRepository hompyRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, HompyRepository hompyRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.hompyRepository = hompyRepository;
     }
 
     // 특정 ID로 User 조회
@@ -26,6 +30,7 @@ public class UserService {
     }
 
     public User join(User user) {
+
         String username = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
@@ -44,7 +49,19 @@ public class UserService {
         user.setGender(gender);
         user.setBirthDay(birthDay);
         user.setRole("ROLE_MEMBER");
-        return userRepository.saveAndFlush(user);
+
+        User savedUser = userRepository.save(user);
+
+        Hompy hompy = Hompy.builder()
+                .user(savedUser)
+                .title(name + "의 미니홈피")
+                .menuColor("#147DAF,#FFF,#147DAF")
+                .menuStatus("visible,visible,visible,visible")
+                .build();
+
+        hompyRepository.save(hompy);
+        System.out.println("hompy만들었지롱~ " + hompy);
+        return savedUser;
     }
 
     public User findByName(String name) {
@@ -53,6 +70,14 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username.toUpperCase());
+    }
+
+    public boolean usernameAvailable(String username) {
+        return !userRepository.existsByUsername(username.toUpperCase());
+    }
+
+    public boolean emailAvailable(String email) {
+        return !userRepository.existsByEmail(email.toUpperCase());
     }
 
 }
