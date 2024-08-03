@@ -1,0 +1,32 @@
+.menu-nav {
+  z-index: 1;
+  position: fixed;
+  top: 158px;
+  right: 515px;
+}
+
+.menu-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-nav ul li a {
+  text-decoration: none;
+  display: inline-block;
+  width: 85px;
+  margin-bottom: 5px;
+  padding: 10px 10px 10px 15px;
+  background: #147DAF;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-nav ul li a.selected  {
+  background: #fff;
+  color: #333;
+}

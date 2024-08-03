@@ -1,0 +1,73 @@
+.left-container {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 36%;
+  height: 750px;
+  margin-left: 70px;
+}
+
+.profile-img {
+  width: 300px;
+  height: 280px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.imgedit-btn {
+  display: flex;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 25px;
+}
+
+.textedit-btn {
+  display: flex;
+  border-radius: 5px;
+  margin-left: 23px;
+}
+
+.profile-msg {
+  margin-top: 10px;
+}
+
+.user-info {
+  display: flex;
+  font-weight: bold;
+  margin-left: 25px;
+}
+
+.name {
+  font-size: 20px;
+}
+
+.birth {
+  margin-left: 15px;
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: normal;
+  color: #BAB4B4;
+}
+
+.friend-btn {
+  display: flex;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.5);
+  background-color: orange;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-left: 25px;
+}
+
+.select {
+  background-color: #95B0D1;
+  width: 85%;
+  margin-top: 5px;
+}
+
+.arrow {
+  color: orange;
+}
