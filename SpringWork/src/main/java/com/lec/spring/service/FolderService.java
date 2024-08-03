@@ -34,13 +34,13 @@ public class FolderService {
     }
 
     @Transactional
-    public int write(Folder folder, Hompy hompy, BoardType boardType) {
+    public Folder write(Folder folder, Hompy hompy, BoardType boardType) {
 
         folder.setHompy(hompy);
         folder.setBoardType(boardType);
         folderRepository.save(folder);
 
-        return 1;
+        return folder;
     }
 
     @Transactional

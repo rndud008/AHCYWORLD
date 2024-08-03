@@ -1,0 +1,8 @@
+.postListHeader{
+  display: flex;
+  justify-content: space-between;
+}
+
+.postListHeader div{
+  text-align: center;
+}

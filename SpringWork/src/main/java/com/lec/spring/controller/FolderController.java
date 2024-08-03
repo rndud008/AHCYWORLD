@@ -133,6 +133,27 @@ public class FolderController {
         return new ResponseEntity<>(folderService.write(folder,hompy,boardType), HttpStatus.OK);// status 200
     }
 
+    @GetMapping("/{hompyId}/{boardName}/update/{id}")
+    public ResponseEntity<?> updateCheck(
+            @PathVariable Long hompyId
+            , @PathVariable String boardName
+            , @RequestBody Folder folder
+            , HttpServletRequest request){
+
+        Hompy hompy = check(request);
+
+        String name = boardTypeName(boardName);
+        BoardType boardType = boardTypeService.findByName(name);
+
+        ResponseEntity<?> validateResponse = validateRequest(folder, hompy, boardType, hompyId, hompy);
+
+        if (validateResponse != null) {
+            return validateResponse;
+        }
+
+        return new ResponseEntity<>(folderService.update(folder), HttpStatus.OK);// status 200
+    }
+
     // 수정
     @PutMapping("/{hompyId}/{boardName}/update")
     public ResponseEntity<?> update(
@@ -182,7 +203,6 @@ public class FolderController {
             @PathVariable Long hompyId
             , @PathVariable String boardName
             , HttpServletRequest request){
-
         Hompy hompy = check(request);
         Hompy miniHompy = hompyService.findById(hompyId);
 

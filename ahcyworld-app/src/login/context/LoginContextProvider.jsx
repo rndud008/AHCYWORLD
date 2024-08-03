@@ -13,6 +13,7 @@ const LoginContextProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState({});
+    console.log(userInfo)
 
     const [isLogin, setIsLogin] = useState(false);
 

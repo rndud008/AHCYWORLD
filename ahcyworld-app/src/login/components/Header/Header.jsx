@@ -38,6 +38,9 @@ const Header = () => {
                             <Link className='nav-link' to='/admin'>
                                 Admin
                             </Link>
+                            <Link className='nav-link' to={`/post/${userInfo.id}/board`}>
+                                Post
+                            </Link>
                             <Button variant='primary' onClick={() => logout()}>
                                 로그아웃
                             </Button>
