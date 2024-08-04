@@ -6,7 +6,9 @@ import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 import java.time.LocalDate;
@@ -78,6 +80,10 @@ public class UserService {
 
     public boolean emailAvailable(String email) {
         return !userRepository.existsByEmail(email.toUpperCase());
+    }
+
+    public List<User> list(){
+        return userRepository.findAll();
     }
 
 }
