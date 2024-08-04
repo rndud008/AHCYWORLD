@@ -4,6 +4,8 @@ drop table if exists attachment_id;
 
 select * from friend;
 select * from ah_user;
+select* from friend;
+select * from payment_history;
 
 delete
 from ah_user

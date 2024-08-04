@@ -26,13 +26,12 @@ public class PaymentHistory {
 
     @Column(nullable = false)
     private String merchantUid;     // 결제번호
-
     @Column(nullable = false)
     private String impUid;          // 주문고유번호
 
     @Column(nullable = false)
-    private Long payment;           // 결제금액
+    private int payment;           // 결제금액
 
     @Column(nullable = false)
-    private Long acornCnt;          // 도토리 개수
+    private int acornCnt;          // 도토리 개수
 }
