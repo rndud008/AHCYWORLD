@@ -37,7 +37,7 @@ const PaymentModal = ({ isOpen, onClose}) => {
           <h2>모달 창</h2>
           <p>이것은 모달 창입니다.</p>
           <label for="name"><h5>도토리 개수 <small>(필수)</small></h5></label>
-          <input type="text" class="form-control" placeholder="숫자를 입력하세요" onChange={changeValue}/>
+          <input type="text" className="form-control" placeholder="숫자를 입력하세요" onChange={changeValue}/>
           <button onClick={()=>Payment(user, acorns)}>결제하기</button>
           <button onClick={onClose}>닫기</button>
         </div>
