@@ -62,7 +62,7 @@ public class UserService {
                 .build();
 
         hompyRepository.save(hompy);
-        System.out.println("hompy만들었지롱~ " + hompy);
+//        System.out.println("hompy만들었지롱~ " + hompy);
         return savedUser;
     }
 

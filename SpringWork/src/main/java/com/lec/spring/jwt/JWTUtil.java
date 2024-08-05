@@ -20,11 +20,12 @@ public class JWTUtil {
                 , Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
-    public String createJwt(Long id, String username, String role, Long expiredMs) {
+    public String createJwt(Long id, String username, String role, String name, Long expiredMs) {
         return Jwts.builder()
                 .claim("id", id)
                 .claim("username", username)
                 .claim("role", role)
+                .claim("name", name)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
@@ -39,7 +40,6 @@ public class JWTUtil {
                 .getPayload()
                 .get("id", Long.class);
     }
-
     public String getUsername(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
@@ -55,6 +55,14 @@ public class JWTUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("role", String.class);
+    }
+    public String getName(String token) {
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("name", String.class);
     }
     public Boolean isExpired(String token) {
         return Jwts.parser()

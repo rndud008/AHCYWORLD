@@ -5,11 +5,6 @@ drop table if exists attachment_id;
 select * from friend;
 select * from ah_user;
 
-delete
-from ah_user
-where username="user3"
-;
-
 select * from diary;
 select * from hompy;
 
@@ -19,4 +14,8 @@ alter table ah_user
 
 delete from friend;
 alter table friend
+    AUTO_INCREMENT = 1;
+
+delete from hompy;
+alter table hompy
     AUTO_INCREMENT = 1;

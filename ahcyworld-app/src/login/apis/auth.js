@@ -26,7 +26,7 @@ export const checkEmailAvailable = (email) => {
 };
 
 export const findFriendList = (username) => {
-    return api.get(`${SERVER_HOST}/user/friends`, {
+    return api.get(`${SERVER_HOST}/friend/myfriends`, {
         params: { username },
     });
 };
@@ -35,8 +35,30 @@ export const userList = () => {
     return api.get(`${SERVER_HOST}/user/list`);
 };
 
-export const checkFriendShip=(username, friendUsername)=>{
-    return api.get(`${SERVER_HOST}/user/check-friendship`, {
-        params:{username, friendUsername}
-    })
-}
+export const checkFriendShip = (username, friendUsername) => {
+    return api.get(`${SERVER_HOST}/friend/check-friendship`, {
+        params: { username, friendUsername },
+    });
+};
+
+export const addFriend = (friendType1, friendType2, message, username, friendUsername) => {
+    return api.post(
+        `${SERVER_HOST}/friend/addfriend`,
+        { friendType1, friendType2, message, username, friendUsername },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+};
+
+export const myFriendRequests = (username) => {
+    return api.get(`${SERVER_HOST}/friend/friend-requests`, {
+        params: { username },
+    });
+};
+
+export const friendShipResponse = (id, reply) => {
+    return api.post(
+        `${SERVER_HOST}/friend/friend-response`,
+        { id, reply },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+};

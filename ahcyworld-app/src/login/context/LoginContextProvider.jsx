@@ -12,11 +12,13 @@ LoginContext.displayName = "LoginContextName";
 const LoginContextProvider = ({ children }) => {
     const navigate = useNavigate();
 
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem("userInfo")) || {});
 
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem("isLogin")) || false);
 
-    const [roles, setRoles] = useState({ isMember: false, isAdmin: false });
+    const [roles, setRoles] = useState(
+        JSON.parse(localStorage.getItem("roles")) || { isMember: false, isAdmin: false }
+    );
 
     const loginCheck = async (isAuthPage = false) => {
         const accessToken = Cookies.get("accessToken");
@@ -63,7 +65,7 @@ const LoginContextProvider = ({ children }) => {
             return;
         }
 
-        // 인증성고
+        // 인증성공
         loginSetting(data, accessToken);
     };
 
@@ -130,7 +132,7 @@ const LoginContextProvider = ({ children }) => {
     };
 
     const loginSetting = (userData, accessToken) => {
-        const { id, username, role } = userData;
+        const { id, username, role, name } = userData;
 
         // console.log(`
         //     loginSetting()
@@ -143,10 +145,13 @@ const LoginContextProvider = ({ children }) => {
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
         // 로그인 여부
-        setIsLogin();
+        setIsLogin(true);
 
         // 유저 정보 세팅
-        setUserInfo({ id, username, role });
+        setUserInfo({ id, username, role, name });
+
+        const updatedUserInfo = { id, username, role, name };
+        setUserInfo(updatedUserInfo);
 
         // 권한 정보 세팅
         const updatedRoles = { isMember: false, isAdmin: false };
@@ -155,8 +160,11 @@ const LoginContextProvider = ({ children }) => {
             role === "ROLE_ADMIN" && (updatedRoles.isAdmin = true);
         });
         // console.log("updatedRoles: ", updatedRoles);
-        setIsLogin(true);
         setRoles(updatedRoles);
+
+        localStorage.setItem("isLogin", "true");
+        localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
+        localStorage.setItem("roles", JSON.stringify(updatedRoles));
     };
 
     const logoutSetting = () => {
@@ -168,6 +176,10 @@ const LoginContextProvider = ({ children }) => {
         // Cookies.remove("rememberId");
 
         api.defaults.headers.common.Authorization = undefined;
+
+        localStorage.removeItem("isLogin");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("roles");
     };
 
     return (
