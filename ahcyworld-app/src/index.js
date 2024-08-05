@@ -15,8 +15,7 @@ root.render(
   <>
     {/* <React.StrictMode> */}
       {/* <AppLogin /> */}
-      <Apphompy />
-      {/* <AhcyworldApp /> */}
+      <AhcyworldApp />
     {/* </React.StrictMode> */}
   </>
 );
