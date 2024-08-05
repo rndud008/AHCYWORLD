@@ -12,7 +12,7 @@ const MiniRoomContainer = styled.div`
 `;
 
 const MiniRoom = () => {
-  // return <MiniRoomContainer>미니룸</MiniRoomContainer>;
+  return <MiniRoomContainer>미니룸</MiniRoomContainer>;
 };
 
 export default MiniRoom;

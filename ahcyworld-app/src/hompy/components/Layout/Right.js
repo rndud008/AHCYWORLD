@@ -5,6 +5,8 @@ const Right = () => {
   return (
     <div className="right-container">
       <div className="content-section">
+
+        {/* 업데이트 뉴스 */}
         <div className="news-section">
           <p className="head-p">Updated news</p>
           <hr className="divider" />
@@ -17,6 +19,7 @@ const Right = () => {
           </ul>
         </div>
       
+        {/* 업데이트 목록 게시판 테이블 */}
         <div className="info-table">
           <table>
             <tbody>
@@ -37,6 +40,7 @@ const Right = () => {
         </div>
       </div>
 
+      {/* 미니룸 */}
       <div className="miniroom-section">
         <span className="miniroom-tabs">Mini Room</span>
         <div className="miniroom">
@@ -45,6 +49,7 @@ const Right = () => {
         </div>
       </div>
 
+      {/* 일촌평 */}
       <div className="friend-msg">
   <span className="friends-msg">일촌평</span>
   <div className="input-container">

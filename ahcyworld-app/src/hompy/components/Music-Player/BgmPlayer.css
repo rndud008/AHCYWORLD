@@ -1,0 +1,61 @@
+.bgm-player {
+  position: absolute;
+  left: 75%;
+  top: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.cover-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.cover-image img {
+  width: 440px; /* 원하는 크기로 조정 */
+  height: 250px;
+  border-radius: 5px;
+}
+
+.track-info {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.controls button {
+  background: none;
+  border: none;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.volume-control input[type="range"] {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.controls span {
+  font-size: 12px;
+}
