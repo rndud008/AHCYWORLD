@@ -44,13 +44,13 @@ const Right = () => {
       <div className="miniroom-section">
         <span className="miniroom-tabs">Mini Room</span>
         <div className="miniroom">
-          <img src="/image/miniroom1.png" alt="Miniroom Background" className="miniroom-bg-image" />
-            <img src="/image/minimi.png" alt="Character" className="miniroom-character" />
+          <img src="/image/miniroom.png" alt="Miniroom Background" className="miniroom-bg-image" />
+            <img src="/image/male.png" alt="Character" className="miniroom-character" />
         </div>
       </div>
 
       {/* 일촌평 */}
-      <div className="friend-msg">
+  <div className="friend-msg">
   <span className="friends-msg">일촌평</span>
   <div className="input-container">
     <input className="text-box" type="text" placeholder="일촌평 작성.." />

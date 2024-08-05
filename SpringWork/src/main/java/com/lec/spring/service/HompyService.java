@@ -29,7 +29,7 @@ public class HompyService {
     }
 
     // 프로필 사진 및 상태 메시지 업데이트
-    public Hompy profile(User user, String profilePicture, String statusMessage) {
+    public Hompy updateUser(User user, String profilePicture, String statusMessage) {
         Hompy hompy = hompyRepository.findByUser(user);
         hompy.setProfilePicture(profilePicture);
         hompy.setStatusMessage(statusMessage);

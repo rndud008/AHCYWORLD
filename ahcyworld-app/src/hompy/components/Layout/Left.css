@@ -5,7 +5,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 36%;
   height: 750px;
-  margin-left: 70px;
+  margin-left: 100px;
+  margin-bottom: 20px;
 }
 
 .profile-img {
@@ -40,6 +41,13 @@
 
 .name {
   font-size: 20px;
+}
+
+.gender {
+  font-size: 23px;
+  text-align: center;
+  margin-bottom: 3px;
+  color: lightsalmon;
 }
 
 .birth {

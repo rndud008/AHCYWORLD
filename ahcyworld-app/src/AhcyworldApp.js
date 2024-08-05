@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DiaryHome from './diary/pages/DiaryHome';
 import DiaryWritePage from './diary/pages/DiaryWritePage';
 import DiaryUpdatePage from './diary/pages/DiaryUpdatePage';
+import Login from './login/pages/Login';
 
 
 const AhcyworldApp = () => {
@@ -13,7 +14,6 @@ const AhcyworldApp = () => {
             <Route path='/list' Component={DiaryHome}></Route>
             <Route path='/write' Component={DiaryWritePage}></Route>
             <Route path='/update/:id' Component={DiaryUpdatePage}></Route>
-            <Route path='' Component={null}></Route>
         </Routes>
         </BrowserRouter> 
         </>

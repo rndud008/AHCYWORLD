@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./page/Home";
 import Profile from "./page/Profile";
@@ -7,12 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BgmPlayer from "./components/Music-Player/BgmPlayer";
 
 const Apphompy = () => {
+
+  const [userId, setUserId] = useState(null);
+
   return (
     <BrowserRouter>
-      <Menu />
+      <Menu userId={userId} />
       <BgmPlayer />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/hompy/:userId" element={<Home setUserId={setUserId} />} />
         <Route path="/profile" element={<Profile />} />
         {/* <Route path="/diary" element={<Diary />} />
         <Route path="/photo" element={<Photo />} />

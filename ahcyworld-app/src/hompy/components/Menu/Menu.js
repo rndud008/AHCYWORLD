@@ -1,13 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import './Menu.css';
 
-const Menu = () => {
+const Menu = ({userId}) => {
+  // console.log("id:", userId);
   return (
     <nav className="menu-nav">
       <ul>
         <li>
-          <NavLink to="/" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${userId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             홈
           </NavLink>
         </li>

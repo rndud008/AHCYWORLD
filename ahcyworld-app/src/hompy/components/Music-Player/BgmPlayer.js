@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { FaPlay, FaPause, FaBackward, FaForward, FaStop, FaList, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import './BgmPlayer.css';
+import { useNavigate } from 'react-router-dom';
 
 const BgmPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -33,7 +34,7 @@ const BgmPlayer = () => {
   return (
     <div className="bgm-player">
       <div className="cover-image">
-        <img src="/image/pro.png" alt="Cover" />
+        <img src="/image/femaleImg.png" alt="Cover" />
       </div>
       <div className="track-info">
         <strong>Sweetbox - Life Is Cool</strong>
