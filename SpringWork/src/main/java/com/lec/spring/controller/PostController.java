@@ -1,16 +1,21 @@
 package com.lec.spring.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.*;
 import com.lec.spring.jwt.JWTUtil;
 import com.lec.spring.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -59,23 +64,23 @@ public class PostController {
         return hompyService.findHompyByuser(user);
     }
 
-    public String boardTypeName(String boardtype){
-        if(boardtype.equals("board")){
+    public String boardTypeName(String postName){
+        if(postName.equals("board")){
             return "게시판";
         }
 
-        if(boardtype.equals("photo")){
+        if(postName.equals("photo")){
             return "사진첩";
         }
 
-        if(boardtype.equals("video")){
+        if(postName.equals("video")){
             return "동영상";
         }
 
         return "";
     }
 
-    private ResponseEntity<?> validateRequest(Hompy hompy, String boardName, Folder folder, Long hompyId, Folder moveFolder,String action, Folder scrapFolder,Post post){
+    private ResponseEntity<?> validateRequest(Hompy hompy, String postName, Folder folder, Long hompyId, Folder moveFolder,String action, Folder scrapFolder,Post post){
 
         if (hompy == null) {
             return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
@@ -117,7 +122,7 @@ public class PostController {
 
         }
 
-        String name = boardTypeName(boardName);
+        String name = boardTypeName(postName);
 
         boolean boardTypeCheck = folder.getBoardType().getName().equals(name);
         if(!boardTypeCheck){
@@ -163,19 +168,21 @@ public class PostController {
     // folder: id
 
     // 작성
-    @PostMapping("/{hompyId}/{boardName}/{folderId}/write")
+    @PostMapping(value= "/{hompyId}/{postName}/{folderId}/write",
+    consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> write(
             @PathVariable Long hompyId
-            ,@PathVariable String boardName
-            ,@PathVariable Long folderId
-            , @RequestBody Post post
+            , @PathVariable String postName
+            , @PathVariable Long folderId
+            , @RequestPart("post")  Post post
             , HttpServletRequest request
-            , @RequestParam Map<String, MultipartFile> files){
+            , @RequestParam(required = false) Map<String, MultipartFile> files){
 
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,null,"null", null,null);
+
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"null", null,null);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -185,40 +192,50 @@ public class PostController {
     }
 
     // 수정
-    @PutMapping("/{hompyId}/{boardName}/{folderId}/update")
+    @PutMapping(value = "/{hompyId}/{postName}/{folderId}/update",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(
             @PathVariable Long hompyId
-            ,@PathVariable String  boardName
+            ,@PathVariable String  postName
             ,@PathVariable Long folderId
             , @RequestParam Map<String,MultipartFile> files
-            , @RequestBody Post post
-            , Long[] delFile
+            , @RequestPart("post")  Post post
+            , @RequestPart("delFile") String jsonDelFile
             , HttpServletRequest request){
 
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,null,"null",null,null);
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"null",null,null);
 
         if (validateResponse != null) {
             return validateResponse;
         }
 
+        ObjectMapper mapper = new ObjectMapper();
+        Long[] delFile = new Long[0];
+        try {
+            delFile = mapper.readValue(jsonDelFile, new TypeReference<Long[]>() {});
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
         return new ResponseEntity<>(postService.update(post,files,delFile), HttpStatus.OK);// status 200
     }
 
     // 삭제
-    @DeleteMapping("/{hompyId}/{boardName}/{folderId}/delete/{id}")
+    @DeleteMapping("/{hompyId}/{postName}/{folderId}/delete/{id}")
     public ResponseEntity<?> delete(
             @PathVariable Long hompyId
-            ,@PathVariable String  boardName
+            ,@PathVariable String  postName
             ,@PathVariable Long folderId
             , @PathVariable Long id
             , HttpServletRequest request){
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,null,"null",null,null);
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"null",null,null);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -228,10 +245,10 @@ public class PostController {
     }
 
     // 조회 - 조회수 증가.
-    @GetMapping("/{hompyId}/{boardName}/{folderId}/detail/{id}")
+    @GetMapping("/{hompyId}/{postName}/{folderId}/detail/{id}")
     public ResponseEntity<?> detail(
             @PathVariable Long hompyId
-            ,@PathVariable String  boardName
+            ,@PathVariable String  postName
             ,@PathVariable Long folderId
             , @PathVariable Long id
             , HttpServletRequest request){
@@ -239,7 +256,7 @@ public class PostController {
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,null,"detail",null,null);
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"detail",null,null);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -249,10 +266,10 @@ public class PostController {
     }
 
     // 게시물 폴더 이동.
-    @PutMapping("/{hompyId}/{boardName}/{folderId}/detail/{id}/{moveFolderId}")
+    @PutMapping("/{hompyId}/{postName}/{folderId}/detail/{id}/{moveFolderId}")
     public ResponseEntity<?> movePost(
             @PathVariable Long hompyId
-            ,@PathVariable String  boardName
+            ,@PathVariable String  postName
             ,@PathVariable Long folderId
             ,@PathVariable Long moveFolderId
             , @PathVariable Long id
@@ -263,7 +280,7 @@ public class PostController {
         Folder folder = folderService.findById(folderId);
         Folder moveFolder = folderService.findById(moveFolderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,moveFolder,"null",null, post);
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,moveFolder,"null",null, post);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -273,10 +290,10 @@ public class PostController {
     }
 
     // 게시물 스크랩.
-    @PostMapping("/{hompyId}/{boardName}/{folderId}/detail/{scrapFolderId}")
+    @PostMapping("/{hompyId}/{postName}/{folderId}/detail/{scrapFolderId}")
     public ResponseEntity<?> scrapPost(
             @PathVariable Long hompyId
-            , @PathVariable String  boardName
+            , @PathVariable String  postName
             , @PathVariable Long folderId
             , @PathVariable Long scrapFolderId
             , @RequestBody Post post
@@ -287,7 +304,7 @@ public class PostController {
         Folder folder = folderService.findById(folderId);
         Folder scrapFolder = folderService.findById(scrapFolderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy, boardName, folder, hompyId,null,"scrap", scrapFolder, post);
+        ResponseEntity<?> validateResponse = validateRequest(hompy, postName, folder, hompyId,null,"scrap", scrapFolder, post);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -297,10 +314,10 @@ public class PostController {
     }
 
     // 조회 - 조회수 증가X
-    @GetMapping("/{hompyId}/{boardName}/{folderId}/update/{id}")
+    @GetMapping("/{hompyId}/{postName}/{folderId}/update/{id}")
     public ResponseEntity<?> updateCheck(
             @PathVariable Long hompyId
-            ,@PathVariable String  boardName
+            ,@PathVariable String  postName
             ,@PathVariable Long folderId
             , @PathVariable Long id
             , HttpServletRequest request){
@@ -308,7 +325,7 @@ public class PostController {
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,null,"null",null,null);
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"null",null,null);
 
         if (validateResponse != null) {
             return validateResponse;
@@ -318,10 +335,10 @@ public class PostController {
     }
 
     // list?
-    @GetMapping("/{hompyId}/{boardName}/{folderId}/list")
+    @GetMapping("/{hompyId}/{postName}/{folderId}/list")
     public ResponseEntity<?> list(
             @PathVariable Long hompyId
-            ,@PathVariable String  boardName
+            ,@PathVariable String  postName
             ,@PathVariable Long folderId
             ,@RequestParam(defaultValue = "0") Integer page
             , HttpServletRequest request){
@@ -330,7 +347,7 @@ public class PostController {
         Folder folder = folderService.findById(folderId);
         String url = request.getRequestURI();
 
-        ResponseEntity<?> validateResponse = validateRequest(hompy,boardName,folder,hompyId,null,"list",null,null);
+        ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"list",null,null);
 
         if (validateResponse != null) {
             return validateResponse;

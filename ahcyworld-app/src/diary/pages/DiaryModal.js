@@ -22,7 +22,7 @@ const DiaryModal = ({
     const onDeleteClick = (id) => {
         if(window.confirm("삭제하시겠습니까?")){
             axios
-                .delete(`http://localhost:8080/cyworld/cy/diaries/delete/${id}`)
+                .delete(`http://localhost:8070/cyworld/cy/diaries/delete/${id}`)
                 .then((response) => {
                     window.alert("삭제되었습니다.");
                     onHide();   // 모달 닫기

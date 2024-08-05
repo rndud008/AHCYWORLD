@@ -35,7 +35,7 @@ import axios from 'axios';
 
                     axios({
                         get:'post',
-                        url: 'http://localhost:8080/payment/save',
+                        url: 'http://localhost:8070/payment/save',
                         headers: {
                             "Content-Type":"application/json",
                         },

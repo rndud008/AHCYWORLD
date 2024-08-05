@@ -1,10 +1,9 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +15,8 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JsonBackReference
     private Post post;
 
     private String sourceName;
@@ -24,4 +24,6 @@ public class Attachment {
 
     @Transient
     private boolean isImage;
+    @Transient
+    private boolean isVideo;
 }

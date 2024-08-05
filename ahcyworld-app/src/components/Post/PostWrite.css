@@ -1,0 +1,14 @@
+.files{
+  display: flex;
+  margin-top: 10px;
+}
+
+.files button{
+  margin-left: 10px;
+  font-size: 15px;
+  width: 59px;
+}
+.write-button-group{
+  display: flex;
+  justify-content: space-between;
+}

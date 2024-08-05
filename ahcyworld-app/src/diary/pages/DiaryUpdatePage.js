@@ -16,7 +16,7 @@ const DiaryUpdatePage = () => {
 
     // 다이어리 정보를 가져오는 useEffect
     useEffect(() => {
-        axios.get(`http://localhost:8080/cyworld/cy/diaries/detail/${id}`)
+        axios.get(`http://localhost:8070/cyworld/cy/diaries/detail/${id}`)
             .then(response => {
                 setDiary(response.data);
                 // console.log("id:", id);
@@ -41,7 +41,7 @@ const DiaryUpdatePage = () => {
     // 폼 제출 핸들러
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:8080/cyworld/cy/diaries/update`, diary, {
+        axios.put(`http://localhost:8070/cyworld/cy/diaries/update`, diary, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }

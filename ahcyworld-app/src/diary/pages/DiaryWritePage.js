@@ -31,7 +31,7 @@ const DiaryWritePage = () => {
             e.stopPropagation();
         } else {
             axios
-                .post("http://localhost:8080/cyworld/cy/diaries/save", formData, {
+                .post("http://localhost:8070/cyworld/cy/diaries/save", formData, {
                     headers: "application/json"
                 })
                 .then((response) => {

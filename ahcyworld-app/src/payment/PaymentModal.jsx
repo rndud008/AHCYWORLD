@@ -21,7 +21,7 @@ const PaymentModal = ({ isOpen, onClose}) => {
         if(user.email === ""){
             axios({
                 get:'get',
-                url:`http://localhost:8080/payment/${Cookies.get('rememberId')}`,
+                url:`http://localhost:8070/payment/${Cookies.get('rememberId')}`,
             }).then(response=>{
                 const{data,status} = response;
                 if(status === 200){

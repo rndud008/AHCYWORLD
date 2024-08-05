@@ -22,8 +22,6 @@ const PostItem = ({ item}) => {
   const folderId = item.folder.id
   const postId = item.id;
 
-  console.log('postItem : ',);
-
   return (
     <>
       <tr>

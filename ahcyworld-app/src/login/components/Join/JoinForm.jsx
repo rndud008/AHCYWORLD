@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 // import "./JoinForm.css";
-import "./JoinForm.css";
+// import "./JoinForm.css";
 import styled from "styled-components";
 import { checkUsernameAvailable, checkEmailAvailable } from "../../apis/auth";
 // import * as Swal from "../apis/alert";

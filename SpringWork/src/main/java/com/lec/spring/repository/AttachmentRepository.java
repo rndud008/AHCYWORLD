@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface AttachmentRepository extends JpaRepository<Attachment,Long> {
 
-    Optional<List<Attachment>> findByPost(Post post);
+    List<Attachment> findByPostId(Long id);
 }

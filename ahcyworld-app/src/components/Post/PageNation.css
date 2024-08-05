@@ -1,0 +1,8 @@
+.pageNation {
+  display: flex;
+  list-style: none;
+}
+
+.pageNation li a {
+  text-decoration: none;
+}

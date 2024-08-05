@@ -25,7 +25,7 @@ const DiaryHome = () => {
     useEffect(() => {
         axios({
             method: "get",
-            url: "http://localhost:8080/cyworld/cy/diaries/list",
+            url: "http://localhost:8070/cyworld/cy/diaries/list",
         })
             .then((response) => {
                 const diaries = response.data;
@@ -85,7 +85,7 @@ const DiaryHome = () => {
 
         axios
             .get(
-                `http://localhost:8080/cyworld/cy/diaries/detail-by-date/${formattedDate}`
+                `http://localhost:8070/cyworld/cy/diaries/detail-by-date/${formattedDate}`
             )
             .then((response) => {
                 setDiaryContent(response.data);

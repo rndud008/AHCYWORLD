@@ -1,49 +1,80 @@
-import React from 'react'
-import { Button, Container } from 'react-bootstrap'
+import React from "react";
+import { Button, Container, PageItem } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+} from "@fortawesome/free-solid-svg-icons";
+import './PageNation.css'
 
-const PageNation = () => {
-  return (
-    <Container>
-      <div>
-        <div>
-          <h4>제목</h4>
-          </div>
-        <div>
-          <Button>목록</Button>
-          <Button>이동</Button>
-          <Button>수정</Button>
-          <Button>삭제</Button>
-          </div>
-      </div>
-      <div>
-        <div>
-          <h5>작성자</h5>
-          </div>
-        <div>
-          <h5>작성일자</h5>
-          </div>
-        <div>
-          <h5>조회수</h5>
-          </div>
-      </div>
-      <div>
-        <span>첨부파일</span>
-      </div>
-      <div>
-        <sapn>content</sapn>
-      </div>
-      <div>
-        <div><Button>댈글보기</Button></div>
-        <div>댓글 목록</div>
-        <div>
-          <label>댓글</label>
-          <input placeholder='댓글입력'/>
-          <Button>확인</Button>
-        </div>
-      </div>
-    
-    </Container>
-  )
+const createPageNumber = (start, end) =>{
+
+  const pages =[];
+  for(let i = start; i <= end; i++){
+    pages.push(i);
+  }
+
+  return pages;
+
 }
 
-export default PageNation
+const PageNation = ({pageAndPostList, setPage}) => {
+
+  const { hompyId, postName } = useParams();
+  console.log('PageNation: ',hompyId)
+  console.log('PageNation: ',postName)
+
+  const pagesNumbers = createPageNumber(pageAndPostList.startpage,pageAndPostList.endpage);
+
+  const pageSave = (item) =>{
+    setPage(item)
+  }
+
+  return (
+    <Container>
+      {pageAndPostList.url && 
+      <ul className="pageNation">
+      <PageItem>
+        <Link onClick={() => pageSave((pageAndPostList.startpage-1))} to={`/post/${hompyId}/${postName}?page=${(pageAndPostList.startpage-1)}`}>
+          <FontAwesomeIcon icon={faAnglesLeft} />
+        </Link>
+      </PageItem>
+
+      <PageItem>
+        <Link onClick={() => pageSave((pageAndPostList.startpage+1))} to={`/post/${hompyId}/${postName}?page=${(pageAndPostList.startpage+1)}`}>
+          <FontAwesomeIcon icon={faAngleLeft} />
+        </Link>
+      </PageItem>
+
+      {
+        pagesNumbers.map(item => {
+          if(item === parseInt(pageAndPostList.page)){
+            return <PageItem className="active"><span>{item}</span></PageItem>
+          }else{
+            return <PageItem><Link onClick={() => pageSave(item)} to={`/post/${hompyId}/${postName}?page=${item}`}>{item}</Link></PageItem>
+          }
+        })
+      }
+      
+      <PageItem>
+        <Link onClick={() => pageSave((pageAndPostList.endpage+1))} to={`/post/${hompyId}/${postName}?page=${(pageAndPostList.endpage+1)}`}>
+          <FontAwesomeIcon icon={faAngleRight} />
+        </Link>
+      </PageItem>
+
+      <PageItem>
+        <Link onClick={() => pageSave(pageAndPostList.totalPage)} to={`/post/${hompyId}/${postName}?page=${pageAndPostList.totalPage}`}>
+          <FontAwesomeIcon icon={faAnglesRight} />
+        </Link>
+      </PageItem>
+    </ul>
+      }
+      
+    </Container>
+  );
+};
+
+export default PageNation;

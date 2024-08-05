@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 let modalName;
 let folderId;
 
-const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList, folder, setFolder,hompyId}) => {
-  console.log("BoardTypeList: ", folderList);
+const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList, folder, setFolder,hompyId,moveFolderId}) => {
+  console.log("moveFolderId: ", moveFolderId);
 
   const navigate = useNavigate();
 
@@ -47,13 +47,30 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
   const createSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await api.post(
-      `http://localhost:8090/${hompyId}/${postName}/write`,
-      folder
-    );
-
-    const data = response.data;
-    setFolderList([...folderList, data]);
+    try{
+      const response = await api.post(
+        `http://localhost:8070/${hompyId}/${postName}/write`,
+        folder
+      );
+  
+      const data = response.data;
+      setFolderList([...folderList, data]);
+    }catch (error) {
+      if (error.response) {
+        // 서버가 400 범위의 응답을 반환한 경우
+        console.error('Error Response:', error.response.data);
+        console.error('Error Status:', error.response.status);
+        console.error('Error Headers:', error.response.headers);
+      } else if (error.request) {
+        // 요청이 만들어졌지만 응답을 받지 못한 경우
+        console.error('Error Request:', error.request);
+      } else {
+        // 요청을 설정하는 중에 문제가 발생한 경우
+        console.error('Error Message:', error.message);
+      }
+      console.error('Error Config:', error.config);
+    }
+    
 
     handleClose();
   };
@@ -62,7 +79,7 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
     e.preventDefault();
 
     const response = await api.put(
-      `http://localhost:8090/${hompyId}/${postName}/update`,
+      `http://localhost:8070/${hompyId}/${postName}/update`,
       folder
     );
 
@@ -91,7 +108,7 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
     folderId = e.target.id.substring(e.target.id.lastIndexOf('-')+1);
     console.log('custom :' ,folderId);
 
-    const response = await api.get(`http://localhost:8090/${hompyId}/${postName}/${folderId}/list`)
+    const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list`)
     const {data, status}= response;
 
     console.log('folderClick data: ',data);
@@ -99,10 +116,11 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
 
     setPageAndPostList(data);
     setFolder(folderList.filter(item => parseInt(item.id) === parseInt(folderId)))
+    navigate(`/post/${hompyId}/${postName}`)
   }
 
   const folderDelete = async () =>{
-    const response = await api.delete(`http://localhost:8090/${hompyId}/${postName}/delete/${folderId}`);
+    const response = await api.delete(`http://localhost:8070/${hompyId}/${postName}/delete/${folderId}`);
     const {status} = response;
     console.log(status);
 
