@@ -3,11 +3,12 @@ import Payment from './Payment';
 import './css/Modal.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const PaymentModal = ({ isOpen, onClose}) => {
-
+    const navigator = useNavigate();
     const [user, setUser] = useState({
         name: "",
         tel: "",
@@ -21,11 +22,14 @@ const PaymentModal = ({ isOpen, onClose}) => {
         if(user.email === ""){
             axios({
                 get:'get',
-                url:`http://localhost:8080/payment/${Cookies.get('rememberId')}`,
+                url:`http://localhost:8080/user`,
+                headers:{
+                    'Authorization': `Bearer ${Cookies.get('accessToken')}`
+                }
             }).then(response=>{
                 const{data,status} = response;
                 if(status === 200){
-                    setUser(data);
+                    setUser({...data});
                 }
             })
         }
@@ -38,7 +42,7 @@ const PaymentModal = ({ isOpen, onClose}) => {
           <p>이것은 모달 창입니다.</p>
           <label for="name"><h5>도토리 개수 <small>(필수)</small></h5></label>
           <input type="text" class="form-control" placeholder="숫자를 입력하세요" onChange={changeValue}/>
-          <button onClick={()=>Payment(user, acorns)}>결제하기</button>
+          <button onClick={()=>Payment(user, acorns,navigator)}>결제하기</button>
           <button onClick={onClose}>닫기</button>
         </div>
       </div>

@@ -4,11 +4,13 @@ import Home from "./page/Home";
 import Profile from "./page/Profile";
 import Menu from "./components/Menu/Menu";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import BgmPlayer from "./components/Music-Player/BgmPlayer";
 
 const Apphompy = () => {
   return (
     <BrowserRouter>
       <Menu />
+      <BgmPlayer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />

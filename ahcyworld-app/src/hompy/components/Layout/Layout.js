@@ -11,7 +11,7 @@ const Layout = () => {
       <div 
         className="background-image"
         style={{ 
-          backgroundImage: `url(/image/skin1.png)`
+          backgroundImage: `url(/image/mainskin.png)`
         }}
       ></div>
 

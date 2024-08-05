@@ -24,3 +24,19 @@ export const checkEmailAvailable = (email) => {
         params: { email },
     });
 };
+
+export const findFriendList = (username) => {
+    return api.get(`${SERVER_HOST}/user/friends`, {
+        params: { username },
+    });
+};
+
+export const userList = () => {
+    return api.get(`${SERVER_HOST}/user/list`);
+};
+
+export const checkFriendShip=(username, friendUsername)=>{
+    return api.get(`${SERVER_HOST}/user/check-friendship`, {
+        params:{username, friendUsername}
+    })
+}
