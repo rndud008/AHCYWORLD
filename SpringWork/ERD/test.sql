@@ -15,6 +15,8 @@ where username="user3"
 select * from diary;
 select * from hompy;
 
+SELECT * FROM Hompy WHERE user_id = 4;
+
 delete from ah_user;
 alter table ah_user
     AUTO_INCREMENT = 1;

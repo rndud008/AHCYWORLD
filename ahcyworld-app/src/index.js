@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import AhcyworldApp from './AhcyworldApp';
-// import AppLogin from './login/AppLogin';
+import AppLogin from './login/AppLogin';
+import Apphompy from './hompy/Apphompy';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -15,7 +16,8 @@ root.render(
   <>
     {/* <React.StrictMode> */}
       {/* <AppLogin /> */}
-      <AhcyworldApp />
+      <Apphompy />
+      {/* <AhcyworldApp /> */}
     {/* </React.StrictMode> */}
   </>
 );
