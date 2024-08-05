@@ -8,7 +8,6 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(callSuper = true)
 @Entity
 public class Item {
     @Id
@@ -16,16 +15,16 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
-    private String itemName;    // 상품이름
+    private String itemName;    // 상품이름, 가수-노래제목
 
     @Column(nullable = false)
     private String itemType;    // 상품타입
 
     @Column(nullable = false)
-    private String sourceName;  // 원본명
+    private String sourceName;  // 원본명(이미지), 노래 이미지
 
     @Column(nullable = false)
-    private String fileName;    // 저장명
+    private String fileName;    // 저장명, 노래 링크
 
     @ColumnDefault(value = "0")
     private Long price;         // 도토리 가격

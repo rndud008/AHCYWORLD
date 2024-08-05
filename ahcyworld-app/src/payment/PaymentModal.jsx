@@ -4,6 +4,7 @@ import './css/Modal.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_HOST } from '../login/apis/api';
 
 
 
@@ -22,7 +23,7 @@ const PaymentModal = ({ isOpen, onClose}) => {
         if(user.email === ""){
             axios({
                 get:'get',
-                url:`http://localhost:8070/user`,
+                url:`${SERVER_HOST}/user`,
                 headers:{
                     'Authorization': `Bearer ${Cookies.get('accessToken')}`
                 }
