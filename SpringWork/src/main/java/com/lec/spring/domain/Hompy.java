@@ -35,6 +35,8 @@ public class Hompy {
     @Column(insertable = false)
     private Long totalVisitor;
 
+    private String minimiPicture;
+
 
     private String profile;
 

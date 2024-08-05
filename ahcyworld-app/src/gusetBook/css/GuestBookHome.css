@@ -1,0 +1,98 @@
+/* 중앙 정렬을 위한 컨테이너 스타일 */
+.guestbook-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 중앙 정렬 */
+    min-height: 100vh; /* 화면 전체 높이 사용 */
+    width: auto;
+}
+
+/* 테이블 스타일 */
+.guestbook-table {
+    width: 80%; /* 테이블 너비를 80%로 설정 */
+    border-collapse: collapse;
+    margin: 0 auto; /* 테이블을 중앙에 배치 */
+    border: 1px solid #999; /* 테이블 테두리 */
+}
+
+/* 테이블 셀 스타일 */
+.guestbook-table td {
+    padding: 8px;
+    vertical-align: top;
+    position: relative; /* 자식 요소를 절대 위치로 배치하기 위해 */
+}
+
+/* 이미지 셀 스타일 */
+.minimi-cell {
+    width: 80px; /* 너비를 조절 */
+    text-align: center; /* 이미지 가운데 정렬 */
+}
+
+/* 이미지 스타일 */
+.minimi-img {
+    height: 80px; /* 높이를 조절 */
+    width: auto; /* 가로 세로 비율 유지 */
+}
+
+/* 정보 셀 스타일 */
+.info-cell {
+    width: calc(100% - 100px); /* 이미지 셀 너비를 고려하여 조정 */
+    padding-left: 15px;
+}
+
+/* 배경 스타일 */
+.info-row {
+    background-color: rgb(211, 211, 211);
+}
+
+/* 액션 버튼 스타일 */
+.actions {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+/* 삭제 버튼 스타일 */
+.delete {
+    cursor: pointer;
+}
+
+/* 비밀로 하기 버튼 스타일 */
+.secret {
+    cursor: pointer;
+}
+
+/* 콘텐츠 셀 스타일 */
+.content-cell {
+    padding-left: 15px;
+    height: auto; /* 콘텐츠 높이를 자동으로 조정 */
+    word-wrap: break-word; /* 긴 단어가 셀을 넘어가지 않도록 조정 */
+}
+
+/* 정보와 콘텐츠를 같은 행에 배치하기 위한 스타일 */
+.guestbook-row {
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+}
+
+.guestbook-content {
+    flex-grow: 1;
+    padding-left: 15px;
+    overflow-wrap: break-word;
+}
+
+.guestbook-content img {
+    margin-right: 15px;
+    max-height: 80px;
+}
+
+.minimi-cell {
+    padding: 15px;
+    width: 30%;
+}
+
+.content-cell {
+    height: 100px;
+}
