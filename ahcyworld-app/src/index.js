@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Apphompy from './hompy/Apphompy';
 import AhcyworldApp from './AhcyworldApp';
 // import AppLogin from './login/AppLogin';
 

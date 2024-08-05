@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './Left.css';
 import { PiGenderFemaleFill, PiGenderMaleFill } from "react-icons/pi";
 import axios from "axios";
 
 const Left = ({ user, hompy }) => {
-  // user가 undefined인 경우 기본값으로 빈 객체를 설정합니다.
-  const [statusMessage, setStatusMessage] = useState(user?.statusMessage || "");
+  const [statusMessage, setStatusMessage] = useState(hompy?.statusMessage || "");
   const [textEdit, setTextEdit] = useState(false);
-  const [profilePicture, setProfilePicture] = useState(hompy?.profilePicture || "/image/default_img.png");
-  const [selectedFile, setSelectedFile] = useState(null); // 선택된 파일 상태
+  const [profilePicture, setProfilePicture] = useState("/image/default_img.png");
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const userId = user?.id; // userId 가져오기
+  const userId = user?.id;
 
   const textEditClick = () => {
-    if (textEdit) {
-      // 파일 업로드와 상태 메시지 업데이트를 동시에 처리
+    if (textEdit && userId) {
       const formData = new FormData();
       if (selectedFile) {
         formData.append('file', selectedFile);
@@ -28,7 +26,6 @@ const Left = ({ user, hompy }) => {
       })
       .then(response => {
         console.log("업로드 성공:", response.data);
-        // 서버에서 반환된 업데이트된 데이터를 사용해 상태를 업데이트
         setProfilePicture(response.data.profilePicture);
         setStatusMessage(response.data.statusMessage);
       })
@@ -56,7 +53,6 @@ const Left = ({ user, hompy }) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      // 파일을 읽어서 이미지 미리보기를 제공
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePicture(reader.result);
@@ -65,46 +61,6 @@ const Left = ({ user, hompy }) => {
     }
   };
 
-  const handleUploadClick = () => {
-    if (!userId) {
-      console.error("Error: userId is undefined. Check if hompy object contains valid user data.");
-      return;
-    }
-  
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-  
-      axios.post(`http://localhost:8070/hompy/${userId}/profile-picture`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then(response => {
-        console.log("프로필 사진 업로드 성공:", response.data);
-        setProfilePicture(response.data.profilePicture);
-      })
-      .catch(error => {
-        console.error("프로필 사진 업로드 에러:", error);
-      });
-    }
-  
-    axios.post(`http://localhost:8070/hompy/${userId}/status-message`, { statusMessage }, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => {
-      console.log("상태 메시지 업데이트 성공:", response.data);
-      setStatusMessage(response.data.statusMessage);
-    })
-    .catch(error => {
-      console.error("상태 메시지 업데이트 에러:", error);
-    });
-  };
-  
-
-  // user가 정의되지 않은 경우 로딩 메시지 표시
   if (!user) {
     return <div>Loading user data...</div>;
   }
