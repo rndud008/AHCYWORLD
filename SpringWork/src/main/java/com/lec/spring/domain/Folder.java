@@ -1,17 +1,20 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity(name = "folder")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Folder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +32,7 @@ public class Folder {
     @ColumnDefault(value = "'전체공개'")
     private String status; // 폴더 공개범위 (전체공개, 일촌공개, 비공개)
 
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Post> posts;
 }

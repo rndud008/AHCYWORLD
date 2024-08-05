@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginContextProvider from "./context/LoginContextProvider";
+import LoginContextProvider, { LoginContext } from "./context/LoginContextProvider";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
@@ -9,6 +9,7 @@ import Admin from "./pages/Admin";
 import Post from "../components/Post/Post";
 
 const AppLogin = () => {
+  
   return (
     <BrowserRouter>
       <LoginContextProvider>

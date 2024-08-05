@@ -1,8 +1,10 @@
 package com.lec.spring.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
@@ -20,17 +22,19 @@ public class Post extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
-//    @JsonIgnore
-    private List<Attachment> ImageList = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @Builder.Default // builder 제공안함.
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
-    @JsonIgnore
+    @ToString.Exclude
+    private List<Attachment> fileList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @Builder.Default // builder 제공안함.
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "folder_id")
+//    @JsonManagedReference
     private Folder folder;
 
     @Column(nullable = false)
@@ -48,4 +52,6 @@ public class Post extends BaseEntity{
     private Long scrap;
 
     // 작성일은 BaseEntity
+
+
 }

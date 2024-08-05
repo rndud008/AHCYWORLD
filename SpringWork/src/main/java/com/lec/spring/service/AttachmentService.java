@@ -20,8 +20,10 @@ public class AttachmentService {
     }
 
     public List<Attachment> findByPost(Post post){
-        return attachmentRepository.findByPost(post).orElse(null);
+        return attachmentRepository.findByPostId(post.getId());
     }
+
+    public Attachment findById(Long id){ return attachmentRepository.findById(id).orElse(null);}
 
 
 }

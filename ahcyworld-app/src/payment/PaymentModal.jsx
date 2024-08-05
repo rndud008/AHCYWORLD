@@ -22,7 +22,7 @@ const PaymentModal = ({ isOpen, onClose}) => {
         if(user.email === ""){
             axios({
                 get:'get',
-                url:`http://localhost:8080/user`,
+                url:`http://localhost:8070/user`,
                 headers:{
                     'Authorization': `Bearer ${Cookies.get('accessToken')}`
                 }

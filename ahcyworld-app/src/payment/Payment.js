@@ -35,9 +35,11 @@ const Payment = (user,acorns,navigatorFunction) => {
                     // 성공 시 처리 로직
 
                     axios({
-                        method:"POST",
-                        url:"http://localhost:8080/payment/save",
-                        headers: {"Content-Type": "application/json"},
+                        get:'post',
+                        url: 'http://localhost:8070/payment/save',
+                        headers: {
+                            "Content-Type":"application/json",
+                        },
                         data: JSON.stringify(savePayment),
                     }).then(response => {
                         const {data,status,error_msg} = response
