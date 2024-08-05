@@ -6,10 +6,12 @@ import Login from "./pages/Login";
 import Join from "./pages/Join";
 import Member from "./pages/Member";
 import Admin from "./pages/Admin";
-
 const AppLogin = () => {
+    
     return (
+        
         <BrowserRouter>
+            
             <LoginContextProvider>
                 <Routes>
                     <Route path='/' element={<Home />} />

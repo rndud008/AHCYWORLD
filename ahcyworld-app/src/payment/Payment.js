@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { SERVER_HOST } from '../login/apis/api';
 
 
 // login(localStorage.getItem('username'), localStorage.getItem('password'), localStorage.getItem('rememberId'));
@@ -36,17 +37,17 @@ const Payment = (user,acorns,navigatorFunction) => {
 
                     axios({
                         method:"POST",
-                        url:"http://localhost:8080/payment/save",
+                        url: `${SERVER_HOST}/payment/save`,
                         headers: {"Content-Type": "application/json"},
                         data: JSON.stringify(savePayment),
                     }).then(response => {
                         const {data,status,error_msg} = response
                         if(status === 201){
-                            console.log('저장성공!!!!!!!!!')
+                            window.alert("결제 되었습니다.")
                             navigatorFunction("/member");
                             
                         }else{
-                            console.log("왜?"+error_msg);
+                            console.log("실패: "+error_msg);
                         }
                     });
                 } else {

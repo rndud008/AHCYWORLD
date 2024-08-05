@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import AhcyworldApp from './AhcyworldApp';
-// import AppLogin from './login/AppLogin';
+import AppLogin from './login/AppLogin';
+import MusicApi from './item/api/MusicApi';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,8 +15,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
     {/* <React.StrictMode> */}
-      {/* <AppLogin /> */}
-      <AhcyworldApp />
+      <AppLogin />
+      {/* <MusicApi /> */}  {/* 혹시 노래데이터 받을 때 필요! */}
     {/* </React.StrictMode> */}
   </>
 );
