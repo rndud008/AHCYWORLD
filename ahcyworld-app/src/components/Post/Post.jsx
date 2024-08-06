@@ -25,17 +25,8 @@ import {FolderAction} from '../../redux/actions/FolderAction'
 import { PostAction } from "../../redux/actions/PostAction";
 import { useDispatch, useSelector } from "react-redux";
 
-const useQuery = () =>{
-  return new URLSearchParams(useLocation().search);
-}
-
 const Post = () => {
-  // const location = useLocation(); // 현재 위치 정보를 가져옴
-  // const postName = location.pathname.split("/")[3];
-  // let hompyId = location.pathname.split("/")[2];
-
   const { hompyId, postName } = useParams();
-  const query = useQuery();
   const {userInfo} = useContext(LoginContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,17 +38,12 @@ const Post = () => {
   const folderList = useSelector((state)=> state.folder.folderList)
   const pageAndPostList = useSelector((state) => state.post.pageAndPostList)
 
-  console.log('post folderList', folderList)
-  console.log('post folder', folder)
-  console.log('post pageAndPostList', pageAndPostList)
-
   const axiosPostList = async() =>{
-
     const folderId = folder?.id !== null ? folder.id : folderList?.[0]?.id
 
     // const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list?page=${page}`)
     // console.log(folderList[0],'folderList[0]')
-    console.log('axiosPostList',folderId)
+    // console.log('axiosPostList',folderId)
 
     // const {data, status} = response;
 
@@ -83,26 +69,20 @@ const Post = () => {
       // setFolderList(data);
       // dispatch(FolderAction.clickFolder(null))
       dispatch(FolderAction.getFolderListAxios(hompyId,postName))
+
     }
   };
-  // console.log('folderlist????',folderList)
 
-  // useEffect ( () => {
-  //    list();
-  //    axiosPostList()
-  // }, [postName, hompyId]);
-
-  // useEffect(()=>{
-  //   axiosPostList()
-  // },[page,folder])
-
-  useEffect(()=>{
+  useEffect( ()=>{
     list();
   },[postName])
 
-  // useEffect(()=>{
-  //   axiosPostList();
-  // },[folderList])
+  useEffect(()=>{
+    if(folder || folder?.length >0){
+      axiosPostList();
+      navigate(`/post/${hompyId}/${postName}/${folder.id}`)
+    }
+  },[page,folder?.id])
 
 
   return (
@@ -127,7 +107,7 @@ const Post = () => {
               <Outlet />
               <Routes>
                 <Route
-                  path=""
+                  path=":folderId"
                   element={
                     postName.includes('board') ?
                     <PostList

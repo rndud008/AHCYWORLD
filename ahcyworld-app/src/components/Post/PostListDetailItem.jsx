@@ -1,58 +1,81 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Container } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { Button, ButtonGroup, Container, Form, Modal } from "react-bootstrap";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api from "../../login/apis/api";
+import { useDispatch, useSelector } from "react-redux";
+import { PostAction } from "../../redux/actions/PostAction";
 
-const PostListDetailItem = ({ item, folderList, moveFolderId, setMoveFolderId }) => {
+const PostListDetailItem = ({ item, moveFolderId, setMoveFolderId }) => {
 
   const {postName,hompyId} = useParams();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState({
+    folderMove:false,
+    scrapFolder:false,
+  });
   const navigate = useNavigate();
-  console.log("PostListDetailItem", item);
-  console.log("PostListDetailItem", postName);
+  const dispatch = useDispatch();
+  const folderList = useSelector(state => state.folder.folderList);
+
+
+  const folderId= item?.folder.id
+  const postId = item?.id
 
   const postDelete = async () => {
     if (!window.confirm("삭제 하시겠습니까?")) return;
-    const response = await api.delete(
-      `http://localhost:8070/${hompyId}/${postName}/${item.foler.id}/delete/${item.id}`
-    );
-    const { status } = response;
+    // const response = await api.delete(
+    //   `http://localhost:8070/${hompyId}/${postName}/${item.foler.id}/delete/${item.id}`
+    // );
+    // const { status } = response;
 
-    if (status === 200) {
-      alert('삭제 완료.');
-      navigate(`http://localhost:8070/${hompyId}/${postName}/${item.foler.id}`);
-    } else {
-      alert("삭제 실패.");
-      navigate(-1);
-    }
+    // if (status === 200) {
+    //   alert('삭제 완료.');
+    //   navigate(`http://localhost:8070/${hompyId}/${postName}/${item.foler.id}`);
+    // } else {
+    //   alert("삭제 실패.");
+    //   navigate(-1);
+    // }
+
+    dispatch(PostAction.deletePostAxios(hompyId,postName,folderId,postId,navigate))
+
   };
 
   const moveFolder = async (e) => {
     e.preventDefault();
 
-    const response = await api.put(`http://localhost:8070/${hompyId}/${postName}/${item.foler.id}/detail/${item.id}/${'moveFolderId'}`)
+    // const response = await api.put(`http://localhost:8070/${hompyId}/${postName}/${item.foler.id}/detail/${item.id}/${'moveFolderId'}`)
+    // const {data,status} = response;
+    // console.log('폴더 변경완료 :', data)
+    // if(parseInt(status) === 200){
+    //   alert('폴더 변경 성공.')
+    //   navigate(`/post/${hompyId}/${postName}/${data.folder.id}/detail/${data.id}`)
+    // }else{
+    //   alert('폴더 변경 실패')
+    //   navigate(`/post/${hompyId}/${postName}`)
+    // }
 
-    const {data,status} = response;
-    console.log('폴더 변경완료 :', data)
+    dispatch(PostAction.movePostFolderAxios(hompyId,postName,folderId,postId,postId,moveFolderId,navigate))
 
-    if(parseInt(status) === 200){
-      alert('폴더 변경 성공.')
-      navigate(`/post/${hompyId}/${postName}/${data.folder.id}/detail/${data.id}`)
-    }else{
-      alert('폴더 변경 실패')
-      navigate(`/post/${hompyId}/${postName}`)
-    }
     setShow(false);
   };
 
   const handleOpen = () => {
-    console.log("data: ", folderList);
+
     setShow(true);
   };
 
   const handleClose = () => {
-    setShow(false);
+    setShow({...show,folderMove:false});
   };
+
+  const changeValue =(e)=>{
+    const {id} = e.target;
+    setMoveFolderId(id);
+  }
+
+  const postScrap = async()=>{
+    const response = await api.post(`http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${''}`)
+  }
+
 
   return (
     <Container>
@@ -90,8 +113,8 @@ const PostListDetailItem = ({ item, folderList, moveFolderId, setMoveFolderId })
       <div>
         <ButtonGroup>
           <Button>댓글닫기</Button>
-          <Button>스크랩</Button>
-          <Button>수정</Button>
+          <Button onClick={postScrap}>스크랩</Button>
+          <Button onClick={()=>navigate(`/post/${hompyId}/${postName}/${folderId}/update/${postId}`)}>수정</Button>
           <Button onClick={handleOpen}>이동</Button>
           <Button onClick={postDelete}>삭제</Button>
         </ButtonGroup>
@@ -102,6 +125,42 @@ const PostListDetailItem = ({ item, folderList, moveFolderId, setMoveFolderId })
           <Button>확인</Button>
         </div>
       </div>
+
+      <Modal show={show.folderMove} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>폴더 이동</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={moveFolder}>
+            <Form.Group>
+              <Form.Label>폴더 리스트 :</Form.Label>
+              <div>
+                {folderList &&
+                  folderList.map((item) => {
+                    return (
+                      <Form.Check
+                        type="radio"
+                        id={`move-folder-radio-${item.id}`}
+                        value={item.name}
+                        name="folder"
+                        label={item.name}
+                        onChange={changeValue}
+                        checked={item.id === parseInt(moveFolderId)}
+                      />
+                    );
+                  })}
+              </div>
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              이동
+            </Button>
+            <Button variant="secondary" onClick={handleClose}>
+              취소
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };
