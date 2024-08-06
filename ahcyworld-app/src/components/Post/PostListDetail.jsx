@@ -6,27 +6,27 @@ import PostItem from "./PostItem";
 import PostListDetailItem from "./PostListDetailItem";
 
 const PostListDetail = ({ pageAndPostList, folder , setPage, folderList, moveFolderId, setMoveFolderId}) => {
-  console.log("pageAndPostList first", pageAndPostList);
-  console.log(
-    "pageAndPostList second:",
-    pageAndPostList?.posts
-      ? pageAndPostList?.posts?.[0].folder.boardType.name
-      : "게시물이 존재하지 않습니다."
-  );
+  // console.log("pageAndPostList first", pageAndPostList);
+  // console.log(
+  //   "pageAndPostList second:",
+  //   pageAndPostList?.posts
+  //     ? pageAndPostList?.posts?.[0].folder.boardType.name
+  //     : "게시물이 존재하지 않습니다."
+  // );
 
   const { postName, hompyId } = useParams();
 
-  console.log("pageAndPostList third", folder);
+  // console.log("pageAndPostList third", folder);
   return (
     <>
       <Container>
         <div className="postListHeader">
-          {folder[0] && <div>{folder[0].name}</div>}
-          {folder[0] && (
+          {folder && <div>{folder.name}</div>}
+          {folder && (
             <div>
               <Button variant="none">
                 {" "}
-                <Link to={`/post/${hompyId}/${postName}/${folder[0].id}/write`}>
+                <Link to={`/post/${hompyId}/${postName}/${folder.id}/write`}>
                 {postName} 올리기
                 </Link>
               </Button>

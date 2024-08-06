@@ -1,22 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import AhcyworldApp from './AhcyworldApp';
+import AhcyworldApp from "./AhcyworldApp";
 // import AppLogin from './login/AppLogin';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import AppLogin from './login/AppLogin';
+import AppLogin from "./login/AppLogin";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     {/* <React.StrictMode> */}
+    <Provider store={store}>
       <AppLogin />
-      {/* <AhcyworldApp /> */}
+    </Provider>
+    {/* <AhcyworldApp /> */}
     {/* </React.StrictMode> */}
   </>
 );

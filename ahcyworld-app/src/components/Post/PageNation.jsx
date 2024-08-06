@@ -24,8 +24,8 @@ const createPageNumber = (start, end) =>{
 const PageNation = ({pageAndPostList, setPage}) => {
 
   const { hompyId, postName } = useParams();
-  console.log('PageNation: ',hompyId)
-  console.log('PageNation: ',postName)
+  // console.log('PageNation: ',hompyId)
+  // console.log('PageNation: ',postName)
 
   const pagesNumbers = createPageNumber(pageAndPostList.startpage,pageAndPostList.endpage);
 

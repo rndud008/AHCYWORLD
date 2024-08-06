@@ -2,38 +2,42 @@ import React, { useState } from "react";
 import "./BoardTypeList.css";
 import { Button, Modal, Form, ListGroup, Container } from "react-bootstrap";
 import api from "../../login/apis/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FolderAction } from "../../redux/actions/FolderAction";
+import { PostAction } from "../../redux/actions/PostAction";
 
 let modalName;
 let folderId;
+const BoardTypeList = ({moveFolderId}) => {
+  const {postName, hompyId} = useParams();
+  const [folder, setFolder] = useState({
+    id: "",
+    boardType: "",
+    name: "",
+    hompy: "",
+    status: "",
+  });
+  // const[folderList, setFolderList] = useState()
 
-const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList, folder, setFolder,hompyId,moveFolderId}) => {
-  console.log("moveFolderId: ", moveFolderId);
-
+  const folderList = useSelector((state) => state.folder.folderList);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const BoardTypeName = folderList[0]?.boardType.name;
-
+  const BoardTypeName = folderList?.[0]?.boardType.name;
   const [show, setShow] = useState(false);
-
+  
   const handleClose = () => {
     setFolder({
       name: "",
       status: "",
     });
-
     setShow(false);
   };
 
   const handleShow = (e) => {
-    const { value } = e.target;
-    const id = e.target.getAttribute("data-id");
-
+    const { value, id } = e.target;
+    // const id = e.target.getAttribute("data-id");
     if (id !== null) {
-      console.log(
-        "BoardTypeList??",
-        folderList?.filter((item) => parseInt(item.id) === parseInt(id))
-      );
       setFolder(
         ...folderList?.filter((item) => parseInt(item.id) === parseInt(id))
       );
@@ -47,30 +51,18 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
   const createSubmit = async (e) => {
     e.preventDefault();
 
-    try{
-      const response = await api.post(
-        `http://localhost:8070/${hompyId}/${postName}/write`,
-        folder
-      );
-  
-      const data = response.data;
-      setFolderList([...folderList, data]);
-    }catch (error) {
-      if (error.response) {
-        // 서버가 400 범위의 응답을 반환한 경우
-        console.error('Error Response:', error.response.data);
-        console.error('Error Status:', error.response.status);
-        console.error('Error Headers:', error.response.headers);
-      } else if (error.request) {
-        // 요청이 만들어졌지만 응답을 받지 못한 경우
-        console.error('Error Request:', error.request);
-      } else {
-        // 요청을 설정하는 중에 문제가 발생한 경우
-        console.error('Error Message:', error.message);
-      }
-      console.error('Error Config:', error.config);
-    }
+    // try{
+    //   const response = await api.post(
+    //     `http://localhost:8070/${hompyId}/${postName}/write`,
+    //     folder
+    //   );
+    //   const data = response.data;
+    //   // setFolderList([...folderList, data]);
+    // }catch (error) {
+    //   console.error('Error :', error);
+    // }
     
+    dispatch(FolderAction.createFolderAxios(hompyId,postName,folder))
 
     handleClose();
   };
@@ -78,62 +70,61 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
   const updateSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await api.put(
-      `http://localhost:8070/${hompyId}/${postName}/update`,
-      folder
-    );
+    // const response = await api.put(
+    //   `http://localhost:8070/${hompyId}/${postName}/update`,
+    //   folder
+    // );
+    // const {data} = response;
+    // setFolderList((prev) =>
+    //   prev.map((item) =>
+    //     parseInt(item.id) === parseInt(data.id) ? data : item
+    //   )
+    // );
 
-    const data = response.data;
-
-    setFolderList((prev) =>
-      prev.map((item) =>
-        parseInt(item.id) === parseInt(data.id) ? data : item
-      )
-    );
-
+    dispatch(FolderAction.updateFolderAxios(hompyId,postName,folder))
     handleClose();
   };
 
   const changeValue = (e) => {
     const { value, name } = e.target;
-    console.log(value);
-
     setFolder({ ...folder, [name]: value });
-    console.log(folder);
   };
 
-  console.log("BoardTypeName", BoardTypeName);
-
   const folderClick = async (e) =>{
+
     folderId = e.target.id.substring(e.target.id.lastIndexOf('-')+1);
-    console.log('custom :' ,folderId);
 
-    const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list`)
-    const {data, status}= response;
+    // const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list`)
+    // const {data, status}= response;
+    // setPageAndPostList(data);
+    // setFolder(folderList.filter(item => parseInt(item.id) === parseInt(folderId)))
 
-    console.log('folderClick data: ',data);
-    console.log('folderClick status: ',status);
-
-    setPageAndPostList(data);
-    setFolder(folderList.filter(item => parseInt(item.id) === parseInt(folderId)))
-    navigate(`/post/${hompyId}/${postName}`)
+    dispatch(FolderAction.clickFolder(folderId))
+    try {
+      // axiosPostList 액션을 디스패치하고 기다립니다.
+      await dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
+      
+      // navigate를 사용하여 경로를 변경합니다.
+      navigate(`/post/${hompyId}/${postName}`);
+    } catch (error) {
+      console.error('Error posting list:', error);
+    }
   }
 
   const folderDelete = async () =>{
-    const response = await api.delete(`http://localhost:8070/${hompyId}/${postName}/delete/${folderId}`);
-    const {status} = response;
-    console.log(status);
 
-    if(status === 200){
-      console.log('list 수정')
-      setFolderList((prev) =>
-        prev.filter((item) =>
-          parseInt(item.id) === parseInt(folderId) ? '' : item
-        )
-      )
-    }
+    // const response = await api.delete(`http://localhost:8070/${hompyId}/${postName}/delete/${folderId}`);
+    // const {status} = response;
+    // if(status === 200){
+    //   setFolderList((prev) =>
+    //     prev.filter((item) =>
+    //       parseInt(item.id) === parseInt(folderId) ? '' : item
+    //     )
+    //   )
+    // }
+
+    dispatch(FolderAction.deleteFolderAxios(hompyId,postName,folderId))
     
-
   }
 
   return (
@@ -160,7 +151,7 @@ const BoardTypeList = ({ folderList, postName, setFolderList, setPageAndPostList
                 />
                 <Button
                   variant="primary"
-                  data-id={item.id}
+                  id={item.id}
                   onClick={handleShow}
                 >
                   폴더 수정

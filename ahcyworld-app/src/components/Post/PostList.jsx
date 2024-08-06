@@ -14,12 +14,12 @@ const PostList = ({ name, pageAndPostList, folder, setPage }) => {
     <>
       <Container>
         <div className="postListHeader">
-          {folder[0] && <div>{folder[0].name}</div>}
-          {folder[0] && (
+          {folder && <div>{folder.name}</div>}
+          {folder && (
             <div>
               <Button variant="none">
                 {" "}
-                <Link to={`/post/${hompyId}/${postName}/${folder[0].id}/write`}>
+                <Link to={`/post/${hompyId}/${postName}/${folder.id}/write`}>
                   글쓰기
                 </Link>
               </Button>

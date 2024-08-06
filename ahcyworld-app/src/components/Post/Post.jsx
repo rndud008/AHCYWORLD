@@ -21,6 +21,9 @@ import PostWrite from "./PostWrite";
 import { LoginContext } from "../../login/context/LoginContextProvider";
 import PostUpdate from "./PostUpdate";
 import PostListDetail from "./PostListDetail";
+import {FolderAction} from '../../redux/actions/FolderAction'
+import { PostAction } from "../../redux/actions/PostAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const useQuery = () =>{
   return new URLSearchParams(useLocation().search);
@@ -35,65 +38,72 @@ const Post = () => {
   const query = useQuery();
   const {userInfo} = useContext(LoginContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   const [page, setPage] = useState(0);
-  const [folderList, setFolderList] = useState([]);
   const [moveFolderId, setMoveFolderId] = useState();
-  const [pageAndPostList, setPageAndPostList] = useState([]);
-  const [folder, setFolder] = useState({
-    id: "",
-    boardType: "",
-    name: "",
-    hompy: "",
-    status: "",
-  });
-  console.log('post folder : ',folder)
-  console.log('post folderList : ',folderList)
-  console.log(query)
+  // const [folderList, setFolderList] = useState([]);
+  const folder = useSelector((state) => state.folder.folder)
+  const folderList = useSelector((state)=> state.folder.folderList)
+  const pageAndPostList = useSelector((state) => state.post.pageAndPostList)
+
+  console.log('post folderList', folderList)
+  console.log('post folder', folder)
+  console.log('post pageAndPostList', pageAndPostList)
 
   const axiosPostList = async() =>{
-    const folderId = folder[0]?.id !==undefined ? folder[0].id : folderList[0]?.id
 
-    console.log(folderList[0],'folderList[0]')
-    const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list?page=${page}`)
-    console.log('axiosPostList',response)
+    const folderId = folder?.id !== null ? folder.id : folderList?.[0]?.id
 
-    const {data, status} = response;
+    // const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list?page=${page}`)
+    // console.log(folderList[0],'folderList[0]')
+    console.log('axiosPostList',folderId)
 
-    if(status === 200){
-      setPageAndPostList(data);
-      
-    }
+    // const {data, status} = response;
 
-    
+    // if(status === 200){
+      // setPageAndPostList(data);
+    // }
+
+    dispatch(PostAction.axiosPostList(hompyId,postName,folderId,page))
+
   }
 
   const list = async () => {
     if (postName) {
-      const response = await api.get(
-        `http://localhost:8070/${hompyId}/${postName}/list`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("accessToken")}`,
-          },
-        }
-      );
-      const { data } = response;
-
-      setFolderList(data);
+      // const response = await api.get(
+      //   `http://localhost:8070/${hompyId}/${postName}/list`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${Cookies.get("accessToken")}`,
+      //     },
+      //   }
+      // );
+      // const { data } = response;
+      // setFolderList(data);
+      // dispatch(FolderAction.clickFolder(null))
+      dispatch(FolderAction.getFolderListAxios(hompyId,postName))
     }
   };
+  // console.log('folderlist????',folderList)
 
-  useEffect(() => {
-    list();
-    setFolder([]);
-    setPageAndPostList([]);
-  }, [postName, hompyId]);
+  // useEffect ( () => {
+  //    list();
+  //    axiosPostList()
+  // }, [postName, hompyId]);
+
+  // useEffect(()=>{
+  //   axiosPostList()
+  // },[page,folder])
 
   useEffect(()=>{
-    axiosPostList()
+    list();
+  },[postName])
 
-  },[page,folderList])
+  // useEffect(()=>{
+  //   axiosPostList();
+  // },[folderList])
+
 
   return (
     <>
@@ -106,10 +116,10 @@ const Post = () => {
               <BoardTypeList
                 folderList={folderList}
                 postName={postName}
-                setFolderList={setFolderList}
-                setPageAndPostList={setPageAndPostList}
+                // setFolderList={setFolderList}
+                // setPageAndPostList={setPageAndPostList}
                 folder={folder}
-                setFolder={setFolder}
+                // setFolder={setFolder}
                 hompyId={hompyId}
               />
             </Col>
