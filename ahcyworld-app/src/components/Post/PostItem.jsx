@@ -1,20 +1,7 @@
 import React from "react";
 import { Col, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-
-const boardNameCheck = (name)=>{
-  if(name === "게시판"){
-    return 'board'
-  }
-  if(name === "사진첩"){
-    return 'photo'
-  }
-  if(name === "동영상"){
-    return 'video'
-  }
-
-}
+import { boardNameCheck } from "./postUtils";
 
 const PostItem = ({ item}) => {
   const hompyId = item.folder.hompy.id;

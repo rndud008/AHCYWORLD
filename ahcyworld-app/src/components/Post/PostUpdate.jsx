@@ -3,12 +3,9 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../login/apis/api";
 import Cookies from "js-cookie";
-
-const nameCheck = (postName) => {
-  if (postName === "board") return "게시물 수정";
-  if (postName === "video") return "비디오 수정";
-  if (postName === "photo") return "사진 수정";
-};
+import { useDispatch, useSelector } from "react-redux";
+import { PostAction } from "../../redux/actions/PostAction";
+import { nameCheck } from "./postUtils";
 
 const PostUpdate = () => {
   const { hompyId, postName, folderId, postId } = useParams();
@@ -16,32 +13,46 @@ const PostUpdate = () => {
   const [post, setPost] = useState();
   const [originFileList, setOriginFileList] = useState();
 
+  const dispatch = useDispatch();
+  const originPost = useSelector(state => state.post.post);
+
 
   console.log('PostUpdate -> post: ',post)
   console.log('PostUpdate -> originFileList: ', originFileList)
+  console.log('PostUpdate -> originPost: ', originPost)
 
   const navigate = useNavigate();
 
   const findPost = async () => {
-    const response = await api.get(
-      `http://localhost:8070/${hompyId}/${postName}/${folderId}/update/${postId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("accessToken")}`,
-        },
-      }
-    );
-    const { data, status } = response;
-    console.log("findPost", data);
-    if (status === 200) {
-      setPost({...data,fileList: [{ id: 1, sourceName: null }]});
-      setOriginFileList(data.fileList);
-    }
+    // const response = await api.get(
+    //   `http://localhost:8070/${hompyId}/${postName}/${folderId}/update/${postId}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${Cookies.get("accessToken")}`,
+    //     },
+    //   }
+    // );
+    // const { data, status } = response;
+    // console.log("findPost", data);
+    // if (status === 200) {
+    //   setPost({...data,fileList: [{ id: 1, sourceName: null }]});
+    //   setOriginFileList(data.fileList);
+    // }
+    dispatch(PostAction.findPostAxios(hompyId,postName,folderId,postId))
+
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     findPost();
-  }, []);
+  },[])
+
+  useEffect(()=>{
+    console.log('실행')
+    if(originPost !== undefined){
+      setPost({...originPost,fileList: [{ id: 1, sourceName: null }]});
+      setOriginFileList(originPost?.fileList ? originPost.fileList:[]);
+    }
+  },[originPost])
 
   const updateSubmit = async (e) =>{
 
@@ -148,7 +159,7 @@ const PostUpdate = () => {
   }
 
   return <Container>
-    <div>{postName && nameCheck(postName)}</div>
+    <div>{postName && nameCheck(postName) + '수정'}</div>
       <Form onSubmit={updateSubmit} encType="multipart/form-data">
         <Form.Group controlId="formSubject">
           <Form.Label>제목 :</Form.Label>
@@ -186,7 +197,7 @@ const PostUpdate = () => {
           </div>
         </div>
 
-        {originFileList?.map((item, idx) => (
+        {originFileList && originFileList?.map((item, idx) => (
           <Form.Group key={item.id} className="files">
             <Form.Control
               type="text"

@@ -9,6 +9,8 @@ import {
   faAnglesRight,
 } from "@fortawesome/free-solid-svg-icons";
 import './PageNation.css'
+import { useSelector } from "react-redux";
+import PostReducer from "../../redux/reducers/PostReducer";
 
 const createPageNumber = (start, end) =>{
 
@@ -21,13 +23,15 @@ const createPageNumber = (start, end) =>{
 
 }
 
-const PageNation = ({pageAndPostList, setPage}) => {
+const PageNation = ({ setPage}) => {
 
   const { hompyId, postName } = useParams();
-  // console.log('PageNation: ',hompyId)
-  // console.log('PageNation: ',postName)
+
+  const pageAndPostList = useSelector(state => state.post.pageAndPostList);
 
   const pagesNumbers = createPageNumber(pageAndPostList.startpage,pageAndPostList.endpage);
+
+  const folderId = pageAndPostList.folder?.id
 
   const pageSave = (item) =>{
     setPage(item)
@@ -38,13 +42,13 @@ const PageNation = ({pageAndPostList, setPage}) => {
       {pageAndPostList.url && 
       <ul className="pageNation">
       <PageItem>
-        <Link onClick={() => pageSave((pageAndPostList.startpage-1))} to={`/post/${hompyId}/${postName}?page=${(pageAndPostList.startpage-1)}`}>
+        <Link onClick={() => pageSave((pageAndPostList.startpage-1))} to={`/post/${hompyId}/${postName}/${folderId}?page=${(pageAndPostList.startpage-1)}`}>
           <FontAwesomeIcon icon={faAnglesLeft} />
         </Link>
       </PageItem>
 
       <PageItem>
-        <Link onClick={() => pageSave((pageAndPostList.startpage+1))} to={`/post/${hompyId}/${postName}?page=${(pageAndPostList.startpage+1)}`}>
+        <Link onClick={() => pageSave((pageAndPostList.startpage+1))} to={`/post/${hompyId}/${postName}/${folderId}?page=${(pageAndPostList.startpage+1)}`}>
           <FontAwesomeIcon icon={faAngleLeft} />
         </Link>
       </PageItem>
@@ -54,19 +58,19 @@ const PageNation = ({pageAndPostList, setPage}) => {
           if(item === parseInt(pageAndPostList.page)){
             return <PageItem className="active"><span>{item}</span></PageItem>
           }else{
-            return <PageItem><Link onClick={() => pageSave(item)} to={`/post/${hompyId}/${postName}?page=${item}`}>{item}</Link></PageItem>
+            return <PageItem><Link onClick={() => pageSave(item)} to={`/post/${hompyId}/${postName}/${folderId}?page=${item}`}>{item}</Link></PageItem>
           }
         })
       }
       
       <PageItem>
-        <Link onClick={() => pageSave((pageAndPostList.endpage+1))} to={`/post/${hompyId}/${postName}?page=${(pageAndPostList.endpage+1)}`}>
+        <Link onClick={() => pageSave((pageAndPostList.endpage+1))} to={`/post/${hompyId}/${postName}/${folderId}?page=${(pageAndPostList.endpage+1)}`}>
           <FontAwesomeIcon icon={faAngleRight} />
         </Link>
       </PageItem>
 
       <PageItem>
-        <Link onClick={() => pageSave(pageAndPostList.totalPage)} to={`/post/${hompyId}/${postName}?page=${pageAndPostList.totalPage}`}>
+        <Link onClick={() => pageSave(pageAndPostList.totalPage)} to={`/post/${hompyId}/${postName}/${folderId}?page=${pageAndPostList.totalPage}`}>
           <FontAwesomeIcon icon={faAnglesRight} />
         </Link>
       </PageItem>

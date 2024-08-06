@@ -9,8 +9,8 @@ import { PostAction } from "../../redux/actions/PostAction";
 
 let modalName;
 let folderId;
-const BoardTypeList = ({moveFolderId}) => {
-  const {postName, hompyId} = useParams();
+const BoardTypeList = () => {
+  const { postName, hompyId } = useParams();
   const [folder, setFolder] = useState({
     id: "",
     boardType: "",
@@ -25,7 +25,7 @@ const BoardTypeList = ({moveFolderId}) => {
   const navigate = useNavigate();
   const BoardTypeName = folderList?.[0]?.boardType.name;
   const [show, setShow] = useState(false);
-  
+
   const handleClose = () => {
     setFolder({
       name: "",
@@ -61,8 +61,8 @@ const BoardTypeList = ({moveFolderId}) => {
     // }catch (error) {
     //   console.error('Error :', error);
     // }
-    
-    dispatch(FolderAction.createFolderAxios(hompyId,postName,folder))
+
+    dispatch(FolderAction.createFolderAxios(hompyId, postName, folder));
 
     handleClose();
   };
@@ -81,7 +81,7 @@ const BoardTypeList = ({moveFolderId}) => {
     //   )
     // );
 
-    dispatch(FolderAction.updateFolderAxios(hompyId,postName,folder))
+    dispatch(FolderAction.updateFolderAxios(hompyId, postName, folder));
     handleClose();
   };
 
@@ -90,29 +90,22 @@ const BoardTypeList = ({moveFolderId}) => {
     setFolder({ ...folder, [name]: value });
   };
 
-  const folderClick = async (e) =>{
-
-    folderId = e.target.id.substring(e.target.id.lastIndexOf('-')+1);
+  const folderClick = async (e) => {
+    folderId = e.target.id.substring(e.target.id.lastIndexOf("-") + 1);
 
     // const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/${folderId}/list`)
     // const {data, status}= response;
     // setPageAndPostList(data);
     // setFolder(folderList.filter(item => parseInt(item.id) === parseInt(folderId)))
 
-    dispatch(FolderAction.clickFolder(folderId))
-    try {
-      // axiosPostList 액션을 디스패치하고 기다립니다.
-      await dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
-      
-      // navigate를 사용하여 경로를 변경합니다.
-      navigate(`/post/${hompyId}/${postName}`);
-    } catch (error) {
-      console.error('Error posting list:', error);
-    }
-  }
+    dispatch(FolderAction.clickFolder(folderId));
 
-  const folderDelete = async () =>{
+    dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
 
+    navigate(`/post/${hompyId}/${postName}/${folderId}`);
+  };
+
+  const folderDelete = async () => {
     // const response = await api.delete(`http://localhost:8070/${hompyId}/${postName}/delete/${folderId}`);
     // const {status} = response;
     // if(status === 200){
@@ -123,9 +116,8 @@ const BoardTypeList = ({moveFolderId}) => {
     //   )
     // }
 
-    dispatch(FolderAction.deleteFolderAxios(hompyId,postName,folderId))
-    
-  }
+    dispatch(FolderAction.deleteFolderAxios(hompyId, postName, folderId));
+  };
 
   return (
     <>
@@ -149,11 +141,7 @@ const BoardTypeList = ({moveFolderId}) => {
                   className="me-3"
                   onClick={folderClick}
                 />
-                <Button
-                  variant="primary"
-                  id={item.id}
-                  onClick={handleShow}
-                >
+                <Button variant="primary" id={item.id} onClick={handleShow}>
                   폴더 수정
                 </Button>
               </ListGroup.Item>
@@ -180,7 +168,7 @@ const BoardTypeList = ({moveFolderId}) => {
               <Form.Control
                 type="text"
                 name="name"
-                value={folder.name}
+                value={folder?.name}
                 onChange={changeValue}
                 placeholder="폴더 이름을 입력하세요"
               />
@@ -196,7 +184,7 @@ const BoardTypeList = ({moveFolderId}) => {
                   name="status"
                   label="전체공개"
                   onChange={changeValue}
-                  checked={folder.status === "전체공개"}
+                  checked={folder?.status === "전체공개"}
                 />
                 <Form.Check
                   type="radio"
@@ -205,7 +193,7 @@ const BoardTypeList = ({moveFolderId}) => {
                   name="status"
                   label="일촌공개"
                   onChange={changeValue}
-                  checked={folder.status === "일촌공개"}
+                  checked={folder?.status === "일촌공개"}
                 />
                 <Form.Check
                   type="radio"
@@ -214,7 +202,7 @@ const BoardTypeList = ({moveFolderId}) => {
                   name="status"
                   label="비공개"
                   onChange={changeValue}
-                  checked={folder.status === "비공개"}
+                  checked={folder?.status === "비공개"}
                 />
               </div>
             </Form.Group>

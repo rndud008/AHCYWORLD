@@ -4,19 +4,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./PostWrite.css";
 import api from "../../login/apis/api";
 import { type } from "@testing-library/user-event/dist/type";
-
-const nameCheck = (postName) => {
-  if (postName === "board") return "게시물 작성";
-  if (postName === "video") return "비디오 업로드";
-  if (postName === "photo") return "사진 업로드";
-};
+import { nameCheck } from "./postUtils";
+import { useDispatch } from "react-redux";
+import { PostAction } from "../../redux/actions/PostAction";
 
 const PostWrite = () => {
   const { hompyId, postName, folderId } = useParams();
   const navigate = useNavigate();
-  console.log("hompyId", hompyId);
-  console.log("postName", postName);
-  console.log("folderId", folderId);
+  const dispatch = useDispatch();
 
   const [post, setPost] = useState({
     subject: "",
@@ -56,16 +51,11 @@ const PostWrite = () => {
   };
 
   const fileDelete = (id) => {
-    console.log("delete value", id);
 
     const updateFileList = post.fileList.filter((item) => item.id !== id);
 
     setPost({ ...post, fileList: updateFileList });
   };
-
-  useEffect(() => {
-    console.log(post);
-  }, [post]);
 
   const writeSubmit = async (e) => {
     e.preventDefault();
@@ -77,49 +67,44 @@ const PostWrite = () => {
       content: post.content,
     });
 
-    // formData.append('post', json);
     formData.append('post', new Blob([json],{type:'application/json'}));
 
     post.fileList.forEach((item, idx) => {
       if (item.sourcename) {
         formData.append(`files[file${idx}]`, item.sourcename);
-        console.log(`Appending file: ${item.sourcename.name}`); // 파일 이름 확인
       }
     });
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // const response = await api.post(
+    //   `http://localhost:8070/${hompyId}/${postName}/${folderId}/write`,
+    //   formData,
+    //   {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   }
+    // );
+    // const { data, status } = response;
 
-    const response = await api.post(
-      `http://localhost:8070/${hompyId}/${postName}/${folderId}/write`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    const { data, status } = response;
-    console.log("data", data);
-    console.log("status", status);
+    // if (status === 200) {
+    //   alert("작성성공", data);
+    //   if(postName.includes('board')) navigate(`/post/${hompyId}/${postName}/${folderId}/detail/${data}`);
+    //   else{
+    //     dispatch(PostAction.axiosPostList(hompyId,postName,folderId))
+    //     navigate(`/post/${hompyId}/${postName}/`)
+    //   }
+    // } else {
+    //   alert("작성실패");
+    //   navigate(-1);
+    // }
+    dispatch(PostAction.createPostAxios(hompyId,postName,folderId,formData,navigate))
 
-    if (status === 200) {
-      alert("작성성공", data);
-      if(postName.includes('board')) navigate(`/post/${hompyId}/${postName}/${folderId}/detail/${data}`);
-      else{
-        navigate(`/post/${hompyId}/${postName}/`)
-      }
-      
-    } else {
-      alert("작성실패");
-      navigate(-1);
-    }
+
   };
 
   return (
     <Container>
-      <div>{postName && nameCheck(postName)}</div>
+      <div>{postName && nameCheck(postName)+' 작성'}</div>
       <Form onSubmit={writeSubmit} encType="multipart/form-data">
         <Form.Group controlId="formSubject">
           <Form.Label>제목 :</Form.Label>

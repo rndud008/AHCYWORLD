@@ -5,6 +5,9 @@ import Cookies from "js-cookie";
 import { Button, Container, Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { userInfo } from "../../login/apis/auth";
 import { LoginContext } from "../../login/context/LoginContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { PostAction } from "../../redux/actions/PostAction";
+import PostItem from "./PostItem";
 
 
 const PostDetail = ({ folderList,setMoveFolderId,moveFolderId }) => {
@@ -12,29 +15,32 @@ const PostDetail = ({ folderList,setMoveFolderId,moveFolderId }) => {
   console.log("user id: ", userInfo.id);
 
   const navigate = useNavigate();
-  const [post, setPost] = useState();
+  const dispatch = useDispatch();
+  // const [post, setPost] = useState();
+  const post = useSelector(state => state.post.post)
   const [show, setShow] = useState(false);
   const { hompyId, postName, folderId, postId } = useParams();
   
   const detailPage = async () => {
-    const response = await api.get(
-      `http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${postId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("accessToken")}`,
-        },
-      }
-    );
+    // const response = await api.get(
+    //   `http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${postId}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${Cookies.get("accessToken")}`,
+    //     },
+    //   }
+    // );
 
-    const { data, status } = response;
+    // const { data, status } = response;
 
-    if (status === 200) {
-      setPost(data);
-      setMoveFolderId(folderId)
-      console.log(data);
-    } else {
-      navigate("/");
-    }
+    // if (status === 200) {
+    //   setPost(data);
+    //   console.log(data);
+    // } else {
+    //   navigate("/");
+    // }
+
+    dispatch(PostAction.detailPostAxios(hompyId,postName,folderId,postId,navigate))
   };
 
   useEffect(() => {
@@ -47,46 +53,49 @@ const PostDetail = ({ folderList,setMoveFolderId,moveFolderId }) => {
 
   const postDelete = async () => {
     if (!window.confirm("삭제 하시겠습니까?")) return;
-    const response = await api.delete(
-      `http://localhost:8070/${hompyId}/${postName}/${folderId}/delete/${postId}`
-    );
-    const { status } = response;
+    // const response = await api.delete(
+    //   `http://localhost:8070/${hompyId}/${postName}/${folderId}/delete/${postId}`
+    // );
+    // const { status } = response;
 
-    if (status === 200) {
-      alert("삭제 성공.");
-      navigate(`http://localhost:8070/${hompyId}/${postName}/${folderId}`);
-    } else {
-      alert("삭제 실패.");
-      navigate(-1);
-    }
+    // if (status === 200) {
+    //   alert("삭제 성공.");
+    //   navigate(`http://localhost:8070/${hompyId}/${postName}/${folderId}`);
+    // } else {
+    //   alert("삭제 실패.");
+    //   navigate(-1);
+    // }
+
+    dispatch(PostAction.deletePostAxios(hompyId,postName,folderId,postId,navigate))
   };
 
   const moveFolder = async (e) => {
     e.preventDefault();
 
-    const response = await api.put(`http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${postId}/${moveFolderId}`)
+    // const response = await api.put(`http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${postId}/${moveFolderId}`)
 
-    const {data,status} = response;
-    console.log('폴더 변경완료 :', data)
+    // const {data,status} = response;
+    // console.log('폴더 변경완료 :', data)
 
-    if(parseInt(status) === 200){
-      alert('폴더 변경 성공.')
-      navigate(`/post/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`)
-    }else{
-      alert('폴더 변경 실패')
-      navigate(`/post/${hompyId}/${postName}`)
-    }
+    // if(parseInt(status) === 200){
+    //   alert('폴더 변경 성공.')
+    //   navigate(`/post/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`)
+    // }else{
+    //   alert('폴더 변경 실패')
+    //   navigate(`/post/${hompyId}/${postName}`)
+    // }
+
+    dispatch(PostAction.movePostFolderAxios(hompyId,postName,folderId,postId,moveFolderId,navigate))
+  
     setShow(false);
   };
 
   const changeValue = (e) => {
     const id = e.target.id.split('-')[3];
     setMoveFolderId(id);
-    console.log(moveFolderId)
   };
 
   const handleOpen = () => {
-    console.log("data: ", folderList);
     setShow(true);
   };
 
