@@ -4,7 +4,7 @@ import { Modal, Button } from "react-bootstrap";
 import { LoginContext } from "../context/LoginContextProvider";
 import { checkFriendShip, findFriendList, userList } from "../apis/auth";
 import Header from "../components/Header/Header";
-import AddFriendModal from "../components/friendShip/AddFriendModal";
+// import AddFriendModal from "../components/friendShip/AddFriendModal";
 import FriendRequestModal from "../components/friendShip/FriendRequestModal";
 
 const Home = () => {
@@ -148,11 +148,11 @@ const Home = () => {
                     )}
                 </div>
             ))}
-            <AddFriendModal
+            {/* <AddFriendModal
                 isOpen={isAddFriendModalOpen}
                 onClose={closeAddFriendModal}
                 selectedFriend={selectedFriend}
-            />
+            /> */}
         </>
     );
 };

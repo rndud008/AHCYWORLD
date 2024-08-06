@@ -10,6 +10,7 @@ import AppLogin from "./login/AppLogin";
 import MusicApi from "./item/api/MusicApi";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import AppGuestBook from './gusetBook/AppGuestBook';
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -21,10 +22,9 @@ root.render(
       {/* <React.StrictMode> */}
       {/* <MusicApi /> */} {/* 혹시 노래데이터 받을 때 필요! */}
       {/* <AppLogin /> */}
-      {/*    <Apphompy />*/}
-      {/* <AhcyworldApp /> */}
-      <AppLogin />
-      {/* <AhcyworldApp /> */}
+      {/* <Apphompy /> */}
+      <AhcyworldApp />
+      {/* <AppGuestBook /> */}
       {/* </React.StrictMode> */}
     </Provider>
   </>

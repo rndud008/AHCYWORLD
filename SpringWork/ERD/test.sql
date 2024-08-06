@@ -24,15 +24,20 @@ where username="user3"
 
 
 update item
-set item_name='포치코1'
+set file_name='포치코1.png'
 where id=90;
 
 update item
 set item_name='글꼴4'
 where id=80;
 
+update hompy
+set minimi_picture = 'minimi3.png'
+where id = 3;
+
 select * from diary;
 select * from hompy;
+select * from guest_book;
 
 SELECT * FROM Hompy WHERE user_id = 4;
 
