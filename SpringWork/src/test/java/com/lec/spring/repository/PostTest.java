@@ -31,30 +31,30 @@ class PostTest {
     @Test
     void test(){
         // --- 게시판 타입 생성.
-        BoardType boardType = new BoardType();
-        boardType.setName("게시판");
-
-        boardTypeRepository.save(boardType);
-
-        BoardType boardType1 = new BoardType();
-        boardType1.setName("사진첩");
-
-        boardTypeRepository.save(boardType1);
-
-        BoardType boardType2 = new BoardType();
-        boardType2.setName("동영상");
-
-        boardTypeRepository.save(boardType2);
-
-        boardTypeRepository.findAll().forEach(System.out::println);
+//        BoardType boardType = new BoardType();
+//        boardType.setName("게시판");
+//
+//        boardTypeRepository.save(boardType);
+//
+//        BoardType boardType1 = new BoardType();
+//        boardType1.setName("사진첩");
+//
+//        boardTypeRepository.save(boardType1);
+//
+//        BoardType boardType2 = new BoardType();
+//        boardType2.setName("동영상");
+//
+//        boardTypeRepository.save(boardType2);
+//
+//        boardTypeRepository.findAll().forEach(System.out::println);
 
         // --- user 생성.
         User user = new User();
 
-        user.setUsername("k1");
+        user.setUsername("k3");
         user.setPassword(passwordEncoder.encode("1234"));
-        user.setName("testK1");
-        user.setEmail("test1@test.com");
+        user.setName("testK3");
+        user.setEmail("test3@test.com");
         user.setBirthDay(LocalDate.parse("1991-12-12"));
         user.setGender("남자");
         user.setRole("ROLE_MEMBER");
@@ -62,6 +62,8 @@ class PostTest {
         userRepository.save(user);
 
         System.out.println(user);
+
+//        User user = userRepository.findById(2l).orElse(null);
 
         Hompy hompy = new Hompy();
         hompy.setUser(user);
@@ -75,27 +77,30 @@ class PostTest {
         hompyRepository.save(hompy);
         System.out.println(hompy);
 
+//        Hompy hompy = hompyRepository.findByUser(user);
+
         Folder folder = new Folder();
         // 게시판 폴더
+
         folder.setHompy(hompy);
         folder.setName("게시판 기본 폴더.");
-        folder.setBoardType(boardType);
+        folder.setBoardType(boardTypeRepository.findById(1l).orElse(null));
         folderRepository.save(folder);
 
         Folder folder1 = new Folder();
 
         folder1.setHompy(hompy);
         folder1.setName("사진첩 기본 폴더.");
-        folder1.setBoardType(boardType1);
+        folder1.setBoardType(boardTypeRepository.findById(2l).orElse(null));
         folderRepository.save(folder1);
 
         Folder folder2 = new Folder();
         folder2.setHompy(hompy);
         folder2.setName("동영상 기본 폴더.");
-        folder2.setBoardType(boardType2);
+        folder2.setBoardType(boardTypeRepository.findById(3l).orElse(null));
         folderRepository.save(folder2);
 
-        folderRepository.findAll().forEach(System.out::println);
+//        folderRepository.findAll().forEach(System.out::println);
 
         //게시판 타입 -> 게시판
         Post post = new Post();

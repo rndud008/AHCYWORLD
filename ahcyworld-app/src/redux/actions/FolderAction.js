@@ -1,4 +1,5 @@
 
+import { type } from "@testing-library/user-event/dist/type";
 import api from "../../login/apis/api";
 import Cookies from "js-cookie";
 
@@ -74,4 +75,30 @@ function deleteFolderAxios(hompyId,postName,folderId){
   }
 }
 
-export const FolderAction ={getFolderListAxios, updateFolderAxios, createFolderAxios, clickFolder, deleteFolderAxios}
+function getScrapFolderListAxios(hompyId,postName){
+  return async(dispatch,getState) =>{
+
+    try{
+
+      const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/scrapfolder`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
+          },
+        })
+        const {data,status} = response;
+  
+        if(status === 200){
+  
+          dispatch({type:"GET_SCRAP_FOLDER_LIST",payload:{data}})
+        }
+    }catch(error){
+      if(error){
+        throw error;
+      }
+    }
+
+  }
+}
+
+export const FolderAction ={getFolderListAxios, updateFolderAxios, createFolderAxios, clickFolder, deleteFolderAxios, getScrapFolderListAxios}

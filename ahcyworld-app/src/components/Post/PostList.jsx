@@ -1,29 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import PostDetail from "./PostDetail";
 import PostListDetail from "./PostListDetail";
 import { Link, useParams } from "react-router-dom";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import PostItem from "./PostItem";
 import PageNation from "./PageNation";
+import { useCol } from "react-bootstrap/esm/Col";
+import { LoginContext } from "../../login/context/LoginContextProvider";
 
 // boardType 에 따라 PostDetail or PostListDetail 출력.
 const PostList = ({ name, pageAndPostList, folder, setPage }) => {
   const { hompyId, postName } = useParams();
+  const { hompyInfo } = useContext(LoginContext);
 
   return (
     <>
       <Container>
         <div className="postListHeader">
           {folder && <div>{folder.name}</div>}
-          {folder && (
-            <div>
-              <Button variant="none">
-                {" "}
-                <Link to={`/post/${hompyId}/${postName}/${folder.id}/write`}>
-                  글쓰기
-                </Link>
-              </Button>
-            </div>
+          {parseInt(hompyId) === hompyInfo?.id && (
+            <>
+              {folder && (
+                <div>
+                  <Button variant="none">
+                    {" "}
+                    <Link
+                      to={`/post/${hompyId}/${postName}/${folder.id}/write`}
+                    >
+                      글쓰기
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
         <Table striped bordered hover>

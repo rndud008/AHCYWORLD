@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./BoardTypeList.css";
 import { Button, Modal, Form, ListGroup, Container } from "react-bootstrap";
 import api from "../../login/apis/api";
@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FolderAction } from "../../redux/actions/FolderAction";
 import { PostAction } from "../../redux/actions/PostAction";
+import { LoginContext } from "../../login/context/LoginContextProvider";
 
 let modalName;
 let folderId;
@@ -19,6 +20,8 @@ const BoardTypeList = () => {
     status: "",
   });
   // const[folderList, setFolderList] = useState()
+
+  const { hompyInfo } = useContext(LoginContext);
 
   const folderList = useSelector((state) => state.folder.folderList);
   const dispatch = useDispatch();
@@ -141,81 +144,96 @@ const BoardTypeList = () => {
                   className="me-3"
                   onClick={folderClick}
                 />
-                <Button variant="primary" id={item.id} onClick={handleShow}>
-                  폴더 수정
-                </Button>
+
+                {parseInt(hompyId) === hompyInfo?.id && (
+                  <>
+                    <Button variant="primary" id={item.id} onClick={handleShow}>
+                      폴더 수정
+                    </Button>
+                  </>
+                )}
               </ListGroup.Item>
             ))}
         </ListGroup>
-        <div>
-          <Button onClick={handleShow} value="폴더 생성">
-            폴더 추가
-          </Button>
-          <Button onClick={folderDelete}>폴더 삭제</Button>
-        </div>
+        {parseInt(hompyId) === hompyInfo?.id && (
+          <>
+            <div>
+              <Button onClick={handleShow} value="폴더 생성">
+                폴더 추가
+              </Button>
+              <Button onClick={folderDelete}>폴더 삭제</Button>
+            </div>
+          </>
+        )}
       </Container>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalName}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form
-            onSubmit={modalName === "폴더 생성" ? createSubmit : updateSubmit}
-          >
-            <Form.Group controlId="formFolderName">
-              <Form.Label>폴더이름 :</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={folder?.name}
-                onChange={changeValue}
-                placeholder="폴더 이름을 입력하세요"
-              />
-            </Form.Group>
+      {parseInt(hompyId) === hompyInfo?.id && (
+        <>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>{modalName}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form
+                onSubmit={
+                  modalName === "폴더 생성" ? createSubmit : updateSubmit
+                }
+              >
+                <Form.Group controlId="formFolderName">
+                  <Form.Label>폴더이름 :</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={folder?.name}
+                    onChange={changeValue}
+                    placeholder="폴더 이름을 입력하세요"
+                  />
+                </Form.Group>
 
-            <Form.Group>
-              <Form.Label>공개범위 :</Form.Label>
-              <div>
-                <Form.Check
-                  type="radio"
-                  id="public"
-                  value="전체공개"
-                  name="status"
-                  label="전체공개"
-                  onChange={changeValue}
-                  checked={folder?.status === "전체공개"}
-                />
-                <Form.Check
-                  type="radio"
-                  id="friend"
-                  value="일촌공개"
-                  name="status"
-                  label="일촌공개"
-                  onChange={changeValue}
-                  checked={folder?.status === "일촌공개"}
-                />
-                <Form.Check
-                  type="radio"
-                  id="private"
-                  value="비공개"
-                  name="status"
-                  label="비공개"
-                  onChange={changeValue}
-                  checked={folder?.status === "비공개"}
-                />
-              </div>
-            </Form.Group>
+                <Form.Group>
+                  <Form.Label>공개범위 :</Form.Label>
+                  <div>
+                    <Form.Check
+                      type="radio"
+                      id="public"
+                      value="전체공개"
+                      name="status"
+                      label="전체공개"
+                      onChange={changeValue}
+                      checked={folder?.status === "전체공개"}
+                    />
+                    <Form.Check
+                      type="radio"
+                      id="friend"
+                      value="일촌공개"
+                      name="status"
+                      label="일촌공개"
+                      onChange={changeValue}
+                      checked={folder?.status === "일촌공개"}
+                    />
+                    <Form.Check
+                      type="radio"
+                      id="private"
+                      value="비공개"
+                      name="status"
+                      label="비공개"
+                      onChange={changeValue}
+                      checked={folder?.status === "비공개"}
+                    />
+                  </div>
+                </Form.Group>
 
-            <Button variant="primary" type="submit">
-              {modalName === "폴더 생성" ? "추가" : "수정"}
-            </Button>
-            <Button variant="secondary" onClick={handleClose}>
-              취소
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+                <Button variant="primary" type="submit">
+                  {modalName === "폴더 생성" ? "추가" : "수정"}
+                </Button>
+                <Button variant="secondary" onClick={handleClose}>
+                  취소
+                </Button>
+              </Form>
+            </Modal.Body>
+          </Modal>
+        </>
+      )}
     </>
   );
 };

@@ -85,7 +85,7 @@ const Post = () => {
   },[page,folder?.id])
 
 
-  return (
+  return userInfo?.id != null && (
     <>
     {/* 쿠키 를 이용하여 로그인 한 회원인지 체크. */}
       <div>

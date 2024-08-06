@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../login/apis/api";
@@ -6,9 +6,11 @@ import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { PostAction } from "../../redux/actions/PostAction";
 import { nameCheck } from "./postUtils";
+import { LoginContext } from "../../login/context/LoginContextProvider";
 
 const PostUpdate = () => {
   const { hompyId, postName, folderId, postId } = useParams();
+  const {hompyInfo} = useContext(LoginContext);
 
   const [post, setPost] = useState();
   const [originFileList, setOriginFileList] = useState();
@@ -158,7 +160,8 @@ const PostUpdate = () => {
     
   }
 
-  return <Container>
+
+  return parseInt(hompyId) === hompyInfo?.id &&  (<Container>
     <div>{postName && nameCheck(postName) + '수정'}</div>
       <Form onSubmit={updateSubmit} encType="multipart/form-data">
         <Form.Group controlId="formSubject">
@@ -242,7 +245,7 @@ const PostUpdate = () => {
           </Form.Group>
         ))}
       </Form>
-  </Container>;
+  </Container>);
 };
 
 export default PostUpdate;

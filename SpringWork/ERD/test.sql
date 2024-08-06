@@ -3,6 +3,8 @@ show tables;
 
 drop table if exists attachment_id;
 
+select *
+from folder;
 select * from friend;
 select * from ah_user;
 select* from friend;

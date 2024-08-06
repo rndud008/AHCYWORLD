@@ -1,7 +1,9 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
+import com.lec.spring.service.HompyService;
 import com.lec.spring.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,9 +21,11 @@ import java.util.stream.Collectors;
 public class HomeController {
 
     private final UserService userService;
+    private final HompyService hompyService;
 
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService, HompyService hompyService) {
         this.userService = userService;
+        this.hompyService = hompyService;
     }
 
 
@@ -43,6 +47,15 @@ public class HomeController {
         User user = userService.findByUserId(userId).orElse(null);
 
         return (user != null) ? user : null;
+    }
+
+    @RequestMapping("/hompy")
+    public Hompy hompy(@AuthenticationPrincipal PrincipalDetails userDetail) {
+        Long userId = userDetail.getUser().getId();
+        User user = userService.findByUserId(userId).orElse(null);
+        Hompy hompy = hompyService.findHompyByuser(user);
+
+        return (hompy != null) ? hompy : null;
     }
 
     @RequestMapping("/auth")

@@ -1,5 +1,6 @@
 package com.lec.spring.config;
 
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,13 +13,16 @@ import java.util.List;
 public class PrincipalDetails implements UserDetails {
 
     private User user;
+    private Hompy hompy;
 
     public User getUser() {
         return this.user;
     }
+    public Hompy getHompy(){return this.hompy;}
 
-    public PrincipalDetails(User user) {
+    public PrincipalDetails(User user, Hompy hompy) {
         this.user = user;
+        this.hompy = hompy;
     }
 
     @Override

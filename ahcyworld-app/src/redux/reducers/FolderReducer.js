@@ -8,6 +8,8 @@ function FolderReducer(state=initialState, action){
   let {type, payload} = action
 
   switch(type){
+    case "GET_SCRAP_FOLDER_LIST":
+      return{...state,scrapFolderList:payload.data};
     case "GET_FOLDER_LIST":
       return{...state,folderList:payload.data,folder:payload.data[0]};
     case "UPDATE_FOLDER":

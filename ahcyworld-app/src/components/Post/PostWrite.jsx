@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./PostWrite.css";
@@ -7,9 +7,11 @@ import { type } from "@testing-library/user-event/dist/type";
 import { nameCheck } from "./postUtils";
 import { useDispatch } from "react-redux";
 import { PostAction } from "../../redux/actions/PostAction";
+import { LoginContext } from "../../login/context/LoginContextProvider";
 
 const PostWrite = () => {
   const { hompyId, postName, folderId } = useParams();
+  const {hompyInfo} = useContext(LoginContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -102,7 +104,7 @@ const PostWrite = () => {
 
   };
 
-  return (
+  return parseInt(hompyId) === hompyInfo?.id && (
     <Container>
       <div>{postName && nameCheck(postName)+' 작성'}</div>
       <Form onSubmit={writeSubmit} encType="multipart/form-data">
