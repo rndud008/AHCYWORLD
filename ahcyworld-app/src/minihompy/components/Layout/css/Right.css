@@ -70,6 +70,7 @@ li span {
   border: 1px solid #ddd;
   vertical-align: top;
   width: 50%;
+  text-align: left;
 }
 
 .count {
@@ -108,6 +109,7 @@ li span {
   width: 100%;
   height: 300px;
   border-radius: 5px;
+  border: none;
 }
 
 .miniroom-character {
@@ -115,6 +117,7 @@ li span {
   position: absolute;
   bottom: 50px; /* 미니룸 내에서의 위치 조정 */
   left: 380px;  /* 미니룸 내에서의 위치 조정 */
+  border: none;
 }
 
 .friend-msg {
