@@ -4,10 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import Apphompy from "./hompy/Apphompy";
+import Apphompy from "./minihompy/Apphompy";
 import AhcyworldApp from "./AhcyworldApp";
-import AppLogin from "./login/AppLogin";
-import MusicApi from "./item/api/MusicApi";
+import AppLogin from "./webpage/login/AppLogin";
+import MusicApi from "./webpage/items/api/MusicApi";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -16,17 +16,17 @@ import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
-    <Provider store={store}>
-      {/* <React.StrictMode> */}
-      {/* <MusicApi /> */} {/* 혹시 노래데이터 받을 때 필요! */}
-      {/* <AppLogin /> */}
-      {/* <Apphompy /> */}
-      <AhcyworldApp />
-      {/* <AppGuestBook /> */}
-      {/* </React.StrictMode> */}
-    </Provider>
-  </>
+    <>
+        <Provider store={store}>
+            {/* <React.StrictMode> */}
+            {/* <MusicApi /> */} {/* 혹시 노래데이터 받을 때 필요! */}
+            <AppLogin />
+            {/* <Apphompy /> */}
+            {/* <AhcyworldApp /> */}
+            {/* <AppGuestBook /> */}
+            {/* </React.StrictMode> */}
+        </Provider>
+    </>
 );
 
 // If you want to start measuring performance in your app, pass a function
