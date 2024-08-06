@@ -34,7 +34,7 @@ const BgmPlayer = () => {
   return (
     <div className="bgm-player">
       <div className="cover-image">
-        <img src="/image/femaleImg.png" alt="Cover" />
+        <img src="/image/male.png" alt="Cover" />
       </div>
       <div className="track-info">
         <strong>Sweetbox - Life Is Cool</strong>

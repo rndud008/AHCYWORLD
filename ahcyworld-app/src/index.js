@@ -16,8 +16,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
     {/* <React.StrictMode> */}
-      <AppLogin />
       {/* <MusicApi /> */}  {/* 혹시 노래데이터 받을 때 필요! */}
+      {/* <AppLogin /> */}
+          <Apphompy />
+      {/* <AhcyworldApp /> */}
     {/* </React.StrictMode> */}
   </>
 );

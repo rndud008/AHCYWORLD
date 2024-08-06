@@ -6,7 +6,7 @@ import axios from "axios";
 const Left = ({ user, hompy }) => {
   const [statusMessage, setStatusMessage] = useState(hompy?.statusMessage || "");
   const [textEdit, setTextEdit] = useState(false);
-  const [profilePicture, setProfilePicture] = useState("/image/default_img.png");
+  const [profilePicture, setProfilePicture] = useState(`${process.env.PUBLIC_URL}/image/default_img.png`);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const userId = user?.id;
