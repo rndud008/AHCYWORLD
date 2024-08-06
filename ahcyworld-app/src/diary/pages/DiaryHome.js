@@ -3,10 +3,11 @@ import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../css/CalendarStyles.css";
-import moment from "moment";
+import moment from 'moment-timezone';
 import {useNavigate} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryModal from "./DiaryModal";
+import { SERVER_HOST } from "../../login/apis/api";
 
 const DiaryHome = () => {
     const curDate = new Date();
@@ -25,23 +26,24 @@ const DiaryHome = () => {
     useEffect(() => {
         axios({
             method: "get",
-            url: "http://localhost:8070/cyworld/cy/diaries/list",
+            url: `${SERVER_HOST}/cyworld/cy/diaries/list`,
         })
             .then((response) => {
                 const diaries = response.data;
                 // console.log("diaries:", diaries);
-                const formattedDates = diaries.map((diary) =>
-                    moment(diary.eventDate).format("YYYY-MM-DD")
-                );
+                const formattedDates = diaries.map((diary) => {
+                    // console.log("diaryEvenDate : ", diary.eventDate);
+                    const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");
+                    // console.log("localDate : ", localDate);
+                    return localDate;
+                });
                 setDayList(formattedDates);
-                console.log("diaries : ", diaries);
+                // console.log("formattedDates: ", formattedDates);
             })
             .catch((error) => {
                 console.error("diary 없음...", error);
             });
     }, []);
-
-    const activeDate = moment(value).format("YYYY-MM-DD"); // 클릭한 날짜
 
     // 현재시간의 월
     const monthOfActiveDate = moment(value).format("YYYY-MM");
@@ -54,28 +56,22 @@ const DiaryHome = () => {
     };
 
     // 각 날짜 타일에 컨텐츠 추가
-    const addContent = ({ date }) => {
-        // 해당 날짜(하루)에 추가할 컨텐츠의 배열
-        const content = [];
+    const addContent = ({ date, view }) => {
+        if(view !== 'month'){
+            return null;
+        }
+
+        const formattedDate = moment(date).format("YYYY-MM-DD");
+        // console.log(`Checking date: ${formattedDate}`);
 
         // date(각 날짜)가 리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘)을 추가
-        if (dayList.find((day) => day === moment(date).format("YYYY-MM-DD"))) {
-            content.push(
-                <>
-                    {/* <img
-                        key={moment(date).format("YYYY-MM-DD")}
-                        src="/pokemon.png"
-                        className="diaryImg"
-                        width="26"
-                        height="26"
-                        alt="today is..."
-                    /> */}
-                    <div key={moment(date).format("YYYY-MM-DD")}>⭐️</div>
-                </>
-            );
+        if (dayList.includes(formattedDate)) {
+            console.log(`Adding content for date: ${formattedDate}`);
+            return <div key={formattedDate}>⭐️</div>;
+        }else{
+            console.log(`Date ${formattedDate} not in dayList`);
         }
-        // console.log("day: ", date)
-        return <div>{content}</div>;
+        return null;
     };
 
     // 날짜 클릭 핸들러
@@ -85,7 +81,7 @@ const DiaryHome = () => {
 
         axios
             .get(
-                `http://localhost:8070/cyworld/cy/diaries/detail-by-date/${formattedDate}`
+                `${SERVER_HOST}/cyworld/cy/diaries/detail-by-date/${formattedDate}`
             )
             .then((response) => {
                 setDiaryContent(response.data);
@@ -114,7 +110,7 @@ const DiaryHome = () => {
     return (
         <>
             <Calendar
-                locale="en"
+                locale="en-US"
                 onChange={onChange}
                 value={value}
                 next2AriaLabel={null} // 년 단위로 이동 버튼
