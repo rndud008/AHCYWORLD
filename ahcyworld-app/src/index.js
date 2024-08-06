@@ -4,23 +4,32 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import AhcyworldApp from "./AhcyworldApp";
-// import AppLogin from './login/AppLogin';
+import Apphompy from './hompy/Apphompy';
+import AhcyworldApp from './AhcyworldApp';
+import AppLogin from './login/AppLogin';
+import MusicApi from './item/api/MusicApi';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import AppLogin from "./login/AppLogin";
+import AhcyworldApp from "./AhcyworldApp";
+
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
+      <Provider store={store}>
     {/* <React.StrictMode> */}
-    <Provider store={store}>
+      {/* <MusicApi /> */}  {/* 혹시 노래데이터 받을 때 필요! */}
+      {/* <AppLogin /> */}
+      {/*    <Apphompy />*/}
+      {/* <AhcyworldApp /> */}
+
       <AppLogin />
-    </Provider>
+
     {/* <AhcyworldApp /> */}
     {/* </React.StrictMode> */}
+    </Provider>
   </>
 );
 

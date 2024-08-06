@@ -23,7 +23,7 @@ public class GuestBook extends BaseEntity {
     private Hompy hompy;
 
     @Column(nullable = false)
-    private String guestBookName;
+    private String guestBookName;       // 방명록 종류(state로 방명록, 일촌평 구분)
 
     @Column(nullable = false)
     private String content;

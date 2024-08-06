@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @GetMapping("/friends")
-    public List<Friend> friendList(@RequestParam String username) {
+    public List<Friend> friendList(@RequestParam(value = "username") String username) {
         User user = userService.findByUsername(username.toUpperCase());
 
         List<Friend> friendList = friendService.findFriendsById(user.getId());
@@ -79,19 +79,52 @@ public class UserController {
     }
 
     @GetMapping("/check-friendship")
-    public Map<String, Boolean> checkFriendship(@RequestParam String username, @RequestParam String friendUsername) {
-        User user = userService.findByUsername(username.toUpperCase());
-
-        List<Friend> friendList = friendService.findFriendsById(user.getId());
-
+    public Map<String, Boolean> checkFriendship(@RequestParam(value = "username") String username, @RequestParam(value = "friendUsername") String friendUsername) {
         Map<String, Boolean> response = new HashMap<>();
-        friendList.forEach(friend -> {
-            if (friend.getFriendUser().getName().equals(friendUsername)) {
-                response.put("friend", true);
-            } else {
+
+        try {
+            User user = userService.findByUsername(username.toUpperCase());
+            if (user == null) {
                 response.put("friend", false);
+                return response;
             }
-        });
+
+            List<Friend> friendList = friendService.findFriendsById(user.getId());
+
+            boolean isFriend = false;
+            for (Friend friend : friendList) {
+                if (friend.getFriendUser() != null && friend.getFriendUser().getName().equals(friendUsername)) {
+                    isFriend = true;
+                    break;
+                }
+            }
+
+            response.put("friend", isFriend);
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그를 통해 예외 확인
+            response.put("friend", false);
+        }
+
+        return response;
+    }
+
+    @PostMapping("/addfriend")
+    public String addFriend(@RequestParam String friendType1
+            , @RequestParam String friendType2
+            , @RequestParam String message
+            , @RequestParam String username
+            , @RequestParam String friendUsername
+    ) {
+//        System.out.println("유저이름은: "+username);
+//        System.out.println("친구이름은?" +friendUsername);
+        User user = userService.findByUsername(username.toUpperCase());
+        User friendUser = userService.findByUsername(friendUsername.toUpperCase());
+
+        String response = friendService.addFriend(friendType1, friendType2, message, user, friendUser);
+
+
+
+
         return response;
     }
 }

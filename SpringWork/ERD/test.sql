@@ -14,15 +14,27 @@ select create_at,folder_id,content,subject
 from post;
 
 
-
-
+select * from item;
+select count(*) from item;
 delete
 from ah_user
 where username="user3"
 ;
 
+
+
+update item
+set item_name='포치코1'
+where id=90;
+
+update item
+set item_name='글꼴4'
+where id=80;
+
 select * from diary;
 select * from hompy;
+
+SELECT * FROM Hompy WHERE user_id = 4;
 
 delete from ah_user;
 alter table ah_user
@@ -30,4 +42,8 @@ alter table ah_user
 
 delete from friend;
 alter table friend
+    AUTO_INCREMENT = 1;
+
+delete from hompy;
+alter table hompy
     AUTO_INCREMENT = 1;

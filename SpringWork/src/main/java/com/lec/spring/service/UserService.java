@@ -56,13 +56,13 @@ public class UserService {
 
         Hompy hompy = Hompy.builder()
                 .user(savedUser)
-                .title(name + "의 미니홈피")
+                .title(name + "님의 미니홈피")
                 .menuColor("#147DAF,#FFF,#147DAF")
                 .menuStatus("visible,visible,visible,visible")
                 .build();
 
         hompyRepository.save(hompy);
-        System.out.println("hompy만들었지롱~ " + hompy);
+//        System.out.println("hompy만들었지롱~ " + hompy);
         return savedUser;
     }
 
