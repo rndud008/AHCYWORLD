@@ -4,11 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import Apphompy from "./minihompy/Apphompy";
-import AhcyworldApp from "./AhcyworldApp";
 import AppLogin from "./webpage/login/AppLogin";
-import MusicApi from "./webpage/items/api/MusicApi";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Provider } from "react-redux";
