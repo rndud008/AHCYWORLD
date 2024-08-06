@@ -1,0 +1,49 @@
+td {
+    text-align: center;
+}
+img{
+    width: 300px;
+    border: 1px solid black;
+}
+
+.fontStyle{
+    width: 300px;
+    height: 300px;
+}
+
+.item{
+    margin-right: 30px;
+    margin-left: 30px;
+}
+.itemRow{
+   display: flex;
+   justify-content: flex-start;
+   align-items: center; 
+   margin-bottom: 60px;
+   
+}
+tbody{
+    width: 400px;
+}
+.page{
+    width: 100%;
+    display: inline;
+    text-align: center;
+}
+
+table{
+    border: 1px solid black;
+    border-spacing: 90px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pushItem{
+    background-color: orange;
+    border-radius: 10px;
+    
+}
+.pushItem:active{
+    background-color: rgb(172, 118, 19);
+}

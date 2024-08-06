@@ -288,7 +288,7 @@ const PostListDetailItem = ({ item, moveFolderId, setMoveFolderId }) => {
           </Form>
         </Modal.Body>
       </Modal>
-      
+
     </Container>
   );
 };

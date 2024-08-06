@@ -1,0 +1,120 @@
+/* 기존 CSS */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* 세로 중앙 정렬 */
+    min-height: 100vh; /* 화면 전체 높이 사용 */
+    padding: 20px;
+    box-sizing: border-box; /* 패딩을 너비에 포함 */
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+    width: 100%;
+    max-width: 500px; /* 최대 너비를 설정 */
+    margin: 0 auto; /* 중앙에 배치 */
+}
+
+.form-row {
+    display: flex;
+    align-items: flex-start; /* 텍스트 박스가 이미지와 같은 높이에서 시작 */
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.form-row img {
+    margin-right: 10px;
+}
+
+.custom-textarea {
+    height: 80px; /* 높이 조절 */
+    resize: none; /* 사용자가 크기 조절하지 못하도록 함 */
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.secret-label {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.submit-button {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.guestbook-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-top: 30px;
+    width: 100%;
+    max-width: 520px; /* 작성 폼과 동일한 최대 너비 설정 */
+    padding: 10px;
+    box-sizing: border-box; /* 패딩을 너비에 포함 */
+}
+
+.guestbook-table {
+    width: 100%; /* 테이블 너비를 100%로 설정하여 컨테이너에 맞춤 */
+    border-collapse: collapse;
+    margin: 0 auto; /* 테이블을 중앙에 배치 */
+    border: 1px solid #999; /* 테이블 테두리 */
+}
+
+.guestbook-table td {
+    padding: 8px;
+    vertical-align: top;
+    position: relative; /* 자식 요소를 절대 위치로 배치하기 위해 */
+}
+
+.minimi-cell {
+    width: 80px; /* 너비를 조절 */
+    text-align: center; /* 이미지 가운데 정렬 */
+}
+
+.minimi-img {
+    height: 80px; /* 높이를 조절 */
+    width: auto; /* 가로 세로 비율 유지 */
+}
+
+.info-cell {
+    width: calc(100% - 100px); /* 이미지 셀 너비를 고려하여 조정 */
+    padding-left: 15px;
+}
+
+.info-row {
+    background-color: rgb(211, 211, 211);
+}
+
+.actions {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+.delete {
+    cursor: pointer;
+}
+
+.secret {
+    cursor: pointer;
+}
+
+.content-cell {
+    padding-left: 15px;
+    height: auto; /* 콘텐츠 높이를 자동으로 조정 */
+    word-wrap: break-word; /* 긴 단어가 셀을 넘어가지 않도록 조정 */
+}

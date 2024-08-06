@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -38,7 +39,8 @@ public class GuestBookController {
     public ResponseEntity<?> list(@PathVariable Long hompyId ){     // , @RequestParam String username
         System.out.println("hompyId:" + hompyId);
         try {
-            List<GuestBook> guestBooks = guestBookService.findByHompyAndVisibility(hompyId);        // , username
+            List<GuestBook> guestBooks = guestBookService.findByHompyAndVisibility(hompyId);// , username
+            System.out.println("guestBooks:" + guestBooks);
             return new ResponseEntity<>(guestBooks, HttpStatus.OK);
         }catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -65,6 +67,16 @@ public class GuestBookController {
             return new ResponseEntity<>(guestBook, HttpStatus.OK);
         }catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/friends/check/{hompyId}")
+    public ResponseEntity<?> friendsCheck(@PathVariable Long hompyId, @RequestParam String username) {
+        try {
+            boolean isFriend = guestBookService.isFriend(hompyId, username);
+            return new ResponseEntity<>(Map.of("isFriend", isFriend), HttpStatus.OK);
+        }catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -157,7 +157,7 @@ const PostUpdate = () => {
   const  fileReCreate = (id) =>{
     const updateOriginFileList = originFileList.map(item => item.id !== id ? item : {...item, status:true});
     setOriginFileList(updateOriginFileList);
-    
+
   }
 
 
@@ -223,7 +223,7 @@ const PostUpdate = () => {
             >
               삭제취소
             </Button>}
-            
+
           </Form.Group>
         ))}
 

@@ -28,12 +28,26 @@ public class HompyService {
         return hompyRepository.save(hompy);
     }
 
-    // 프로필 사진 및 상태 메시지 업데이트
-    public Hompy updateUser(User user, String profilePicture, String statusMessage) {
+    // 프로필 사진
+    public Hompy updateProfilePicture(User user, String profilePicture) {
         Hompy hompy = hompyRepository.findByUser(user);
-        hompy.setProfilePicture(profilePicture);
-        hompy.setStatusMessage(statusMessage);
-        return hompyRepository.save(hompy);
+        if (hompy != null) {
+            hompy.setProfilePicture(profilePicture);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
+    }
+
+    // 상태 메시지
+    public Hompy updateStatusMessage(User user, String statusMessage) {
+        Hompy hompy = hompyRepository.findByUser(user);
+        if (hompy != null) {
+            hompy.setStatusMessage(statusMessage);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
     }
 
     // 메뉴 상태 및 색상 설정

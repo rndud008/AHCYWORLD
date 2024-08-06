@@ -37,9 +37,9 @@ public class GuestBookService {
         }
 
         if (guestBook.getStatus() == null){
-            guestBook.setStatus("visible");;
+            guestBook.setStatus("visible");
+            guestBook.setGuestBookName("guestBook");
         }
-
         return guestBookRepository.save(guestBook);
     }
 
@@ -95,5 +95,16 @@ public class GuestBookService {
         }else {
             throw new IllegalArgumentException("비밀글로 설정할 권한이 없습니다.");
         }
+    }
+
+    public boolean isFriend (Long homypId, String username){
+        User user = userRepository.findByUsername(username);
+        Hompy hompy = hompyRepository.findById(homypId)
+                .orElseThrow(() -> new IllegalArgumentException("미니홈피를 찾지 못 했습니다."));
+
+        if (user == null){
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+        return friendRepository.existsByUserAndFriendUser(user, hompy.getUser());
     }
 }
