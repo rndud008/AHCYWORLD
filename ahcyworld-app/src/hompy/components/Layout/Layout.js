@@ -17,7 +17,7 @@ const Layout = ({hompy, user}) => {
       <div 
         className="background-image"
         style={{ 
-          backgroundImage: `url(${process.env.PUBLIC_URL}/image/rengoku.png)`
+          backgroundImage: `url(${process.env.PUBLIC_URL}/image/렌고쿠.png)`
         }}
       ></div>
 
