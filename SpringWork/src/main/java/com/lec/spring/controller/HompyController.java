@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/hompy")
@@ -52,26 +53,51 @@ public class HompyController {
 //        return hompyService.updateUser(user, profilePicture, statusMessage);
 //    }
 
-    @PostMapping("/{userId}/profile")
-    public ResponseEntity<?> updateProfile(
-            @PathVariable Long userId,
-            @RequestParam("file") MultipartFile file,
-            @RequestParam String statusMessage) {
+//    @PostMapping("/{userId}/profile")
+//    public ResponseEntity<?> updateProfile(
+//            @PathVariable Long userId,
+//            @RequestParam("file") MultipartFile file,
+//            @RequestParam String statusMessage) {
+//
+//        User user = userService.findByUserId(userId)
+//                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
+//
+//        String profilePicturePath = saveFile(file);
+//
+//        Hompy updatedHompy = hompyService.updateUser(user, profilePicturePath, statusMessage);
+//
+//        return ResponseEntity.ok(updatedHompy);
+//    }
 
+    // 프로필 이미지
+    @PostMapping("/{userId}/profileImg")
+    public ResponseEntity<?> updateProfileImg(@PathVariable Long userId, @RequestParam("file") MultipartFile file) {
         User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
+                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
 
         String profilePicturePath = saveFile(file);
 
-        Hompy updatedHompy = hompyService.updateUser(user, profilePicturePath, statusMessage);
+        hompyService.updateProfilePicture(user, profilePicturePath);
 
-        return ResponseEntity.ok(updatedHompy);
+        return ResponseEntity.ok().body(Map.of("profilePicture", profilePicturePath));
+    }
+
+    // 상태메시지
+    @PostMapping("/{userId}/statusMessage")
+    public ResponseEntity<?> updateStatusMessage(@PathVariable Long userId, @RequestBody Map<String, String> request) {
+        String statusMessage = request.get("statusMessage");
+        User user = userService.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다. " + userId));
+
+        hompyService.updateStatusMessage(user, statusMessage);
+
+        return ResponseEntity.ok().build();
     }
 
     // 파일 저장 메서드
     private String saveFile(MultipartFile file) {
         String fileName = file.getOriginalFilename();
-        Path filePath = Paths.get("path/to/save", fileName);
+        Path filePath = Paths.get("upload", fileName);
         try {
             Files.write(filePath, file.getBytes());
         } catch (IOException e) {

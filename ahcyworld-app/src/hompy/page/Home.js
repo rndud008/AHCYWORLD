@@ -11,7 +11,7 @@ const Home = ({setUserId}) => {
 
   // 특정 유저의 미니홈피 url 경로유지
   useEffect(() => {
-    // setUserId(userId);
+    setUserId(userId);
   }, [userId, setUserId]);
 
   useEffect(() => {
