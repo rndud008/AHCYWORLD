@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import LoginContextProvider, { LoginContext } from "./context/LoginContextProvider";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -19,7 +19,7 @@ const AppLogin = () => {
                     <Route path='/member' element={<Member />} />
                     <Route path='/admin' element={<Admin />} />
                     <Route path='/post/:hompyId/:postName/*' element={<Post />} />
-                </Routes>
+               </Routes>
             </LoginContextProvider>
         </BrowserRouter>
     );
