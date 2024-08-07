@@ -1,12 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Left from "./css/Left.css";
-import Right from "./css/Right.css";
+import Left from "../../../minihompy/components/Layout/Left";
+import Right from "../../../minihompy/components/Layout/Right";
 import "./css/Layout.css";
+import axios from "axios";
 
-const Layout = ({ hompy, user }) => {
-    // console.log("유저:",user);
-    // console.log("홈피:",hompy);
+const Layout = ({ hompy, user, children }) => {
+
+    const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
+    const userId = user?.id;
+
+    useEffect(() => {
+        // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
+        if (hompy) {
+            setVisitorInfo({
+                todayVisitor: hompy.todayVisitor || 0,
+                totalVisitor: hompy.totalVisitor || 0,
+            });
+        }
+    }, [hompy]);
+
+    useEffect(() => {
+        // 미니홈피에 방문 시 방문자 수 증가 API 호출
+        const increaseVisitCount = async () => {
+            // sessionStorage.getItem을 사용해 해당 사용자가 이미 방문했는지 확인
+            const hasVisited = sessionStorage.getItem(`hasVisited_${userId}`);
+
+            if (userId && !hasVisited) {
+                try {
+                    const response = await axios.post(`http://localhost:8070/hompy/${userId}/visit`);
+                    setVisitorInfo({
+                        todayVisitor: response.data.todayVisitor || 0,
+                        totalVisitor: response.data.totalVisitor || 0,
+                    });
+                    // 사용자가 처음 방문한 경우에만 방문자 수 증가 API를 호출하고, 
+                    // 그 후에 sessionStorage.setItem을 사용해 방문 사실을 기록
+                    sessionStorage.setItem(`hasVisited_${userId}`, 'true');
+                } catch (error) {
+                    console.error("Error increasing visit count:", error);
+                }
+            }
+        };
+        increaseVisitCount();
+    }, [user]);
+
     if (!hompy || !user) {
         return <div>Loading...</div>; // hompy가 없을 때 로딩 중 표시
     }
@@ -23,7 +60,7 @@ const Layout = ({ hompy, user }) => {
 
             {/* TODAY | TOTAL */}
             <div className='visitor-info'>
-                TODAY {hompy.todayVisitor} &nbsp; | &nbsp; TOTAL {hompy.totalVisitor}
+                TODAY {visitorInfo.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo.totalVisitor}
             </div>
 
             {/* 김세진님의 미니홈피 */}
@@ -35,7 +72,7 @@ const Layout = ({ hompy, user }) => {
                     <Left user={user} hompy={hompy} />
                 </div>
                 <div className='right-panel'>
-                    <Right hompy={hompy} />
+                {children || <Right hompy={hompy} />} {/* children을 통해 오른쪽 컴포넌트를 대체 */}
                 </div>
             </div>
         </div>

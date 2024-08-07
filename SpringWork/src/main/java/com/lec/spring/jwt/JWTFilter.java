@@ -1,6 +1,7 @@
 package com.lec.spring.jwt;
 
 import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -45,6 +46,8 @@ public class JWTFilter extends OncePerRequestFilter {
         String name = jwtUtil.getName(token);
 //        System.out.println(role);
 
+        Long hompyId = jwtUtil.getHompyId(token);
+
         User user = User.builder()
                 .id(id)
                 .username(username)
@@ -53,7 +56,11 @@ public class JWTFilter extends OncePerRequestFilter {
                 .name(name)
                 .build();
 
-        PrincipalDetails userDetails = new PrincipalDetails(user);
+        Hompy hompy = Hompy.builder()
+                .id(hompyId)
+                .build();
+
+        PrincipalDetails userDetails = new PrincipalDetails(user,hompy);
 
         Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 

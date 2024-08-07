@@ -21,6 +21,8 @@ const LoginContextProvider = ({ children }) => {
         JSON.parse(localStorage.getItem("roles")) || { isMember: false, isAdmin: false }
     );
 
+    const [hompyInfo, setHompyInfo] = useState()
+
     const loginCheck = async (isAuthPage = false) => {
         const accessToken = Cookies.get("accessToken");
         // console.log(`accessToken: ${accessToken}`);
@@ -68,6 +70,14 @@ const LoginContextProvider = ({ children }) => {
 
         // 인증성공
         loginSetting(data, accessToken);
+
+        response = await auth.hompyInfo();
+        data = response.data;
+
+        setHompyInfo(data);
+
+
+
     };
 
     useEffect(() => {
@@ -147,6 +157,7 @@ const LoginContextProvider = ({ children }) => {
 
         // 로그인 여부
         setIsLogin(true);
+        console.log(userData)
 
         // 유저 정보 세팅
         setUserInfo({ id, username, role, name });
@@ -189,6 +200,7 @@ const LoginContextProvider = ({ children }) => {
                 isLogin,
                 userInfo,
                 roles,
+                hompyInfo,
                 loginCheck,
                 login,
                 logout,

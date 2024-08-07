@@ -9,6 +9,8 @@ export const login = (username, password) =>
 
 export const userInfo = () => api.get(`${SERVER_HOST}/user`);
 
+export const hompyInfo = () => api.get(`${SERVER_HOST}/hompy`);
+
 export const authInfo = () => api.get(`${SERVER_HOST}/auth`);
 
 export const join = (data) => api.post(`${SERVER_HOST}/user/join`, data);

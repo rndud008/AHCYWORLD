@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import { LoginContext } from "../../login/context/LoginContextProvider";
 
 const Header = () => {
-    const { isLogin, logout, userInfo } = useContext(LoginContext);
+    const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
     // console.log("isLogin: ", isLogin);
     // console.log("logout: ", logout);
     // console.log("userInfo: ", userInfo);
+
+    console.log("hompyInfo",hompyInfo)
 
     return (
         <>
@@ -38,7 +40,7 @@ const Header = () => {
                             <Link className='nav-link' to='/admin'>
                                 Admin
                             </Link>
-                            <Link className='nav-link' to={`/post/${userInfo.id}/board`}>
+                            <Link className='nav-link' to={`/post/${hompyInfo?.id}/board`}>
                                 Post
                             </Link>
                             <Button variant='primary' onClick={() => logout()}>

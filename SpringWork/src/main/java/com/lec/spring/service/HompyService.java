@@ -65,4 +65,15 @@ public class HompyService {
         hompy.setTotalVisitor(hompy.getTotalVisitor() + 1);
         return hompyRepository.save(hompy);
     }
+
+    // 프로필 (간단한 자기소개?)
+    public Hompy userProfile(User user, String profile) {
+        Hompy hompy = hompyRepository.findByUser(user);
+        if (hompy != null) {
+            hompy.setProfile(profile);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
+    }
 }
