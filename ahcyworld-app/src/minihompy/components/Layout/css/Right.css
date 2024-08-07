@@ -1,10 +1,10 @@
-.right-container {
+.right-container { /* 오른쪽 섹션 공통 css */
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 90%;
   height: 750px;
-  margin-left: -500px;
+  margin-left: -510px;
   display: flex;
   flex-direction: column; /* 세로로 나열되도록 설정 */
   padding: 20px;

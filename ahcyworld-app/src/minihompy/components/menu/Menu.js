@@ -13,7 +13,7 @@ const Menu = ({userId}) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/profile" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/profile/${userId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             프로필
           </NavLink>
         </li>

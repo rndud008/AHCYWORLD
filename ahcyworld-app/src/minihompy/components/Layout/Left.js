@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import './Left.css';
+import './css/Left.css';
 import { PiGenderFemaleFill, PiGenderMaleFill } from "react-icons/pi";
 import axios from "axios";
 
 const Left = ({ user, hompy }) => {
   const [statusMessage, setStatusMessage] = useState(hompy?.statusMessage || "");
   const [textEdit, setTextEdit] = useState(false);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState();
   const [profileEdit, setProfileEdit] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const userId = user?.id;
+
+  useEffect(() => {
+    if (hompy?.profilePicture) {
+      const imageUrl = `http://localhost:8070/hompy/profileImg/${hompy.profilePicture.split('/').pop()}`;
+      setProfilePicture(imageUrl);
+    }
+  }, [hompy]);
 
   // 상태 메시지
   const updateStatusMessage = () => {
@@ -32,27 +39,27 @@ const Left = ({ user, hompy }) => {
     }
   };
 
-// 프로필 사진 업데이트 함수
-const updateProfileImg = () => {
-  if (userId && selectedFile) {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-
-    axios.post(`http://localhost:8070/hompy/${userId}/profileImg`, formData, {
-      headers: {
-        'Content-Type':'multipart/form-data',
-      },
-    })
-    .then(response => {
-      console.log("프로필 사진 업로드 성공", response.data);
-      setProfilePicture(response.data.profilePicture);
-      setProfileEdit(false);
-    })
-    .catch(error => {
-      console.error("프로필 사진 업로드 실패", error);
-    });
-  }
-};
+  const updateProfileImg = () => {
+    if (userId && selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+  
+      axios.post(`http://localhost:8070/hompy/${userId}/profileImg`, formData, {
+        headers: {
+          'Content-Type':'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log("프로필 사진 업로드 성공", response.data);
+        const imageUrl = `http://localhost:8070/hompy/profileImg/${response.data.profilePicture.split('/').pop()}`;
+        setProfilePicture(imageUrl);
+        setProfileEdit(false);
+      })
+      .catch(error => {
+        console.error("프로필 사진 업로드 실패", error);
+      });
+    }
+  };
 
   const textChange = (event) => {
     setStatusMessage(event.target.value);
@@ -76,7 +83,7 @@ const updateProfileImg = () => {
 
   return (
     <div className="left-container">
-      <img className="profile-img" src={profilePicture}  alt="유저 이미지"/>
+      <img className="profile-img" src={profilePicture || 'default_profileImg.png'}  alt="유저 이미지"/>
       <input 
         type="file" 
         id="fileInput" 
