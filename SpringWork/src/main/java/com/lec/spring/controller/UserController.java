@@ -33,7 +33,7 @@ public class UserController {
                 .gender(joinUser.getGender())
                 .birthDay(LocalDate.parse(joinUser.getBirthDay()))
                 .build();
-        user = userService.join(user);
+        user = userService.join(user,null);
         if (user == null) return "JOIN FAILED";
         else {
 

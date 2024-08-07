@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Left from "./css/Left.css";
 import Right from "./css/Right.css";
 import "./css/Layout.css";
+import { Container } from "react-bootstrap";
 
 const Layout = ({ hompy, user }) => {
     // console.log("유저:",user);

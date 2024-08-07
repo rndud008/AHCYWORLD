@@ -1,11 +1,14 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.EmailAuthentication;
 import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.EmailAuthenticationRepository;
 import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -20,10 +23,13 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final HompyRepository hompyRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, HompyRepository hompyRepository) {
+    private final EmailAuthenticationRepository emailAuthenticationRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, HompyRepository hompyRepository, EmailAuthenticationRepository emailAuthenticationRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.hompyRepository = hompyRepository;
+        this.emailAuthenticationRepository = emailAuthenticationRepository;
     }
 
     // 특정 ID로 User 조회
@@ -31,7 +37,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User join(User user) {
+    @Transactional
+    public User join(User user, String provider) {
+
+
 
         String username = user.getUsername();
         String password = user.getPassword();
@@ -39,6 +48,17 @@ public class UserService {
         String name = user.getName();
         String gender = user.getGender();
         LocalDate birthDay = user.getBirthDay();
+
+        if(provider == null){
+            EmailAuthentication emailAuthentication = emailAuthenticationRepository.findByEmail(email).orElse(null);
+            boolean authCheck = emailAuthentication !=null && emailAuthentication.getStatus().equals("인증완료");
+
+            if(authCheck){
+                emailAuthenticationRepository.delete(emailAuthentication);
+            }else{
+                return null;
+            }
+        }
 
         if (userRepository.existsByUsername(username)) {
             return null;

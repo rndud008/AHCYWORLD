@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import BoardTypeList from "./BoardTypeList";
 import { Link, Outlet, Route, Routes, useLocation, useNavigate, useParams, useRoutes } from "react-router-dom";
-// import Header from "../../login/components/Header/Header";
 import Header from "../../../webpage/components/Header/Header";
-// import api from "../../../apis/api";
-import Cookies from "js-cookie";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import "./Post.css";
 import PostDetail from "./PostDetail";
@@ -43,8 +40,11 @@ const Post = () => {
         // setPageAndPostList(data);
       // }
   
-      dispatch(PostAction.axiosPostList(hompyId,postName,folderId,page))
-  
+      try{
+        await dispatch(PostAction.axiosPostList(hompyId,postName,folderId,page))
+      }catch(error){
+        return list();
+      }
     }
   
     const list = async () => {
@@ -61,7 +61,7 @@ const Post = () => {
         // setFolderList(data);
         // dispatch(FolderAction.clickFolder(null))
         dispatch(FolderAction.getFolderListAxios(hompyId,postName))
-  
+        // dispatch(FolderAction.)
       }
     };
   

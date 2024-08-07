@@ -1,20 +1,23 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.lec.spring.support.AttachmentListConverter;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
-public class UserWriteHistroy {
+public class UserWriteHistroy extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +28,19 @@ public class UserWriteHistroy {
 
     private String username;
 
+    private String postType;
+
     private String subject;
 
     private String content;
 
-    private LocalDateTime createAt; // 해당글의 작성일
-    private LocalDateTime updateAt; // 해당글의 수정일?
+    @Column(columnDefinition = "LONGTEXT")
+    @Convert(converter = AttachmentListConverter.class)
+    @ToString.Exclude
+    private List<Attachment> attachmentList = new ArrayList<>();
 
     private String status; // Insert, Update, Delete 세가지 상태로 구분.
 
+    // 생성일은 BaseEntity
 
 }
