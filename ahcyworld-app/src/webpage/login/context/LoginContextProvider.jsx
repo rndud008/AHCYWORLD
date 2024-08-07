@@ -23,14 +23,14 @@ const LoginContextProvider = ({ children }) => {
 
     const loginCheck = async (isAuthPage = false) => {
         const accessToken = Cookies.get("accessToken");
-        // console.log(`accessToken: ${accessToken}`);
+        console.log(Cookies.get("accessToken"));
 
         let response;
         let data;
 
         // JWT이 없으면
         if (!accessToken) {
-            // console.log("쿠키에 JWT(accessToken)이 없습니다.");
+            console.log("쿠키에 JWT(accessToken)이 없습니다.");
             logoutSetting();
             return;
         }
@@ -73,6 +73,7 @@ const LoginContextProvider = ({ children }) => {
     useEffect(() => {
         loginCheck();
     }, []);
+
 
     const login = async (username, password, rememberId) => {
         // console.log(`
@@ -134,13 +135,6 @@ const LoginContextProvider = ({ children }) => {
 
     const loginSetting = (userData, accessToken) => {
         const { id, username, role, name } = userData;
-
-        // console.log(`
-        //     loginSetting()
-        //        id : ${id}
-        //        username : ${username}
-        //        role : ${role}
-        //     `);
 
         // JWT 토큰을 header에 저장
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;

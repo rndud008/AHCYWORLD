@@ -4,11 +4,12 @@ import { checkFriendShip, findFriendList, userList } from "../../apis/auth";
 import Header from "../components/Header/Header";
 // import AddFriendModal from "../components/friendShip/AddFriendModal";
 import FriendRequestModal from "../../minihompy/components/friendShip/FriendRequestModal";
+import AddFriendModal from "../../minihompy/components/friendShip/AddFriendModal";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../payment/PaymentModal";
 
 const Home = () => {
-    const { isLogin, logout, userInfo } = useContext(LoginContext);
+    const { isLogin, logout, userInfo, loginCheck } = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
     const [friends, setFriends] = useState([]);
@@ -65,7 +66,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            if (isLogin) {
+            if (isLogin && userInfo.username) {
                 try {
                     const response = await userList();
                     setUsers(response.data);
@@ -92,7 +93,12 @@ const Home = () => {
         if (userInfo) {
             fetchUsers();
         } else return;
-    }, [isAddFriendModalOpen]);
+    }, [isAddFriendModalOpen, isLogin]);
+
+    const onNaverLogin = () => {
+        window.location.href = "http://localhost:8070/oauth2/authorization/naver";
+
+    };
 
     return (
         <>
@@ -137,6 +143,9 @@ const Home = () => {
             ) : (
                 <></>
             )}
+
+            <Button onClick={onNaverLogin}>Naver</Button>
+
             <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
             <br />
             <br />
@@ -148,11 +157,11 @@ const Home = () => {
                     )}
                 </div>
             ))}
-            {/* <AddFriendModal
+            <AddFriendModal
                 isOpen={isAddFriendModalOpen}
                 onClose={closeAddFriendModal}
                 selectedFriend={selectedFriend}
-            /> */}
+            />
         </>
     );
 };

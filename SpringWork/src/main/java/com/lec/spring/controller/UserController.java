@@ -33,7 +33,7 @@ public class UserController {
                 .gender(joinUser.getGender())
                 .birthDay(LocalDate.parse(joinUser.getBirthDay()))
                 .build();
-        user = userService.join(user);
+        user = userService.join(user, null);
         if (user == null) return "JOIN FAILED";
         else {
 
@@ -63,7 +63,7 @@ public class UserController {
 
     @GetMapping("/friends")
     public List<Friend> friendList(@RequestParam(value = "username") String username) {
-        User user = userService.findByUsername(username.toUpperCase());
+        User user = userService.findByUsername(username);
 
         List<Friend> friendList = friendService.findFriendsById(user.getId());
 
@@ -83,7 +83,7 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
 
         try {
-            User user = userService.findByUsername(username.toUpperCase());
+            User user = userService.findByUsername(username);
             if (user == null) {
                 response.put("friend", false);
                 return response;
@@ -117,8 +117,8 @@ public class UserController {
     ) {
 //        System.out.println("유저이름은: "+username);
 //        System.out.println("친구이름은?" +friendUsername);
-        User user = userService.findByUsername(username.toUpperCase());
-        User friendUser = userService.findByUsername(friendUsername.toUpperCase());
+        User user = userService.findByUsername(username);
+        User friendUser = userService.findByUsername(friendUsername);
 
         String response = friendService.addFriend(friendType1, friendType2, message, user, friendUser);
 

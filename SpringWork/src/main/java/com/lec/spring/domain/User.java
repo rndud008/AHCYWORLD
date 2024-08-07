@@ -16,29 +16,29 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity(name = "ah_user")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,unique = true,updatable = false)
+    @Column(nullable = false, unique = true, updatable = false)
     private String username;        // 로그인 아이디
 
     @Column(nullable = false)
     @JsonIgnore
     private String password;
 
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private String name;
 
     @Column(unique = true)
     private String email;
 
-    @Column(nullable = false,updatable = false)
+    @Column(updatable = false, nullable = true)
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate birthDay;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String gender;
 
     @ColumnDefault(value = "0")
