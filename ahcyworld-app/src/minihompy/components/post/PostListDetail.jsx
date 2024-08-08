@@ -5,28 +5,19 @@ import PageNation from "./PageNation";
 import PostItem from "./PostItem";
 import PostListDetailItem from "./PostListDetailItem";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"; 
+import { useSelector } from "react-redux";
 
 const PostListDetail = ({
-  pageAndPostList,
-  folder,
   setPage,
-  folderList,
   moveFolderId,
   setMoveFolderId,
 }) => {
-  // console.log("pageAndPostList first", pageAndPostList);
-  // console.log(
-  //   "pageAndPostList second:",
-  //   pageAndPostList?.posts
-  //     ? pageAndPostList?.posts?.[0].folder.boardType.name
-  //     : "게시물이 존재하지 않습니다."
-  // );
 
   const { postName, hompyId } = useParams();
-
   const { hompyInfo } = useContext(LoginContext);
+  const pageAndPostList = useSelector(state => state.post.pageAndPostList);
+  const folder = useSelector(state => state.folder.folder);
 
-  // console.log("pageAndPostList third", folder);
   return (
     <>
       <Container>
@@ -39,7 +30,7 @@ const PostListDetail = ({
                   <Button variant="none">
                     {" "}
                     <Link
-                      to={`/post/${hompyId}/${postName}/${folder.id}/write`}
+                      to={`/hompy/${hompyId}/${postName}/${folder.id}/write`}
                     >
                       {postName} 올리기
                     </Link>
@@ -56,7 +47,7 @@ const PostListDetail = ({
                 <PostListDetailItem
                   key={item}
                   item={item}
-                  folderList={folderList}
+                  // folderList={folderList}
                   moveFolderId={moveFolderId}
                   setMoveFolderId={setMoveFolderId}
                 />
@@ -67,7 +58,7 @@ const PostListDetail = ({
           )}
         </div>
         <div>
-          <PageNation pageAndPostList={pageAndPostList} setPage={setPage} />
+          <PageNation setPage={setPage} />
         </div>
       </Container>
     </>

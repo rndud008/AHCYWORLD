@@ -18,10 +18,11 @@ public class PrincipalDetails implements UserDetails {
     public User getUser() {
         return this.user;
     }
+    public Hompy getHompy() { return this.hompy;}
 
-    public PrincipalDetails(User user) {
+    public PrincipalDetails(User user,Hompy hompy) {
         this.user = user;
-
+        this.hompy = hompy;
     }
 
     @Override

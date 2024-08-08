@@ -11,13 +11,16 @@ import java.util.Map;
 public class CustomOAuth2User implements OAuth2User {
 
     private User user;
+    private Hompy hompy;
 
     public User getUser() {
         return this.user = user;
     }
+    public Hompy getHompy(){return this.hompy = hompy;}
 
-    public CustomOAuth2User(User user) {
+    public CustomOAuth2User(User user, Hompy hompy) {
         this.user = user;
+        this.hompy = hompy;
     }
 
     @Override

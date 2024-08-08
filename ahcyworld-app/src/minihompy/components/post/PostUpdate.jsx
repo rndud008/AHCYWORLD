@@ -96,10 +96,10 @@ const PostUpdate = () => {
   
       if(status === 200){
         alert('수정완료',data)
-        navigate(`/post/${hompyId}/${postName}/${folderId}/detail/${postId}`)
+        navigate(`/hompy/${hompyId}/${postName}/${folderId}/detail/${postId}`)
       }else{
         alert('수정실패')
-        navigate(`/post/${hompyId}/${postName}`)
+        navigate(`/hompy/${hompyId}/${postName}`)
       }
   
     }

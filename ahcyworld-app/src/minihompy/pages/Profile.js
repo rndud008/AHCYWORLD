@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -6,22 +6,21 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Swal from 'sweetalert2';
 import './css/Profile.css';
+import { LoginContext } from "../../webpage/login/context/LoginContextProvider";
 
 const Profile = ({ setUserId }) => {
     console.log('Profile 실행')
-    const { userId } = useParams();
+    const { hompyId } = useParams();
     const [hompy, setHompy] = useState({});
     const [profile, setProfile] = useState(""); 
     const [isReadOnly, setIsReadOnly] = useState(true); // CKEditor의 읽기 전용 상태 관리
     const [buttonLabel, setButtonLabel] = useState("프로필 수정"); // 버튼 라벨 관리
+    const {userInfo} = useContext(LoginContext);
 
-    useEffect(() => {
-        setUserId(userId);
-    }, [userId, setUserId]);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8070/hompy/${userId}`)
+            .get(`http://localhost:8070/hompy/${hompyId}`)
             .then((response) => {
                 setHompy(response.data);
                 setProfile(response.data.profile || ""); 
@@ -29,7 +28,7 @@ const Profile = ({ setUserId }) => {
             .catch((error) => {
                 console.error("에러: 프로필을 가져 올 수 없음", error);
             });
-    }, [userId]);
+    }, [hompyId]);
 
     const handleProfileUpdate = async () => {
         if (isReadOnly) {
@@ -39,7 +38,7 @@ const Profile = ({ setUserId }) => {
         } else {
             // 편집 가능 상태 -> 읽기 전용 상태로 전환 및 프로필 업데이트
             try {
-                const response = await axios.post(`http://localhost:8070/hompy/${userId}/profile`, { profile: profile }, {
+                const response = await axios.post(`http://localhost:8070/hompy/${userInfo.id}/profile`, { profile: profile }, {
                     headers: { "Content-Type": "application/json" },
                 });
                 Swal.fire({

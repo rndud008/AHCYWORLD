@@ -14,7 +14,7 @@ const PostItem = ({ item}) => {
       <tr>
         <td>{item.id}</td>
         <td>
-          <Link to={`/post/${hompyId}/${postName}/${folderId}/detail/${postId}`}>{item.subject}</Link>
+          <Link to={`/hompy/${hompyId}/${postName}/${folderId}/detail/${postId}`}>{item.subject}</Link>
         </td>
         <td>{item.folder.hompy.user.name}</td>
         <td>{item.createAt}</td>

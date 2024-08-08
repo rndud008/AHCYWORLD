@@ -161,6 +161,10 @@ const GuestBookHome = () => {
         setIsSecret(e.target.checked);
     };
 
+    // hompy 에대한 useParam을 통해 hompy 정보 가져오기
+    // 가져온 값값으로 방명록 글 셋팅.
+    // 현재 홈피info는 로그인한 유저의 정보들이기때문에 url 이 변경되어도 
+    // 나자신의 홈피 내용밖에 안나옴.
     return (
         <>
             <Layout hompy={hompyInfo} user={hompyInfo.user}>
