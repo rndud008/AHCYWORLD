@@ -1,16 +1,14 @@
-import logo from "./logo.svg";
+
 import "./App.css";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "./webpage/components/Header/Header";
 import Home from "./webpage/pages/Home";
-import MiniHome from "./minihompy/pages/Home";
+import Hompy from "./minihompy/pages/Hompy";
 import Login from "./webpage/pages/Login";
 import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
 import Admin from "./webpage/pages/Admin";
-import Layout from "./minihompy/components/Layout/Layout";
 import Menu from "./minihompy/components/menu/Menu";
-import BgmPlayer from "./minihompy/components/musicPlayer/BgmPlayer";
 import { useContext, useState } from "react";
 import Profile from "./minihompy/pages/Profile";
 import { LoginContext } from "./webpage/login/context/LoginContextProvider";
@@ -36,7 +34,7 @@ function App() {
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (
           <Route path="/hompy/:userId" element={<> <Menu userId={hompyInfo.id} /> </>}>
-            <Route index element={<MiniHome setUserId={setUserId}/>}/>
+            <Route index element={<Hompy setUserId={setUserId}/>}/>
             <Route path="profile" element={<Profile setUserId={setUserId} />}/>
           </Route>
         )}

@@ -70,10 +70,10 @@ const Layout = ({ hompy, user, children }) => {
             <div className='homepage-title'>{hompy.title}</div>
 
                 {/* Menu 컴포넌트 */}
-                <Menu userId={userId} />
+                {/* <Menu userId={userId} /> */}
 
                 {/* BGM Player 컴포넌트 */}
-                <BgmPlayer />
+                {/* <BgmPlayer /> */}
 
             {/* 메인 컨텐츠 */}
             <div className='d-flex justify-content-center align-items-center min-vh-100'>
