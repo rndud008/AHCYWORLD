@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./css/CalendarStyles.css";
-import moment from 'moment-timezone';
-import {useNavigate} from 'react-router-dom';
+import moment from "moment-timezone";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryModal from "./DiaryModal";
-import { SERVER_HOST } from "../../../apis/api"; 
+import { SERVER_HOST } from "../../../apis/api";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import Layout from "../Layout/Layout";
 
 const DiaryHome = () => {
     const curDate = new Date();
@@ -21,6 +23,7 @@ const DiaryHome = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [diaryContent, setDiaryContent] = useState(null);
     const navigate = useNavigate();
+    const { hompyInfo, userInfo } = useContext(LoginContext);
 
     // 로딩시 초기
     useEffect(() => {
@@ -33,7 +36,9 @@ const DiaryHome = () => {
                 // console.log("diaries:", diaries);
                 const formattedDates = diaries.map((diary) => {
                     // console.log("diaryEvenDate : ", diary.eventDate);
-                    const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");
+                    const localDate = moment(new Date(diary.eventDate)).format(
+                        "YYYY-MM-DD"
+                    );
                     // console.log("localDate : ", localDate);
                     return localDate;
                 });
@@ -57,7 +62,7 @@ const DiaryHome = () => {
 
     // 각 날짜 타일에 컨텐츠 추가
     const addContent = ({ date, view }) => {
-        if(view !== 'month'){
+        if (view !== "month") {
             return null;
         }
 
@@ -68,7 +73,7 @@ const DiaryHome = () => {
         if (dayList.includes(formattedDate)) {
             console.log(`Adding content for date: ${formattedDate}`);
             return <div key={formattedDate}>⭐️</div>;
-        }else{
+        } else {
             console.log(`Date ${formattedDate} not in dayList`);
         }
         return null;
@@ -105,31 +110,33 @@ const DiaryHome = () => {
 
     const handleWriteClick = () => {
         navigate("/write");
-    }
+    };
 
     return (
         <>
-            <Calendar
-                locale="en-US"
-                onChange={onChange}
-                value={value}
-                next2AriaLabel={null} // 년 단위로 이동 버튼
-                prev2AriaLabel={null} // 년 단위로 이동 버튼
-                formatDay={(locale, date) => moment(date).format("D")} // 날짜형태 바꾸는 함수
-                tileContent={addContent} // 날짜 칸에 보여지는 콘텐츠
-                showNeighboringMonth={false} // 앞 뒤 달의 이어지는 날짜 보여주기 여부
-                onActiveStartDateChange={(
-                    { activeStartDate } // 활성화된 (현재 보여지는) 년, 월, 일이 변경될 때마다 실행
-                ) => getActiveMonth(activeStartDate)}
-                onClickDay={handleDateClick} // 날짜 클릭 시 핸들러
-            />
-            <DiaryModal
-                show={showModal}
-                onHide={handleCloseModal}
-                selectedDate={selectedDate}
-                diaryContent={diaryContent}
-                onWriteClick={handleWriteClick}
-            />
+            <Layout hompy={hompyInfo} user={hompyInfo.user}>
+                <Calendar
+                    locale="en-US"
+                    onChange={onChange}
+                    value={value}
+                    next2AriaLabel={null} // 년 단위로 이동 버튼
+                    prev2AriaLabel={null} // 년 단위로 이동 버튼
+                    formatDay={(locale, date) => moment(date).format("D")} // 날짜형태 바꾸는 함수
+                    tileContent={addContent} // 날짜 칸에 보여지는 콘텐츠
+                    showNeighboringMonth={false} // 앞 뒤 달의 이어지는 날짜 보여주기 여부
+                    onActiveStartDateChange={(
+                        { activeStartDate } // 활성화된 (현재 보여지는) 년, 월, 일이 변경될 때마다 실행
+                    ) => getActiveMonth(activeStartDate)}
+                    onClickDay={handleDateClick} // 날짜 클릭 시 핸들러
+                />
+                <DiaryModal
+                    show={showModal}
+                    onHide={handleCloseModal}
+                    selectedDate={selectedDate}
+                    diaryContent={diaryContent}
+                    onWriteClick={handleWriteClick}
+                />
+            </Layout>
         </>
     );
 };
