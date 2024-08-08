@@ -8,6 +8,8 @@ import com.lec.spring.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,17 +63,6 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/friends")
-    public List<Friend> friendList(@RequestParam(value = "username") String username) {
-        User user = userService.findByUsername(username);
-
-        List<Friend> friendList = friendService.findFriendsById(user.getId());
-
-        System.out.println(friendList);
-
-        return friendList;
-    }
-
     @GetMapping("/list")
     public List<User> list() {
         List<User> user = userService.list();
@@ -108,23 +99,24 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/addfriend")
-    public String addFriend(@RequestParam String friendType1
-            , @RequestParam String friendType2
-            , @RequestParam String message
-            , @RequestParam String username
-            , @RequestParam String friendUsername
-    ) {
-//        System.out.println("유저이름은: "+username);
-//        System.out.println("친구이름은?" +friendUsername);
-        User user = userService.findByUsername(username);
-        User friendUser = userService.findByUsername(friendUsername);
+    @PostMapping("/addinfo")
+    public String addInfo(@RequestParam String username
+            , @RequestParam String gender
+            , @RequestParam String birthDay) {
 
-        String response = friendService.addFriend(friendType1, friendType2, message, user, friendUser);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//        LocalDate birthday;
+//
+//        try {
+//            birthday = LocalDate.parse(birthDay, formatter);
+//        } catch (DateTimeParseException e) {
+//            return "Invalid date format";
+//        }
 
-
-
+        String response = userService.OAuthAddInfo(username, gender, birthDay);
 
         return response;
     }
+
 }

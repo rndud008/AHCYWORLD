@@ -8,6 +8,7 @@ import Apphompy from "./minihompy/Apphompy";
 import AhcyworldApp from "./AhcyworldApp";
 import AppLogin from "./webpage/login/AppLogin";
 import MusicApi from "./webpage/items/api/MusicApi";
+import WebPageApp from "./webpage/WebPageApp";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -20,7 +21,8 @@ root.render(
         <Provider store={store}>
             {/* <React.StrictMode> */}
             {/* <MusicApi /> */} {/* 혹시 노래데이터 받을 때 필요! */}
-            <AppLogin />
+            {/* <AppLogin /> */}
+            <WebPageApp />
             {/* <Apphompy /> */}
             {/* <AhcyworldApp /> */}
             {/* <AppGuestBook /> */}

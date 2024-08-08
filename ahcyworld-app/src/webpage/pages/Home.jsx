@@ -9,7 +9,7 @@ import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../payment/PaymentModal";
 
 const Home = () => {
-    const { isLogin, logout, userInfo, loginCheck } = useContext(LoginContext);
+    const { isLogin, logout, userInfo } = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
     const [friends, setFriends] = useState([]);
@@ -67,6 +67,7 @@ const Home = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             if (isLogin && userInfo.username) {
+                console.log(userInfo.username);
                 try {
                     const response = await userList();
                     setUsers(response.data);
@@ -97,7 +98,10 @@ const Home = () => {
 
     const onNaverLogin = () => {
         window.location.href = "http://localhost:8070/oauth2/authorization/naver";
+    };
 
+    const onKakaoLogin = () => {
+        window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=e6a276bbc03eba1dceba18ea7095056c&redirect_uri=http://localhost:8070/oauth2/kakao/callback&response_type=code";
     };
 
     return (
@@ -145,6 +149,7 @@ const Home = () => {
             )}
 
             <Button onClick={onNaverLogin}>Naver</Button>
+            <Button onClick={onKakaoLogin}>Kakao</Button>
 
             <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
             <br />

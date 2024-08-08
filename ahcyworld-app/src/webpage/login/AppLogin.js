@@ -7,6 +7,7 @@ import Join from "../pages/Join";
 import Member from "../pages/Member";
 import Admin from "../pages/Admin";
 import Post from "../../minihompy/components/post/Post";
+import OAuth2AddInfo from "./Login/OAuth2AddInfo";
 
 const AppLogin = () => {
     return (
@@ -19,7 +20,8 @@ const AppLogin = () => {
                     <Route path='/member' element={<Member />} />
                     <Route path='/admin' element={<Admin />} />
                     <Route path='/post/:hompyId/:postName/*' element={<Post />} />
-               </Routes>
+                    <Route path='/addinfo' element={<OAuth2AddInfo />} />
+                </Routes>
             </LoginContextProvider>
         </BrowserRouter>
     );

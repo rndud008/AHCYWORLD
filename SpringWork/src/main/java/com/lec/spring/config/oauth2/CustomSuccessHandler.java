@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -32,6 +33,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Long id = customOAuth2User.getUser().getId();
         String username = customOAuth2User.getUsername();
         String name = customOAuth2User.getName();
+        LocalDate birthDay = customOAuth2User.getUser().getBirthDay();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -46,7 +48,14 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addHeader("Authorization", "Bearer " + token);
         response.addCookie(createCookie("accessToken", token));
 
-        String redirectUrl = "http://localhost:3000/";
+        String redirectUrl;
+
+        if (birthDay == null) {
+            redirectUrl = "http://localhost:3000/addinfo";
+        } else {
+            redirectUrl = "http://localhost:3000/";
+        }
+
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 
