@@ -27,17 +27,15 @@ import java.util.Map;
 @RequestMapping("/hompy")
 public class HompyController {
 
-    private final HompyRepository hompyRepository;
     @Value("${app.upload.path}")
     private String UPLOADDIR;
     private final HompyService hompyService;
     private final UserService userService;
 
     @Autowired
-    public HompyController(HompyService hompyService, UserService userService, HompyRepository hompyRepository) {
+    public HompyController(HompyService hompyService, UserService userService) {
         this.hompyService = hompyService;
         this.userService = userService;
-        this.hompyRepository = hompyRepository;
     }
 
     // 특정 User의 Hompy 조회

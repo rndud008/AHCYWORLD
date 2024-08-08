@@ -7,7 +7,7 @@ import { PostAction } from "../../../redux/actions/PostAction";
 import { FolderAction } from "../../../redux/actions/FolderAction";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 
-const PostListDetailItem = ({ item, moveFolderId, setMoveFolderId }) => {
+const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
   const { hompyInfo } = useContext(LoginContext);
   const { postName, hompyId } = useParams();
   const [show, setShow] = useState({
@@ -141,7 +141,7 @@ const PostListDetailItem = ({ item, moveFolderId, setMoveFolderId }) => {
   };
 
   return (
-    <Container >
+    <Container key={key}>
       <div>
         <span>작성번호 : {item.id}</span>
         <span>제목 : {item.subject}</span>
@@ -196,7 +196,7 @@ const PostListDetailItem = ({ item, moveFolderId, setMoveFolderId }) => {
               <Button
                 onClick={() =>
                   navigate(
-                    `/post/${hompyId}/${postName}/${folderId}/update/${postId}`
+                    `/hompy/${hompyId}/${postName}/${folderId}/update/${postId}`
                   )
                 }
               >

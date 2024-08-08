@@ -52,11 +52,11 @@ function movePostFolderAxios(
       alert("폴더 변경 성공.");
       dispatch({ type: "MOVE_POST_FOLDER", payload: { data } });
       navigate(
-        `/post/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`
+        `/hompy/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`
       );
     } else {
       alert("폴더 변경 실패");
-      navigate(`/post/${hompyId}/${postName}/${folderId}`);
+      navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
     }
   };
 }
@@ -72,7 +72,7 @@ function deletePostAxios(hompyId, postName, folderId, postId, navigate) {
       alert("삭제 성공.");
       dispatch({ type: "DELETE_POST", payload: { postId } });
       dispatch(PostAction.axiosPostList());
-      navigate(`/post/${hompyId}/${postName}/${folderId}`);
+      navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
     } else {
       alert("삭제 실패.");
       navigate(-1);
@@ -97,13 +97,13 @@ function createPostAxios(hompyId, postName, folderId, formData, navigate) {
       alert("작성성공", data);
       dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
       if (postName.includes("board")) {
-        navigate(`/post/${hompyId}/${postName}/${folderId}/detail/${data}`);
+        navigate(`/hompy/${hompyId}/${postName}/${folderId}/detail/${data}`);
       } else {
-        navigate(`/post/${hompyId}/${postName}/${folderId}`);
+        navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
       }
     } else {
       alert("작성실패");
-      navigate(`/post/${hompyId}/${postName}/`);
+      navigate(`/hompy/${hompyId}/${postName}/`);
     }
   };
 }

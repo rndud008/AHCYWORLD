@@ -13,15 +13,18 @@ import { FolderAction } from "../../../redux/actions/FolderAction";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import Layout from "../Layout/Layout";
+import { hompyInfo } from "../../../apis/auth";
 
-const Post = () => {
+const Post = ({page}) => {
     const { hompyId, postName } = useParams();
     const {userInfo} = useContext(LoginContext);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
-    const [page, setPage] = useState(0);
-    const [moveFolderId, setMoveFolderId] = useState();
+    console.log(hompyId,'post')
+
+    const {hompyInfo} = useContext(LoginContext);
+
     // const [folderList, setFolderList] = useState([]);
     const folder = useSelector((state) => state.folder.folder)
     const folderList = useSelector((state)=> state.folder.folderList)
@@ -72,7 +75,7 @@ const Post = () => {
     useEffect(()=>{
       if(folder || folder?.length >0){
         axiosPostList();
-        navigate(`/post/${hompyId}/${postName}/${folder.id}`)
+        navigate(`/hompy/${hompyId}/${postName}/${folder.id}`)
       }
     },[page,folder?.id])
   
@@ -80,60 +83,18 @@ const Post = () => {
     return userInfo?.id != null && (
       <>
       {/* 쿠키 를 이용하여 로그인 한 회원인지 체크. */}
-        <div>
-          <Header />
+        <Layout hompy={hompyInfo} user={hompyInfo.user}>
+          {/* <Header /> */}
           <Container>
             <Row>
               <Col>
-                <BoardTypeList
-                  folderList={folderList}
-                  postName={postName}
-                  // setFolderList={setFolderList}
-                  // setPageAndPostList={setPageAndPostList}
-                  folder={folder}
-                  // setFolder={setFolder}
-                  hompyId={hompyId}
-                />
+                <BoardTypeList />
               </Col>
               <Col>
                 <Outlet />
-                <Routes>
-                  <Route
-                    path=":folderId"
-                    element={
-                      postName.includes('board') ?
-                      <PostList
-                        pageAndPostList={pageAndPostList}
-                        folder={folder}
-                        setPage={setPage}
-                      />
-                      :
-                      <PostListDetail
-                        pageAndPostList={pageAndPostList}
-                        folderList={folderList}
-                        moveFolderId={moveFolderId}
-                        setMoveFolderId={setMoveFolderId}
-                        folder={folder}
-                        setPage={setPage}
-                      />
-                    }
-                  />
-                  <Route
-                    path=":folderId/detail/:postId"
-                    element={
-                      <PostDetail
-                        folderList={folderList}
-                        moveFolderId={moveFolderId}
-                        setMoveFolderId={setMoveFolderId}
-                      />
-                    }
-                  />
-                  <Route path=":folderId/write" element={<PostWrite />} />
-                  <Route path=":folderId/update/:postId" element={<PostUpdate />} />
-                </Routes>
               </Col>
             </Row>
-            <Container>
+            {/* <Container>
               <Button variant="none">
                 <Link to={`/post/${hompyId}/${"board"}`}>게시판</Link>
               </Button>
@@ -143,9 +104,9 @@ const Post = () => {
               <Button variant="none">
                 <Link to={`/post/${hompyId}/${"photo"}`}>사진첩</Link>
               </Button>
-            </Container>
+            </Container> */}
           </Container>
-        </div>
+        </Layout>
       </>
     );
   };
