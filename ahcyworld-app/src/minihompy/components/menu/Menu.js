@@ -5,7 +5,7 @@ import { LoginContext } from '../../../webpage/login/context/LoginContextProvide
 import BgmPlayer from '../musicPlayer/BgmPlayer';
 
 const Menu = ({userId}) => {
-  // 
+  //
   // console.log("id:", userId);
 
   const {userInfo,hompyInfo} = useContext(LoginContext);
@@ -44,7 +44,7 @@ const Menu = ({userId}) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/guest_book" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/guestbook/${hompyId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             방명록
           </NavLink>
         </li>
@@ -55,7 +55,7 @@ const Menu = ({userId}) => {
         </li>
       </ul>
     </nav>
-    <BgmPlayer /> 
+    <BgmPlayer />
     <Outlet />
     </>
   );

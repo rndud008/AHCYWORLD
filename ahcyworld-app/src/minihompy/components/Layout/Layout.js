@@ -13,6 +13,7 @@ const Layout = ({ hompy, user, children }) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
     const userId = user?.id;
+    const hompyId = hompy.id;
 
     console.log(userId)
 
@@ -85,7 +86,7 @@ const Layout = ({ hompy, user, children }) => {
                 </div>
             </div>
 
-            
+
         </div>
     );
 };

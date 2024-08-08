@@ -10,10 +10,12 @@ import Cart from "../pages/Cart";
 import Post from "../../minihompy/components/post/Post";
 import Hompy from "../../minihompy/pages/Hompy";
 import Profile from "../../minihompy/pages/Profile";
+import GuestBookHome from "../../minihompy/components/guestBook/GuestBookHome";
 
 const AppLogin = () => {
 
     const [userId, setUserId] = useState();
+
 
     return (
         <BrowserRouter>
@@ -28,6 +30,7 @@ const AppLogin = () => {
                     <Route path='/hompy/:userId' element={<Hompy setUserId={setUserId} />} />
                     <Route path='/profile/:userId' element={<Profile setUserId={setUserId} />} />
                     <Route path='/cart' element={<Cart/>}></Route>
+                    <Route path="/guestbook/:hompyId" element={<GuestBookHome setUserId={setUserId}/>} />
                 </Routes>
             </LoginContextProvider>
         </BrowserRouter>
