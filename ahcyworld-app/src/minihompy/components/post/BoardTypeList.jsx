@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./BoardTypeList.css";
 import { Button, Modal, Form, ListGroup, Container } from "react-bootstrap";
-import api from "../../../apis/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FolderAction } from "../../../redux/actions/FolderAction";

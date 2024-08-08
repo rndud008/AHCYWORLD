@@ -5,7 +5,7 @@ import "./PostWrite.css";
 import { nameCheck } from "./postUtils";
 import { useDispatch } from "react-redux";
 import { PostAction } from "../../../redux/actions/PostAction";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"; 
 
 const PostWrite = () => {
     const { hompyId, postName, folderId } = useParams();

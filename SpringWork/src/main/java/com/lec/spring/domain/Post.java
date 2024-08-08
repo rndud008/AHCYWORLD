@@ -2,6 +2,7 @@ package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.lec.spring.listener.WriteEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
@@ -17,6 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
+@EntityListeners(WriteEntityListener.class)
 public class Post extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +52,9 @@ public class Post extends BaseEntity{
     @Column(insertable = false)
     @ColumnDefault(value = "0")
     private Long scrap;
+
+    @Transient
+    private boolean updateViews = true;
 
     // 작성일은 BaseEntity
 

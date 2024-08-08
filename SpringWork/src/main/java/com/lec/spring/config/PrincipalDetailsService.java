@@ -13,21 +13,19 @@ import org.springframework.stereotype.Service;
 public class PrincipalDetailsService implements UserDetailsService {
 
     private final UserService userService;
-    private final HompyService hompyService;
 
-    public PrincipalDetailsService(UserService userService, HompyService hompyService) {
+
+    public PrincipalDetailsService(UserService userService) {
         this.userService = userService;
-        this.hompyService = hompyService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userService.findByUsername(username);
-        Hompy hompy = hompyService.findHompyByuser(user);
 
         if (user != null) {
-            return new PrincipalDetails(user,hompy);
+            return new PrincipalDetails(user);
         }
 
         throw new UsernameNotFoundException(username);

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import './css/Profile.css';
 
 const Profile = ({ setUserId }) => {
+    console.log('Profile 실행')
     const { userId } = useParams();
     const [hompy, setHompy] = useState({});
     const [profile, setProfile] = useState(""); 

@@ -50,7 +50,7 @@ const PostList = ({ name, pageAndPostList, folder, setPage }) => {
           <tbody>
             {pageAndPostList?.posts !== null ? (
               pageAndPostList?.posts?.map((item) => {
-                return <PostItem item={item} />;
+                return <PostItem key={item.id} item={item} />;
               })
             ) : (
               <h4>게시물이 존재하지 않습니다.</h4>

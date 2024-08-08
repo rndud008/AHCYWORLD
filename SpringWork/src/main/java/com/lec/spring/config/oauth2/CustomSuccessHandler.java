@@ -32,7 +32,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Long id = customOAuth2User.getUser().getId();
         String username = customOAuth2User.getUsername();
         String name = customOAuth2User.getName();
-
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();

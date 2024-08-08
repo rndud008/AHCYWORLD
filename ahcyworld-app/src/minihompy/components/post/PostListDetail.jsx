@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import PageNation from "./PageNation";
 import PostItem from "./PostItem";
 import PostListDetailItem from "./PostListDetailItem";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"; 
 
 const PostListDetail = ({
   pageAndPostList,
@@ -54,6 +54,7 @@ const PostListDetail = ({
             pageAndPostList?.posts?.map((item) => {
               return (
                 <PostListDetailItem
+                  key={item}
                   item={item}
                   folderList={folderList}
                   moveFolderId={moveFolderId}

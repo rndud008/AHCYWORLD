@@ -1,20 +1,24 @@
 show tables;
 
-
 drop table if exists attachment_id;
 
 select *
+from folder;
+select * from friend;
+select * from ah_user;
+select* from friend;
+select * from payment_history;
+select * from post;
+select * from attachment;
+select * from user_write_histroy;
+
+alter table user_write_histroy drop column update_at;
+#  컬럼 삭제.
+
+insert into post (create_at,folder_id,content,subject)
+select create_at,folder_id,content,subject
 from friend;
-select *
-from ah_user;
-select*
-from friend;
-select *
-from payment_history;
-select *
-from post;
-select *
-from attachment;
+
 select *
 from diary;
 select *

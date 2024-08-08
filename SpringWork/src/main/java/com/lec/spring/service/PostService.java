@@ -120,6 +120,10 @@ public class PostService {
             }
         }
 
+        List<Attachment> attachmentList = attachmentRepository.findByPostId(post.getId());
+        post.setFileList(attachmentList);
+        postRepository.save(post);
+
     }
 
     private void setImageAndVideo(List<Attachment> fileList) {
@@ -148,7 +152,6 @@ public class PostService {
         }
     }
 
-
     private void deleteFile(Attachment attachment) {
         String saveDir = new File(UPLOADDIR).getAbsolutePath();
 
@@ -175,7 +178,7 @@ public class PostService {
         post.setFolder(folder);
 
         // 글저장
-        post = postRepository.saveAndFlush(post);
+        post = postRepository.save(post);
 
         // 첨부파일 추가.
         addFiles(files, post);
@@ -190,7 +193,8 @@ public class PostService {
 
         if (post != null) {
             post.setViewCnt(post.getViewCnt() + 1);
-//            postRepository.save(post);
+            post.setUpdateViews(false);
+            postRepository.save(post);
 
             // 첨부파일들 을 가져와서 image 파일 관련 세팅.
             List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
@@ -263,6 +267,7 @@ public class PostService {
             List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
             setImageAndVideo(fileList);
             post.setFileList(fileList);
+        post.setUpdateViews(false);
         }
 
         return post;
@@ -278,6 +283,7 @@ public class PostService {
         if (oringPost != null) {
             oringPost.setSubject(post.getSubject());
             oringPost.setContent(post.getContent());
+
 
             oringPost = postRepository.saveAndFlush(oringPost);
 
@@ -324,6 +330,7 @@ public class PostService {
     @Transactional
     public Post movePost(Post post, Folder moveFolder) {
         post.setFolder(moveFolder);
+        post.setUpdateViews(false);
 
         return post;
     }
@@ -335,12 +342,13 @@ public class PostService {
 
         Post originPost = postRepository.findById(post.getId()).orElse(null);
         Post copyPost = Post.builder()
-                .subject(originPost.getSubject())
+                .subject("[스크랩]"+originPost.getSubject())
                 .content(originPost.getContent())
                 .folder(scrapFolder)
+                .updateViews(true)
                 .build();
 
-        postRepository.saveAndFlush(copyPost);
+        copyPost = postRepository.save(copyPost);
         List<Attachment> copyAttachmentList = new ArrayList<>();
 
         if (attachmentList != null) {
@@ -350,17 +358,16 @@ public class PostService {
                         .sourceName(attachment.getSourceName())
                         .fileName(attachment.getFileName())
                         .build();
-
-                attachmentRepository.saveAndFlush(copyAttachment);
                 copyAttachmentList.add(copyAttachment);
             }
+            copyAttachmentList = attachmentRepository.saveAll(copyAttachmentList);
             setImageAndVideo(copyAttachmentList);
             copyPost.setFileList(copyAttachmentList);
-            postRepository.save(copyPost);
+            postRepository.saveAndFlush(copyPost);
         }
-
+        originPost.setUpdateViews(false);
         originPost.setScrap(originPost.getScrap() + 1);
-        postRepository.saveAndFlush(originPost);
+        postRepository.save(originPost);
 
         Comment comment = Comment.builder()
                 .post(originPost)

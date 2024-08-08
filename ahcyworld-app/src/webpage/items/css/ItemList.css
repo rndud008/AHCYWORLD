@@ -1,8 +1,9 @@
 td {
     text-align: center;
 }
-img{
-    width: 300px;
+.itemImg{
+    width: 400px;
+    height: 300px;
     border: 1px solid black;
 }
 
@@ -22,7 +23,7 @@ img{
    margin-bottom: 60px;
    
 }
-tbody{
+.itemListFram{
     width: 400px;
 }
 .page{
@@ -31,7 +32,7 @@ tbody{
     text-align: center;
 }
 
-table{
+.itemTable{
     border: 1px solid black;
     border-spacing: 90px;
     width: 400px;
@@ -47,3 +48,10 @@ table{
 .pushItem:active{
     background-color: rgb(172, 118, 19);
 }
+
+.itemPagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

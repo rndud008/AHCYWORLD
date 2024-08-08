@@ -1,10 +1,8 @@
 package com.lec.spring.config.oauth2;
-
 import com.lec.spring.config.oauth2.provider.NaverUserInfo;
 import com.lec.spring.config.oauth2.provider.OAuth2UserInfo;
 import com.lec.spring.domain.CustomOAuth2User;
 import com.lec.spring.domain.User;
-import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

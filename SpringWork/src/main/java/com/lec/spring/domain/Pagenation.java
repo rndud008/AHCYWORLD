@@ -21,4 +21,5 @@ public class Pagenation {
     private int endpage;
     private String url;
     private List<Post> posts;
+    private List<Item> items;
 }

@@ -17,7 +17,8 @@ const Join = () => {
         } catch (error) {
             // console.log(`${error}`);
             // console.log(`회원 가입 요청중 에러가 발생했습니다.`);
-            return;
+            alert(error)
+            return
         }
 
         const { data, status } = response;
@@ -33,7 +34,6 @@ const Join = () => {
 
     return (
         <>
-            <Header />
             <div>
                 <JoinForm join={join} />
             </div>

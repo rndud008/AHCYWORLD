@@ -1,10 +1,16 @@
-import React from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import './Menu.css';
+import { LoginContext } from '../../../webpage/login/context/LoginContextProvider';
+import BgmPlayer from '../musicPlayer/BgmPlayer';
 
 const Menu = ({userId}) => {
+  // 
   // console.log("id:", userId);
+
+  const {userInfo,hompyInfo} = useContext(LoginContext);
   return (
+    <>
     <nav className="menu-nav">
       <ul>
         <li>
@@ -13,7 +19,7 @@ const Menu = ({userId}) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to={`/profile/${userId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${userId}/${'profile'}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             프로필
           </NavLink>
         </li>
@@ -49,6 +55,9 @@ const Menu = ({userId}) => {
         </li>
       </ul>
     </nav>
+    <BgmPlayer /> 
+    <Outlet />
+    </>
   );
 };
 
