@@ -9,6 +9,7 @@ import Member from "./webpage/pages/Member";
 import Admin from "./webpage/pages/Admin";
 import Menu from "./minihompy/components/menu/Menu";
 import GuestBookHome from "./minihompy/components/guestBook/GuestBookHome";
+import DiaryHome from "./minihompy/components/diary/DiaryHome";
 import { useContext, useState } from "react";
 import Profile from "./minihompy/pages/Profile";
 import { LoginContext } from "./webpage/login/context/LoginContextProvider";
@@ -52,20 +53,21 @@ function App() {
                   postName?.includes("board") ? (
                     <PostList setPage={setPage} />
                   ) : ( <PostListDetail
-                     moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} setPage={setPage} 
+                     moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} setPage={setPage}
                      /> )
                 }
               />
-              <Route path=":folderId/detail/:postId" element={ <PostDetail 
+              <Route path=":folderId/detail/:postId" element={ <PostDetail
               moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} /> } />
               <Route path=":folderId/write" element={<PostWrite />} />
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
+            <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
           </Route>
         )}
         {/* 3. 어드민 페이지 */}
         <Route></Route>
-        
+
       </Routes>
     </div>
   );

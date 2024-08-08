@@ -11,6 +11,7 @@ import Post from "../../minihompy/components/post/Post";
 import Hompy from "../../minihompy/pages/Hompy";
 import Profile from "../../minihompy/pages/Profile";
 import GuestBookHome from "../../minihompy/components/guestBook/GuestBookHome";
+import OAuth2AddInfo from "./Login/OAuth2AddInfo";
 
 const AppLogin = () => {
 
@@ -31,6 +32,7 @@ const AppLogin = () => {
                     <Route path='/profile/:userId' element={<Profile setUserId={setUserId} />} />
                     <Route path='/cart' element={<Cart/>}></Route>
                     <Route path="/guestbook/:hompyId" element={<GuestBookHome setUserId={setUserId}/>} />
+                    <Route path='/addinfo' element={<OAuth2AddInfo />} />
                 </Routes>
             </LoginContextProvider>
         </BrowserRouter>
