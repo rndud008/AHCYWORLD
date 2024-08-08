@@ -6,6 +6,7 @@ import com.lec.spring.domain.User;
 import com.lec.spring.domain.oauth.KaKaoProfile;
 import com.lec.spring.domain.oauth.KakaoOAuthToken;
 import com.lec.spring.jwt.JWTUtil;
+import com.lec.spring.service.HompyService;
 import com.lec.spring.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -44,13 +45,16 @@ public class KakaoOAuth2Controller {
 
 
     private final UserService userService;
+    private final HompyService hompyService;
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
 
-    public KakaoOAuth2Controller(UserService userService, AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+    public KakaoOAuth2Controller(UserService userService, AuthenticationManager authenticationManager
+            , JWTUtil jwtUtil, HompyService hompyService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.hompyService = hompyService;
     }
 
     @GetMapping("/kakao/callback")
@@ -60,8 +64,10 @@ public class KakaoOAuth2Controller {
         KakaoOAuthToken token = kakaoAccessToken(code);
         KaKaoProfile profile = kakaoUserInfo(token.getAccess_token());
         User kakaoUser = registerKakaoUser(profile);
+        Long hompyId = hompyService.findHompyByuser(kakaoUser).getId();
         String jwtToken = jwtUtil.createJwt(
                 kakaoUser.getId(),
+                hompyId,
                 kakaoUser.getUsername(),
                 "ROLE_MEMBER",
                 kakaoUser.getName(),
