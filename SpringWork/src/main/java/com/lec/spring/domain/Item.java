@@ -15,13 +15,13 @@ public class Item {
     private Long id;
 
     @Column(nullable = false)
-    private String itemName;    // 상품이름, 가수-노래제목
+    private String itemName;    // 상품이름,노래제목
 
     @Column(nullable = false)
     private String itemType;    // 상품타입
 
     @Column(nullable = false)
-    private String sourceName;  // 원본명(이미지), 노래 이미지
+    private String sourceName;  // 원본명(이미지), 노래 가수
 
     @Column(nullable = false)
     private String fileName;    // 저장명, 노래 링크

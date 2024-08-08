@@ -40,6 +40,7 @@ where id = 3;
 select * from diary;
 select * from hompy;
 select * from guest_book;
+select * from carts;
 
 SELECT * FROM Hompy WHERE user_id = 4;
 

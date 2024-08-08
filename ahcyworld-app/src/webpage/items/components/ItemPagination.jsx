@@ -1,24 +1,28 @@
 import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 
-const ItemPagination = () => {
+const ItemPagination = ({pageData, setCurrentPage}) => {
+
+  const {totalPage, page, startpage,endpage} = pageData;
+
+  const pages = Array.from({length: endpage - startpage + 1}, (_,i) => startpage+i);
+  
     return (
         <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
-  
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-        <Pagination.Item active>{12}</Pagination.Item>
-        <Pagination.Item>{13}</Pagination.Item>
-        <Pagination.Item disabled>{14}</Pagination.Item>
-  
-        <Pagination.Ellipsis />
-        <Pagination.Item>{20}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
+        {page >1 ? <Pagination.First onClick={() =>setCurrentPage(1)}/> : null}
+        {startpage > 1 ? <Pagination.Prev onClick={() =>setCurrentPage(startpage - 1)}/>: null}
+
+        {totalPage > 1 ? 
+        (pages.map(k =>(
+          page === k ? <Pagination.Item onClick={() =>setCurrentPage(k)} active key={k}>{k}</Pagination.Item>
+          :
+          <Pagination.Item onClick={() => setCurrentPage(k)} key={k}>{k}</Pagination.Item>
+        )))
+        :
+        null
+        }
+        { totalPage > endpage ? <Pagination.Next onClick={() => setCurrentPage(endpage + 1)}/> : null}
+        {page < totalPage? <Pagination.Last onClick={() => setCurrentPage(totalPage)}/> : null}
       </Pagination>
     );
 };

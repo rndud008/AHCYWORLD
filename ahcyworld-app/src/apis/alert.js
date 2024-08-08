@@ -23,3 +23,24 @@ export const confirm = (title, text, icon, callback) => {
         confirmButtonText: "Yes",
     }).then(callback);
 };
+
+
+/* 아이템 장바구니추가 알림창 */
+export const itemconfirm = (title, text, icon, callback, cancelCallback) => {
+    mySwal.fire({
+        title: title,
+        text: text,
+        icon: icon,
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        cancelButtonText: "No",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }else if(result.isDismissed){
+            cancelCallback();
+        }
+    });
+};

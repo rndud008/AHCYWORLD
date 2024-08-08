@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { nameCheck } from "./postUtils";
-import { LoginContext } from "../../../login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"
 
 const PostUpdate = () => {
     const { hompyId, postName, folderId, postId } = useParams();

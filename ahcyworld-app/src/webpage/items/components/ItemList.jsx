@@ -1,47 +1,88 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SERVER_HOST } from "../../../apis/api";
 import "../css/ItemList.css";
-import { Button } from "react-bootstrap";
-import Pagination from "react-bootstrap/Pagination";
 import ItemPagination from "./ItemPagination";
+import { LoginContext } from "../../login/context/LoginContextProvider"
+import * as Swal from "../../../apis/alert";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ItemList = (props) => {
     const [items, setItems] = useState([]);
     const [isMusic, setIsMusic] = useState(false);
     const [isFont, setIsFont] = useState(false);
-    const [totalPage, setTotalPage] = useState(10);
+    const [pageData, setPageData] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const {userInfo} = useContext(LoginContext)
+    const navigate = useNavigate();
 
     useEffect(() => {
+        window.scroll(0,0);
         const type = props.itemKind;
+        let firstpage = 0;
+        if(localStorage.getItem("currentType") === type){
+            firstpage = currentPage;
+        }else{
+            firstpage = 1;
+        }
+        console.log("유저 정보: " + JSON.stringify(userInfo));
         axios({
             method: "GET",
             url: `${SERVER_HOST}/item/${type}`,
+            params: {page: firstpage},
         }).then((response) => {
             const { data, status } = response;
+            const { items } = data;
+            localStorage.setItem("currentType",type);
             if (status === 200) {
                 const threeItems = [];
-                for (let i = 0; i < [...data].length; i += 3) {
-                    threeItems.push([...data].slice(i, i + 3));
+                for (let i = 0; i < [...items].length; i += 3) {
+                    threeItems.push([...items].slice(i, i + 3));
                 }
                 setItems(threeItems);
-                if (data[0].itemType === "배경음악") {
+                if (items[0].itemType === "배경음악") {
                     setIsMusic(true);
                 } else {
                     setIsMusic(false);
+
                 }
-                if (data[0].itemType === "글꼴") {
+                if (items[0].itemType === "글꼴") {
                     setIsFont(true);
                 } else {
                     setIsFont(false);
                 }
+                setPageData({...data});
             }
+            
         });
-    }, [props.itemKind]);
+    }, [props.itemKind, currentPage]);
+
+    const addCart = (item) => {
+        console.log("유저 정보 이름: " + userInfo.username);
+        console.log("아이텀 이름: " + item.itemName);
+        
+        axios({
+            method: "POST",
+            url: `${SERVER_HOST}/cart/additem`,
+            params: {
+                username: userInfo.username,
+                itemname: item.itemName,
+            }
+        }).then(response => {
+            const {data, status, error} = response
+            if(status === 201){
+                Swal.itemconfirm("장바구니 추가", "장바구니화면으로 이동하시겠습니까?", "success",() => {navigate("/cart")}, () => {console.log("안이동이지롱")});
+            }else{
+                window.alert("실패! : " + error)
+            }
+
+        })
+
+    }
 
     return (
         <>
-            <table>
+            <table className="itemTable">
                 <tbody className='itemListFram'>
                     {items.map((threeItem, rowIndex) => (
                         <tr className='itemRow' key={rowIndex}>
@@ -55,11 +96,11 @@ const ItemList = (props) => {
                                             value='AhCyWorld'
                                         />
                                     ) : isMusic ? (
-                                        <img src={item.bgmImg} />
+                                        <img className="itemImg" src={item.bgmImg} />
                                     ) : (
                                         <img
+                                            className="itemImg"
                                             src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
-                                            style={{ height: "250px" }}
                                         />
                                     )}
                                     <br />
@@ -74,14 +115,16 @@ const ItemList = (props) => {
                                             <br />
                                         </div>
                                     )}
-                                    <button className='pushItem'>장바구니추가</button>
+                                    <button className='pushItem' onClick={()=>addCart(item)}>장바구니추가</button>
                                 </td>
                             ))}
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <ItemPagination totalPages={totalPage} />
+            <div className="itemPagination">
+                <ItemPagination pageData={pageData} setCurrentPage={setCurrentPage} />
+            </div>
         </>
     );
 };
