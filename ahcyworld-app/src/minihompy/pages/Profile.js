@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 const Profile = ({ setUserId }) => {
     console.log('Profile 실행')
     const { userId } = useParams();
-    const [hompy, setHompy] = useState(null);
+    const [hompy, setHompy] = useState({});
     const [profile, setProfile] = useState(""); 
     const [isReadOnly, setIsReadOnly] = useState(true); // CKEditor의 읽기 전용 상태 관리
     const [buttonLabel, setButtonLabel] = useState("프로필 수정"); // 버튼 라벨 관리
@@ -61,10 +61,6 @@ const Profile = ({ setUserId }) => {
             }
         }
     };
-
-    if (!hompy) {
-        return <div>Hompy data not found</div>;
-    }
 
     return (
         <Layout hompy={hompy} user={hompy.user}>

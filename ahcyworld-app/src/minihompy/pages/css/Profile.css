@@ -1,0 +1,35 @@
+.profile-container {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  height: 750px;
+  margin-left: -510px;
+  display: flex;
+  flex-direction: column; /* 세로로 나열되도록 설정 */
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.ck-editor__editable {
+  height: 640px;
+  font-size: 24px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.profile-btn {
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100px;
+  margin-left: auto;
+}

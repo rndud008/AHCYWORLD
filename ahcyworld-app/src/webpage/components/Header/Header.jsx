@@ -12,6 +12,7 @@ const Header = () => {
     // console.log("userInfo: ", userInfo);
 
     console.log("hompyInfo",hompyInfo)
+    console.log("userInfo", userInfo);
 
     return (
         <>
@@ -42,6 +43,9 @@ const Header = () => {
                             </Link>
                             <Link className='nav-link' to={`/post/${hompyInfo?.id}/board`}>
                                 Post
+                            </Link>
+                            <Link className='nav-link' to={`/hompy/${userInfo.id}`}>
+                                미니홈피
                             </Link>
                             <Button variant='primary' onClick={() => logout()}>
                                 로그아웃

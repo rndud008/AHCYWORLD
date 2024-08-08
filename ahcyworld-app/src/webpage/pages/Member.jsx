@@ -70,7 +70,7 @@ const Member = () => {
             </button>
             <div>내가 가지고 있는 도토리: {user.acorn}</div>
             <hr />
-            <ItemList itemKind={itemKind} />
+            <ItemList itemKind={itemKind} />    
         </div>
     );
 };

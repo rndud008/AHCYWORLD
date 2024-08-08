@@ -6,6 +6,8 @@ import "./css/Layout.css";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import Menu from "../menu/Menu";
+import BgmPlayer from "../musicPlayer/BgmPlayer";
 
 const Layout = ({ hompy, user, children }) => {
 
@@ -48,17 +50,13 @@ const Layout = ({ hompy, user, children }) => {
         increaseVisitCount();
     }, [user]);
 
-    if (!hompy || !user) {
-        return <div>Loading...</div>; // hompy가 없을 때 로딩 중 표시
-    }
-
     return (
         <div className='container-fluid p-0 position-relative layout-container'>
             {/* 배경 이미지 */}
             <div
                 className='background-image'
                 style={{
-                    backgroundImage: `url(${process.env.PUBLIC_URL}/image/렌고쿠.png)`,
+                    backgroundImage: `url(${process.env.PUBLIC_URL}/image/mainskin.png)`,
                 }}
             ></div>
 
@@ -71,13 +69,19 @@ const Layout = ({ hompy, user, children }) => {
             {/* 김세진님의 미니홈피 */}
             <div className='homepage-title'>{hompy.title}</div>
 
+                {/* Menu 컴포넌트 */}
+                <Menu userId={userId} />
+
+                {/* BGM Player 컴포넌트 */}
+                <BgmPlayer />
+
             {/* 메인 컨텐츠 */}
             <div className='d-flex justify-content-center align-items-center min-vh-100'>
                 <div className='left-panel'>
                     <Left user={user} hompy={hompy} />
                 </div>
                 <div className='right-panel'>
-                {children || <Right hompy={hompy} />} {/* children을 통해 오른쪽 컴포넌트를 대체 */}
+                {children || <Right hompy={hompy} user={user} />} {/* children을 통해 오른쪽 컴포넌트를 대체 */}
                 </div>
             </div>
 
