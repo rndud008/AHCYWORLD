@@ -34,7 +34,7 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
 
-    @Column(updatable = false, nullable = true)
+    @Column(nullable = true)
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate birthDay;
 
