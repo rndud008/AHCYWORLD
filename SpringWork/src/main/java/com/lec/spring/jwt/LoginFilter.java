@@ -48,7 +48,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Long id = userDetails.getUser().getId();
         String username = userDetails.getUsername();
         String name = userDetails.getUser().getName();
-        Long hompId = userDetails.getHompy().getId();
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         String role = authorities.stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
