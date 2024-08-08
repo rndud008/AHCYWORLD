@@ -18,10 +18,7 @@ const BoardTypeList = () => {
       hompy: "",
       status: "",
     });
-    // const[folderList, setFolderList] = useState()
-  
     const { hompyInfo } = useContext(LoginContext);
-  
     const folderList = useSelector((state) => state.folder.folderList);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -104,7 +101,7 @@ const BoardTypeList = () => {
   
       dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
   
-      navigate(`/post/${hompyId}/${postName}/${folderId}`);
+      navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
     };
   
     const folderDelete = async () => {

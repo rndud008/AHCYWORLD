@@ -7,11 +7,14 @@ import PostItem from "./PostItem";
 import PageNation from "./PageNation";
 import { useCol } from "react-bootstrap/esm/Col";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { useSelector } from "react-redux";
 
 // boardType 에 따라 PostDetail or PostListDetail 출력.
-const PostList = ({ name, pageAndPostList, folder, setPage }) => {
+const PostList = ({ setPage }) => {
   const { hompyId, postName } = useParams();
   const { hompyInfo } = useContext(LoginContext);
+  const pageAndPostList = useSelector(state => state.post.pageAndPostList);
+  const folder = useSelector((state) => state.folder.folder)
 
   return (
     <>
@@ -25,7 +28,7 @@ const PostList = ({ name, pageAndPostList, folder, setPage }) => {
                   <Button variant="none">
                     {" "}
                     <Link
-                      to={`/post/${hompyId}/${postName}/${folder.id}/write`}
+                      to={`/hompy/${hompyId}/${postName}/${folder.id}/write`}
                     >
                       글쓰기
                     </Link>
@@ -58,7 +61,7 @@ const PostList = ({ name, pageAndPostList, folder, setPage }) => {
           </tbody>
         </Table>
         <div>
-          <PageNation pageAndPostList={pageAndPostList} setPage={setPage} />
+          <PageNation setPage={setPage} />
         </div>
       </Container>
     </>

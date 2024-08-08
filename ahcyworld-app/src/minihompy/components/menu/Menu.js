@@ -29,17 +29,17 @@ const Menu = ({hompyId}) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/photo" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${userId}/${`photo`}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             사진첩
           </NavLink>
         </li>
         <li>
-          <NavLink to="/board" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${userId}/${`board`}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             게시판
           </NavLink>
         </li>
         <li>
-          <NavLink to="/video" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${userId}/${`video`}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             동영상
           </NavLink>
         </li>
