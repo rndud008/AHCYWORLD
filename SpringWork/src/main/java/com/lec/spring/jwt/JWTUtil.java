@@ -21,12 +21,13 @@ public class JWTUtil {
                 , Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
-    public String createJwt(Long id, String username, String role, String name, Long expiredMs) {
+    public String createJwt(Long id,Long hompyId, String username, String role, String name, Long expiredMs) {
         return Jwts.builder()
                 .claim("id", id)
                 .claim("username", username)
                 .claim("role", role)
                 .claim("name", name)
+                .claim("hompyId", hompyId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
@@ -40,6 +41,15 @@ public class JWTUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("id", Long.class);
+    }
+
+    public Long getHompyId(String token){
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("id",Long.class);
     }
 
     public String getUsername(String token) {

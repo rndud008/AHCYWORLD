@@ -70,6 +70,7 @@ const LoginContextProvider = ({ children }) => {
 
         // 인증성공
         loginSetting(data, accessToken);
+        console.log('check',data)
 
         response = await auth.hompyInfo();
         data = response.data;
@@ -144,7 +145,7 @@ const LoginContextProvider = ({ children }) => {
     };
 
     const loginSetting = (userData, accessToken) => {
-        const { id, username, role, name } = userData;
+        const { id, username, role, name, hompyId } = userData;
 
         // JWT 토큰을 header에 저장
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
@@ -156,7 +157,7 @@ const LoginContextProvider = ({ children }) => {
         // 유저 정보 세팅
         setUserInfo({ id, username, role, name });
 
-        const updatedUserInfo = { id, username, role, name };
+        const updatedUserInfo = { id, username, role, name, hompyId };
         setUserInfo(updatedUserInfo);
 
         // 권한 정보 세팅

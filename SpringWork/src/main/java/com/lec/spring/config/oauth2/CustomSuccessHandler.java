@@ -32,12 +32,13 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Long id = customOAuth2User.getUser().getId();
         String username = customOAuth2User.getUsername();
         String name = customOAuth2User.getName();
+        Long hompyId = customOAuth2User.getHompy().getId();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String token = jwtUtil.createJwt(id, username, role, name, 30 * 60 * 1000L);
+        String token = jwtUtil.createJwt(id,hompyId, username, role, name, 30 * 60 * 1000L);
 
 
 //        System.out.println("token:" + token);

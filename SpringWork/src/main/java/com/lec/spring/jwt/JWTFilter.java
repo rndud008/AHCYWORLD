@@ -44,6 +44,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(token);
         String role = jwtUtil.getRole(token);
         String name = jwtUtil.getName(token);
+        Long hompyId = jwtUtil.getHompyId(token);
 //        System.out.println(role);
 
         User user = User.builder()
@@ -54,8 +55,12 @@ public class JWTFilter extends OncePerRequestFilter {
                 .name(name)
                 .build();
 
+        Hompy hompy = Hompy.builder()
+                .id(hompyId)
+                .build();
 
-        PrincipalDetails userDetails = new PrincipalDetails(user);
+
+        PrincipalDetails userDetails = new PrincipalDetails(user,hompy);
 
         Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 

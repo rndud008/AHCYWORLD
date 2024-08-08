@@ -48,12 +48,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Long id = userDetails.getUser().getId();
         String username = userDetails.getUsername();
         String name = userDetails.getUser().getName();
+        Long hompyId = userDetails.getHompy().getId();
+
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         String role = authorities.stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
                 .collect(Collectors.joining(","));
 
-        String token = jwtUtil.createJwt(id, username, role, name, 3000 * 6000 * 1000L);
+        String token = jwtUtil.createJwt(id,hompyId, username, role, name, 3000 * 6000 * 1000L);
 
         System.out.println("token:" + token);
 

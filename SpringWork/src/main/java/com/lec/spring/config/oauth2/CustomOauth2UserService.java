@@ -2,7 +2,9 @@ package com.lec.spring.config.oauth2;
 import com.lec.spring.config.oauth2.provider.NaverUserInfo;
 import com.lec.spring.config.oauth2.provider.OAuth2UserInfo;
 import com.lec.spring.domain.CustomOAuth2User;
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
+import com.lec.spring.service.HompyService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -17,9 +19,11 @@ import java.time.LocalDate;
 public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
     private final UserService userService;
+    private final HompyService hompyService;
 
-    public CustomOauth2UserService(UserService userService) {
+    public CustomOauth2UserService(UserService userService, HompyService hompyService) {
         this.userService = userService;
+        this.hompyService = hompyService;
     }
 
     @Value("${app.oauth2.password}")
@@ -53,6 +57,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 //        System.out.println("username" + username);
 
         User user = userService.findByUsername(username);
+        Hompy hompy = new Hompy();
         if (user == null) {
             User newUser = User.builder()
                     .username(username.toUpperCase())
@@ -66,18 +71,18 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
 //            User savedUser = userService.join(newUser);
             User savedUser = userService.join(newUser, provider);
-
             if (savedUser != null) {
                 System.out.println("[OAuth2 인증. 회원가입 성공!]");
 
                 user = userService.findByUsername(username);
+                hompy = hompyService.findHompyByuser(user);
+
             } else {
                 System.out.println("[OAau2 인증. 회원가입 실패]");
             }
         } else {
             System.out.println("[OAuth2 인증. 이미 가입된 회원입니다.]");
         }
-
-        return new CustomOAuth2User(user);
+        return new CustomOAuth2User(user,hompy);
     }
 }

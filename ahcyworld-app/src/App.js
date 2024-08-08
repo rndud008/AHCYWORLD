@@ -50,31 +50,22 @@ function App() {
             <Route path=":postName" element={<Post page={page} />}>
               <Route path=":folderId" element={
                   postName?.includes("board") ? (
-                    <PostList
-                      setPage={setPage}
-                    />
-                  ) : (
-                    <PostListDetail
-                      moveFolderId={moveFolderId}
-                      setMoveFolderId={setMoveFolderId}
-                      setPage={setPage}
-                    />
-                  )
+                    <PostList setPage={setPage} />
+                  ) : ( <PostListDetail
+                     moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} setPage={setPage} 
+                     /> )
                 }
               />
               <Route path=":folderId/detail/:postId" element={ <PostDetail 
-                        moveFolderId={moveFolderId}
-                        setMoveFolderId={setMoveFolderId}
-                      />
-                    }
-                  />
+              moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} /> } />
               <Route path=":folderId/write" element={<PostWrite />} />
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
+          </Route>
         )}
-
         {/* 3. 어드민 페이지 */}
         <Route></Route>
+        
       </Routes>
     </div>
   );
