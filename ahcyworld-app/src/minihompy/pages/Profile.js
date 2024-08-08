@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import './css/Profile.css';
 import { LoginContext } from "../../webpage/login/context/LoginContextProvider";
 
-const Profile = ({ setUserId }) => {
+const Profile = () => {
     console.log('Profile 실행')
     const { hompyId } = useParams();
     const [hompy, setHompy] = useState({});

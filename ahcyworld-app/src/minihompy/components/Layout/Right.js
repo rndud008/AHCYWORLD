@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./css/Right.css";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Right = ({ user }) => {
+  const {hompyId} = useParams();
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
 
   const userId = user?.id;
 
   useEffect(() => {
-    if (userId) {
+    if (hompyId) {
       axios
-        .get(`http://localhost:8070/hompy/${userId}`)
+        .get(`http://localhost:8070/hompy/${hompyId}`)
         .then((response) => {
           const hompyData = response.data;
 
