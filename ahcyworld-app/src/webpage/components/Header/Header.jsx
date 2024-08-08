@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { LoginContext } from "../../login/context/LoginContextProvider";
 
 const Header = () => {
@@ -50,6 +50,7 @@ const Header = () => {
                     )}
                 </Nav>
             </Navbar>
+            <Outlet/>
         </>
     );
 };

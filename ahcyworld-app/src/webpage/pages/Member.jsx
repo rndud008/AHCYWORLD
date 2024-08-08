@@ -26,7 +26,6 @@ const Member = () => {
 
     return (
         <div>
-            <Header />
             <h1 style={{ fontFamily: "'Nanum Pen Script', cursive" }}>Member</h1>
 
             <button
