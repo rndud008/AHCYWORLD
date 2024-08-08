@@ -18,7 +18,6 @@ root.render(
             {/* <React.StrictMode> */}
             {/* <MusicApi /> */} {/* 혹시 노래데이터 받을 때 필요! */}
             <AppLogin />
-            {/* <Apphompy /> */}
             {/* <AhcyworldApp /> */}
             {/* <AppGuestBook /> */}
             {/* </React.StrictMode> */}

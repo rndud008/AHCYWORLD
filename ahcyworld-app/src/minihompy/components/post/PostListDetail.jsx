@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import PageNation from "./PageNation";
 import PostItem from "./PostItem";
 import PostListDetailItem from "./PostListDetailItem";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 
 const PostListDetail = ({
   pageAndPostList,

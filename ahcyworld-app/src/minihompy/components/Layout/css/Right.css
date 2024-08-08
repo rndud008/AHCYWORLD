@@ -4,7 +4,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 90%;
   height: 750px;
-  margin-left: -510px;
+  margin-left: -500px;
   display: flex;
   flex-direction: column; /* 세로로 나열되도록 설정 */
   padding: 20px;
