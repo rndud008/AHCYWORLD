@@ -13,9 +13,10 @@ const Layout = ({ hompy, user, children }) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
     const userId = user?.id;
-    const hompyId = hompy.id;
+    const hompyId = hompy?.id;
 
-    console.log(userId)
+    console.log("userId:", userId);
+    // console.log("children : ", children);
 
     useEffect(() => {
         // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -35,7 +36,7 @@ const Layout = ({ hompy, user, children }) => {
 
             if (userId && !hasVisited) {
                 try {
-                    const response = await axios.post(`http://localhost:8070/hompy/${userId}/visit`);
+                    const response = await axios.post(`http://localhost:8070/hompy/${hompyId}/visit`);
                     setVisitorInfo({
                         todayVisitor: response.data.todayVisitor || 0,
                         totalVisitor: response.data.totalVisitor || 0,

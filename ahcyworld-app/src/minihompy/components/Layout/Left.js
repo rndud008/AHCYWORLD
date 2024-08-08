@@ -13,6 +13,7 @@ const Left = ({ user, hompy }) => {
   const userId = user?.id;
 
   // 서버로 부터 최신정보 받아오기
+  // 수정해야함
   useEffect(() => {
     if (userId) {
       axios.get(`http://localhost:8070/hompy/${userId}`)
@@ -29,6 +30,9 @@ const Left = ({ user, hompy }) => {
         });
     }
   }, [userId]);
+
+  // 홈피에 대한 것을 가져와야함
+
 
   // 상태 메시지
   const updateStatusMessage = () => {

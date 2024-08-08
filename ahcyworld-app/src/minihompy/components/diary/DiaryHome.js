@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../css/CalendarStyles.css";
+import "./css/CalendarStyles.css";
 import moment from 'moment-timezone';
 import {useNavigate} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryModal from "./DiaryModal";
-import { SERVER_HOST } from "../../login/apis/api";
+import { SERVER_HOST } from "../../../apis/api"; 
 
 const DiaryHome = () => {
     const curDate = new Date();

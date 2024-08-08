@@ -9,6 +9,7 @@ import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
 import Admin from "./webpage/pages/Admin";
 import Menu from "./minihompy/components/menu/Menu";
+import GuestBookHome from "./minihompy/components/guestBook/GuestBookHome";
 import { useContext, useState } from "react";
 import Profile from "./minihompy/pages/Profile";
 import { LoginContext } from "./webpage/login/context/LoginContextProvider";
@@ -33,9 +34,10 @@ function App() {
         </Route>
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (
-          <Route path="/hompy/:userId" element={<> <Menu userId={hompyInfo.id} /> </>}>
+          <Route path="/hompy/:hompyId" element={<> <Menu userId={hompyInfo.id} /> </>}>
             <Route index element={<Hompy setUserId={setUserId}/>}/>
             <Route path="profile" element={<Profile setUserId={setUserId} />}/>
+            <Route path="guestbook" element={<GuestBookHome setUserId={setUserId} />}/>
           </Route>
         )}
 

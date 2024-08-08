@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { LoginContext } from "../../webpage/login/context/LoginContextProvider";
 
 const Hompy = ({ setUserId }) => {
     const { userId } = useParams();
     const [hompy, setHompy] = useState({});
+    const {hompyInfo, userInfo} = useContext(LoginContext);
 
     // 특정 유저의 미니홈피 url 경로유지
-    useEffect(() => {
-        setUserId(userId);
-    }, [userId, setUserId]);
+    // useEffect(() => {
+    //     setUserId(userId);
+    // }, [userId, setUserId]);
 
     useEffect(() => {
         axios
@@ -22,11 +24,11 @@ const Hompy = ({ setUserId }) => {
             .catch((error) => {
                 console.log("에러: 데이터없음");
             });
-    }, [userId]);
+    }, []);
 
     return (
         // props 로 hompy 데이터 전달
-        <Layout hompy={hompy} user={hompy.user} />
+        <Layout hompy={hompyInfo} user={hompyInfo.user} />
     );
 };
 

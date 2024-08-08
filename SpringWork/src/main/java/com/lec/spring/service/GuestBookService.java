@@ -28,7 +28,7 @@ public class GuestBookService {
 
     // 일촌 관계일 때만 글 작성 가능
     public GuestBook save(GuestBook guestBook) {
-        User user = userRepository.findByUsername(guestBook.getUser().getUsername());
+        User user = userRepository.findById(guestBook.getUser().getId()).orElse(null);
         Hompy hompy = hompyRepository.findById(guestBook.getHompy().getId())
                 .orElseThrow(() -> new IllegalArgumentException("미니홈피를 찾지 못 했습니다."));
 
@@ -66,22 +66,21 @@ public class GuestBookService {
     }
 
     // 작성자와 미니홈피 주인만 방명록 볼 수 있는 로직
-    public List<GuestBook> findByHompyAndVisibility(Long hompyId) {     // , String username
+    public List<GuestBook> findByHompyAndVisibility(Long hompyId, String username) {     //
         Hompy hompy = hompyRepository.findById(hompyId)
                 .orElseThrow(() -> new IllegalArgumentException("미니홈피를 찾지 못 했습니다."));
-//        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
         System.out.println("hompy:" + hompy);
-//        System.out.println("user:" + user);
+        System.out.println("user:" + user);
 
-//        boolean isOwner = hompy.getUser().equals(user);
+        boolean isOwner = hompy.getUser().equals(user);
 
-//        if (isOwner){
-//            return guestBookRepository.findByHompy(hompy);
-//        }else {
-//            return guestBookRepository.findByHompyAndStatus(hompyId, "visible");
-//        }
-        return guestBookRepository.findByHompyIdAndStatus(hompyId, "visible");
+        if (isOwner){
+            return guestBookRepository.findByHompy(hompy);
+        }else {
+            return guestBookRepository.findByHompyIdAndStatus(hompyId, "visible");
+        }
     }
 
     public GuestBook hideGuestBook(Long id, String username) {

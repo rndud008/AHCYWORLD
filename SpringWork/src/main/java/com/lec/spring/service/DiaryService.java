@@ -21,7 +21,7 @@ public class DiaryService {
 
     public Diary save(Diary diary) {
         Hompy hompy = hompyRepository.findById(diary.getHompy().getId()).orElseThrow(() -> new RuntimeException("Hompy not found"));
-        if (!hompy.getUser().getId().equals(diary.getHompy().getId())){
+        if (!hompy.getUser().getId().equals(diary.getHompy().getUser().getId())){
             throw new RuntimeException("User ID missMatch");
         }
         return diaryRepository.saveAndFlush(diary);

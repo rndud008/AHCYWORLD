@@ -44,7 +44,7 @@ const Header = () => {
                             <Link className='nav-link' to={`/post/${hompyInfo?.id}/board`}>
                                 Post
                             </Link>
-                            <Link className='nav-link' to={`/hompy/${userInfo.id}`}>
+                            <Link className='nav-link' to={`/hompy/${hompyInfo?.id}`}>
                                 미니홈피
                             </Link>
                             <Button variant='primary' onClick={() => logout()}>

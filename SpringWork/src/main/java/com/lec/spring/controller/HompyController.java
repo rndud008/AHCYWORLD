@@ -41,38 +41,35 @@ public class HompyController {
     }
 
     // 특정 User의 Hompy 조회
-    @GetMapping("/{userId}")
-    public Hompy HompyByUser(@PathVariable Long userId) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
+    @GetMapping("/{hompyId}")
+    public Hompy HompyByUser(@PathVariable Long hompyId) {
 
-        Hompy hompy = hompyService.findHompyByuser(user);
-        hompy.setUser(user); // hompy에 user 정보를 설정
+        Hompy hompy = hompyService.findById(hompyId);
+
+//        hompy.setUser(user); // hompy에 user 정보를 설정
 
         return hompy;
     }
 
     // 프로필 이미지
-    @PostMapping("/{userId}/profileImg")
-    public ResponseEntity<?> updateProfileImg(@PathVariable Long userId, @RequestParam("file") MultipartFile file) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+    @PostMapping("/{hompyId}/profileImg")
+    public ResponseEntity<?> updateProfileImg(@PathVariable Long hompyId, @RequestParam("file") MultipartFile file) {
+        Hompy hompy = hompyService.findById(hompyId);
 
         String profilePicturePath = saveFile(file);
 
-        hompyService.updateProfilePicture(user, profilePicturePath);
+        hompyService.updateProfilePicture(hompy.getUser(), profilePicturePath);
 
         return ResponseEntity.ok().body(Map.of("profilePicture", profilePicturePath));
     }
 
     // 상태메시지
-    @PostMapping("/{userId}/statusMessage")
-    public ResponseEntity<?> updateStatusMessage(@PathVariable Long userId, @RequestBody Map<String, String> request) {
+    @PostMapping("/{hompyId}/statusMessage")
+    public ResponseEntity<?> updateStatusMessage(@PathVariable Long hompyId, @RequestBody Map<String, String> request) {
         String statusMessage = request.get("statusMessage");
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다. " + userId));
+        Hompy hompy = hompyService.findById(hompyId);
 
-        hompyService.updateStatusMessage(user, statusMessage);
+        hompyService.updateStatusMessage(hompy.getUser(), statusMessage);
 
         return ResponseEntity.ok().build();
     }
@@ -120,23 +117,21 @@ public class HompyController {
 
 
     // 메뉴 상태 및 색상 설정
-    @PostMapping("/{userId}/menu")
+    @PostMapping("/{hompyId}/menu")
     public Hompy updateMenu(
-            @PathVariable Long userId,
+            @PathVariable Long hompyId,
             @RequestParam String menuColor,
             @RequestParam String menuStatus) {
 
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
+      Hompy hompy = hompyService.findById(hompyId);
 
-        return hompyService.menu(user, menuColor, menuStatus);
+        return hompyService.menu(hompy.getUser(), menuColor, menuStatus);
     }
 
     // 방문자 수
-    @PostMapping("/{userId}/visit")
-    public ResponseEntity<Hompy> visitCnt(@PathVariable Long userId) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
+    @PostMapping("/{hompyId}/visit")
+    public ResponseEntity<Hompy> visitCnt(@PathVariable Long hompyId) {
+        User user = hompyService.findById(hompyId).getUser();
 
         // 방문자 수 증가
         Hompy hompy = hompyService.visitCnt(user);
@@ -145,10 +140,9 @@ public class HompyController {
     }
 
     // 프로필 (간단한 자기소개?)
-    @PostMapping("/{userId}/profile")
-    public ResponseEntity<?> profile(@PathVariable Long userId, @RequestBody Map<String, String> profile) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId ));
+    @PostMapping("/{hompyId}/profile")
+    public ResponseEntity<?> profile(@PathVariable Long hompyId, @RequestBody Map<String, String> profile) {
+        User user = hompyService.findById(hompyId).getUser();
 
         String profileData = profile.get("profile"); // JSON의 "profile" 키에 접근
         hompyService.userProfile(user, profileData); // 프로필 저장 메소드 호출
@@ -157,10 +151,9 @@ public class HompyController {
     }
 
     // 미니미
-    @PostMapping("/{userId}/minimi")
-    public ResponseEntity<?> minimi(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+    @PostMapping("/{hompyId}/minimi")
+    public ResponseEntity<?> minimi(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
+        User user = hompyService.findById(hompyId).getUser();
 
         String minimiPicturePath = saveFile(file);
 
@@ -170,10 +163,9 @@ public class HompyController {
     }
 
     // 미니룸
-    @PostMapping("/{userId}/miniroom")
+    @PostMapping("/{hompyId}/miniroom")
     public ResponseEntity<?> miniroom(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+        User user = hompyService.findById(userId).getUser();
 
         String miniroomPicturePath = saveFile(file);
 
@@ -183,10 +175,9 @@ public class HompyController {
     }
 
     // 미니홈피 스킨
-    @PostMapping("/{userId}/homyskin")
-    public ResponseEntity<?> homyskin(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
-        User user = userService.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+    @PostMapping("/{hompyId}/hompyskin")
+    public ResponseEntity<?> homyskin(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
+        User user = hompyService.findById(hompyId).getUser();
 
         String minihomeyskinPicturePath = saveFile(file);
 

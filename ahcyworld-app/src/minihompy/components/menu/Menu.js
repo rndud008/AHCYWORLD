@@ -4,7 +4,7 @@ import './Menu.css';
 import { LoginContext } from '../../../webpage/login/context/LoginContextProvider';
 import BgmPlayer from '../musicPlayer/BgmPlayer';
 
-const Menu = ({userId}) => {
+const Menu = ({hompyId}) => {
   //
   // console.log("id:", userId);
 
@@ -14,12 +14,12 @@ const Menu = ({userId}) => {
     <nav className="menu-nav">
       <ul>
         <li>
-          <NavLink to={`/hompy/${userId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${hompyInfo.id}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             홈
           </NavLink>
         </li>
         <li>
-          <NavLink to={`/hompy/${userId}/${'profile'}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${hompyInfo.id}/profile`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             프로필
           </NavLink>
         </li>
@@ -44,7 +44,7 @@ const Menu = ({userId}) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to={`/guestbook/${hompyId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${hompyInfo.id}/guestbook/`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             방명록
           </NavLink>
         </li>

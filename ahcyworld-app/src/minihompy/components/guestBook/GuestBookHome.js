@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import api, { SERVER_HOST } from "../../../apis/api";
+import Layout from "../Layout/Layout";
 import "../guestBook/css/GuestBookHome.css";
 import Cookies from 'js-cookie'
-import Hompy from "../../pages/Hompy";
+import { hompyInfo, userInfo } from "../../../apis/auth";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 
 const GuestBookHome = () => {
     const [guestBook, setGuestBook] = useState([]);
@@ -14,6 +16,8 @@ const GuestBookHome = () => {
     const [isSecret, setIsSecret] = useState(false); // 비밀글 여부
     const [isFriend, setIsFriend] = useState(false);    // 일촌 관계 여부
     const { hompyId } = useParams();
+
+    const {hompyInfo, userInfo} = useContext(LoginContext);
 
     useEffect(() => {
         console.log("hompyId:", hompyId);
@@ -50,9 +54,9 @@ const GuestBookHome = () => {
         };
 
         if (hompyId) {
-            fetchUserName().then(() => {
-                checkFriendship(userName)
-            })
+            // fetchUserName().then(() => {
+            //     checkFriendship(userName)
+            // })
             axios({
                 method: "get",
                 url: `${SERVER_HOST}/cyworld/cy/guestbook/list/${hompyId}`,
@@ -138,6 +142,8 @@ const GuestBookHome = () => {
         const guestBookEntry = {
             content: content,
             status: isSecret ? "invisible" : "visible",
+            user: userInfo,
+            hompy: hompyInfo,
         };
 
         axios({
@@ -167,7 +173,7 @@ const GuestBookHome = () => {
 
     return (
         <>
-        <Hompy>
+        <Layout hompy={hompyInfo} user={hompyInfo.user}>
             <Container className="container">
             <Form onSubmit={handleSubmit} className="form-container">
                 <Row className="form-row">
@@ -277,7 +283,7 @@ const GuestBookHome = () => {
                 )}
             </div>
         </Container>
-        </Hompy>
+        </Layout>
         </>
     );
 };

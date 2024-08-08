@@ -146,4 +146,12 @@ class GuestBookRepositoryTest {
 
         guestBookRepository.saveAllAndFlush(List.of(guestBook1, guestBook2, guestBook3));
     }
+    @Test
+    void test1(){
+        User user = userRepository.findByUsername("user4".toUpperCase());
+
+        user.setPassword(passwordEncoder.encode("1234"));
+
+        userRepository.saveAndFlush(user);
+    }
 }
