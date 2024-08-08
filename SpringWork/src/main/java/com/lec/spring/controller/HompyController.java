@@ -8,6 +8,8 @@ import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,35 +51,6 @@ public class HompyController {
 
         return hompy;
     }
-
-//    // 프로필 사진 및 상태 메시지 업데이트
-//    @PostMapping("/{userId}/profile")
-//    public Hompy updateProfile(
-//            @PathVariable Long userId,
-//            @RequestParam String profilePicture,
-//            @RequestParam String statusMessage ){
-//
-//        User user = userService.findByUserId(userId)
-//                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
-//
-//        return hompyService.updateUser(user, profilePicture, statusMessage);
-//    }
-
-//    @PostMapping("/{userId}/profile")
-//    public ResponseEntity<?> updateProfile(
-//            @PathVariable Long userId,
-//            @RequestParam("file") MultipartFile file,
-//            @RequestParam String statusMessage) {
-//
-//        User user = userService.findByUserId(userId)
-//                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다: " + userId));
-//
-//        String profilePicturePath = saveFile(file);
-//
-//        Hompy updatedHompy = hompyService.updateUser(user, profilePicturePath, statusMessage);
-//
-//        return ResponseEntity.ok(updatedHompy);
-//    }
 
     // 프로필 이미지
     @PostMapping("/{userId}/profileImg")
@@ -181,5 +154,44 @@ public class HompyController {
         hompyService.userProfile(user, profileData); // 프로필 저장 메소드 호출
 
         return ResponseEntity.ok(Map.of("profile", profileData));
+    }
+
+    // 미니미
+    @PostMapping("/{userId}/minimi")
+    public ResponseEntity<?> minimi(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
+        User user = userService.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+
+        String minimiPicturePath = saveFile(file);
+
+        hompyService.minimi(user, minimiPicturePath);
+
+        return ResponseEntity.ok().body(Map.of("minimiPicture", minimiPicturePath));
+    }
+
+    // 미니룸
+    @PostMapping("/{userId}/miniroom")
+    public ResponseEntity<?> miniroom(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
+        User user = userService.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+
+        String miniroomPicturePath = saveFile(file);
+
+        hompyService.miniRoom(user, miniroomPicturePath);
+
+        return ResponseEntity.ok().body(Map.of("miniroomPicture", miniroomPicturePath));
+    }
+
+    // 미니홈피 스킨
+    @PostMapping("/{userId}/homyskin")
+    public ResponseEntity<?> homyskin(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
+        User user = userService.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("유저 아이디를 찾을 수 없습니다." + userId));
+
+        String minihomeyskinPicturePath = saveFile(file);
+
+        hompyService.miniHompySkin(user, minihomeyskinPicturePath);
+
+        return ResponseEntity.ok().body(Map.of("minihomeyskinPicture", minihomeyskinPicturePath));
     }
 }
