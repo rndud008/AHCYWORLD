@@ -11,6 +11,7 @@ const Layout = ({ hompy, user, children }) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
     const userId = user?.id;
+    const hompyId = hompy.id;
 
     useEffect(() => {
         // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -65,7 +66,7 @@ const Layout = ({ hompy, user, children }) => {
             <div className='homepage-title'>{hompy.title}</div>
 
                 {/* Menu 컴포넌트 */}
-                <Menu userId={userId} />
+                <Menu userId={userId} hompyId={hompyId}/>
 
                 {/* BGM Player 컴포넌트 */}
                 <BgmPlayer />

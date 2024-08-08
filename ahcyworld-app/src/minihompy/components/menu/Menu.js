@@ -2,8 +2,9 @@ import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import './Menu.css';
 
-const Menu = ({userId}) => {
+const Menu = ({userId, hompyId}) => {
   // console.log("id:", userId);
+  // console.log("hompyid:", hompyId);
   return (
     <nav className="menu-nav">
       <ul>
@@ -38,7 +39,7 @@ const Menu = ({userId}) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/guest_book" className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/guestbook/${hompyId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             방명록
           </NavLink>
         </li>

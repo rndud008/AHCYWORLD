@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import AppLogin from "./webpage/login/AppLogin";
+import AppGuestBook from "../src/minihompy/components/guestBook/GuestBookHome"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Provider } from "react-redux";
@@ -17,7 +18,6 @@ root.render(
             {/* <React.StrictMode> */}
             {/* <MusicApi /> */} {/* 혹시 노래데이터 받을 때 필요! */}
             <AppLogin />
-            {/* <AhcyworldApp /> */}
             {/* <AppGuestBook /> */}
             {/* </React.StrictMode> */}
         </Provider>

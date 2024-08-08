@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { SERVER_HOST } from "../../../apis/api";
-import "../css/GuestBookHome.css";
+import api, { SERVER_HOST } from "../../../apis/api";
+import "../guestBook/css/GuestBookHome.css";
+import Cookies from 'js-cookie'
+import Hompy from "../../pages/Hompy";
 
 const GuestBookHome = () => {
-    const [guestBook, setGeustBook] = useState([]);
+    const [guestBook, setGuestBook] = useState([]);
     const [userName, setUserName] = useState(""); // 로그인한 사용자 이름
     const [content, setContent] = useState(""); // 방명록 내용
     const [isSecret, setIsSecret] = useState(false); // 비밀글 여부
@@ -14,46 +16,55 @@ const GuestBookHome = () => {
     const { hompyId } = useParams();
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        // const fetchUserName = async () => {
-        //     // 로그인한 사용자의 이름을 가져오는 요청
-        //     try{
-        //         userInfo();
-        //         };
-        //         setUserName(response.data.name);
-        //     }catch(error){
-        //         console.error("사용자의 정보를 가져오는데 실패했습니다.", error);
-        //     }
-        // };
+        console.log("hompyId:", hompyId);
+        const cookie = Cookies.get("accessToken")
+        console.log("Cookie:", cookie);
 
-        const checkFriendship = async () => {
-            try{
-                const response = await axios.get(`${SERVER_HOST}/cyworld/cy/guestbook/friends/check/${hompyId}`, {
+        const fetchUserName = async () => {
+            // 로그인한 사용자의 이름을 가져오는 요청
+            try {
+                const response = await api.get(`${SERVER_HOST}/user`, {
                     headers: {
-                        "Authorization" : `Bearer ${token}`
-                    }
+                        'Authorization': `Bearer ${cookie}`,
+                    },
                 });
+                setUserName(response.data.name);
+            } catch (error) {
+                console.error("사용자의 정보를 가져오는데 실패했습니다.", error);
+            }
+        };
+
+        const checkFriendship = async (userName) => {
+            try{
+                const response = await api.get(`${SERVER_HOST}/cyworld/cy/guestbook/friends/check/${hompyId}`, {
+                    headers: {
+                        "Authorization" : `Bearer ${cookie}`
+                    },
+                    params: { username: userName }
+                });
+                console.log("response:", response);
                 setIsFriend(response.data.isFriend)
             }catch(error) {
                 console.error("일촌 관계 확인 실패", error)
             }
         };
-            // fetchUserName();
-        //    checkFriendship();
 
         if (hompyId) {
+            fetchUserName().then(() => {
+                checkFriendship(userName)
+            })
             axios({
                 method: "get",
                 url: `${SERVER_HOST}/cyworld/cy/guestbook/list/${hompyId}`,
-                // headers: {
-                //     "Authorization": `Bearer ${token}`,
-                // }
+                headers: {
+                    "Authorization": `Bearer ${cookie}`,
+                }
             })
                 .then((response) => {
                     const { data, status } = response;
                     if (status === 200) {
                         console.log("방명록 불러오기 성공", data);
-                        setGeustBook(data);
+                        setGuestBook(data);
                     }
                 })
                 .catch((error) => {
@@ -70,16 +81,16 @@ const GuestBookHome = () => {
             axios({
                 method: "delete",
                 url: `${SERVER_HOST}/cyworld/cy/guestbook/delete/${id}`,
-                // headers: {
-                //     "Authorization": `Bearer ${token}`,
-                // },
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
                 params: {
                     userName,
                 },
             })
                 .then((respone) => {
                     if (respone.status === 200) {
-                        setGeustBook(guestBook.fill((e) => e.id !== id));
+                        setGuestBook(guestBook.filter((e) => e.id !== id));
                     }
                 })
                 .catch((error) => {
@@ -93,16 +104,16 @@ const GuestBookHome = () => {
         axios({
             method: "put",
             url: `${SERVER_HOST}/cyworld/cy/guestbook/hide/${id}`,
-            // headers: {
-            //     "Authorization": `Bearer ${token}`
-            // },
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
             params: {
                 username: userName,
             },
         })
             .then((response) => {
                 if (response.status === 200) {
-                    setGeustBook(
+                    setGuestBook(
                         guestBook.map((guest) =>
                             guest.id === id
                                 ? { ...guest, status: "invisible" }
@@ -137,7 +148,7 @@ const GuestBookHome = () => {
             .then((response) => {
                 const { data, status } = response;
                 if (status === 200) {
-                    setGeustBook(data);
+                    setGuestBook(data);
                     console.log("방명록 저장 성공", data);
                 }
             })
@@ -156,6 +167,7 @@ const GuestBookHome = () => {
 
     return (
         <>
+        <Hompy>
             <Container className="container">
             <Form onSubmit={handleSubmit} className="form-container">
                 <Row className="form-row">
@@ -265,6 +277,7 @@ const GuestBookHome = () => {
                 )}
             </div>
         </Container>
+        </Hompy>
         </>
     );
 };
