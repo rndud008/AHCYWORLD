@@ -50,6 +50,39 @@ public class HompyService {
         }
     }
 
+    // 미니미
+    public Hompy minimi(User user, String minimiPicture) {
+        Hompy hompy = hompyRepository.findByUser(user);
+        if (hompy != null) {
+            hompy.setMinimiPicture(minimiPicture);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
+    }
+
+    // 미니룸
+    public Hompy miniRoom(User user, String miniRoomPicture) {
+        Hompy hompy = hompyRepository.findByUser(user);
+        if (hompy != null) {
+            hompy.setMiniRoom(miniRoomPicture);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
+    }
+
+    // 미니홈피 스킨
+    public Hompy miniHompySkin(User user, String miniHompySkinPicture) {
+        Hompy hompy = hompyRepository.findByUser(user);
+        if (hompy != null) {
+            hompy.setMiniHompySkin(miniHompySkinPicture);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
+    }
+
     // 메뉴 상태 및 색상 설정
     public Hompy menu(User user, String menuColor, String menuStatus) {
         Hompy hompy = hompyRepository.findByUser(user);
