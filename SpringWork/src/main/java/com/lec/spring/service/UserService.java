@@ -107,4 +107,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public String OAuthAddInfo(String username, String gender, String birthday) {
+//        System.out.println("username2: " + username);
+//        System.out.println("gender2: " + gender);
+//        System.out.println("birthDay2: " + birthday);
+
+        User user = userRepository.findByUsername(username);
+
+        LocalDate birthDay = LocalDate.parse(birthday);
+
+        if (user != null) {
+            user.setBirthDay(birthDay);
+            user.setGender(gender);
+            userRepository.save(user);
+            return "ok";
+        }
+
+        return "ok";
+    }
+
 }
