@@ -49,7 +49,12 @@ public class Hompy {
     // 미니룸, 미니미, 미니홈피 스킨 기본이미지 설정 ( 미니미는 성별이 남자면 남자이미지 / 여자면 여자이미지), 프로필 기본이미지
     @PrePersist
     public void prePersist() {
-//        // 미니미 기본이미지
+        // 프로필 기본이미지
+        if (this.profilePicture == null) {
+            this.profilePicture = "/upload/default_profile.png";
+        }
+
+        //        // 미니미 기본이미지
 //        if (this.minimiPicture == null) {
 //            if (user != null && "MALE".equalsIgnoreCase(user.getGender())) {
 //                this.minimiPicture = "upload/male.png"; // 성별이 남자일때 미니미
@@ -67,10 +72,5 @@ public class Hompy {
 //        if (this.miniHompySkin == null) {
 //            this.miniHompySkin = "/upload/mainskin.png";
 //        }
-
-        // 프로필 기본이미지
-        if (this.profilePicture == null) {
-            this.profilePicture = "/upload/default_profile.png";
-        }
     }
 }

@@ -12,6 +12,7 @@ import BgmPlayer from "../musicPlayer/BgmPlayer";
 const Layout = ({ hompy, user, children }) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
+    const [miniHompySkin, setMiniHompySkin] = useState();
     const userId = user?.id;
     const hompyId = hompy?.id;
   console.log("userId:", userId);
@@ -36,7 +37,7 @@ const Layout = ({ hompy, user, children }) => {
     const increaseVisitCount = async () => {
       // sessionStorage.getItem을 사용해 해당 사용자가 이미 방문했는지 확인
       const hasVisited = sessionStorage.getItem(`hasVisited_${userId}`);
-      
+
             if (userId && !hasVisited) {
                 try {
                     const response = await axios.post(`http://localhost:8070/hompy/${hompyId}/visit`);
@@ -55,15 +56,36 @@ const Layout = ({ hompy, user, children }) => {
         increaseVisitCount();
     }, [user]);
 
-  return (
-    <div className="container-fluid p-0 position-relative layout-container">
-      {/* 배경 이미지 */}
-      <div
-        className="background-image"
-        style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/image/mainskin.png)`,
-        }}
-      ></div>
+    useEffect(() => {
+        if (userId) {
+          axios
+            .get(`http://localhost:8070/hompy/${userId}`)
+            .then((response) => {
+              const hompyData = response.data;
+
+              // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
+              const hompySkinImagePath = hompyData.miniHompySkin
+                ? `http://localhost:8070${hompyData.miniHompySkin}`
+                : `${process.env.PUBLIC_URL}/image/mainskin.png`;
+
+
+              setMiniHompySkin(hompySkinImagePath);
+            })
+            .catch((error) => {
+              console.error("데이터를 불러오지 못했습니다. 관리자에게 문의하세요.", error);
+            });
+        }
+      }, [userId]);
+
+    return (
+        <div className='container-fluid p-0 position-relative layout-container'>
+            {/* 배경 이미지 */}
+            <div
+                className='background-image'
+                style={{
+                    backgroundImage: `url(${miniHompySkin}`,
+                }}
+            ></div>
 
       {/* TODAY | TOTAL */}
       <div className="visitor-info">
@@ -98,7 +120,7 @@ const Layout = ({ hompy, user, children }) => {
       </div>
       </div>
   );
-        
+
 };
 
 export default Layout;

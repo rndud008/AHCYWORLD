@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./css/Right.css";
 import axios from "axios";
 
-const Right = ({ user }) => { 
+const Right = ({ user }) => {
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
 
@@ -10,34 +10,29 @@ const Right = ({ user }) => {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:8070/hompy/${userId}`)
-        .then(response => {
+      axios
+        .get(`http://localhost:8070/hompy/${userId}`)
+        .then((response) => {
           const hompyData = response.data;
-            // 서버에서 받아온 데이터 확인
-            console.log("Server Response:", hompyData);
-            console.log("hompyData.minimiPicture:", hompyData.minimiPicture);
-        console.log("hompyData.miniRoom:", hompyData.miniRoom);
-        console.log("User Gender:", hompyData.userGender);
 
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
-          const minimiImagePath = hompyData.minimiPicture 
-          ? `http://localhost:8070${hompyData.minimiPicture}` 
-          : hompyData.userGender === "MALE"
-              ? `${process.env.PUBLIC_URL}/image/female.png`
-              : `${process.env.PUBLIC_URL}/image/male.png`;
-        
-        const miniRoomImagePath = hompyData.miniRoom 
-          ? `http://localhost:8070${hompyData.miniRoom}` 
-          : `${process.env.PUBLIC_URL}/image/miniroom.png`;
-        
-        
-        console.log("Minimi Image Path:", minimiImagePath);
-        console.log("MiniRoom Image Path:", miniRoomImagePath);
-        
-        setMinimi(minimiImagePath);
-        setMiniRoom(miniRoomImagePath);
+          const userGender = hompyData.user && hompyData.user.gender ? hompyData.user.gender : "unknown";
+
+          const minimiImagePath = hompyData.minimiPicture
+            ? `http://localhost:8070${hompyData.minimiPicture}`
+            : userGender === "MALE"
+            ? `${process.env.PUBLIC_URL}/image/male.png`
+            : `${process.env.PUBLIC_URL}/image/female.png`;
+
+          const miniRoomImagePath = hompyData.miniRoom
+            ? `http://localhost:8070${hompyData.miniRoom}`
+            : `${process.env.PUBLIC_URL}/image/miniroom.png`;
+
+
+          setMinimi(minimiImagePath);
+          setMiniRoom(miniRoomImagePath);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("데이터를 불러오지 못했습니다. 관리자에게 문의하세요.", error);
         });
     }
