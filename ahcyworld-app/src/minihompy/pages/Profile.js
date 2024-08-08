@@ -5,9 +5,10 @@ import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Swal from 'sweetalert2';
-import './css/Profile.css';
+// import './css/Profile.css';
 
 const Profile = ({ setUserId }) => {
+    console.log('Profile 실행')
     const { userId } = useParams();
     const [hompy, setHompy] = useState(null);
     const [profile, setProfile] = useState(""); 

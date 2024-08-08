@@ -34,7 +34,6 @@ const Join = () => {
 
     return (
         <>
-            <Header />
             <div>
                 <JoinForm join={join} />
             </div>

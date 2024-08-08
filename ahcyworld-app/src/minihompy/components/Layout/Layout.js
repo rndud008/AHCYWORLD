@@ -4,11 +4,15 @@ import Left from "../../../minihompy/components/Layout/Left";
 import Right from "../../../minihompy/components/Layout/Right";
 import "./css/Layout.css";
 import axios from "axios";
+import { Outlet } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 const Layout = ({ hompy, user, children }) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
     const userId = user?.id;
+
+    console.log(userId)
 
     useEffect(() => {
         // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -58,6 +62,7 @@ const Layout = ({ hompy, user, children }) => {
                 }}
             ></div>
 
+
             {/* TODAY | TOTAL */}
             <div className='visitor-info'>
                 TODAY {visitorInfo.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo.totalVisitor}
@@ -75,6 +80,8 @@ const Layout = ({ hompy, user, children }) => {
                 {children || <Right hompy={hompy} />} {/* children을 통해 오른쪽 컴포넌트를 대체 */}
                 </div>
             </div>
+
+            
         </div>
     );
 };

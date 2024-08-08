@@ -102,7 +102,6 @@ const Home = () => {
 
     return (
         <>
-            <Header />
             <h1>Home</h1>
             <button onClick={openModal}>모달 열기</button>
             <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
