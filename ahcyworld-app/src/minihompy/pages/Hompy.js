@@ -18,7 +18,7 @@ const Hompy = ({ setUserId }) => {
         axios
             .get(`http://localhost:8070/hompy/${hompyId}`)
             .then((response) => {
-                console.log("API Response:", response.data); // hompy 데이터 확인
+                // console.log("API Response:", response.data); // hompy 데이터 확인
                 setHompy(response.data);
             })
             .catch((error) => {

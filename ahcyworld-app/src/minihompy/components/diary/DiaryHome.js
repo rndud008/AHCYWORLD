@@ -115,6 +115,7 @@ const DiaryHome = () => {
     return (
         <>
             <Layout hompy={hompyInfo} user={hompyInfo.user}>
+            <div className="calendar-container">
                 <Calendar
                     locale="en-US"
                     onChange={onChange}
@@ -129,6 +130,7 @@ const DiaryHome = () => {
                     ) => getActiveMonth(activeStartDate)}
                     onClickDay={handleDateClick} // 날짜 클릭 시 핸들러
                 />
+                </div>
                 <DiaryModal
                     show={showModal}
                     onHide={handleCloseModal}

@@ -13,8 +13,7 @@ const Left = ({ user, hompy }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const userId = user?.id;
-  console.log("hompy", hompy);
-  console.log("profile", profilePicture);
+
 
   // 서버로 부터 최신정보 받아오기
   // 수정해야함

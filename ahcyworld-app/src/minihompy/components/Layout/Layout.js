@@ -15,12 +15,8 @@ const Layout = ({ hompy, user, children }) => {
     const [miniHompySkin, setMiniHompySkin] = useState();
     const userId = user?.id;
     const hompyId = hompy?.id;
-  console.log("userId:", userId);
 
   const { postName } = useParams();
-
-  console.log("postName:", postName);
-  console.log(hompy)
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트

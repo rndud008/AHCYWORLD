@@ -38,7 +38,8 @@ const Profile = () => {
         } else {
             // 편집 가능 상태 -> 읽기 전용 상태로 전환 및 프로필 업데이트
             try {
-                const response = await axios.post(`http://localhost:8070/hompy/${userInfo.id}/profile`, { profile: profile }, {
+                console.log("홈피", hompyId);
+                const response = await axios.post(`http://localhost:8070/hompy/${hompyId}/profile`, { profile: profile }, {
                     headers: { "Content-Type": "application/json" },
                 });
                 Swal.fire({
