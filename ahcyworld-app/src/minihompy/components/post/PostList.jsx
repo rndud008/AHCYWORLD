@@ -6,7 +6,7 @@ import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import PostItem from "./PostItem";
 import PageNation from "./PageNation";
 import { useCol } from "react-bootstrap/esm/Col";
-import { LoginContext } from "../../login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"; 
 
 // boardType 에 따라 PostDetail or PostListDetail 출력.
 const PostList = ({ name, pageAndPostList, folder, setPage }) => {
@@ -50,7 +50,7 @@ const PostList = ({ name, pageAndPostList, folder, setPage }) => {
           <tbody>
             {pageAndPostList?.posts !== null ? (
               pageAndPostList?.posts?.map((item) => {
-                return <PostItem item={item} />;
+                return <PostItem key={item.id} item={item} />;
               })
             ) : (
               <h4>게시물이 존재하지 않습니다.</h4>

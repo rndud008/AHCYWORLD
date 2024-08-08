@@ -49,7 +49,7 @@ const PostDetail = ({ folderList, setMoveFolderId, moveFolderId }) => {
     }, []);
   
     const list = () => {
-      navigate(`/post/${hompyId}/${postName}`);
+      navigate(`/post/${hompyId}/${postName}/${folderId}`);
     };
   
     const postDelete = async () => {

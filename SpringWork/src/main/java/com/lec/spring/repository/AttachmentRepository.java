@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface AttachmentRepository extends JpaRepository<Attachment,Long> {
 
     List<Attachment> findByPostId(Long id);
+
+    Optional<List<Attachment>> findByPost(Post post);
 }
