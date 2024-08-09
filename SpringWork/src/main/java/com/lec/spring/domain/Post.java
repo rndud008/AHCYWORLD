@@ -1,11 +1,11 @@
 package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lec.spring.listener.WriteEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
@@ -32,6 +32,7 @@ public class Post extends BaseEntity{
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @Builder.Default // builder 제공안함.
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne(optional = false)

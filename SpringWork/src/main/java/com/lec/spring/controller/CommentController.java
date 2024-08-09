@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Comment;
 import com.lec.spring.domain.QryCommentList;
 import com.lec.spring.domain.QryResult;
 import com.lec.spring.service.CommentService;
@@ -20,15 +21,12 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/write")
-    public QryResult write(
-            @RequestParam("post_id") Long postId,
-            @RequestParam("user_id") Long userId,
-            String content) {
-        return commentService.write(postId, userId, content);
+    public QryResult write(@RequestBody Comment comment) {
+        return commentService.write(comment.getPost().getId(), comment.getUser().getId(), comment.getContent());
     }
 
     // 댓글삭제
-    @PostMapping("/delete/{commentId}")
+    @DeleteMapping("/delete/{commentId}")
     public QryResult delete(@PathVariable("commentId") Long commentId) {
         return commentService.delete(commentId);
     }

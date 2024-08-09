@@ -2,6 +2,7 @@ let initialState ={
   folderList:[],
   folder:null,
   scrapFolderList:[],
+  moveFolderId:''
 }
 
 function FolderReducer(state=initialState, action){
