@@ -51,7 +51,7 @@ const Menu = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink exact to={`/hompy/${hompyId}/setting`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${hompyId}/${'setting'}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             관리
           </NavLink>
         </li>

@@ -7,7 +7,7 @@ import { LoginContext } from '../../../webpage/login/context/LoginContextProvide
 import Cookies from "js-cookie";
 import { SERVER_HOST } from '../../../apis/api';
 
-const DiaryUpdatePage = () => {
+const DiaryUpdatePage = ({hompy}) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [diary, setDiary] = useState({
@@ -61,7 +61,7 @@ const DiaryUpdatePage = () => {
     };
 
     return (
-        <Layout hompy={hompyInfo} user={hompyInfo.user}>
+        <Layout hompy={hompy} user={hompy.user}>
         <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
             <div className="w-50">
                 <h1>다이어리 수정</h1>
@@ -89,7 +89,7 @@ const DiaryUpdatePage = () => {
                     </Form.Group>
                     <div className="d-flex justify-content-end mt-3">
                         <Button type="submit" className="btn btn-primary me-2">저장</Button>
-                        <Button type="button" className="btn btn-secondary" onClick={() => navigate('/list')}>취소</Button>
+                        <Button type="button" className="btn btn-secondary" onClick={() => navigate(`/hompy/${hompyInfo.id}/diary`)}>취소</Button>
                     </div>
                 </Form>
             </div>
