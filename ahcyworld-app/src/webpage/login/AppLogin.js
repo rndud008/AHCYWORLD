@@ -30,9 +30,9 @@ const AppLogin = () => {
                     <Route path='/post/:hompyId/:postName/*' element={<Post />} />
                     <Route path='/hompy/:userId' element={<Hompy setUserId={setUserId} />} />
                     <Route path='/profile/:userId' element={<Profile setUserId={setUserId} />} />
-                    <Route path='/cart' element={<Cart/>}></Route>
                     <Route path="/guestbook/:hompyId" element={<GuestBookHome setUserId={setUserId}/>} />
                     <Route path='/addinfo' element={<OAuth2AddInfo />} />
+                    <Route path='/cart/:userId' element={<Cart/>}></Route>
                 </Routes>
             </LoginContextProvider>
         </BrowserRouter>
