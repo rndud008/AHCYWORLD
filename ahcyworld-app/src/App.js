@@ -19,6 +19,7 @@ import PostListDetail from "./minihompy/components/post/PostListDetail";
 import PostWrite from "./minihompy/components/post/PostWrite";
 import PostUpdate from "./minihompy/components/post/PostUpdate";
 import PostDetail from "./minihompy/components/post/PostDetail";
+import HompySetting from "./minihompy/pages/HompySetting";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
             <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
+            <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/>
           </Route>
         )}
         {/* 3. 어드민 페이지 */}
