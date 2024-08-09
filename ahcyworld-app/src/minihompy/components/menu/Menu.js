@@ -16,7 +16,7 @@ const Menu = () => {
     <nav className="menu-nav">
       <ul>
         <li>
-          <NavLink to={`/hompy/${hompyId}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${hompyId}`} end className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             홈
           </NavLink>
         </li>
