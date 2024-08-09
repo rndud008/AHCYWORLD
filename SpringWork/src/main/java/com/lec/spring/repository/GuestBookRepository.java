@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface GuestBookRepository extends JpaRepository<GuestBook, Long> {
     List<GuestBook> findByHompy(Hompy hompy);
-    List<GuestBook> findByHompyIdAndStatus(Long hompyId, String status);
+    List<GuestBook> findByHompyId(Long hompyId);
 }

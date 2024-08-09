@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
+    List<Diary> findByHompyUserId(Long userId);
     // 달력 안의 내용 출력
     List<Diary> findByEventDate(LocalDate date);
 }

@@ -7,6 +7,7 @@ import "../guestBook/css/GuestBookHome.css";
 import Cookies from "js-cookie";
 import { hompyInfo, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import * as Swal from "../../../apis/alert";
 
 const GuestBookHome = () => {
     const [guestBook, setGuestBook] = useState([]);
@@ -14,7 +15,9 @@ const GuestBookHome = () => {
     const [content, setContent] = useState(""); // 방명록 내용
     const [isSecret, setIsSecret] = useState(false); // 비밀글 여부
     const [isFriend, setIsFriend] = useState(false); // 일촌 관계 여부
+    const [book, setBook] = useState(false);
     const { hompyId } = useParams();
+    const [hompy, setHompy] = useState("");       // hompy 상태 설정
 
     const { hompyInfo, userInfo } = useContext(LoginContext);
 
@@ -26,46 +29,71 @@ const GuestBookHome = () => {
         // 로그인된 사용자 이름 설정
         setUserName(userInfo.username);
 
-        const fetchGuestBook = async () => {
-            try {
-                const response = await api.get(
-                    `${SERVER_HOST}/cyworld/cy/guestbook/list/${hompyId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${cookie}`,
-                        },
+        const fetchHompy = async () => {
+            try{
+                const respone = await api.get(`${SERVER_HOST}/hompy/${hompyId}`,{
+                    headers: {
+                        "Authorization": `Bearer ${cookie}`,
                     }
-                );
-                setGuestBook(response.data);
-            } catch (error) {
-                console.error("방명록 불러오기 실패", error);
+                });
+                    setHompy(respone.data);
+                    console.log("홈피 : ", respone);
+            }catch(error){
+                console.error("홈피 정보 불러오기 실패", error)
             }
+        }
+
+        const fetchGuestBook = async () => {
+            if(userName){
+                try {
+                    const response = await api.get(
+                        `${SERVER_HOST}/cyworld/cy/guestbook/list/${hompyId}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${cookie}`,
+                            },
+                            params: { username: userName }
+                        }
+                    );
+                    setGuestBook(response.data);
+                    console.log("방명록 정보", response.data);
+                } catch (error) {
+                    console.error("방명록 불러오기 실패", error);
+                }
+            }
+            
         };
 
         const checkFriendship = async () => {
-            try {
-                const response = await api.get(
-                    `${SERVER_HOST}/cyworld/cy/guestbook/friends/check/${hompyId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${cookie}`,
-                        },
-                    }
-                );
-                console.log("response:", response);
-                setIsFriend(response.data.isFriend);
-            } catch (error) {
-                console.error("일촌 관계 확인 실패", error);
+            if(userName){
+                try {
+                    const response = await api.get(
+                        `${SERVER_HOST}/cyworld/cy/guestbook/friends/check/${hompyId}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${cookie}`,
+                            },
+                            params: {username: userName}
+                        }
+                    );
+                    console.log("checkFriendship");
+                    console.log("response:", response);
+                    setIsFriend(response.data.isFriend);
+                } catch (error) {
+                    console.error("일촌 관계 확인 실패", error);
+                }
             }
         };
 
         if (hompyId) {
+            fetchHompy();
             fetchGuestBook();
             checkFriendship();
+            setBook(false);
         } else {
             console.log("HompyId가 없습니다.");
         }
-    }, [hompyId, userInfo]);
+    }, [hompyId, userName]);
 
     const handleDelete = async (id) => {
         if (window.confirm("삭제하시겠습니까?")) {
@@ -103,7 +131,7 @@ const GuestBookHome = () => {
                     params: { username: userName },
                 }
             );
-            if (response.data === 200) {
+            if (response.status === 200) {
                 setGuestBook(
                     guestBook.map((guest) =>
                         guest.id === id
@@ -111,6 +139,7 @@ const GuestBookHome = () => {
                             : guest
                     )
                 );
+                Swal.alert("비밀글 설정에 성공했습니다", "비밀글 설정 성공", "success", () => {return});
             }
         } catch (error) {
             console.error("비밀글 설정 실패", error);
@@ -129,7 +158,8 @@ const GuestBookHome = () => {
             content: content,
             status: isSecret ? "invisible" : "visible",
             user: userInfo,
-            hompy: hompyInfo,
+            hompy: hompy,
+            // guestBookName: "guestBook",
         };
 
         const cookie = Cookies.get("accessToken");
@@ -143,12 +173,15 @@ const GuestBookHome = () => {
                     },
                 }
             );
-            if (response.data === 200) {
+            if (response.status === 200) {
+                console.log("방명록 등록 시도");
                 setGuestBook([...guestBook, response.data]);
                 setContent("");
                 setIsSecret(false);
+                Swal.alert("방명록 등록에 성공했습니다", "방명록 등록 성공", "success", () => {return});
             }
         } catch (error) {
+            Swal.alert("유저와 일촌 관계인지 확인하세요.", "방명록 등록 실패", "warning", () => { return })
             console.error("방명록 저장 실패", error);
         }
     };
@@ -161,13 +194,13 @@ const GuestBookHome = () => {
         setIsSecret(e.target.checked);
     };
 
-    // hompy 에대한 useParam을 통해 hompy 정보 가져오기
+    // hompy 에 대한 useParam을 통해 hompy 정보 가져오기
     // 가져온 값값으로 방명록 글 셋팅.
     // 현재 홈피info는 로그인한 유저의 정보들이기때문에 url 이 변경되어도 
     // 나자신의 홈피 내용밖에 안나옴.
     return (
         <>
-            <Layout hompy={hompyInfo} user={hompyInfo.user}>
+            <Layout hompy={hompy} user={hompy.user}>
                 <Container className="container">
                     <Form onSubmit={handleSubmit} className="form-container">
                         <Row className="form-row">
@@ -255,10 +288,10 @@ const GuestBookHome = () => {
                                                                 </span>
                                                             )}
                                                             {(guest.user
-                                                                .name ===
+                                                                .username ===
                                                                 userName ||
                                                                 hompyInfo.user
-                                                                    .name ===
+                                                                    .username ===
                                                                     userName) && (
                                                                 <span
                                                                     className="delete"
@@ -283,14 +316,13 @@ const GuestBookHome = () => {
                                                     />
                                                 </td>
                                                 <td className="content-cell">
-                                                {(guest.status === "visible" || guest.user.name === userName || hompyInfo.user.name === userName) && (
-                                                    <div className="content">
-                                                        {guest.content}
-                                                    </div>
-                                                )}
-                                                {(guest.status === "invisible" && guest.user.name !== userName && hompyInfo.user.name !== userName) && (
+                                                {(guest.status === "invisible" && guest.user.username !== userName && hompy.user.username !== userName) && (
                                                     <div className="secret-message">
                                                         비밀글입니다. 작성자만 볼 수 있습니다.
+                                                    </div>
+                                                ) || (
+                                                    <div className="secret-message">
+                                                        {guest.content}
                                                     </div>
                                                 )}
                                             </td>
