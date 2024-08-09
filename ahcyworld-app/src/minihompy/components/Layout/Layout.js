@@ -4,13 +4,14 @@ import Left from "../../../minihompy/components/Layout/Left";
 import Right from "../../../minihompy/components/Layout/Right";
 import "./css/Layout.css";
 import axios from "axios";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 import BoardTypeList from "../post/BoardTypeList";
 
 
-const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = true}) => {
+
+const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = true, LeftPanelComponent}) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
     const [miniHompySkin, setMiniHompySkin] = useState();
@@ -18,8 +19,11 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
     const hompyId = hompy?.id;
 
   const { postName } = useParams();
+  const location = useLocation();
+  const isSettingPage = location.pathname.includes('/setting'); // 셋팅페이지 경로감지
 
   console.log(postName, "Layout");
+
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -105,8 +109,14 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
       {/* 메인 컨텐츠 */}
       <div className="d-flex justify-content-center align-items-center min-vh-100">
         <div className="left-panel">
-          {postName === undefined && <Left user={user} hompy={hompy} />}
-          {postName && <BoardTypeList />}
+        {isSettingPage ? (
+            LeftPanelComponent ? <LeftPanelComponent /> : null
+          ) : (
+            <>
+              {postName === undefined && <Left user={user} hompy={hompy} />}
+              {postName && <BoardTypeList />}
+            </>
+          )}
         </div>
         <div className="right-panel">
           {children || <Right hompy={hompy} user={user} />}{" "}

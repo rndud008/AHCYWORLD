@@ -67,7 +67,7 @@ function App() {
             <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
             <Route path="diary/write" element={<DiaryWritePage setUserId={setUserId} />}/>
             <Route path="diary/update/:id" element={<DiaryUpdatePage setUserId={setUserId} />}/>
-            {/* <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/> */}
+            <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/>
           </Route>
         )}
         {/* 3. 어드민 페이지 */}
