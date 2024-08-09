@@ -62,7 +62,7 @@ function App() {
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
             <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
-            <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/>
+            <Route path="setting" element={<HompySetting setUserId={setUserId}/>}/>
           </Route>
         )}
         {/* 3. 어드민 페이지 */}
