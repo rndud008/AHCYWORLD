@@ -28,19 +28,19 @@ public class GuestBookService {
 
     // 일촌 관계일 때만 글 작성 가능
     public GuestBook save(GuestBook guestBook) {
-        User user = userRepository.findById(guestBook.getUser().getId())
+        User guestBookUser = userRepository.findById(guestBook.getUser().getId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-        Hompy hompy = hompyRepository.findById(guestBook.getHompy().getId())
+        Hompy targetHompy = hompyRepository.findById(guestBook.getHompy().getId())
                 .orElseThrow(() -> new IllegalArgumentException("미니홈피를 찾지 못 했습니다."));
 
-        if (!friendRepository.existsByUserAndFriendUser(user, hompy.getUser())){
+        // 로그에 방명록 작성자와 홈피 소유자 정보를 출력
+        System.out.println("GuestBook User: " + guestBookUser.getId() + ", Hompy Owner: " + targetHompy.getUser().getId());
+        System.out.println("Hompy Owner: " + targetHompy);
+
+        if (!friendRepository.existsByUserAndFriendUser(guestBookUser, targetHompy.getUser())){
             throw new IllegalArgumentException("유저와 일촌 관계가 아닙니다.");
         }
-
-        if (guestBook.getStatus() == null){
-            guestBook.setStatus("visible");
-            guestBook.setGuestBookName("guestBook");
-        }
+        guestBook.setGuestBookName("guestBook");
         return guestBookRepository.save(guestBook);
     }
 
@@ -76,7 +76,7 @@ public class GuestBookService {
         if (isOwner){
             return guestBookRepository.findByHompy(hompy);
         }else {
-            return guestBookRepository.findByHompyIdAndStatus(hompyId, "visible");
+            return guestBookRepository.findByHompyId(hompyId);
         }
     }
 
