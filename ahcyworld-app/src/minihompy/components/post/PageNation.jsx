@@ -43,7 +43,7 @@ const PageNation = ({ setPage }) => {
           <PageItem>
             <Link
               onClick={() => pageSave(pageAndPostList.startpage - 1)}
-              to={`/post/${hompyId}/${postName}/${folderId}?page=${
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${
                 pageAndPostList.startpage - 1
               }`}
             >
@@ -54,7 +54,7 @@ const PageNation = ({ setPage }) => {
           <PageItem>
             <Link
               onClick={() => pageSave(pageAndPostList.startpage + 1)}
-              to={`/post/${hompyId}/${postName}/${folderId}?page=${
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${
                 pageAndPostList.startpage + 1
               }`}
             >
@@ -74,7 +74,7 @@ const PageNation = ({ setPage }) => {
                 <PageItem key={item}>
                   <Link
                     onClick={() => pageSave(item)}
-                    to={`/post/${hompyId}/${postName}/${folderId}?page=${item}`}
+                    to={`/hompy/${hompyId}/${postName}/${folderId}?page=${item}`}
                   >
                     {item}
                   </Link>
@@ -86,7 +86,7 @@ const PageNation = ({ setPage }) => {
           <PageItem>
             <Link
               onClick={() => pageSave(pageAndPostList.endpage + 1)}
-              to={`/post/${hompyId}/${postName}/${folderId}?page=${
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${
                 pageAndPostList.endpage + 1
               }`}
             >
@@ -97,7 +97,7 @@ const PageNation = ({ setPage }) => {
           <PageItem>
             <Link
               onClick={() => pageSave(pageAndPostList.totalPage)}
-              to={`/post/${hompyId}/${postName}/${folderId}?page=${pageAndPostList.totalPage}`}
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${pageAndPostList.totalPage}`}
             >
               <FontAwesomeIcon icon={faAnglesRight} />
             </Link>

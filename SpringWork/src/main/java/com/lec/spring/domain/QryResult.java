@@ -14,5 +14,7 @@ public class QryResult {
 
     Integer count; // 결과값
 
+    Long postId;
+
     String status; // 처리결과 메시지
 }

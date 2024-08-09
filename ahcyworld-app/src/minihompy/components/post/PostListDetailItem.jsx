@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, ButtonGroup, Container, Form, Modal } from "react-bootstrap";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api from "../../../apis/api";
@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { FolderAction } from "../../../redux/actions/FolderAction";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { CommentAction } from "../../../redux/actions/CommentAction";
 
-const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
-  const { hompyInfo } = useContext(LoginContext);
-  const { postName, hompyId } = useParams();
+const PostListDetailItem = ({ item }) => {
+  const { hompyInfo, userInfo } = useContext(LoginContext);
+  const { postName, hompyId, folderId } = useParams();
   const [show, setShow] = useState({
     folderMove: false,
     scrapFolder: false,
@@ -19,26 +20,48 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
   const dispatch = useDispatch();
   const folderList = useSelector((state) => state.folder.folderList);
   const scrapFolderList = useSelector((state) => state.folder.scrapFolderList);
+  const [moveFolderId, setMoveFolderId] = useState();
 
-  const folderId = item?.folder.id;
   const postId = item?.id;
 
-  console.log(hompyInfo.id, "hompid");
+  const photoAndVideoCommentList = useSelector(
+    (state) => state.comment.photoAndVideoCommentList
+  );
+  const [content, setContent] = useState();
+  const [commentShow, setCommentShow] = useState(false);
+
+  console.log(photoAndVideoCommentList);
+
+  const photoAndVideoCommentListAxios = async () => {
+    try {
+      await dispatch(CommentAction.photoAndVideoCommentListAxios(postId));
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  const commentWriteAxios = async () => {
+    try {
+      await dispatch(
+        CommentAction.commentWriteAxios(userInfo, item, content, postName)
+      );
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  const commentDeleteAxios = async (commentId) => {
+    try {
+      await dispatch(
+        CommentAction.commentDeleteAxios(commentId, item.id, postName)
+      );
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   const postDelete = async () => {
     if (!window.confirm("삭제 하시겠습니까?")) return;
-    // const response = await api.delete(
-    //   `http://localhost:8070/${hompyId}/${postName}/${item.foler.id}/delete/${item.id}`
-    // );
-    // const { status } = response;
-
-    // if (status === 200) {
-    //   alert('삭제 완료.');
-    //   navigate(`http://localhost:8070/${hompyId}/${postName}/${item.foler.id}`);
-    // } else {
-    //   alert("삭제 실패.");
-    //   navigate(-1);
-    // }
 
     dispatch(
       PostAction.deletePostAxios(hompyId, postName, folderId, postId, navigate)
@@ -47,17 +70,6 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
 
   const moveFolder = async (e) => {
     e.preventDefault();
-
-    // const response = await api.put(`http://localhost:8070/${hompyId}/${postName}/${item.foler.id}/detail/${item.id}/${'moveFolderId'}`)
-    // const {data,status} = response;
-    // console.log('폴더 변경완료 :', data)
-    // if(parseInt(status) === 200){
-    //   alert('폴더 변경 성공.')
-    //   navigate(`/post/${hompyId}/${postName}/${data.folder.id}/detail/${data.id}`)
-    // }else{
-    //   alert('폴더 변경 실패')
-    //   navigate(`/post/${hompyId}/${postName}`)
-    // }
 
     dispatch(
       PostAction.movePostFolderAxios(
@@ -79,14 +91,8 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
     if (name === "folderMove") {
       setShow({ ...show, folderMove: true });
     }
+
     if (name === "scrapPost") {
-      // const response = await api.get(`http://localhost:8070/${hompyId}/${postName}/scrapfolder`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${Cookies.get("accessToken")}`,
-      //     },
-      //   })
-      //   const {data} = response;
       try {
         await dispatch(FolderAction.getScrapFolderListAxios(hompyId, postName));
       } catch (error) {
@@ -127,7 +133,7 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
 
     const response = await api.post(
       `http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${scrap}`,
-      post
+      item
     );
 
     const { data, status, statusText } = response;
@@ -139,9 +145,14 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
       alert(statusText);
     }
   };
+  useEffect(() => {
+    photoAndVideoCommentListAxios();
+  }, []);
+
+  let result = photoAndVideoCommentList.find((item) => item.postId === postId);
 
   return (
-    <Container key={key}>
+    <>
       <div>
         <span>작성번호 : {item.id}</span>
         <span>제목 : {item.subject}</span>
@@ -179,41 +190,68 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
         })}
         {item.content}
       </div>
+
       <div>
-        <ButtonGroup>
-          <Button>댓글닫기</Button>
+        <div>
+          <ButtonGroup>
+            <Button onClick={() => setCommentShow(!commentShow)}>
+              {commentShow === false ? "댓글보기" : "댓글닫기"}
+            </Button>
 
-          {!(parseInt(hompyId) === hompyInfo?.id) && (
-            <>
-              <Button name="scrapPost" onClick={handleOpen}>
-                스크랩
-              </Button>
-            </>
-          )}
+            {!(parseInt(hompyId) === hompyInfo?.id) && (
+              <>
+                <Button name="scrapPost" onClick={handleOpen}>
+                  스크랩
+                </Button>
+              </>
+            )}
 
-          {parseInt(hompyId) === hompyInfo?.id && (
-            <>
-              <Button
-                onClick={() =>
-                  navigate(
-                    `/hompy/${hompyId}/${postName}/${folderId}/update/${postId}`
-                  )
-                }
-              >
-                수정
-              </Button>
-              <Button name="folderMove" onClick={handleOpen}>
-                이동
-              </Button>
-              <Button onClick={postDelete}>삭제</Button>
-            </>
-          )}
-        </ButtonGroup>
-        <div>댓글 목록</div>
+            {parseInt(hompyId) === hompyInfo?.id && (
+              <>
+                <Button
+                  onClick={() =>
+                    navigate(
+                      `/hompy/${hompyId}/${postName}/${folderId}/update/${postId}`
+                    )
+                  }
+                >
+                  수정
+                </Button>
+                <Button name="folderMove" onClick={handleOpen}>
+                  이동
+                </Button>
+                <Button onClick={postDelete}>삭제</Button>
+              </>
+            )}
+          </ButtonGroup>
+        </div>
+
+        {commentShow && (
+          <div>
+            {result?.data?.length === 0 ? (
+              <div>작성된 댓글이 없습니다.</div>
+            ) : (
+              result?.data.map((item) => (
+                <div style={{ display: "flex" }}>
+                  <p>{item.user.name}</p>
+                  <p>{item.createAt}</p>
+                  <p>{item.content}</p>
+                  <Button onClick={() => commentDeleteAxios(item.id)}>
+                    삭제
+                  </Button>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+
         <div>
           <label>댓글</label>
-          <input placeholder="댓글입력" />
-          <Button>확인</Button>
+          <input
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="댓글입력"
+          />
+          <Button onClick={commentWriteAxios}>확인</Button>
         </div>
       </div>
 
@@ -301,7 +339,7 @@ const PostListDetailItem = ({ key,item, moveFolderId, setMoveFolderId }) => {
           </Form>
         </Modal.Body>
       </Modal>
-    </Container>
+    </>
   );
 };
 

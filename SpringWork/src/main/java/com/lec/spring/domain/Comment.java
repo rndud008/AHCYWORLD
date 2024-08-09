@@ -20,8 +20,7 @@ public class Comment extends BaseEntity{
     @ToString.Exclude
     private User user;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(optional = false)
     private Post post;
 
     @Column(nullable = false)

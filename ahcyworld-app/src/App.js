@@ -19,17 +19,16 @@ import PostListDetail from "./minihompy/components/post/PostListDetail";
 import PostWrite from "./minihompy/components/post/PostWrite";
 import PostUpdate from "./minihompy/components/post/PostUpdate";
 import PostDetail from "./minihompy/components/post/PostDetail";
+import HompySetting from "./minihompy/pages/HompySetting";
+import { useSelector } from "react-redux";
 
 function App() {
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(0);
-  const [moveFolderId, setMoveFolderId] = useState();
   const { userInfo, hompyInfo } = useContext(LoginContext);
-
-  console.log("userInfo: ", userInfo);
-  console.log("hompyInfo: ", hompyInfo);
-
   const {postName} = useParams();
+  const folder = useSelector(state => state.folder.folder);
+
 
   return (
     <div>
@@ -50,19 +49,20 @@ function App() {
             <Route path="guestbook" element={<GuestBookHome setUserId={setUserId} />}/>
             <Route path=":postName" element={<Post page={page} />}>
               <Route path=":folderId" element={
-                  postName?.includes("board") ? (
+                folder && folder.boardType.name.includes('게시판')? (
                     <PostList setPage={setPage} />
                   ) : ( <PostListDetail
-                     moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} setPage={setPage}
+                      setPage={setPage}
                      /> )
                 }
               />
               <Route path=":folderId/detail/:postId" element={ <PostDetail
-              moveFolderId={moveFolderId} setMoveFolderId={setMoveFolderId} /> } />
+               /> } />
               <Route path=":folderId/write" element={<PostWrite />} />
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
             <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
+            <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/>
           </Route>
         )}
         {/* 3. 어드민 페이지 */}
