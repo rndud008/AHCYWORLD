@@ -1,19 +1,25 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SERVER_HOST } from "../../../apis/api";
+import * as Swal from "../../../apis/alert";
+import Layout from "../Layout/Layout";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import moment from "moment";
 
 const DiaryWritePage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const selectedDate = location.state?.date || new Date();
+    const { userInfo, hompyInfo } = useContext(LoginContext);
 
     const [validated, setValidated] = useState(false);
 
     const [formData, setFormData] = useState({
         keyWord: "",
         content: "",
-        eventDate: selectedDate,
+        eventDate: moment(selectedDate).format("YYYY-MM-DD"),
     });
 
     const handleChange = (e) => {
@@ -25,18 +31,40 @@ const DiaryWritePage = () => {
     };
 
     const handleSubmit = (e) => {
+        e.preventDefault();  // 기본 동작 차단
+        e.stopPropagation(); // 이벤트 전파 차단
+
+        console.log("selectedDate :", selectedDate);
+        
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
+            // 유효성 검사 실패
+            setValidated(true);
         } else {
+            // 유효성 검사 성공
+            setValidated(false);  // 유효성 검사 성공 시, `validated` 상태를 false로 설정
+            const requestData = {
+                ...formData,
+                // eventDate: moment(selectedDate).format("YYYY-MM-DD"),
+                hompy: {
+                    id: hompyInfo.id,
+                    user: {
+                        id: userInfo.id,
+                    },
+                },
+            };
+    
             axios
-                .post("http://localhost:8070/cyworld/cy/diaries/save", formData, {
-                    headers: "application/json"
+                .post(`${SERVER_HOST}/cyworld/cy/diaries/save`, requestData, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 })
                 .then((response) => {
-                    console.log("다이어리 저장 완료", response.data);
-                    navigate("/list");
+                    Swal.alert("다이어리 저장이 완료되었습니다.", "다이어리 저장 성공", "success", () =>{
+                        console.log("다이어리 저장 완료", response.data);
+                        navigate(`/hompy/${hompyInfo.id}/diary`);
+                    })
                 })
                 .catch((error) => {
                     console.error("다이어리 저장 실패", error);
@@ -46,6 +74,7 @@ const DiaryWritePage = () => {
 
     return (
         <>
+        <Layout hompy={hompyInfo} user={hompyInfo.user}>
             <div className="container d-flex justify-content-center align-items-center min-vh-100">
                 <div className="w-50">
                     <h1 className="mb-4 text-center">다이어리 작성</h1>
@@ -93,7 +122,7 @@ const DiaryWritePage = () => {
                             <Button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={() => navigate("/list")}
+                                onClick={() => navigate(`/hompy/${hompyInfo.id}/diary`)}
                             >
                                 취소
                             </Button>
@@ -101,6 +130,7 @@ const DiaryWritePage = () => {
                     </Form>
                 </div>
             </div>
+            </Layout>
         </>
     );
 };

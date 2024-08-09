@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { SERVER_HOST } from "../../../apis/api";
+import * as Swal from "../../../apis/alert";
+import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 
 const DiaryModal = ({
     show,
@@ -13,20 +15,22 @@ const DiaryModal = ({
     onWriteClick,
 }) => {
 
+    const {userInfo, hompyInfo} = useContext(LoginContext);
+
     const navigate = useNavigate();
 
     const onUpdateClick = (id) => {
-        navigate("/update/" + id);
+        navigate(`/hompy/${hompyInfo.id}/diary/update/` + id);
     };
 
     const onDeleteClick = (id) => {
         if(window.confirm("삭제하시겠습니까?")){
             axios
-                .delete(`http://localhost:8070/cyworld/cy/diaries/delete/${id}`)
+                .delete(`${SERVER_HOST}/cyworld/cy/diaries/delete/${id}/${userInfo.id}`)
                 .then((response) => {
-                    window.alert("삭제되었습니다.");
-                    onHide();   // 모달 닫기
-                    window.location.reload();       // 페이지 새로고침
+                    Swal.alert("다이어리가 삭제 되었습니다.", "다이어리 삭제 성공", "success", () => {
+                        onHide();
+                    })
                 })
                 .catch((error => {
                     console.error("삭제 실패", error);

@@ -19,8 +19,11 @@ import PostListDetail from "./minihompy/components/post/PostListDetail";
 import PostWrite from "./minihompy/components/post/PostWrite";
 import PostUpdate from "./minihompy/components/post/PostUpdate";
 import PostDetail from "./minihompy/components/post/PostDetail";
-import HompySetting from "./minihompy/pages/HompySetting";
+// import HompySetting from "./minihompy/pages/HompySetting";
 import { useSelector } from "react-redux";
+import DiaryModal from "./minihompy/components/diary/DiaryModal";
+import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
+import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -62,7 +65,9 @@ function App() {
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
             <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
-            <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/>
+            <Route path="diary/write" element={<DiaryWritePage setUserId={setUserId} />}/>
+            <Route path="diary/update/:id" element={<DiaryUpdatePage setUserId={setUserId} />}/>
+            {/* <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/> */}
           </Route>
         )}
         {/* 3. 어드민 페이지 */}

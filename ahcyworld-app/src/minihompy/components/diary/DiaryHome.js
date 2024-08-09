@@ -27,28 +27,30 @@ const DiaryHome = () => {
 
     // 로딩시 초기
     useEffect(() => {
-        axios({
-            method: "get",
-            url: `${SERVER_HOST}/cyworld/cy/diaries/list`,
-        })
-            .then((response) => {
-                const diaries = response.data;
-                // console.log("diaries:", diaries);
-                const formattedDates = diaries.map((diary) => {
-                    // console.log("diaryEvenDate : ", diary.eventDate);
-                    const localDate = moment(new Date(diary.eventDate)).format(
-                        "YYYY-MM-DD"
-                    );
-                    // console.log("localDate : ", localDate);
-                    return localDate;
-                });
-                setDayList(formattedDates);
-                // console.log("formattedDates: ", formattedDates);
+        if(userInfo.id === hompyInfo.user.id){
+            axios({
+                method: "get",
+                url: `${SERVER_HOST}/cyworld/cy/diaries/list/${hompyInfo.id}/${userInfo.id}`,
             })
-            .catch((error) => {
-                console.error("diary 없음...", error);
-            });
-    }, []);
+                .then((response) => {
+                    const diaries = response.data;
+                    // console.log("diaries:", diaries);
+                    const formattedDates = diaries.map((diary) => {
+                        // console.log("diaryEvenDate : ", diary.eventDate);
+                        const localDate = moment(new Date(diary.eventDate)).format(
+                            "YYYY-MM-DD"
+                        );
+                        // console.log("localDate : ", localDate);
+                        return localDate;
+                    });
+                    setDayList(formattedDates);
+                    // console.log("formattedDates: ", formattedDates);
+                })
+                .catch((error) => {
+                    console.error("diary 없음...", error);
+                });
+        }
+    }, [hompyInfo.id, userInfo.id]);
 
     // 현재시간의 월
     const monthOfActiveDate = moment(value).format("YYYY-MM");
@@ -65,16 +67,15 @@ const DiaryHome = () => {
         if (view !== "month") {
             return null;
         }
-
         const formattedDate = moment(date).format("YYYY-MM-DD");
-        // console.log(`Checking date: ${formattedDate}`);
+        // console.log(Checking date: ${formattedDate});
 
         // date(각 날짜)가 리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘)을 추가
         if (dayList.includes(formattedDate)) {
-            console.log(`Adding content for date: ${formattedDate}`);
+            // console.log(Adding content for date: ${formattedDate});
             return <div key={formattedDate}>⭐️</div>;
         } else {
-            console.log(`Date ${formattedDate} not in dayList`);
+            // console.log(Date ${formattedDate} not in dayList);
         }
         return null;
     };
@@ -83,24 +84,37 @@ const DiaryHome = () => {
     const handleDateClick = (date) => {
         const formattedDate = moment(date).format("YYYY-MM-DD");
         setSelectedDate(formattedDate);
+        console.log("formattedDate: ", formattedDate);
 
-        axios
-            .get(
-                `${SERVER_HOST}/cyworld/cy/diaries/detail-by-date/${formattedDate}`
-            )
-            .then((response) => {
-                setDiaryContent(response.data);
-                setShowModal(true);
-                console.log("responseData:", response.data);
-            })
-            .catch((error) => {
-                setDiaryContent(null);
-                setShowModal(true);
-                console.error(
-                    "다이어리 내용을 가져오는데 실패 했습니다.",
-                    error
-                );
-            });
+        if(userInfo.id === hompyInfo.user.id){
+            axios
+                .get(
+                    `${SERVER_HOST}/cyworld/cy/diaries/detail-by-date/${formattedDate}`
+                )
+                .then((response) => {
+                    const diaries = response.data;
+
+                    const filteredDiaries = diaries.filter(diary => diary.hompy.user.id === userInfo.id);
+
+                    if(filteredDiaries.length > 0){
+                        console.log("다이어리 정보: ", filteredDiaries);
+                        setDiaryContent(filteredDiaries);
+                        setShowModal(true);
+                    }else{
+                        setDiaryContent(null);
+                        setShowModal(true);
+                    }
+                })
+                .catch((error) => {
+                    setDiaryContent(null);
+                    setShowModal(true);
+                    console.error(
+                        "다이어리 내용을 가져오는데 실패 했습니다.",
+                        error
+                    );
+                });
+        }
+        
     };
 
     const handleCloseModal = () => {
@@ -109,7 +123,9 @@ const DiaryHome = () => {
     };
 
     const handleWriteClick = () => {
-        navigate("/write");
+        navigate(`/hompy/${hompyInfo.id}/diary/write`, {
+            state: {date: selectedDate},
+        });
     };
 
     return (
