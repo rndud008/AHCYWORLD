@@ -130,14 +130,14 @@ const DiaryHome = () => {
                     ) => getActiveMonth(activeStartDate)}
                     onClickDay={handleDateClick} // 날짜 클릭 시 핸들러
                 />
-                </div>
                 <DiaryModal
                     show={showModal}
                     onHide={handleCloseModal}
                     selectedDate={selectedDate}
                     diaryContent={diaryContent}
                     onWriteClick={handleWriteClick}
-                />
+                    />
+            </div>
             </Layout>
         </>
     );

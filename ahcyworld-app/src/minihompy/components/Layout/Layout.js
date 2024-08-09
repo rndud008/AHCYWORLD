@@ -6,10 +6,9 @@ import "./css/Layout.css";
 import axios from "axios";
 import { Outlet, useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import Menu from "../menu/Menu";
-import BgmPlayer from "../musicPlayer/BgmPlayer";
 
-const Layout = ({ hompy, user, children }) => {
+
+const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = true}) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
     const [miniHompySkin, setMiniHompySkin] = useState();
@@ -83,20 +82,17 @@ const Layout = ({ hompy, user, children }) => {
                 }}
             ></div>
 
-      {/* TODAY | TOTAL */}
-      <div className="visitor-info">
-        TODAY {visitorInfo.todayVisitor} &nbsp; | &nbsp; TOTAL{" "}
-        {visitorInfo.totalVisitor}
-      </div>
+      {/* TODAY | TOTAL 조건부 랜더링 (관리페이지에서 사용함) */}
+      {showVisitorInfo && (
+        <div className="visitor-info">
+          TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo?.totalVisitor}
+        </div>
+      )}
 
-      {/* 김세진님의 미니홈피 */}
-      <div className="homepage-title">{hompy.title}</div>
-
-      {/* Menu 컴포넌트 */}
-      {/* <Menu userId={userId} /> */}
-
-      {/* BGM Player 컴포넌트 */}
-      {/* <BgmPlayer /> */}
+      {/* 김세진님의 미니홈피 조건부 랜더링 (관리페이지에서 사용함) */}
+      {showTitle && (
+        <div className="homepage-title">{hompy.title}</div>
+      )}
 
       {/* 메인 컨텐츠 */}
       <div className="d-flex justify-content-center align-items-center min-vh-100">
