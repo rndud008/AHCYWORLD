@@ -21,6 +21,8 @@ select *
 from hompy;
 select *
 from guest_book;
+select *
+from carts;
 
 delete
 from ah_user
@@ -37,7 +39,7 @@ describe ah_user;
 alter table ah_user modify birth_day date null;
 alter table ah_user modify gender varchar(255) null;
 
-    select * from item;
+select * from item;
 select count(*)
 from item;
 delete

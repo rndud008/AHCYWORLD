@@ -9,7 +9,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import Apphompy from "./minihompy/Apphompy";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

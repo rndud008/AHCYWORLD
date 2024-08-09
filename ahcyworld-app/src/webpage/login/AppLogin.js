@@ -28,7 +28,7 @@ const AppLogin = () => {
                     <Route path='/post/:hompyId/:postName/*' element={<Post />} />
                     <Route path='/hompy/:userId' element={<Hompy setUserId={setUserId} />} />
                     <Route path='/profile/:userId' element={<Profile setUserId={setUserId} />} />
-                    <Route path='/cart' element={<Cart/>}></Route>
+                    <Route path='/cart/:userId' element={<Cart/>}></Route>
                 </Routes>
             </LoginContextProvider>
         </BrowserRouter>
