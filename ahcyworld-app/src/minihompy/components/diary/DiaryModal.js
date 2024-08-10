@@ -29,6 +29,7 @@ const DiaryModal = ({
                 .delete(`${SERVER_HOST}/cyworld/cy/diaries/delete/${id}/${userInfo.id}`)
                 .then((response) => {
                     Swal.alert("다이어리가 삭제 되었습니다.", "다이어리 삭제 성공", "success", () => {
+                        window.location.reload();
                         onHide();
                     })
                 })

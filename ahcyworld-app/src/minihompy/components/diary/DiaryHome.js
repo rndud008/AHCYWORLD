@@ -10,6 +10,7 @@ import DiaryModal from "./DiaryModal";
 import { SERVER_HOST } from "../../../apis/api";
 import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import Layout from "../Layout/Layout";
+import { Button } from "react-bootstrap";
 
 const DiaryHome = () => {
     const curDate = new Date();
@@ -128,6 +129,12 @@ const DiaryHome = () => {
         });
     };
 
+    const moveToToday = () => {
+        const today = new Date();
+        onChange(today);
+        setActiveMonth(moment(today).format("YYYY-MM-DD"));
+    }
+
     return (
         <>
             <Layout hompy={hompyInfo} user={hompyInfo.user}>
@@ -145,7 +152,9 @@ const DiaryHome = () => {
                         { activeStartDate } // 활성화된 (현재 보여지는) 년, 월, 일이 변경될 때마다 실행
                     ) => getActiveMonth(activeStartDate)}
                     onClickDay={handleDateClick} // 날짜 클릭 시 핸들러
+                    activeStartDate={new Date(activeMonth)}
                 />
+                <Button className="move-to-today" onClick={moveToToday}>오늘로 이동</Button>
                 <DiaryModal
                     show={showModal}
                     onHide={handleCloseModal}

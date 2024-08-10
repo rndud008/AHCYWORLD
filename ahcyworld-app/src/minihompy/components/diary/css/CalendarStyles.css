@@ -8,6 +8,10 @@
     margin-left: -500px;
     padding: 20px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 /* 달력 */
@@ -98,4 +102,13 @@
 .react-calendar__tile--now:enabled:focus {
     background: wheat; /* 오늘 날짜 타일이 hover 및 focus 시의 배경색 */
     border-radius: 14px;
+}
+
+.move-to-today {
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+    margin-top: auto;
+    padding-top: 10px;
+    width: auto;
 }
