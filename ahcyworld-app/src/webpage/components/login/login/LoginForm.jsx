@@ -97,7 +97,7 @@ const LoginForm = () => {
                     <img src={naver} alt='' className='naver-btn' onClick={onNaverLogin} />
                     <img src={kakao} alt='' className='kakao-btn' onClick={onKakaoLogin} />
                     <button className='login-btn' value='Login' type='submit'>
-                        Login
+                    로그인
                     </button>
                 </div>
             </form>

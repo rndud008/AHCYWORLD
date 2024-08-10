@@ -26,7 +26,7 @@ const Header = () => {
                     <div className='logo-box'>
                         <img src={logo} alt='Acyworld LOGO' />
                     </div>
-                    <div className='search-box'>
+                    <div className='search-select'>
                         <select>
                             <option>전체검색</option>
                             <option>사람검색</option>
