@@ -1,5 +1,6 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ class UserRepositoryTest {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    HompyRepository hompyRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -68,6 +71,22 @@ class UserRepositoryTest {
 
         userRepository.saveAllAndFlush(List.of(user1, user2, admin1));
     }
+
+    @Test
+    void updateTest() {
+        User user = userRepository.findById(5L).orElse(null);
+
+        Hompy hompy = hompyRepository.findByUser(user);
+
+        System.out.println("홈피아이디: " + hompy.getId());
+
+        String newPic = "망곰2.png";
+        hompy.setMinimiPicture(newPic);
+
+        hompyRepository.save(hompy);
+        System.out.println("저장 후 홈피: " + hompy);
+    }
+
 
 
 }

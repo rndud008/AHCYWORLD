@@ -18,11 +18,11 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
     const userId = user?.id;
     const hompyId = hompy?.id;
 
-  const { postName } = useParams();
+  const { postName,setting } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes('/setting'); // 셋팅페이지 경로감지
 
-  console.log(postName, "Layout");
+  // console.log(postName, "Layout");
 
 
   useEffect(() => {
@@ -109,14 +109,11 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
       {/* 메인 컨텐츠 */}
       <div className="d-flex justify-content-center align-items-center min-vh-100">
         <div className="left-panel">
-        {isSettingPage ? (
-            LeftPanelComponent ? <LeftPanelComponent /> : null
-          ) : (
             <>
               {postName === undefined && <Left user={user} hompy={hompy} />}
-              {postName && <BoardTypeList />}
+              {(postName && setting === undefined) && <BoardTypeList />}
+              {(setting && postName === undefined) && <LeftPanelComponent />}
             </>
-          )}
         </div>
         <div className="right-panel">
           {children || <Right hompy={hompy} user={user} />}{" "}

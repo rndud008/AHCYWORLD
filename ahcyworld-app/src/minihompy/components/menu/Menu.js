@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import './Menu.css';
-import { LoginContext } from '../../../webpage/login/context/LoginContextProvider';
 import BgmPlayer from '../musicPlayer/BgmPlayer';
+import { LoginContext } from '../../../webpage/components/login/context/LoginContextProvider';
 
 const Menu = () => {
   //
@@ -51,7 +51,7 @@ const Menu = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink exact to={`/hompy/${hompyId}/setting`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
+          <NavLink to={`/hompy/${hompyId}/${'setting'}`} className={({ isActive }) => isActive ? "menu-link selected" : "menu-link"}>
             관리
           </NavLink>
         </li>

@@ -4,8 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import PageNation from "./PageNation";
 import PostItem from "./PostItem";
 import PostListDetailItem from "./PostListDetailItem";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"; 
 import { useSelector } from "react-redux";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const PostListDetail = ({
   setPage,

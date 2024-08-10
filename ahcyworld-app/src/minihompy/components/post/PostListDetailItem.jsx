@@ -5,8 +5,8 @@ import api from "../../../apis/api";
 import { useDispatch, useSelector } from "react-redux";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { FolderAction } from "../../../redux/actions/FolderAction";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import { CommentAction } from "../../../redux/actions/CommentAction";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const PostListDetailItem = ({ item }) => {
   const { hompyInfo, userInfo } = useContext(LoginContext);

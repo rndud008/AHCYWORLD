@@ -67,11 +67,12 @@ export const friendShipResponse = (id, reply) => {
 
 export const addInfo = (username, gender, birthDay) => {
     const params = new URLSearchParams();
-    params.append('username', username)
-    params.append('gender', gender)
-    params.append('birthDay', birthDay)
-    
-    return api.post(`${SERVER_HOST}/user/addinfo`, 
+    params.append("username", username);
+    params.append("gender", gender);
+    params.append("birthDay", birthDay);
+
+    return api.post(
+        `${SERVER_HOST}/user/addinfo`,
         { username, gender, birthDay },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );

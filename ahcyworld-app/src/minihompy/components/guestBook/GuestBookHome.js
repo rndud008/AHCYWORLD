@@ -6,7 +6,7 @@ import Layout from "../Layout/Layout";
 import "../guestBook/css/GuestBookHome.css";
 import Cookies from "js-cookie";
 import { hompyInfo, userInfo } from "../../../apis/auth";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
 
 const GuestBookHome = () => {
@@ -23,6 +23,7 @@ const GuestBookHome = () => {
 
     useEffect(() => {
         // console.log("hompyId:", hompyId);
+        console.log("userInfo : ", userInfo);
         const cookie = Cookies.get("accessToken");
         // console.log("Cookie:", cookie);
 
@@ -36,8 +37,8 @@ const GuestBookHome = () => {
                         "Authorization": `Bearer ${cookie}`,
                     }
                 });
-                    setHompy(respone.data);
-                    console.log("홈피 : ", respone);
+                setHompy(respone.data);
+                console.log("홈피 : ", respone);
             }catch(error){
                 console.error("홈피 정보 불러오기 실패", error)
             }
@@ -55,13 +56,38 @@ const GuestBookHome = () => {
                             params: { username: userName }
                         }
                     );
-                    setGuestBook(response.data);
-                    console.log("방명록 정보", response.data);
+
+                    // 각 방명록 작성자에 대한 홈피 정보 요청
+            const guestBookWithHompy = await Promise.all(response.data.map(async (entry) => {
+                try {
+                    const hompyResponse = await api.get(
+                        `${SERVER_HOST}/cyworld/cy/guestbook/user/hompy/${entry.user.id}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${cookie}`,
+                            }
+                        }
+                    );
+                    return {
+                        ...entry,
+                        user: {
+                            ...entry.user,
+                            homepage: hompyResponse.data
+                        }
+                    };
+                } catch (error) {
+                    console.error(`Failed to fetch hompy for user ${entry.user.id}`, error);
+                    return entry; // 홈피 정보를 가져오지 못해도 기본 방명록 정보를 유지
+                }
+            }));
+
+                setGuestBook(guestBookWithHompy);
+                console.log("방명록 정보", guestBookWithHompy);
                 } catch (error) {
                     console.error("방명록 불러오기 실패", error);
                 }
             }
-            
+
         };
 
         const checkFriendship = async () => {
@@ -109,11 +135,15 @@ const GuestBookHome = () => {
                     }
                 );
                 if (response.status === 200) {
-                    setGuestBook(guestBook.filter((e) => e.id !== id));
-                    console.log("삭제 성공", response.data);
+                    Swal.alert("방명록 삭제 성공했습니다.", "방명록 삭제 성공", "success", () => {
+                        setGuestBook(guestBook.filter((e) => e.id !== id));
+                        console.log("삭제 성공", response.data);
+                    })
                 }
             } catch (error) {
-                console.error("삭제 실패", error);
+                Swal.alert("방명록 삭제 실패했습니다.", "방명록 삭제 실패", "warning", () => {
+                    console.error("삭제 실패", error);
+                })
             }
         }
     };
@@ -179,6 +209,8 @@ const GuestBookHome = () => {
                 setContent("");
                 setIsSecret(false);
                 Swal.alert("방명록 등록에 성공했습니다", "방명록 등록 성공", "success", () => {return});
+                console.log("guestUsername : ", guestBook);
+                console.log("userName : ", userName);
             }
         } catch (error) {
             Swal.alert("유저와 일촌 관계인지 확인하세요.", "방명록 등록 실패", "warning", () => { return })
@@ -246,6 +278,7 @@ const GuestBookHome = () => {
                             </Col>
                         </Row>
                     </Form>
+                    <hr />
 
                     <div className="guestbook-container">
                         {guestBook.length > 0 ? (
@@ -275,7 +308,7 @@ const GuestBookHome = () => {
                                                         </div>
                                                         <div className="actions">
                                                             {guest.status ===
-                                                                "visible" && (
+                                                                "visible" && guest.user.username === userName && (
                                                                 <span
                                                                     className="secret"
                                                                     onClick={() =>
@@ -287,12 +320,8 @@ const GuestBookHome = () => {
                                                                     비밀로 하기
                                                                 </span>
                                                             )}
-                                                            {(guest.user
-                                                                .username ===
-                                                                userName ||
-                                                                hompyInfo.user
-                                                                    .username ===
-                                                                    userName) && (
+                                                            {(guest.user.username === userName ||
+                                                                hompyInfo.user.id === guest.user.id) && (
                                                                 <span
                                                                     className="delete"
                                                                     onClick={() =>
@@ -310,7 +339,7 @@ const GuestBookHome = () => {
                                             <tr>
                                                 <td className="minimi-cell">
                                                     <img
-                                                        src={`${process.env.PUBLIC_URL}/image/${guest.hompy.minimiPicture}`}
+                                                        src={`${process.env.PUBLIC_URL}/image/${guest.user.homepage?.minimiPicture || "default_img.png"}`}
                                                         alt="Minimi"
                                                         className="minimi-img"
                                                     />

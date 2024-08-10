@@ -21,9 +21,9 @@ import PostListDetail from "./PostListDetail";
 import { FolderAction } from "../../../redux/actions/FolderAction";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import Layout from "../Layout/Layout";
 import { hompyInfo } from "../../../apis/auth";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import { HompyAction } from "../../../redux/actions/HompyAction";
 
 const Post = ({ page }) => {
@@ -35,7 +35,7 @@ const Post = ({ page }) => {
   const folder = useSelector((state) => state.folder.folder);
   const folderList = useSelector((state) => state.folder.folderList);
   const hompy = useSelector(state => state.hompy.hompy)
-  
+
 
   const axiosPostList = async () => {
     const folderId = folder?.id !== null ? folder.id : folderList?.[0]?.id;

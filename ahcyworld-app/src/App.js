@@ -1,9 +1,7 @@
 import "./App.css";
 import { Route, Routes, useParams } from "react-router-dom";
 import Header from "./webpage/components/Header/Header";
-import Home from "./webpage/pages/Home";
 import Hompy from "./minihompy/pages/Hompy";
-import Login from "./webpage/pages/Login";
 import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
 import Admin from "./webpage/pages/Admin";
@@ -12,21 +10,25 @@ import GuestBookHome from "./minihompy/components/guestBook/GuestBookHome";
 import DiaryHome from "./minihompy/components/diary/DiaryHome";
 import { useContext, useState } from "react";
 import Profile from "./minihompy/pages/Profile";
-import { LoginContext } from "./webpage/login/context/LoginContextProvider";
 import Post from "./minihompy/components/post/Post";
 import PostList from "./minihompy/components/post/PostList";
 import PostListDetail from "./minihompy/components/post/PostListDetail";
 import PostWrite from "./minihompy/components/post/PostWrite";
 import PostUpdate from "./minihompy/components/post/PostUpdate";
 import PostDetail from "./minihompy/components/post/PostDetail";
-import HompySetting from "./minihompy/pages/HompySetting";
+// import HompySetting from "./minihompy/pages/HompySetting";
 import { useSelector } from "react-redux";
+import DiaryModal from "./minihompy/components/diary/DiaryModal";
+import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
+import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
+import Home from "./webpage/pages/Home";
+import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
 
 function App() {
+    const { postName } = useParams();
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(0);
   const { userInfo, hompyInfo } = useContext(LoginContext);
-  const {postName} = useParams();
   const folder = useSelector(state => state.folder.folder);
 
 
@@ -36,7 +38,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
           <Route path="admin" element={<Admin />} />
@@ -62,7 +63,9 @@ function App() {
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
             <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
-            <Route path="setting" element={<HompySetting setUserId={setUserId}/>}/>
+            <Route path="diary/write" element={<DiaryWritePage setUserId={setUserId} />}/>
+            <Route path="diary/update/:id" element={<DiaryUpdatePage setUserId={setUserId} />}/>
+            {/* <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/> */}
           </Route>
         )}
         {/* 3. 어드민 페이지 */}

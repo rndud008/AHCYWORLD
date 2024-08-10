@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FolderAction } from "../../../redux/actions/FolderAction";
 import { PostAction } from "../../../redux/actions/PostAction";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 let modalName;
 let folderId;
@@ -24,6 +24,8 @@ const BoardTypeList = () => {
     const navigate = useNavigate();
     const BoardTypeName = folderList?.[0]?.boardType.name;
     const [show, setShow] = useState(false);
+
+    console.log("folderList : ", folder)
   
     const handleClose = () => {
       setFolder({
@@ -117,6 +119,10 @@ const BoardTypeList = () => {
   
       dispatch(FolderAction.deleteFolderAxios(hompyId, postName, folderId));
     };
+
+    console.log("hompyId:", hompyId);
+    console.log("hompyInfo:", hompyInfo.id);
+    console.log("비교:", hompyInfo.id === parseInt(hompyId));
   
     return (
       <>

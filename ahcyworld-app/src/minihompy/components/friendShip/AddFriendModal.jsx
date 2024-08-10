@@ -3,7 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { addFriend } from "../../../apis/auth";
 import * as Swal from "../../../apis/alert";
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
     const navigate = useNavigate();

@@ -11,11 +11,10 @@ import {
   Modal,
 } from "react-bootstrap";
 import { userInfo } from "../../../apis/auth";
-// import { LoginContext } from "../../login/context/LoginContextProvider";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { PostAction } from "../../../redux/actions/PostAction";
 import PostItem from "./PostItem";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import { CommentAction as CommentAction } from "../../../redux/actions/CommentAction";
 import { TbWashDryP } from "react-icons/tb";
 
@@ -51,11 +50,11 @@ const PostDetail = () => {
   const commentDeleteAxios = async (commentId) =>{
     try{
       await dispatch(CommentAction.commentDeleteAxios(commentId,post.id,postName))
-      
+
     }catch(e){
       alert(e)
     }
-  } 
+  }
 
   const detailPage = async () => {
 
@@ -206,7 +205,7 @@ const PostDetail = () => {
                   </div>
                 ))}
           </div>}
-          
+
           <div>
             <label>댓글</label>
             <input

@@ -11,6 +11,7 @@ select * from payment_history;
 select * from post;
 select * from attachment;
 select * from user_write_histroy;
+select * from board_type;
 
 alter table user_write_histroy drop column update_at;
 #  컬럼 삭제.
@@ -62,8 +63,9 @@ set item_name='글꼴4'
 where id = 80;
 
 update hompy
-set minimi_picture = 'minimi3.png'
-where id = 3;
+set minimi_picture = '망곰2.png'
+where id = 2;
+
 
 
 

@@ -104,4 +104,12 @@ public class GuestBookService {
         }
         return friendRepository.existsByUserAndFriendUser(user, hompy.getUser());
     }
+
+    public Hompy findHompyByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null){
+            return hompyRepository.findByUser(user);
+        }
+        return null;
+    }
 }
