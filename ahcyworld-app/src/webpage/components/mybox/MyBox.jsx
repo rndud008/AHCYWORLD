@@ -3,6 +3,7 @@ import "./MyBox.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png"
+import { getLogedUser } from "../../../apis/auth";
 const MyBox = () => {
     const { isLogin, userInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,23 +18,7 @@ const MyBox = () => {
     };
 
     useEffect(() => {
-        // console.log("hompyInfo: ", hompyInfo);
-        // console.log(userInfo);
-        // const fetchUsers = async () => {
-        //     if (isLogin && userInfo.username) {
-        //         // console.log(userInfo.username);
-        //         try {
-        //             const response = await userInfo();
-        //             setLogedUser(response.data);
-
-        //             console.log(logedUser);
-        //         } catch (error) {
-        //             console.error("userList Error: ", error);
-        //         }
-        //     }
-        // };
-
-        // fetchUsers();
+        // console.log("유저 정보: ", userInfo);
     }, []);
 
     const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture}`;
@@ -70,7 +55,7 @@ const MyBox = () => {
                         <li>
                             내 도토리
                             <img src={acorn} />
-                            <span>0</span>
+                            <span>{userInfo.acorn}</span>
                         </li>
                     </ul>
                 </div>

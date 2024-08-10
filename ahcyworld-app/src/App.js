@@ -29,7 +29,6 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(0);
   const { userInfo, hompyInfo } = useContext(LoginContext);
-  const {postName} = useParams();
   const folder = useSelector(state => state.folder.folder);
 
 

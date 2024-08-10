@@ -3,9 +3,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Form, Container } from 'react-bootstrap';
 import Layout from '../Layout/Layout';
-import { LoginContext } from '../../../webpage/login/context/LoginContextProvider';
 import Cookies from "js-cookie";
 import { SERVER_HOST } from '../../../apis/api';
+import { LoginContext } from '../../../webpage/components/login/context/LoginContextProvider';
 
 const DiaryUpdatePage = ({hompy}) => {
     const { id } = useParams();

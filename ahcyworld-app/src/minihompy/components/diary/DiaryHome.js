@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryModal from "./DiaryModal";
 import { SERVER_HOST } from "../../../apis/api";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import Layout from "../Layout/Layout";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const DiaryHome = () => {
     const curDate = new Date();

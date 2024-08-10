@@ -76,7 +76,6 @@ const LoginContextProvider = ({ children }) => {
 
             setHompyInfo(data);
             localStorage.setItem("hompyInfo", JSON.stringify(data));
-
         } catch (error) {
             console.error("HompyInfo Error: ", error);
         }
@@ -147,7 +146,7 @@ const LoginContextProvider = ({ children }) => {
     };
 
     const loginSetting = (userData, accessToken) => {
-        const { id, username, role, name, hompyId } = userData;
+        const { id, username, role, name, acorn } = userData;
 
         // JWT 토큰을 header에 저장
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
@@ -157,9 +156,9 @@ const LoginContextProvider = ({ children }) => {
         // console.log("userdata: ", userData);
 
         // 유저 정보 세팅
-        setUserInfo({ id, username, role, name });
+        setUserInfo({ id, username, role, name, acorn });
 
-        const updatedUserInfo = { id, username, role, name, hompyId };
+        const updatedUserInfo = { id, username, role, name, acorn };
         setUserInfo(updatedUserInfo);
 
         // 권한 정보 세팅
@@ -170,6 +169,8 @@ const LoginContextProvider = ({ children }) => {
         });
         // console.log("updatedRoles: ", updatedRoles);
         setRoles(updatedRoles);
+
+        // console.log("유저 정보: ", updatedUserInfo);
 
         localStorage.setItem("isLogin", "true");
         localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
@@ -189,6 +190,7 @@ const LoginContextProvider = ({ children }) => {
         localStorage.removeItem("isLogin");
         localStorage.removeItem("userInfo");
         localStorage.removeItem("roles");
+        localStorage.removeItem("hompyInfo");
     };
 
     return (

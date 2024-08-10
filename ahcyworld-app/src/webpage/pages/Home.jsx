@@ -108,15 +108,15 @@ const Home = () => {
     }, [isAddFriendModalOpen, isLogin]);
 
     return (
-        <div className='container'>
+        <div className='home-container'>
             <div className='body-container'>
                 <StyledLoginBox>
                     {" "}
                     <LoginForm />
                 </StyledLoginBox>
-                {/* <StyledMyBox>
+                <StyledMyBox>
                     <MyBox/>
-                </StyledMyBox> */}
+                </StyledMyBox>
                 <br />
                 <br />
                 {isLogin ? (
