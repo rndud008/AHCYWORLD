@@ -4,11 +4,10 @@ import api from "../../../apis/api";
 import Cookies from "js-cookie";
 import { Button, Container, Form, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { userInfo } from "../../../apis/auth";
-// import { LoginContext } from "../../login/context/LoginContextProvider";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { PostAction } from "../../../redux/actions/PostAction";
 import PostItem from "./PostItem";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const PostDetail = ({ folderList, setMoveFolderId, moveFolderId }) => {
     const { userInfo, hompyInfo } = useContext(LoginContext);

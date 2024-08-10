@@ -60,8 +60,9 @@ set item_name='글꼴4'
 where id = 80;
 
 update hompy
-set minimi_picture = 'minimi3.png'
-where id = 3;
+set minimi_picture = '망곰2.png'
+where id = 2;
+
 
 
 

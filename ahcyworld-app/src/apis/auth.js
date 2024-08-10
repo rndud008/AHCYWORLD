@@ -76,3 +76,7 @@ export const addInfo = (username, gender, birthDay) => {
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 };
+
+export const getMyHomy=(username)=>{
+    return api.get(`${SERVER_HOST}/hompy`)
+}

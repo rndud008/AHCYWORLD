@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, ListGroup, Modal } from "react-bootstrap";
 import { friendShipResponse, myFriendRequests } from "../../../apis/auth";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const FriendRequestModal = ({ isOpen, onClose }) => {
     const { userInfo } = useContext(LoginContext);

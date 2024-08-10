@@ -6,7 +6,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Swal from 'sweetalert2';
 import './css/Profile.css';
-import { LoginContext } from "../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../webpage/components/login/context/LoginContextProvider";
 
 const Profile = ({ setUserId }) => {
     console.log('Profile 실행')

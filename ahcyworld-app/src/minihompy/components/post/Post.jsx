@@ -12,9 +12,9 @@ import PostListDetail from "./PostListDetail";
 import { FolderAction } from "../../../redux/actions/FolderAction";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import Layout from "../Layout/Layout";
 import { hompyInfo } from "../../../apis/auth";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const Post = ({page}) => {
     const { hompyId, postName } = useParams();

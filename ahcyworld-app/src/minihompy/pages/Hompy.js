@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { LoginContext } from "../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../webpage/components/login/context/LoginContextProvider";
 
 const Hompy = ({ setUserId }) => {
     const { hompyId } = useParams();

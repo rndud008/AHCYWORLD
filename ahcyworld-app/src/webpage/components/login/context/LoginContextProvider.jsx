@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
-import api from "../../../apis/api";
 
-import * as Swal from "../../../apis/alert";
-import * as auth from "../../../apis/auth";
+import * as Swal from "../../../../apis/alert";
+import * as auth from "../../../../apis/auth";
 
 import { useNavigate } from "react-router-dom";
+import api from "../../../../apis/api";
 
 export const LoginContext = createContext();
 LoginContext.displayName = "LoginContextName";
@@ -21,11 +21,10 @@ const LoginContextProvider = ({ children }) => {
         JSON.parse(localStorage.getItem("roles")) || { isMember: false, isAdmin: false }
     );
 
-    const [hompyInfo, setHompyInfo] = useState()
+    const [hompyInfo, setHompyInfo] = useState(JSON.parse(localStorage.getItem("hompyInfo")) || {});
 
     const loginCheck = async (isAuthPage = false) => {
         const accessToken = Cookies.get("accessToken");
-        console.log(Cookies.get("accessToken"));
 
         let response;
         let data;
@@ -70,21 +69,24 @@ const LoginContextProvider = ({ children }) => {
 
         // 인증성공
         loginSetting(data, accessToken);
-        console.log('check',data)
 
-        response = await auth.hompyInfo();
-        data = response.data;
+        try {
+            response = await auth.hompyInfo();
+            data = response.data;
 
-        setHompyInfo(data);
+            setHompyInfo(data);
+            localStorage.setItem("hompyInfo", JSON.stringify(data));
 
+        } catch (error) {
+            console.error("HompyInfo Error: ", error);
+        }
 
-
+        // console.log("check", hompyInfo);
     };
 
     useEffect(() => {
         loginCheck();
     }, []);
-
 
     const login = async (username, password, rememberId) => {
         // console.log(`
@@ -152,7 +154,7 @@ const LoginContextProvider = ({ children }) => {
 
         // 로그인 여부
         setIsLogin(true);
-        console.log(userData)
+        // console.log("userdata: ", userData);
 
         // 유저 정보 세팅
         setUserInfo({ id, username, role, name });

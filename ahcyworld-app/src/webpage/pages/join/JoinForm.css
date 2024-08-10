@@ -1,12 +1,12 @@
-div .form {
+.join_form {
     width: 800px;
 }
 
-input {
+.join_input {
     max-width: 500px;
 }
 
-.btn-login {
+.btn-join {
     height: 50px;
     width: 400px;
 
@@ -16,7 +16,7 @@ input {
     color: #fff;
     font-size: 30px;
 }
-.btn-login:hover {
+.btn-join:hover {
     background-color: #fff;
     color: #e66e28;
 }
@@ -31,7 +31,8 @@ input {
     justify-content: left;
 }
 
-#gender-male, #gender-female{
+#gender-male,
+#gender-female {
     margin: 0 20px;
     display: flex;
 }

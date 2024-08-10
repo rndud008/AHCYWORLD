@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import { LoginContext } from "../context/LoginContextProvider";
-import { addInfo } from "../../../apis/auth";
+import { addInfo } from "../../../../apis/auth";
 import { useNavigate } from "react-router-dom";
 
 const OAuth2AddInfo = () => {
