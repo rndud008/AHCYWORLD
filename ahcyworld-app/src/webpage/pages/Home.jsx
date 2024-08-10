@@ -17,19 +17,19 @@ const Home = () => {
     const [friendShipStatus, setFriendShipStatus] = useState({});
 
     /* 모달 상태와 변경 */
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
-    const openModal = () => {
-        setIsModalOpen(true);
+    const paymentopenModal = () => {
+        setIsPaymentModalOpen(true);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
+    const paymentcloseModal = () => {
+        setIsPaymentModalOpen(false);
     };
 
     const openAddFriendModal = (friend) => {
@@ -107,8 +107,8 @@ const Home = () => {
     return (
         <>
             <h1>Home</h1>
-            <button onClick={openModal}>모달 열기</button>
-            <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
+            <button onClick={paymentopenModal}>모달 열기</button>
+            <PaymentModal isOpen={isPaymentModalOpen} onClose={paymentcloseModal} />
             <br />
             <br />
             {isLogin ? (

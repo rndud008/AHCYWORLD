@@ -20,6 +20,7 @@ import PostWrite from "./minihompy/components/post/PostWrite";
 import PostUpdate from "./minihompy/components/post/PostUpdate";
 import PostDetail from "./minihompy/components/post/PostDetail";
 import HompySetting from "./minihompy/pages/HompySetting";
+import Cart from "./webpage/pages/Cart";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -40,6 +41,8 @@ function App() {
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="cart/:userId" element={<Cart/>}/>
+          
         </Route>
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (

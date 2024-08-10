@@ -1,19 +1,32 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { resolvePath, useNavigate, useParams } from 'react-router-dom';
 import { SERVER_HOST } from "../../apis/api";
 import * as Swal from "../../apis/alert";
+import AcornPayModal from '../items/components/AcornPayModal';
+import { LoginContext } from '../login/context/LoginContextProvider';
 
 const Cart = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
+    const {hompyInfo, userInfo} = useContext(LoginContext);
     const [myCart, setMyCart] = useState([]);
     const [isDelete, setIsDelete] = useState(false);
     const [selectItem, setSelectItem] = useState([]);
     const [allCheckBox, setAllCheckBox] = useState(false);
     const [totalAcorn, setTotalAcorn] = useState(0);
+    const [isAcornPayModalOpen, setIsAcornPayModalOpen] = useState(false);
+
+    const acornPayOpenModal = () => {
+        setIsAcornPayModalOpen(true);
+    };
+
+    const acornPayCloseModal = () => {
+        setIsAcornPayModalOpen(false);
+    };
 
     useEffect(() => {
+        setIsAcornPayModalOpen(false);
         axios({
             method: "GET",
             url: `${SERVER_HOST}/cart/list`,
@@ -25,6 +38,8 @@ const Cart = () => {
             setIsDelete(false);
         })
     }, [isDelete])
+
+    
 
 
 
@@ -69,7 +84,7 @@ const Cart = () => {
 
         )
         setMyCart(oneChangbox);
-        e.target.checked ? setSelectItem([...selectItem, value]) : setSelectItem(selectItem.filter(x => x != value));
+        e.target.checked ? setSelectItem([...selectItem, parseInt(value)]) : setSelectItem(selectItem.filter(x => x !== parseInt(value)));
     }
 
     const handleSelectAll = (e) => {
@@ -83,8 +98,7 @@ const Cart = () => {
         const allCheckItem = myCart.map(x => ({ ...x, checked: checked }))
         let allCheckItemNum = [];
         let allItemAcorn = 0;
-        // console.log("현재 가격?"+myCart[0].item.price);
-        e.target.checked ? myCart.forEach(x => allCheckItemNum.push(x.id)) : setSelectItem([]);
+        e.target.checked ? myCart.forEach(x => allCheckItemNum.push(parseInt(x.id))) : setSelectItem([]);
         e.target.checked ? myCart.forEach(x => {allItemAcorn = allItemAcorn + x.item.price}) : setTotalAcorn(0);
         console.log("모든 가격: "+allItemAcorn);
         setSelectItem(allCheckItemNum);
@@ -116,10 +130,6 @@ const Cart = () => {
 
     const handleAllDelete = () => {
         Swal.itemconfirm("체크된 아이템 삭제", "정말 삭제하시겠습니까?", "warning", () => AllDelete(), () => navigate(`/cart/${userId}`))
-    }
-
-    const itemPayment = () => {
-        axios()
     }
 
 
@@ -181,8 +191,9 @@ const Cart = () => {
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                <button>쇼핑계속하기</button>
-                <button onClick={() => itemPayment()} >상품구매</button>
+                <button onClick={()=>navigate(-1)}>쇼핑계속하기</button>
+                <button onClick={()=>acornPayOpenModal()}>상품 구매</button>
+                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo}/>
             </div>
         </div>
     );

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,30 @@ public class CartsService {
         }else{
             cartsRepository.deleteAll(deleteItems);
             return 1;
+        }
+    }
+
+    @Transactional
+    public List<Carts> checkItemList(List<Long> itemList){
+        return cartsRepository.findAllById(itemList);
+    }
+
+    @Transactional
+    public List<Carts> updateCarts(List<Long> itemList, Long id,Long totalAcorn){
+        List<Carts> updateItems = cartsRepository.findAllById(itemList);
+        User user = userRepository.findById(id).orElse(null);
+        if(updateItems == null){
+            return null;
+        }else{
+            user.setAcorn(user.getAcorn()-totalAcorn);
+
+            userRepository.saveAndFlush(user);
+
+            updateItems.forEach(item -> {
+                item.setCartsStatus("Y");
+                item.setCreateAt(LocalDateTime.now());
+            });
+            return cartsRepository.saveAllAndFlush(updateItems);
         }
     }
 
