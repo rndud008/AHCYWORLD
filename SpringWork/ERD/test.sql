@@ -33,6 +33,9 @@ delete
 from ah_user
 where id = 8;
 
+update ah_user
+set acorn = 100000
+where id = 4;
 
 
 insert into post (create_at, folder_id, content, subject)
@@ -51,6 +54,8 @@ delete
 from ah_user
 where username = "user3"
 ;
+
+
 
 
 

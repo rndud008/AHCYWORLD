@@ -17,12 +17,9 @@ import PostWrite from "./minihompy/components/post/PostWrite";
 import PostUpdate from "./minihompy/components/post/PostUpdate";
 import PostDetail from "./minihompy/components/post/PostDetail";
 // import HompySetting from "./minihompy/pages/HompySetting";
+import HompySetting from "./minihompy/pages/HompySetting";
+import Cart from "./webpage/pages/Cart";
 import { useSelector } from "react-redux";
-import DiaryModal from "./minihompy/components/diary/DiaryModal";
-import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
-import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
-import Home from "./webpage/pages/Home";
-import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
 
 function App() {
     const { postName } = useParams();
@@ -41,6 +38,8 @@ function App() {
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="cart/:userId" element={<Cart/>}/>
+
         </Route>
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (

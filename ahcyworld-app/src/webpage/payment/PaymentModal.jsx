@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Payment from "./Payment";
-import "./css/Modal.css";
+import "./css/PaymentModal.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";

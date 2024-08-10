@@ -36,12 +36,20 @@ const Home = () => {
     const [friendShipStatus, setFriendShipStatus] = useState({});
 
     /* 모달 상태와 변경 */
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
+    const paymentopenModal = () => {
+        setIsPaymentModalOpen(true);
+    };
+
+    const paymentcloseModal = () => {
+        setIsPaymentModalOpen(false);
+    };
 
     const openAddFriendModal = (friend) => {
         setSelectedFriend(friend);

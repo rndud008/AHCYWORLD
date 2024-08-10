@@ -23,7 +23,6 @@ public class CartsController {
     @CrossOrigin
     public ResponseEntity<?> addItem(@RequestParam String username, @RequestParam String itemname){
         return new ResponseEntity<>(cartsService.addItem(username,itemname), HttpStatus.CREATED);
-//        return new ResponseEntity<>(username+"이랑"+itemname,HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
@@ -43,6 +42,22 @@ public class CartsController {
     public ResponseEntity<?> deleteAll(@RequestBody List<Long> deleteList){
         System.out.println(deleteList);
         return new ResponseEntity<>(cartsService.deleteAll(deleteList),HttpStatus.OK);
-//        return new ResponseEntity<>(deleteList,HttpStatus.OK);
     }
+
+    @GetMapping("/itemcheck")
+    @CrossOrigin
+    public ResponseEntity<?> itemCheck(@RequestParam(defaultValue = "0") List<Long> itemList){
+        System.out.println(itemList);
+        return new ResponseEntity<>(cartsService.checkItemList(itemList),HttpStatus.OK);
+//        return new ResponseEntity<>("tpwls",HttpStatus.OK);
+    }
+
+    @PostMapping("/payed/item")
+    @CrossOrigin
+    public ResponseEntity<?> payedItme(@RequestBody List<Long> itemList ,@RequestParam Long id, @RequestParam Long totalAcorn){
+
+        return new ResponseEntity<>(cartsService.updateCarts(itemList,id,totalAcorn),HttpStatus.OK);
+//        return new ResponseEntity<>("sejin",HttpStatus.OK);
+    }
+
 }
