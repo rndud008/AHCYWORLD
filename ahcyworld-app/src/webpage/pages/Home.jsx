@@ -13,16 +13,16 @@ import { LoginContext } from "../components/login/context/LoginContextProvider";
 import MyBox from "../components/mybox/MyBox";
 
 const StyledLoginBox = styled.div`
-    outline: 3px solid red;
+    /* outline: 3px solid red; */
     width: 350px;
     height: 270px;
     margin-left: 30px;
     margin-top: 20px;
 `;
 const StyledMyBox = styled.div`
-    outline: 3px solid red;
+    /* outline: 1px solid #dad9d9; */
     width: 350px;
-    height: 270px;
+    height: 280px;
     margin-left: 30px;
     margin-top: 20px;
 `;
@@ -42,7 +42,6 @@ const Home = () => {
 
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
-
     const openAddFriendModal = (friend) => {
         setSelectedFriend(friend);
         setIsAddFriendModalOpen(true);
@@ -53,13 +52,6 @@ const Home = () => {
         setIsAddFriendModalOpen(false);
     };
 
-    const openFriendRequestModal = () => {
-        setIsFriendRequestModalOpen(true);
-    };
-
-    const closeFriendRequestModal = () => {
-        setIsFriendRequestModalOpen(false);
-    };
     /* 모달 상태와 변경 */
 
     const toggleFriendList = async () => {
@@ -110,16 +102,20 @@ const Home = () => {
     return (
         <div className='home-container'>
             <div className='body-container'>
-                <StyledLoginBox>
-                    {" "}
-                    <LoginForm />
-                </StyledLoginBox>
-                <StyledMyBox>
-                    <MyBox/>
-                </StyledMyBox>
-                <br />
-                <br />
                 {isLogin ? (
+                    <StyledMyBox>
+                        <MyBox />
+                    </StyledMyBox>
+                ) : (
+                    <StyledLoginBox>
+                        {" "}
+                        <LoginForm />
+                    </StyledLoginBox>
+                )}
+
+                <br />
+                <br />
+                {/* {isLogin ? (
                     <>
                         <Button onClick={toggleFriendList}>
                             {isFriendListVisible ? "친구목록닫기" : "친구목록보기"}
@@ -145,19 +141,6 @@ const Home = () => {
                     <></>
                 )}
                 <br />
-                {/* {isLogin ? (
-                    <Button
-                        onClick={() => {
-                            openFriendRequestModal();
-                        }}
-                    >
-                        친구요청목록
-                    </Button>
-                ) : (
-                    <></>
-                )}
-
-                <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
                 <br />
                 <br />
                 {users.map((friend) => (
