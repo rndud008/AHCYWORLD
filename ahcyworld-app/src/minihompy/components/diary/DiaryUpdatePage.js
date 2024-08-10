@@ -1,9 +1,13 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Form, Container } from 'react-bootstrap';
+import Layout from '../Layout/Layout';
+import { LoginContext } from '../../../webpage/login/context/LoginContextProvider';
+import Cookies from "js-cookie";
+import { SERVER_HOST } from '../../../apis/api';
 
-const DiaryUpdatePage = () => {
+const DiaryUpdatePage = ({hompy}) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [diary, setDiary] = useState({
@@ -13,20 +17,19 @@ const DiaryUpdatePage = () => {
         content: "",
         eventDate: ""
     });
+    console.log("diaryId : ", id);
+    const { userInfo, hompyInfo } = useContext(LoginContext);
 
     // 다이어리 정보를 가져오는 useEffect
     useEffect(() => {
-        axios.get(`http://localhost:8070/cyworld/cy/diaries/detail/${id}`)
+        axios.get(`${SERVER_HOST}/cyworld/cy/diaries/detail/${id}`)
             .then(response => {
                 setDiary(response.data);
-                // console.log("id:", id);
-                // console.log("diary:", response.data);
             })
             .catch(error => {
-                console.error("다이어리 데이터가 없어...", error);
-                // console.log("id:", id);
+                console.error("다이어리 데이터를 가져오지 못했습니다.", error);
             });
-    }, []);
+    }, [id]);
 
     // 입력값 변경 핸들러
     const handleChange = (e) => {
@@ -40,15 +43,17 @@ const DiaryUpdatePage = () => {
 
     // 폼 제출 핸들러
     const handleSubmit = (e) => {
+        const cookie = Cookies.get("accessToken");
+
         e.preventDefault();
-        axios.put(`http://localhost:8070/cyworld/cy/diaries/update`, diary, {
+        axios.put(`${SERVER_HOST}/cyworld/cy/diaries/update/${diary.id}/${userInfo.id}`, diary, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${cookie}`
             }
         })
             .then(response => {
                 console.log("폼 제출 됐엉", response.data);
-                navigate('/list'); // 수정 후 리스트 페이지로 이동
+                navigate(`/hompy/${hompyInfo.id}/diary`); // 수정 후 리스트 페이지로 이동
             })
             .catch(error => {
                 console.error("폼 제출이 안 됐어...", error);
@@ -56,6 +61,7 @@ const DiaryUpdatePage = () => {
     };
 
     return (
+        <Layout hompy={hompy} user={hompy.user}>
         <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
             <div className="w-50">
                 <h1>다이어리 수정</h1>
@@ -83,11 +89,12 @@ const DiaryUpdatePage = () => {
                     </Form.Group>
                     <div className="d-flex justify-content-end mt-3">
                         <Button type="submit" className="btn btn-primary me-2">저장</Button>
-                        <Button type="button" className="btn btn-secondary" onClick={() => navigate('/list')}>취소</Button>
+                        <Button type="button" className="btn btn-secondary" onClick={() => navigate(`/hompy/${hompyInfo.id}/diary`)}>취소</Button>
                     </div>
                 </Form>
             </div>
         </Container>
+        </Layout>
     );
 };
 

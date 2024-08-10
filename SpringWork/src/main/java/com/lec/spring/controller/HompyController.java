@@ -183,4 +183,27 @@ public class HompyController {
 
         return ResponseEntity.ok().body(Map.of("minihomeyskinPicture", minihomeyskinPicturePath));
     }
+
+    // 메뉴 상태 + 메뉴 색 바꾸기
+    @PostMapping("/{hompyId}/setting")
+    public ResponseEntity<Hompy> setting(@PathVariable Long hompyId, @RequestBody Hompy updateHompy) {
+        // 기존 Hompy 객체를 가져옴
+        Hompy hompy = hompyService.findById(hompyId);
+
+        // hompyId로 Hompy 객체를 찾지 못한 경우
+        if (hompy == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        User user= hompy.getUser();
+        Long userId = user.getId();
+
+        // 필요한 필드만 업데이트
+        hompy.setMenuColor(updateHompy.getMenuColor());
+        hompy.setMenuStatus(updateHompy.getMenuStatus());
+
+        // 업데이트된 객체를 저장
+        Hompy updatedHompy = hompyService.updateHompy(hompy);
+        return ResponseEntity.ok(updatedHompy);
+    }
 }

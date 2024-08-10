@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./css/Left.css";
 import { PiGenderFemaleFill, PiGenderMaleFill } from "react-icons/pi";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Left = ({ user, hompy }) => {
+  const {hompyId} = useParams();
   const [statusMessage, setStatusMessage] = useState(hompy?.statusMessage || "");
   const [textEdit, setTextEdit] = useState(false);
   const [profilePicture, setProfilePicture] = useState();
@@ -12,11 +14,12 @@ const Left = ({ user, hompy }) => {
 
   const userId = user?.id;
 
+
   // 서버로 부터 최신정보 받아오기
   // 수정해야함
   useEffect(() => {
-    if (userId) {
-      axios.get(`http://localhost:8070/hompy/${userId}`)
+    if (hompyId) {
+      axios.get(`http://localhost:8070/hompy/${hompyId}`)
         .then(response => {
           const hompyData = response.data;
           setStatusMessage(hompyData.statusMessage || "");
@@ -29,7 +32,7 @@ const Left = ({ user, hompy }) => {
           console.error("데이터 불러오기 실패", error);
         });
     }
-  }, [userId]);
+  }, [hompyId]);
 
   // 홈피에 대한 것을 가져와야함
 
@@ -39,7 +42,7 @@ const Left = ({ user, hompy }) => {
     if (userId) {
       axios
         .post(
-          `http://localhost:8070/hompy/${userId}/statusMessage`,
+          `http://localhost:8070/hompy/${hompyId}/statusMessage`,
           { statusMessage },
           {
             headers: {
@@ -63,7 +66,7 @@ const Left = ({ user, hompy }) => {
       formData.append("file", selectedFile);
 
       axios
-        .post(`http://localhost:8070/hompy/${userId}/profileImg`, formData, {
+        .post(`http://localhost:8070/hompy/${hompyId}/profileImg`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

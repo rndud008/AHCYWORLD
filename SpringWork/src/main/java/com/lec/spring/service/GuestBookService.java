@@ -28,18 +28,19 @@ public class GuestBookService {
 
     // 일촌 관계일 때만 글 작성 가능
     public GuestBook save(GuestBook guestBook) {
-        User user = userRepository.findById(guestBook.getUser().getId()).orElse(null);
-        Hompy hompy = hompyRepository.findById(guestBook.getHompy().getId())
+        User guestBookUser = userRepository.findById(guestBook.getUser().getId())
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        Hompy targetHompy = hompyRepository.findById(guestBook.getHompy().getId())
                 .orElseThrow(() -> new IllegalArgumentException("미니홈피를 찾지 못 했습니다."));
 
-        if (user == null || !friendRepository.existsByUserAndFriendUser(user, hompy.getUser())){
+        // 로그에 방명록 작성자와 홈피 소유자 정보를 출력
+        System.out.println("GuestBook User: " + guestBookUser.getId() + ", Hompy Owner: " + targetHompy.getUser().getId());
+        System.out.println("Hompy Owner: " + targetHompy);
+
+        if (!friendRepository.existsByUserAndFriendUser(guestBookUser, targetHompy.getUser())){
             throw new IllegalArgumentException("유저와 일촌 관계가 아닙니다.");
         }
-
-        if (guestBook.getStatus() == null){
-            guestBook.setStatus("visible");
-            guestBook.setGuestBookName("guestBook");
-        }
+        guestBook.setGuestBookName("guestBook");
         return guestBookRepository.save(guestBook);
     }
 
@@ -49,20 +50,16 @@ public class GuestBookService {
 
     // 작성자와 미니홈피 주인만 삭제 가능
     public int delete(Long id, String username){
-        int result = 0;
+        GuestBook guestBook = guestBookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("방명록을 찾지 못 했습니다."));
+        User user = userRepository.findByUsername(username);
 
-        GuestBook guestBook = guestBookRepository.findById(id).orElse(null);
-
-        if (guestBook != null){
-            User user = userRepository.findByUsername(username);
-            if (user != null && (guestBook.getUser().equals(user) || guestBook.getHompy().getUser().equals(user))){
-                guestBookRepository.delete(guestBook);
-                result = 1;
-            }else {
-                throw new IllegalArgumentException("삭제 권한이 없습니다.");
-            }
+        if (guestBook.getUser().equals(user) || guestBook.getHompy().getUser().equals(user)){
+            guestBookRepository.delete(guestBook);
+            return 1;
+        }else {
+            throw new IllegalArgumentException("삭제 권한이 없습니다.");
         }
-        return result;
     }
 
     // 작성자와 미니홈피 주인만 방명록 볼 수 있는 로직
@@ -79,16 +76,17 @@ public class GuestBookService {
         if (isOwner){
             return guestBookRepository.findByHompy(hompy);
         }else {
-            return guestBookRepository.findByHompyIdAndStatus(hompyId, "visible");
+            return guestBookRepository.findByHompyId(hompyId);
         }
     }
 
+    // 비밀글 설정
     public GuestBook hideGuestBook(Long id, String username) {
         GuestBook guestBook = guestBookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("방명록을 찾지 못 했습니다."));
         User user = userRepository.findByUsername(username);
 
-        if (user != null && (guestBook.getUser().equals(user) || guestBook.getHompy().getUser().equals(user))) {
+        if (guestBook.getUser().equals(user) || guestBook.getHompy().getUser().equals(user)){
             guestBook.setStatus("invisible");
             return guestBookRepository.save(guestBook);
         }else {
@@ -105,5 +103,13 @@ public class GuestBookService {
             throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
         }
         return friendRepository.existsByUserAndFriendUser(user, hompy.getUser());
+    }
+
+    public Hompy findHompyByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null){
+            return hompyRepository.findByUser(user);
+        }
+        return null;
     }
 }

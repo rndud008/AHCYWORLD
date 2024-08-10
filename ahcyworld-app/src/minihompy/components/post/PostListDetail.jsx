@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import PageNation from "./PageNation";
@@ -9,15 +9,13 @@ import { LoginContext } from "../../../webpage/components/login/context/LoginCon
 
 const PostListDetail = ({
   setPage,
-  moveFolderId,
-  setMoveFolderId,
 }) => {
 
   const { postName, hompyId } = useParams();
   const { hompyInfo } = useContext(LoginContext);
   const pageAndPostList = useSelector(state => state.post.pageAndPostList);
   const folder = useSelector(state => state.folder.folder);
-
+  
   return (
     <>
       <Container>
@@ -45,11 +43,7 @@ const PostListDetail = ({
             pageAndPostList?.posts?.map((item) => {
               return (
                 <PostListDetailItem
-                  key={item}
                   item={item}
-                  // folderList={folderList}
-                  moveFolderId={moveFolderId}
-                  setMoveFolderId={setMoveFolderId}
                 />
               );
             })

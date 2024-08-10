@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.GuestBook;
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.service.GuestBookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +77,19 @@ public class GuestBookController {
             boolean isFriend = guestBookService.isFriend(hompyId, username);
             return new ResponseEntity<>(Map.of("isFriend", isFriend), HttpStatus.OK);
         }catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/user/hompy/{userId}")
+    public ResponseEntity<?> getUserHompy(@PathVariable Long userId){
+        try {
+            Hompy hompy = guestBookService.findHompyByUserId(userId);
+            if (hompy == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(hompy, HttpStatus.OK);
+        }catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

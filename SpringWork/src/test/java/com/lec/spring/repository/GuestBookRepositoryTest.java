@@ -148,7 +148,7 @@ class GuestBookRepositoryTest {
     }
     @Test
     void test1(){
-        User user = userRepository.findByUsername("user4".toUpperCase());
+        User user = userRepository.findByUsername("user5".toUpperCase());
 
         user.setPassword(passwordEncoder.encode("1234"));
 

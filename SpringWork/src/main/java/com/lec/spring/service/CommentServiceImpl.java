@@ -33,6 +33,7 @@ public class CommentServiceImpl implements CommentService {
 
         list.setCount(comments.size());
         list.setList(comments);
+        list.setPostId(postId);
         list.setStatus("OK");
 
         return list;
@@ -61,11 +62,13 @@ public class CommentServiceImpl implements CommentService {
 
             return QryResult.builder()
                     .count(1)
+                    .postId(comment.getPost().getId())
                     .status("OK")
                     .build();
         } else {
             return QryResult.builder()
                     .count(0)
+                    .postId(null)
                     .status("FAIL")
                     .build();
         }
@@ -76,9 +79,9 @@ public class CommentServiceImpl implements CommentService {
         Optional<Comment> comment = commentRepository.findById(commentId);
         if (comment.isPresent()) {
             commentRepository.delete(comment.get());
-            return new QryResult(1, "SUCCESS");
+            return new QryResult(1, comment.get().getPost().getId(),"SUCCESS");
         } else {
-            return new QryResult(0, "FAIL");
+            return new QryResult(0, null, "FAIL");
         }
     }
 }

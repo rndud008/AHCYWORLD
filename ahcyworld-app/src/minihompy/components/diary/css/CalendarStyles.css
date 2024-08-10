@@ -1,16 +1,31 @@
+/* 달력 컨테이너 */
+.calendar-container {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: 750px;
+    margin-left: -500px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
 /* 달력 */
 .react-calendar {
-    width: 500px;
+    width: 100%;
     height: auto;
     margin: 0 auto;
     border: none;
+    display: flex;
+    flex-direction: column; /* 세로로 나열되도록 설정 */
 }
+
 
 /* 상단 네비게이션 (년, 월) */
 .react-calendar__navigation {
     background: rgb(248, 219, 224); /* 직접 색상 값을 사용 */
     border-bottom: 4px solid brown;
-    height: 90px;
+    height: 110px;
     border: 2px solid black;
     border-radius: 20px 20px 0 0;
     margin-bottom: 0.5px;
@@ -40,13 +55,13 @@
 
 .react-calendar__month-view abbr {
     color: brown;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
 }
 
 /* 요일 */
 .react-calendar__month-view__weekdays abbr {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 900;
     text-decoration: none;
 }
@@ -54,11 +69,12 @@
 /* 일 (각 타일) */
 .react-calendar__tile {
     text-align: center;
-    height: 60px;
+    height: 90px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    font-size: 18px;
 }
 
 .react-calendar__tile:enabled:hover,
