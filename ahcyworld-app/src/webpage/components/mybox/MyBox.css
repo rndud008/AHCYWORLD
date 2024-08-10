@@ -1,0 +1,99 @@
+:root {
+    --main-color: #e66e28;
+}
+
+.mybox-container {
+    outline: 2px solid black;
+}
+
+/* 박스 상단 */
+.top {
+    outline: 2px solid blue;
+
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.acorn-btn{
+    width: 120px;
+    background-color: var(--main-color);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 3px 5px;
+    border: 0;
+    border-radius: 10px;
+}
+
+/* 박스 중앙 */
+.middle {
+    /* outline: 2px solid red; */
+    width: 100%;
+    height: 150px;
+    display: flex;
+}
+
+.minimi-box {
+    outline: 2px solid rgb(255, 0, 179);
+    width: 50%;
+    height: 100%;
+}
+.info-box {
+    outline: 2px solid rgb(255, 72, 0);
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.info-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.info-box ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.info-box ul li span {
+    margin: 0;
+    /* display: block; */
+}
+
+.info-box ul li img{
+    width: 15px;
+    height: 15px;
+
+    position: relative;
+    right: 20px;
+}
+
+/* 박스 하단 */
+.bottom {
+    outline: 2px solid lime;
+
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hompy-btn {
+    width: 300px;
+    height: 50px;
+    border: 0;
+    border-radius: 20px;
+    background-color: var(--main-color);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+}

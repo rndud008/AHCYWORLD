@@ -6,8 +6,8 @@ import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import PostItem from "./PostItem";
 import PageNation from "./PageNation";
 import { useCol } from "react-bootstrap/esm/Col";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import { useSelector } from "react-redux";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 // boardType 에 따라 PostDetail or PostListDetail 출력.
 const PostList = ({ setPage }) => {

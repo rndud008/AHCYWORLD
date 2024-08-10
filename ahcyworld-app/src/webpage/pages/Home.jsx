@@ -5,8 +5,27 @@ import Header from "../components/Header/Header";
 // import AddFriendModal from "../components/friendShip/AddFriendModal";
 import FriendRequestModal from "../../minihompy/components/friendShip/FriendRequestModal";
 import AddFriendModal from "../../minihompy/components/friendShip/AddFriendModal";
-import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../payment/PaymentModal";
+import styled from "styled-components";
+import LoginForm from "../components/login/login/LoginForm";
+import "./css/Home.css";
+import { LoginContext } from "../components/login/context/LoginContextProvider";
+import MyBox from "../components/mybox/MyBox";
+
+const StyledLoginBox = styled.div`
+    outline: 3px solid red;
+    width: 350px;
+    height: 270px;
+    margin-left: 30px;
+    margin-top: 20px;
+`;
+const StyledMyBox = styled.div`
+    outline: 3px solid red;
+    width: 350px;
+    height: 270px;
+    margin-left: 30px;
+    margin-top: 20px;
+`;
 
 const Home = () => {
     const { isLogin, logout, userInfo } = useContext(LoginContext);
@@ -17,19 +36,19 @@ const Home = () => {
     const [friendShipStatus, setFriendShipStatus] = useState({});
 
     /* 모달 상태와 변경 */
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
-    const openModal = () => {
-        setIsModalOpen(true);
+    const paymentopenModal = () => {
+        setIsPaymentModalOpen(true);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
+    const paymentcloseModal = () => {
+        setIsPaymentModalOpen(false);
     };
 
     const openAddFriendModal = (friend) => {
@@ -67,7 +86,7 @@ const Home = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             if (isLogin && userInfo.username) {
-                console.log(userInfo.username);
+                // console.log(userInfo.username);
                 try {
                     const response = await userList();
                     setUsers(response.data);
@@ -96,77 +115,74 @@ const Home = () => {
         } else return;
     }, [isAddFriendModalOpen, isLogin]);
 
-    const onNaverLogin = () => {
-        window.location.href = "http://localhost:8070/oauth2/authorization/naver";
-    };
-
-    const onKakaoLogin = () => {
-        window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=e6a276bbc03eba1dceba18ea7095056c&redirect_uri=http://localhost:8070/oauth2/kakao/callback&response_type=code";
-    };
-
     return (
-        <>
-            <h1>Home</h1>
-            <button onClick={openModal}>모달 열기</button>
-            <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
-            <br />
-            <br />
-            {isLogin ? (
-                <>
-                    <Button onClick={toggleFriendList}>{isFriendListVisible ? "친구목록닫기" : "친구목록보기"}</Button>
-                    {isFriendListVisible && (
-                        <div style={{ marginTop: "20px" }}>
-                            {friends.length > 0 ? (
-                                <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
-                                    {friends.map((friend) => (
-                                        <li key={friend.id} style={{ marginBottom: "10px" }}>
-                                            {friend.friendUser.name}
-                                            <small>({friend.friendName})</small>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>친구 목록이 없습니다.</p>
-                            )}
-                        </div>
-                    )}
-                </>
-            ) : (
-                <></>
-            )}
-            <br />
-            {isLogin ? (
-                <Button
-                    onClick={() => {
-                        openFriendRequestModal();
-                    }}
-                >
-                    친구요청목록
-                </Button>
-            ) : (
-                <></>
-            )}
+        <div className='home-container'>
+            <div className='body-container'>
+                <StyledLoginBox>
+                    {" "}
+                    <LoginForm />
+                </StyledLoginBox>
+                <StyledMyBox>
+                    <MyBox/>
+                </StyledMyBox>
+                <br />
+                <br />
+                {isLogin ? (
+                    <>
+                        <Button onClick={toggleFriendList}>
+                            {isFriendListVisible ? "친구목록닫기" : "친구목록보기"}
+                        </Button>
+                        {isFriendListVisible && (
+                            <div style={{ marginTop: "20px" }}>
+                                {friends.length > 0 ? (
+                                    <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
+                                        {friends.map((friend) => (
+                                            <li key={friend.id} style={{ marginBottom: "10px" }}>
+                                                {friend.friendUser.name}
+                                                <small>({friend.friendName})</small>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>친구 목록이 없습니다.</p>
+                                )}
+                            </div>
+                        )}
+                    </>
+                ) : (
+                    <></>
+                )}
+                <br />
+                {/* {isLogin ? (
+                    <Button
+                        onClick={() => {
+                            openFriendRequestModal();
+                        }}
+                    >
+                        친구요청목록
+                    </Button>
+                ) : (
+                    <></>
+                )}
 
-            <Button onClick={onNaverLogin}>Naver</Button>
-            <Button onClick={onKakaoLogin}>Kakao</Button>
-
-            <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
-            <br />
-            <br />
-            {users.map((friend) => (
-                <div key={friend.id}>
-                    <Button>{friend.name}</Button>
-                    {friendShipStatus[friend.name] === false && (
-                        <Button onClick={() => openAddFriendModal(friend)}>일촌신청</Button>
-                    )}
-                </div>
-            ))}
-            <AddFriendModal
-                isOpen={isAddFriendModalOpen}
-                onClose={closeAddFriendModal}
-                selectedFriend={selectedFriend}
-            />
-        </>
+                <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
+                <br />
+                <br />
+                {users.map((friend) => (
+                    <div key={friend.id}>
+                        <Button>{friend.name}</Button>
+                        {friendShipStatus[friend.name] === false && (
+                            <Button onClick={() => openAddFriendModal(friend)}>일촌신청</Button>
+                        )}
+                    </div>
+                ))}
+                <AddFriendModal
+                    isOpen={isAddFriendModalOpen}
+                    onClose={closeAddFriendModal}
+                    selectedFriend={selectedFriend}
+                /> */}
+            </div>
+        </div>
     );
 };
 

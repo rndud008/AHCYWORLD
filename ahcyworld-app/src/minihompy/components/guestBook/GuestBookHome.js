@@ -6,7 +6,7 @@ import Layout from "../Layout/Layout";
 import "../guestBook/css/GuestBookHome.css";
 import Cookies from "js-cookie";
 import { hompyInfo, userInfo } from "../../../apis/auth";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
 
 const GuestBookHome = () => {
@@ -87,7 +87,7 @@ const GuestBookHome = () => {
                     console.error("방명록 불러오기 실패", error);
                 }
             }
-            
+
         };
 
         const checkFriendship = async () => {

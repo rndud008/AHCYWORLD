@@ -4,8 +4,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import ItemList from "../items/components/ItemList";
 import { SERVER_HOST } from "../../apis/api";
+import { useNavigate } from "react-router-dom";
 
 const Member = () => {
+    const navigate = useNavigate();
     const [itemKind, setItemKind] = useState("배경음악");
 
     const [user, setUser] = useState({});
@@ -68,6 +70,7 @@ const Member = () => {
             >
                 스킨
             </button>
+            <button onClick={() => navigate(`/cart/${user.id}`)}>장바구니</button>
             <div>내가 가지고 있는 도토리: {user.acorn}</div>
             <hr />
             <ItemList itemKind={itemKind} />    

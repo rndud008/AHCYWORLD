@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import './Menu.css';
-import { LoginContext } from '../../../webpage/login/context/LoginContextProvider';
 import BgmPlayer from '../musicPlayer/BgmPlayer';
+import { LoginContext } from '../../../webpage/components/login/context/LoginContextProvider';
 
 const Menu = () => {
   //

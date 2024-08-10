@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../pages/css/HompySetting.css";
-import HompySettingLeft from "./HompySettingLeft";
+// import HompySettingLeft from "./HompySettingLeft";
 
 
 
@@ -30,7 +30,7 @@ const HompySetting = () => {
     <Layout
       hompy={hompy}
       user={hompy.user}
-      LeftPanelComponent={HompySettingLeft}
+      // LeftPanelComponent={HompySettingLeft}
       showTitle={false}
       showVisitorInfo={false}
     >

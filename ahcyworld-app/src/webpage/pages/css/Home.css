@@ -1,0 +1,15 @@
+.home-container {
+    outline: 2px solid red;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.body-container {
+    outline: 2px solid blue;
+    width: 1400px;
+    height: 100%;
+    box-sizing: border-box; 
+}

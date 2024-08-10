@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Swal from "../../apis/alert";
 import Header from "../components/Header/Header";
-import { LoginContext } from "../login/context/LoginContextProvider";
+import { LoginContext } from "../components/login/context/LoginContextProvider";
 
 const Admin = () => {
     const { isLogin, roles } = useContext(LoginContext);

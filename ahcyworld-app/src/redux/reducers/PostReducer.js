@@ -6,7 +6,7 @@ let initialState = {
 function PostReducer(state = initialState, action) {
   let { type, payload } = action;
 
-  console.log("PostReducer : ", state.pageAndPostList.posts);
+  // console.log("PostReducer : ", state.pageAndPostList.posts);
 
   switch (type) {
     case "GET_POST_LIST":

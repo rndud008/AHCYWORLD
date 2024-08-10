@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SERVER_HOST } from "../../../apis/api";
 import * as Swal from "../../../apis/alert";
 import Layout from "../Layout/Layout";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
 import moment from "moment";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const DiaryWritePage = () => {
     const location = useLocation();

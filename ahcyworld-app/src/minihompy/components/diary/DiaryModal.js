@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api";
 import * as Swal from "../../../apis/alert";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const DiaryModal = ({
     show,
