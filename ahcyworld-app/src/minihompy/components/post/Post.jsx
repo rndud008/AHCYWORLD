@@ -7,6 +7,8 @@ import { axiosPostList } from "./utils/postUtils";
 import { findByHompyIdAxios } from "./utils/hompyUtils";
 import { list } from "./utils/FolderUtils";
 
+const keyword =['board','photo','video'];
+
 const Post = () => {
   const { hompyId, postName, folderId } = useParams();
   const navigate = useNavigate();
@@ -16,8 +18,11 @@ const Post = () => {
   const page = useSelector((state) => state.post.page);
 
   useEffect(() => {
-    list(postName, dispatch, hompyId);
-    findByHompyIdAxios(dispatch, hompyId);
+    if(keyword.some(item => postName.includes(item))){
+
+      list(postName, dispatch, hompyId);
+      findByHompyIdAxios(dispatch, hompyId);
+    }
   }, [postName, hompyId]);
 
   useEffect(() => {

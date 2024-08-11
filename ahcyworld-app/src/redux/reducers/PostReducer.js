@@ -4,6 +4,7 @@ let initialState = {
   page: 0,
   show: false,
   moveFolderId: "",
+  errors: {},
 };
 
 function PostReducer(state = initialState, action) {
@@ -36,6 +37,8 @@ function PostReducer(state = initialState, action) {
       return{...state, show:payload.data};
     case "MOVE_FOLDER_ID_STATE":
       return{...state, moveFolderId:payload.data};
+    case "POST_ERROR-STATE":
+      return{...state, errors:{...state.errors, [payload.name]:payload.value}}
     default:
       return { ...state };
   }
