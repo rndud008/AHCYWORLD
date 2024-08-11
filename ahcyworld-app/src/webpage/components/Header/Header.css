@@ -1,0 +1,126 @@
+:root {
+    --main-color: #e66e28;
+}
+
+.header-container {
+    /* outline: 3px solid rgb(136, 255, 0); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-box {
+    /* outline: 3px solid red; */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding: 40px 0;
+    width: 100%;
+    max-width: 1400px;
+    min-width: 1400px;
+}
+
+.logo-box {
+    /* outline: 3px solid red; */
+
+    width: 40%;
+}
+
+.logo-box img {
+    width: 350px;
+    height: 70px;
+}
+
+.search-select {
+    /* outline: 3px solid lime; */
+    display: flex;
+    width: 900px;
+
+    position: relative;
+    right: 40px;
+}
+
+.search-select select {
+    border: 5px solid var(--main-color);
+    outline: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-right: 0;
+    padding-left: 10px;
+}
+
+.search-select input {
+    width: 700px;
+    height: 60px;
+
+    border: 5px solid var(--main-color);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-left: 0;
+}
+
+.search-btn {
+    width: 120px;
+    height: 60px;
+    background-color: var(--main-color);
+    color: white;
+    border: 0;
+    border-radius: 30px;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-btn:hover {
+    background-color: #d55a24;
+    transform: scale(1.05);
+}
+
+.search-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.4);
+}
+
+
+.navbar {
+    /* outline: 3px solid blue; */
+    width: 70%;
+    max-width: 1400px;
+    min-width: 1400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 1px solid var(--main-color);
+}
+
+.navbar button {
+    border: 0;
+    background-color: white;
+    text-decoration: none;
+    color: #000;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 40px;
+
+    margin: 0 12px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar button:hover {
+    background-color: var(--main-color);
+    color: #ffffff;
+    transform: translateY(-3px);
+}
+
+.navbar button.active {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.navbar button.nav-link {
+    font-weight: 600;
+}

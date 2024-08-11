@@ -1,0 +1,127 @@
+import React, { useEffect, useState } from 'react';
+import { SERVER_HOST } from '../../../apis/api';
+import { Navigate, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import '../css/AcornPayModal.css';
+import { itemconfirm } from '../../../apis/alert';
+import { userInfo } from '../../../apis/auth';
+
+const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, userInfo }) => {
+    const [payItems, setPayItems] = useState([])
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (isOpen) {
+            console.log(userInfo)
+            const params = new URLSearchParams();
+            let updateAcorn = 0;
+            console.log("배열의 길이 : "+selectItem.length);
+            selectItem.forEach(item => params.append('itemList', item));
+            axios({
+                method: 'GET',
+                url: `${SERVER_HOST}/cart/itemcheck`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                params: params,
+            }).then((response) => {
+                const { data, status } = response;
+                if (status === 200) {
+                    setPayItems(data); 
+                }
+            });
+        }
+    }, [isOpen])
+
+    if (!isOpen) {
+        return null;
+    }
+
+    const payedItem = () => {
+
+        axios({
+            method: 'POST',
+            url: `${SERVER_HOST}/cart/payed/item`,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(selectItem),
+            params: {
+                id: userInfo.id,
+                totalAcorn: totalAcorn,
+            }
+        }).then((response) => {
+            const { data, status } = response;
+            if (status === 200) {
+                itemconfirm("구매 성공!!","미니홈피로 이동하시겠습니까?","success",()=>navigate(`/hompy/${hompyInfo.id}`),onClose)
+            }
+        });
+    }
+
+    const alertPayed = () => {
+        itemconfirm("상품 구매","구매하시겠습니까?","question",()=> payedItem(),onClose)
+    }
+
+    return (
+        <div className='acornpay-modal-overlay'>
+            <div className='acornpay-modal-content'>
+                <div style={{ padding: '20px', maxWidth: '600px', margin: 'auto' }}>
+                    <h2>결제</h2>
+
+                    <div style={{ marginTop: '10px', border: '1px solid #ddd', padding: '10px' }}>
+
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <div>상품정보</div>
+                            <div style={{ marginLeft: 'auto' }}>상품금액</div>
+                        </div>
+                        <hr />
+                        <div style={{ width: 400, height: 400, overflowY: 'auto' }}>
+
+                            {payItems.map((payitem) => (
+
+                                <div key={payitem.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
+                                    {payitem.item.itemType === "글꼴" ? (
+                                        <input
+                                            className='fontStyle'
+                                            type='text'
+                                            style={{ fontFamily: `${payitem.item.sourceName}, cursive`, fontSize: 50, width: 100, height: 100 }}
+                                            defaultValue='AhCyWorld'
+                                            readOnly
+                                        />
+                                    ) : payitem.item.itemType === "배경음악" ? (
+                                        <img className="itemImg" src={payitem.item.bgmImg} style={{ width: 100, height: 100 }} alt='' />
+                                    ) : (
+                                        <img
+                                            className="itemImg"
+                                            src={`${process.env.PUBLIC_URL}/image/${payitem.item.fileName}`}
+                                            style={{ width: 100, height: 100 }} alt=''
+                                        />
+                                    )}
+                                    <div style={{ flex: 1, marginLeft: '10px' }}>
+                                        <div>{payitem.item.itemName}</div>
+                                        <div style={{ color: '#888' }}>{payitem.item.itemType}</div>
+                                    </div>
+                                    <div style={{ width: '100px', textAlign: 'right' }}>{payitem.item.price}도토리</div>
+                                </div>
+
+                            ))}
+                        </div>
+                        <div style={{ textAlign: 'right', marginTop: '10px' }}><hr />
+                            <div>내 보유도토리: {null}</div>
+                            <div>총 상품도토리: {totalAcorn}도토리</div>
+                            <hr/>
+                            <div>잔여 도토리: {null}도토리</div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
+                        <button onClick={onClose}>결제취소</button>
+                        <button onClick={()=>alertPayed()}>결제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default AcornPayModal;

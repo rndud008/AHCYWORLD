@@ -1,9 +1,7 @@
 import "./App.css";
 import { Route, Routes, useParams } from "react-router-dom";
 import Header from "./webpage/components/Header/Header";
-import Home from "./webpage/pages/Home";
 import Hompy from "./minihompy/pages/Hompy";
-import Login from "./webpage/pages/Login";
 import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
 import Admin from "./webpage/pages/Admin";
@@ -13,7 +11,6 @@ import DiaryHome from "./minihompy/components/diary/DiaryHome";
 import { useContext, useEffect, useState } from "react";
 import Profile from "./minihompy/pages/Profile";
 import { LoginContext } from "./webpage/login/context/LoginContextProvider";
-import { useDispatch, useSelector } from "react-redux";
 import Post from "./minihompy/components/post/Post";
 import PostListDetail from "./minihompy/components/post/PostListDetail/PostListDetail";
 import PostWrite from "./minihompy/components/post/PostWrite/PostWrite";
@@ -22,11 +19,18 @@ import PostList from "./minihompy/components/post/PostList/PostList";
 import PostDetail from "./minihompy/components/post/PostList/PostDetail/PostDetail";
 import Layout from "./minihompy/components/Layout/Layout";
 
+import HompySetting from "./minihompy/pages/HompySetting";
+import Cart from "./webpage/pages/Cart";
+import { useSelector } from "react-redux";
+
+
+
 function App() {
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(0);
   const { userInfo, hompyInfo } = useContext(LoginContext);
   const folder = useSelector((state) => state.folder.folder);
+
 
   return (
     <div>
@@ -34,10 +38,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="cart/:userId" element={<Cart/>}/>
+
         </Route>
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (
@@ -63,7 +68,10 @@ function App() {
               <Route path=":folderId/write" element={<PostWrite />} />
               <Route path=":folderId/update/:postId" element={<PostUpdate />} />
             </Route>
-            <Route path="diary" element={<DiaryHome setUserId={setUserId} />} />
+            <Route path="diary" element={<DiaryHome setUserId={setUserId} />}/>
+            <Route path="diary/write" element={<DiaryWritePage setUserId={setUserId} />}/>
+            <Route path="diary/update/:id" element={<DiaryUpdatePage setUserId={setUserId} />}/>
+            {/* <Route path=":setting" element={<HompySetting setUserId={setUserId}/>}/> */}
           </Route>
         )}
         {/* 3. 어드민 페이지 */}

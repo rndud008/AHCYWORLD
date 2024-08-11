@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
-import api from "../../../apis/api";
 
-import * as Swal from "../../../apis/alert";
-import * as auth from "../../../apis/auth";
+import * as Swal from "../../../../apis/alert";
+import * as auth from "../../../../apis/auth";
 
 import { useNavigate } from "react-router-dom";
+import api from "../../../../apis/api";
 
 export const LoginContext = createContext();
 LoginContext.displayName = "LoginContextName";
@@ -21,11 +21,10 @@ const LoginContextProvider = ({ children }) => {
         JSON.parse(localStorage.getItem("roles")) || { isMember: false, isAdmin: false }
     );
 
-    const [hompyInfo, setHompyInfo] = useState()
+    const [hompyInfo, setHompyInfo] = useState(JSON.parse(localStorage.getItem("hompyInfo")) || {});
 
     const loginCheck = async (isAuthPage = false) => {
         const accessToken = Cookies.get("accessToken");
-        console.log(Cookies.get("accessToken"));
 
         let response;
         let data;
@@ -70,21 +69,22 @@ const LoginContextProvider = ({ children }) => {
 
         // 인증성공
         loginSetting(data, accessToken);
-        console.log('check',data)
 
-        response = await auth.hompyInfo();
-        data = response.data;
+        try {
+            response = await auth.hompyInfo();
+            data = response.data;
 
-        setHompyInfo(data);
-
-
+            setHompyInfo(data);
+            localStorage.setItem("hompyInfo", JSON.stringify(data));
+        } catch (error) {
+            console.error("HompyInfo Error: ", error);
+        }
 
     };
 
     useEffect(() => {
         loginCheck();
     }, []);
-
 
     const login = async (username, password, rememberId) => {
         // console.log(`
@@ -145,19 +145,19 @@ const LoginContextProvider = ({ children }) => {
     };
 
     const loginSetting = (userData, accessToken) => {
-        const { id, username, role, name, hompyId } = userData;
+        const { id, username, role, name, acorn } = userData;
 
         // JWT 토큰을 header에 저장
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
         // 로그인 여부
         setIsLogin(true);
-        console.log(userData)
+        // console.log("userdata: ", userData);
 
         // 유저 정보 세팅
-        setUserInfo({ id, username, role, name ,hompyId});
+        setUserInfo({ id, username, role, name, acorn });
 
-        const updatedUserInfo = { id, username, role, name, hompyId };
+        const updatedUserInfo = { id, username, role, name, acorn };
         setUserInfo(updatedUserInfo);
 
         // 권한 정보 세팅
@@ -168,6 +168,8 @@ const LoginContextProvider = ({ children }) => {
         });
         // console.log("updatedRoles: ", updatedRoles);
         setRoles(updatedRoles);
+
+        // console.log("유저 정보: ", updatedUserInfo);
 
         localStorage.setItem("isLogin", "true");
         localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
@@ -187,6 +189,7 @@ const LoginContextProvider = ({ children }) => {
         localStorage.removeItem("isLogin");
         localStorage.removeItem("userInfo");
         localStorage.removeItem("roles");
+        localStorage.removeItem("hompyInfo");
     };
 
     return (

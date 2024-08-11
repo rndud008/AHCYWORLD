@@ -4,7 +4,7 @@ import * as Swal from "../../apis/alert";
 
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header";
-import JoinForm from "../login/join/JoinForm";
+import JoinForm from "./join/JoinForm";
 
 const Join = () => {
     const navigate = useNavigate();

@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
-import LoginContextProvider from "./webpage/login/context/LoginContextProvider";
+import LoginContextProvider from "./webpage/components/login/context/LoginContextProvider";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -6,9 +6,14 @@ import com.lec.spring.domain.User;
 import com.lec.spring.repository.CartsRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
+
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartsService {
@@ -36,4 +41,61 @@ public class CartsService {
 
         return cartsRepository.saveAndFlush(carts);
     }
+
+    @Transactional
+    public List<Carts> cartsList(Long id){
+
+        User user = userRepository.findById(id).orElse(null);
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+
+        return cartsRepository.findByUserAndCartsStatus(user,"N", sort);
+    }
+
+    @Transactional
+    public int deleteCartsItem(Long id){
+        Carts carts = cartsRepository.findById(id).orElse(null);
+        if(carts == null){
+            return 0;
+        }else{
+            cartsRepository.delete(carts);
+            return 1;
+        }
+    }
+
+    @Transactional
+    public int deleteAll(List<Long> deleteList){
+
+        List<Carts> deleteItems = cartsRepository.findAllById(deleteList);
+        if(deleteItems == null){
+            return 0;
+        }else{
+            cartsRepository.deleteAll(deleteItems);
+            return 1;
+        }
+    }
+
+    @Transactional
+    public List<Carts> checkItemList(List<Long> itemList){
+        return cartsRepository.findAllById(itemList);
+    }
+
+    @Transactional
+    public List<Carts> updateCarts(List<Long> itemList, Long id,Long totalAcorn){
+        List<Carts> updateItems = cartsRepository.findAllById(itemList);
+        User user = userRepository.findById(id).orElse(null);
+        if(updateItems == null){
+            return null;
+        }else{
+            user.setAcorn(user.getAcorn()-totalAcorn);
+
+            userRepository.saveAndFlush(user);
+
+            updateItems.forEach(item -> {
+                item.setCartsStatus("Y");
+                item.setCreateAt(LocalDateTime.now());
+            });
+            return cartsRepository.saveAllAndFlush(updateItems);
+        }
+    }
+
 }

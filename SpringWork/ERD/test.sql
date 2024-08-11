@@ -11,6 +11,7 @@ select * from payment_history;
 select * from post;
 select * from attachment;
 select * from user_write_histroy;
+select * from board_type;
 
 alter table user_write_histroy drop column update_at;
 #  컬럼 삭제.
@@ -26,6 +27,8 @@ select *
 from hompy;
 select *
 from guest_book;
+select *
+from carts;
 
 delete
 from ah_user
@@ -33,6 +36,9 @@ where id = 8;
 
 update hompy set total_visitor = 0 where id = 1;
 
+update ah_user
+set acorn = 100000
+where id = 4;
 
 
 insert into post (create_at, folder_id, content, subject)
@@ -44,13 +50,15 @@ describe ah_user;
 alter table ah_user modify birth_day date null;
 alter table ah_user modify gender varchar(255) null;
 
-    select * from item;
+select * from item;
 select count(*)
 from item;
 delete
 from ah_user
 where username = "user3"
 ;
+
+
 
 
 
@@ -63,8 +71,9 @@ set item_name='글꼴4'
 where id = 80;
 
 update hompy
-set minimi_picture = 'minimi3.png'
-where id = 3;
+set minimi_picture = '망곰2.png'
+where id = 2;
+
 
 
 
