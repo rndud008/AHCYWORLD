@@ -12,9 +12,6 @@ import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
 import { useDispatch, useSelector } from "react-redux";
 import { HompyAction } from "../../../redux/actions/HompyAction";
 
-
-
-
 const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = true, LeftPanelComponent}) => {
 
     const [visitorInfo, setVisitorInfo] = useState({ todayVisitor: 0, totalVisitor: 0 });
@@ -23,17 +20,9 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
     const hompyId = hompy?.id;
     
 
-  const { postName,setting,hompyId } = useParams();
+  const { postName,setting } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes('/setting'); // 셋팅페이지 경로감지
-    
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(HompyAction.findByHompyIdAxios(hompyId));
-  // }, [hompyId]);
-  //
-  // const hompy = useSelector((state) => state.hompy.hompy);
-  // const userId = hompy.user?.id;
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -131,8 +120,9 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
                   <div className="text1-6">
                       <div className="text1-3">
                           {/* <좌측> 프로필, 폴더, 관리 */}
-                          {postName === undefined && <Left user={user} hompy={hompy} />}
-                          {postName && <BoardTypeList />}
+                          {(postName === undefined && setting === undefined) && <Left user={user} hompy={hompy} />}
+                          {(postName && setting === undefined) && <BoardTypeList />}
+                          {(setting && postName === undefined) && <LeftPanelComponent />}
                       </div>
                       <div className="text1-4">
                           {/* <우측> 게시물 들  */}
@@ -181,8 +171,8 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
           {postName && <BoardTypeList />} */}
             {/*<>*/}
             {/*  {postName === undefined && <Left user={user} hompy={hompy} />}*/}
-            {/*  {(postName && setting === undefined) && <BoardTypeList />}*/}
-            {/*  {(setting && postName === undefined) && <LeftPanelComponent />}*/}
+             {/* {(postName && setting === undefined) && <BoardTypeList />} */}
+             {/* {(setting && postName === undefined) && <LeftPanelComponent />} */}
             {/*</>*/}
         </div>
         <div className="right-panel">

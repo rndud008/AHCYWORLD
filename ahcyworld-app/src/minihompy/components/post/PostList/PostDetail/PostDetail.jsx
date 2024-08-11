@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
-import { LoginContext } from "../../../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../../../webpage/components/login/context/LoginContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import {
   detailPage,

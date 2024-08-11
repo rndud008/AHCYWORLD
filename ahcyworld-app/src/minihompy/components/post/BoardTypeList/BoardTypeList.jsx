@@ -3,7 +3,7 @@ import "./BoardTypeList.style.css";
 import { Button, ListGroup, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginContext } from "../../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../../webpage/components/login/context/LoginContextProvider" 
 import Folder  from "./Folder/Folder";
 import FolderModal from "./Folder/FolderModal/FolderModal";
 import { folderDelete, handleShow } from "../utils/FolderUtils";

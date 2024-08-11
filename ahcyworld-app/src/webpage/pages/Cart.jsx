@@ -4,8 +4,7 @@ import { resolvePath, useNavigate, useParams } from 'react-router-dom';
 import { SERVER_HOST } from "../../apis/api";
 import * as Swal from "../../apis/alert";
 import AcornPayModal from '../items/components/AcornPayModal';
-import { LoginContext } from '../login/context/LoginContextProvider';
-
+import { LoginContext } from '../components/login/context/LoginContextProvider';
 const Cart = () => {
     const { userId } = useParams();
     const navigate = useNavigate();

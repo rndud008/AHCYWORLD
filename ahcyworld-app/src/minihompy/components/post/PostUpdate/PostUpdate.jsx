@@ -11,7 +11,7 @@ import {
   updateSubmit,
   writeAndUpdateChangeValue,
 } from "../utils/postUtils";
-import { LoginContext } from "../../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../../webpage/components/login/context/LoginContextProvider";
 
 const PostUpdate = () => {
   const { hompyId, postName, folderId, postId } = useParams();

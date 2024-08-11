@@ -3,7 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import PageNation from "../PageNation/PageNation";
 import PostListDetailItem from "./PostListDetailItem/PostListDetailItem";
-import { LoginContext } from "../../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../../webpage/components/login/context/LoginContextProvider";
 import { useSelector } from "react-redux";
 
 const PostListDetail = () => {

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Button, Container, Table } from "react-bootstrap";
 import PostItem from "./PostDetail/PostItem/PostItem";
 import PageNation from "../PageNation/PageNation"
-import { LoginContext } from "../../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../../webpage/components/login/context/LoginContextProvider";
 import { useSelector } from "react-redux";
 
 // boardType 에 따라 PostDetail or PostListDetail 출력.

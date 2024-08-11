@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { commentDeleteAxios, commentWriteAxios, contentState } from '../../../utils/commentUtils';
-import { LoginContext } from '../../../../../../webpage/login/context/LoginContextProvider';
+import { LoginContext } from '../../../../../../webpage/components/login/context/LoginContextProvider'; 
 import { useDispatch, useSelector } from 'react-redux';
 
 const Comment = ({commentShow,item}) => {

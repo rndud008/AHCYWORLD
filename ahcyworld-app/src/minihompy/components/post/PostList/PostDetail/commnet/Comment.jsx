@@ -7,7 +7,7 @@ import {
 } from "../../../utils/commentUtils";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginContext } from "../../../../../../webpage/login/context/LoginContextProvider";
+import { LoginContext } from "../../../../../../webpage/components/login/context/LoginContextProvider"; 
 import { useParams } from "react-router-dom";
 
 const Comment = () => {

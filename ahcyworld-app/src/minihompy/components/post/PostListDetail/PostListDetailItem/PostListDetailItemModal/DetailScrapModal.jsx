@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { changeValue, detailListHandleClose, postScrap } from '../../../utils/postUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LoginContext } from '../../../../../../webpage/login/context/LoginContextProvider';
+import { LoginContext } from '../../../../../../webpage/components/login/context/LoginContextProvider'; 
 
 const DetailScrapModal = ({show,setShow,item}) => {
   const {hompyInfo} = useContext(LoginContext); 
