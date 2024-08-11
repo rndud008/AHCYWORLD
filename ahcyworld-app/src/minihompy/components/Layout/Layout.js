@@ -25,9 +25,12 @@ const Layout = ({
   const userId = user?.id;
   const hompyId = hompy?.id;
 
-  const { postName, setting } = useParams();
+  const { postName } = useParams();
   const location = useLocation();
-  const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
+  const isSettingPage = location.pathname.includes('/setting'); // 셋팅페이지 경로감지
+
+  // console.log(postName, "Layout");
+
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
