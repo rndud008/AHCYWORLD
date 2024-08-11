@@ -22,7 +22,7 @@ const Layout = ({ hompy, user, children, showTitle = true, showVisitorInfo = tru
   const location = useLocation();
   const isSettingPage = location.pathname.includes('/setting'); // 셋팅페이지 경로감지
 
-  console.log(postName, "Layout");
+  // console.log(postName, "Layout");
 
 
   useEffect(() => {
