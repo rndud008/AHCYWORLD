@@ -271,8 +271,8 @@ public class PostController {
             @PathVariable Long hompyId
             ,@PathVariable String  postName
             ,@PathVariable Long folderId
-            ,@PathVariable Long moveFolderId
             , @PathVariable Long id
+            ,@PathVariable Long moveFolderId
             , HttpServletRequest request){
 
         Hompy hompy = check(request);
@@ -345,6 +345,24 @@ public class PostController {
 
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
+
+        String action ="";
+
+        if(!hompy.getId().equals(folder.getHompy().getId())){
+            action = "OTHER";
+        }
+
+        if(folder.getStatus().equals("일촌공개") && action.equals("OTHER")){
+          Friend friend = friendService.findByUserAndFriendUser(folder.getHompy().getUser(), hompy.getUser());
+          if(friend == null){
+              return new ResponseEntity<>("일촌 잘못된 접근입니다.",HttpStatus.BAD_REQUEST);
+          }
+        }
+
+        if(folder.getStatus().equals("비공개") && !hompy.getId().equals(hompyId) ){
+            return new ResponseEntity<>("비공개 잘못된 접근입니다.",HttpStatus.BAD_REQUEST);
+        }
+
         String url = request.getRequestURI();
 
         ResponseEntity<?> validateResponse = validateRequest(hompy,postName,folder,hompyId,null,"list",null,null);

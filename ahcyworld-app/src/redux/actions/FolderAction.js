@@ -92,6 +92,36 @@ function getScrapFolderListAxios(hompyId, postName) {
   };
 }
 
+function beforeCreateFolderState(name,value){
+  return (dispatch,getState) => {
+    dispatch({type:"BEFORE_CREATE_FOLDER_STATE",payload:{name,value}})
+  }
+}
+
+function afterCreateFolderState(){
+  return (dispatch,getState) => {
+    dispatch({type:"AFTER_CREATE_FOLDER_STATE",payload:{}})
+  }
+}
+
+function showState(data){
+  return (dispatch,getState) =>{
+    dispatch({type:"FOLDER_SHOW_STATE",payload:{data}})
+  }
+}
+
+function modalNameState(data){
+  return(dispatch,getState) =>{
+    dispatch({type:"MODAL_NAME_STATE",payload:{data}})
+  }
+}
+
+function errorState(name,value){
+  return (dispatch,getState) =>{
+    dispatch({type:"ERROR_STATE",payload:{name,value}})
+  }
+}
+
 export const FolderAction = {
   getFolderListAxios,
   updateFolderAxios,
@@ -99,4 +129,9 @@ export const FolderAction = {
   clickFolder,
   deleteFolderAxios,
   getScrapFolderListAxios,
+  beforeCreateFolderState,
+  afterCreateFolderState,
+  showState,
+  modalNameState,
+  errorState,
 };

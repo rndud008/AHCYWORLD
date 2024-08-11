@@ -1,12 +1,13 @@
 let initialState = {
   pageAndPostList: [],
   post: null,
+  page: 0,
+  show: false,
+  moveFolderId: "",
 };
 
 function PostReducer(state = initialState, action) {
   let { type, payload } = action;
-
-  console.log("PostReducer : ", state.pageAndPostList.posts);
 
   switch (type) {
     case "GET_POST_LIST":
@@ -28,7 +29,13 @@ function PostReducer(state = initialState, action) {
         ),
       };
     case "DETAIL_POST":
-      return { ...state, post: payload.data };
+      return{...state, post:payload.data};
+    case "SET_PAGE":
+      return{...state, page:payload.page};
+    case "POST_SHOW_STATE":
+      return{...state, show:payload.data};
+    case "MOVE_FOLDER_ID_STATE":
+      return{...state, moveFolderId:payload.data};
     default:
       return { ...state };
   }

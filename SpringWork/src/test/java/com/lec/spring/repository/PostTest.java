@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -49,21 +50,21 @@ class PostTest {
 //        boardTypeRepository.findAll().forEach(System.out::println);
 
         // --- user 생성.
-        User user = new User();
+//        User user = new User();
+//
+//        user.setUsername("k3");
+//        user.setPassword(passwordEncoder.encode("1234"));
+//        user.setName("testK3");
+//        user.setEmail("test3@test.com");
+//        user.setBirthDay(LocalDate.parse("1991-12-12"));
+//        user.setGender("남자");
+//        user.setRole("ROLE_MEMBER");
+//
+//        userRepository.save(user);
+//
+//        System.out.println(user);
 
-        user.setUsername("k3");
-        user.setPassword(passwordEncoder.encode("1234"));
-        user.setName("testK3");
-        user.setEmail("test3@test.com");
-        user.setBirthDay(LocalDate.parse("1991-12-12"));
-        user.setGender("남자");
-        user.setRole("ROLE_MEMBER");
-
-        userRepository.save(user);
-
-        System.out.println(user);
-
-//        User user = userRepository.findById(2l).orElse(null);
+        User user = userRepository.findById(5l).orElse(null);
 
         Hompy hompy = new Hompy();
         hompy.setUser(user);
@@ -156,7 +157,14 @@ class PostTest {
         postRepository.save(post2);
         // post를 수정.
 
+    }
 
+    @Test
+    void test2(){
+
+        User user = userRepository.findById(6l).orElse(null);
+        user.setPassword(passwordEncoder.encode("1234"));
+        userRepository.save(user);
 
     }
 

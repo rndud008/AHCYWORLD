@@ -204,8 +204,18 @@ public class FolderController {
         Hompy hompy = check(request);
         Hompy miniHompy = hompyService.findById(hompyId);
 
+        String aciton ;
+
+        if(hompy.getId().equals(miniHompy.getId())){
+            aciton="OWNER";
+        }else {
+            aciton="OTHER";
+        }
+
         String name = boardTypeName(postName);
         BoardType boardType = boardTypeService.findByName(name);
+
+        Friend friend = friendService.findByUserAndFriendUser(miniHompy.getUser(),hompy.getUser());
 
         ResponseEntity<?> validateResponse = validateRequest(null, hompy, boardType, null, miniHompy);
 
@@ -213,7 +223,7 @@ public class FolderController {
             return validateResponse;
         }
 
-        return new ResponseEntity<>(folderService.folderListByBoardType(boardType, miniHompy), HttpStatus.OK);// status 200
+        return new ResponseEntity<>(folderService.folderListByBoardType(boardType, miniHompy,friend,aciton), HttpStatus.OK);// status 200
     }
 
     @GetMapping("/{hompyId}/{postName}/scrapfolder")
@@ -240,7 +250,7 @@ public class FolderController {
             return validateResponse;
         }
 
-        return new ResponseEntity<>(folderService.folderListByBoardType(boardType, hompy), HttpStatus.OK);// status 200
+        return new ResponseEntity<>(folderService.scrapFolderListByBoardType(boardType, hompy), HttpStatus.OK);// status 200
     }
 
 }

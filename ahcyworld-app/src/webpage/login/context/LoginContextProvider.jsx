@@ -155,7 +155,7 @@ const LoginContextProvider = ({ children }) => {
         console.log(userData)
 
         // 유저 정보 세팅
-        setUserInfo({ id, username, role, name });
+        setUserInfo({ id, username, role, name ,hompyId});
 
         const updatedUserInfo = { id, username, role, name, hompyId };
         setUserInfo(updatedUserInfo);

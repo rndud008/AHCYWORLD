@@ -11,6 +11,9 @@ import java.util.Optional;
 
 public interface FolderRepository extends JpaRepository<Folder,Long> {
     Optional<Folder> findByHompy(Hompy hompy);
-
     Optional<List<Folder>> findByBoardTypeAndHompy(BoardType boardType, Hompy hompy, Sort sort);
+    Optional<List<Folder>> findByBoardTypeAndHompyAndStatusIn(BoardType boardType, Hompy hompy, Sort sort,List<String> all);
+    Optional<List<Folder>> findByBoardTypeAndHompyAndStatus(BoardType boardType, Hompy hompy, Sort sort,String all);
+
+
 }

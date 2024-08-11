@@ -1,20 +1,17 @@
 import React, { useContext, useEffect } from "react";
-import PostDetail from "./PostDetail";
-import PostListDetail from "./PostListDetail";
 import { Link, useParams } from "react-router-dom";
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
-import PostItem from "./PostItem";
-import PageNation from "./PageNation";
-import { useCol } from "react-bootstrap/esm/Col";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider";
+import { Button, Container, Table } from "react-bootstrap";
+import PostItem from "./PostDetail/PostItem/PostItem";
+import PageNation from "../PageNation/PageNation"
+import { LoginContext } from "../../../../webpage/login/context/LoginContextProvider";
 import { useSelector } from "react-redux";
 
 // boardType 에 따라 PostDetail or PostListDetail 출력.
-const PostList = ({ setPage }) => {
+const PostList = () => {
   const { hompyId, postName } = useParams();
   const { hompyInfo } = useContext(LoginContext);
   const pageAndPostList = useSelector(state => state.post.pageAndPostList);
-  const folder = useSelector((state) => state.folder.folder)
+  const folder = useSelector((state) => state.folder.folder);
 
   return (
     <>
@@ -61,7 +58,7 @@ const PostList = ({ setPage }) => {
           </tbody>
         </Table>
         <div>
-          <PageNation setPage={setPage} />
+          <PageNation />
         </div>
       </Container>
     </>

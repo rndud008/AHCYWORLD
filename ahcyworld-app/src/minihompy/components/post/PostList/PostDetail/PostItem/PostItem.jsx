@@ -1,7 +1,6 @@
 import React from "react";
-import { Col, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { boardNameCheck } from "./postUtils";
+import { boardNameCheck } from "../../../utils/postUtils";
 
 const PostItem = ({ item}) => {
   const hompyId = item.folder.hompy.id;

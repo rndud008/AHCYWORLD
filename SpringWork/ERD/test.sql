@@ -19,6 +19,7 @@ insert into post (create_at,folder_id,content,subject)
 select create_at,folder_id,content,subject
 from friend;
 
+
 select *
 from diary;
 select *
@@ -29,6 +30,8 @@ from guest_book;
 delete
 from ah_user
 where id = 8;
+
+update hompy set total_visitor = 0 where id = 1;
 
 
 

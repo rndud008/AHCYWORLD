@@ -5,12 +5,11 @@ import { LoginContext } from '../../../webpage/login/context/LoginContextProvide
 import BgmPlayer from '../musicPlayer/BgmPlayer';
 
 const Menu = () => {
-  //
-  // console.log("id:", userId);
 
   const {userInfo,hompyInfo} = useContext(LoginContext);
 
   const{hompyId} = useParams();
+
   return (
     <>
     <nav className="menu-nav">
@@ -57,8 +56,8 @@ const Menu = () => {
         </li>
       </ul>
     </nav>
-    <BgmPlayer />
-    <Outlet />
+    {/* <BgmPlayer /> */}
+    {/* <Outlet /> */}
     </>
   );
 };

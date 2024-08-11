@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import api, { SERVER_HOST } from "../../apis/api";
 import Cookies from "js-cookie";
+import { FolderAction } from "./FolderAction";
 
 function axiosPostList(hompyId, postName, folderId, page = 0) {
   return async (dispatch, getState) => {
@@ -51,9 +52,18 @@ function movePostFolderAxios(
     if (parseInt(status) === 200) {
       alert("폴더 변경 성공.");
       dispatch({ type: "MOVE_POST_FOLDER", payload: { data } });
-      navigate(
-        `/hompy/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`
-      );
+      if(postName.includes('board')){
+        dispatch(FolderAction.clickFolder(data.folder.id))
+        navigate(
+          `/hompy/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`
+        );
+      }else{
+        dispatch(PostAction.axiosPostList(hompyId, postName, data.folder.id))
+        dispatch(FolderAction.clickFolder(data.folder.id))
+        navigate(
+          `/hompy/${hompyId}/${postName}/${data.folder.id}`
+        );
+      }
     } else {
       alert("폴더 변경 실패");
       navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
@@ -71,7 +81,7 @@ function deletePostAxios(hompyId, postName, folderId, postId, navigate) {
     if (status === 200) {
       alert("삭제 성공.");
       dispatch({ type: "DELETE_POST", payload: { postId } });
-      dispatch(PostAction.axiosPostList());
+      dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
       navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
     } else {
       alert("삭제 실패.");
@@ -129,6 +139,54 @@ function detailPostAxios(hompyId, postName, folderId, postId, navigate) {
   };
 }
 
+function setPage(page){
+  return (dispatch,getState)=>{
+    dispatch({type:"SET_PAGE",payload:{page}})
+  }
+}
+
+function showState(data){
+  return(dispatch,getState) => {
+    dispatch({type:"POST_SHOW_STATE",payload:{data}})
+  }
+}
+
+function moveFolderIdState(data){
+  return(dispatch,getState) =>{
+    dispatch({type:"MOVE_FOLDER_ID_STATE",payload:{data}})
+  }
+}
+
+function postUpdate(hompyId,postName,folderId,formData,navigate,postId){
+  return async(dispatch,getState) =>{
+    const response = await api.put(
+      `http://localhost:8070/${hompyId}/${postName}/${folderId}/update`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  
+    const { data, status } = response;
+  
+    if (status === 200) {
+      if(postName.includes('board')){
+        alert("수정완료", data);
+        navigate(`/hompy/${hompyId}/${postName}/${folderId}/detail/${postId}`);
+      }else{
+        navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
+      }
+      dispatch(PostAction.axiosPostList(hompyId, postName, folderId))
+    } else {
+      alert("수정실패");
+      navigate(`/hompy/${hompyId}/${postName}`);
+    }
+  }
+}
+
+
 export const PostAction = {
   axiosPostList,
   findPostAxios,
@@ -136,4 +194,8 @@ export const PostAction = {
   deletePostAxios,
   createPostAxios,
   detailPostAxios,
+  setPage,
+  showState,
+  moveFolderIdState,
+  postUpdate,
 };

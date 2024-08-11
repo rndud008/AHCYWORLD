@@ -4,6 +4,7 @@ import FolderReducer from "./FolderReducer";
 import EmailAuthReducer from "./EmailAuthReducer";
 import CommentReducer from "./CommentReducer";
 import HompyReducer from "./HompyReducer";
+import FriendReducer from "./FriendReducer";
 
 export default combineReducers({
   post: PostReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   email: EmailAuthReducer,
   comment: CommentReducer,
   hompy: HompyReducer,
+  friend: FriendReducer,
 })

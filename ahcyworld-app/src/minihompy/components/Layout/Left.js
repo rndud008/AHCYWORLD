@@ -128,7 +128,8 @@ const Left = ({ user, hompy }) => {
 
       <div className="profile-msg">
         <textarea
-          rows="10"
+          className="no-resize"
+          rows="8"
           cols="33"
           placeholder="자기소개가 없습니다."
           value={statusMessage}

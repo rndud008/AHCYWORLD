@@ -1,21 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import PageNation from "./PageNation";
-import PostItem from "./PostItem";
-import PostListDetailItem from "./PostListDetailItem";
-import { LoginContext } from "../../../webpage/login/context/LoginContextProvider"; 
+import PageNation from "../PageNation/PageNation";
+import PostListDetailItem from "./PostListDetailItem/PostListDetailItem";
+import { LoginContext } from "../../../../webpage/login/context/LoginContextProvider";
 import { useSelector } from "react-redux";
 
-const PostListDetail = ({
-  setPage,
-}) => {
-
+const PostListDetail = () => {
   const { postName, hompyId } = useParams();
   const { hompyInfo } = useContext(LoginContext);
-  const pageAndPostList = useSelector(state => state.post.pageAndPostList);
-  const folder = useSelector(state => state.folder.folder);
-  
+  const pageAndPostList = useSelector((state) => state.post.pageAndPostList);
+  const folder = useSelector((state) => state.folder.folder);
+
   return (
     <>
       <Container>
@@ -41,18 +37,14 @@ const PostListDetail = ({
         <div>
           {pageAndPostList?.posts != null ? (
             pageAndPostList?.posts?.map((item) => {
-              return (
-                <PostListDetailItem
-                  item={item}
-                />
-              );
+              return <PostListDetailItem item={item} />;
             })
           ) : (
             <h4>게시물이 존재하지 않습니다.</h4>
           )}
         </div>
         <div>
-          <PageNation setPage={setPage} />
+          <PageNation />
         </div>
       </Container>
     </>

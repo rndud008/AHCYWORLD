@@ -2,14 +2,18 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.BoardType;
 import com.lec.spring.domain.Folder;
+import com.lec.spring.domain.Friend;
 import com.lec.spring.domain.Hompy;
 import com.lec.spring.repository.BoardTypeRepository;
 import com.lec.spring.repository.FolderRepository;
+import com.lec.spring.repository.FriendRepository;
 import com.lec.spring.repository.HompyRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,8 +74,33 @@ public class FolderService {
         return result;
     }
 
-    public List<Folder> folderListByBoardType(BoardType boardType,Hompy miniHompy){
-        return folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
+    public List<Folder> folderListByBoardType(BoardType boardType, Hompy miniHompy, Friend friend, String action) {
+        List<Folder> folderList = new ArrayList<>();
+        List<Folder> folders = new ArrayList<>();
+
+        if (action.equals("OWNER")) {
+            folderList = folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
+        } else if (action.equals("OTHER") && friend == null) {
+            folderList = folderRepository
+                    .findByBoardTypeAndHompyAndStatus(boardType, miniHompy, Sort.by(Sort.Order.asc("id")), "전체공개").orElse(null);
+        } else if (action.equals("OTHER")) {
+            folderList = folderRepository
+                    .findByBoardTypeAndHompyAndStatusIn
+                            (boardType, miniHompy, Sort.by(Sort.Order.asc("id")), Arrays.asList("전체공개","일촌공개")).orElse(null);
+
+
+
+        }
+
+        return folderList;
     }
+
+    public List<Folder> scrapFolderListByBoardType(BoardType boardType, Hompy miniHompy) {
+
+        return folderRepository
+                .findByBoardTypeAndHompy
+                        (boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
+    }
+
 
 }

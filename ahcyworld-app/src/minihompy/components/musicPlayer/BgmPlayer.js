@@ -1,7 +1,16 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { FaPlay, FaPause, FaBackward, FaForward, FaStop, FaList, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
-import './BgmPlayer.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useCallback } from "react";
+import {
+  FaPlay,
+  FaPause,
+  FaBackward,
+  FaForward,
+  FaStop,
+  FaList,
+  FaVolumeUp,
+  FaVolumeMute,
+} from "react-icons/fa";
+import "./BgmPlayer.css";
+import { useNavigate } from "react-router-dom";
 
 const BgmPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -41,33 +50,38 @@ const BgmPlayer = () => {
       </div>
       <audio ref={audioRef} src="/image/music.mp3"></audio>
       <div className="controls">
-        <button onClick={togglePlayPause}>
-          {isPlaying ? <FaPause /> : <FaPlay />}
-        </button>
-        <button onClick={stopPlayback}>
-          <FaStop />
-        </button>
-        <button>
-          <FaBackward />
-        </button>
-        <button>
-          <FaForward />
-        </button>
-        <span>00:02 / 04:26</span>
-        <div className="volume-control">
-          {volume > 0 ? <FaVolumeUp /> : <FaVolumeMute />}
-          <input
-            type="range"
-            value={volume}
-            min="0"
-            max="1"
-            step="0.01"
-            onChange={handleVolumeChange}
-          />
+        <div className="controls-box">
+          <button onClick={togglePlayPause}>
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </button>
+          <button onClick={stopPlayback}>
+            <FaStop />
+          </button>
+          <button>
+            <FaBackward />
+          </button>
+          <button>
+            <FaForward />
+          </button>
+          <span>00:02 / 04:26</span>
         </div>
-        <button>
-          <FaList />
-        </button>
+        <div className="controls-box">
+          
+          <div className="volume-control">
+            {volume > 0 ? <FaVolumeUp /> : <FaVolumeMute />}
+            <input
+              type="range"
+              value={volume}
+              min="0"
+              max="1"
+              step="0.01"
+              onChange={handleVolumeChange}
+            />
+          </div>
+          <button>
+            <FaList />
+          </button>
+        </div>
       </div>
     </div>
   );

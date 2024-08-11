@@ -11,8 +11,6 @@ const Header = () => {
     // console.log("logout: ", logout);
     // console.log("userInfo: ", userInfo);
 
-    console.log("hompyInfo",hompyInfo)
-    console.log("userInfo", userInfo);
 
     return (
         <>
