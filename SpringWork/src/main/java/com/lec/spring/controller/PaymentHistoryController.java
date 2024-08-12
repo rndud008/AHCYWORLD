@@ -21,7 +21,9 @@ public class PaymentHistoryController {
     @PostMapping("/save")
     @CrossOrigin
     public ResponseEntity<?> save(@RequestBody PaymentHistory paymentHistory) {
+        System.out.println(paymentHistory);
         return new ResponseEntity<>(paymentHistoryService.save(paymentHistory), HttpStatus.CREATED);
+//        return new ResponseEntity<>(paymentHistory,HttpStatus.CREATED);
     }
 
     @GetMapping("/list")

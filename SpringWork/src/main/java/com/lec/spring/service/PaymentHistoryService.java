@@ -21,10 +21,18 @@ public class PaymentHistoryService {
 
     @Transactional
     public PaymentHistory save(PaymentHistory paymentHistory) {
-        User user = userRepository.findById(paymentHistory.getUser().getId()).orElse(null);
-        user.setAcorn(user.getAcorn() + paymentHistory.getAcornCnt());
-        userRepository.saveAndFlush(user);
-        return paymentHistoryRepository.saveAndFlush(paymentHistory);
+        if(paymentHistory.getFriendUser().getId() == null){
+            User user = userRepository.findById(paymentHistory.getUser().getId()).orElse(null);
+            user.setAcorn(user.getAcorn() + paymentHistory.getAcornCnt());
+            userRepository.saveAndFlush(user);
+            return paymentHistoryRepository.saveAndFlush(paymentHistory);
+        }else{
+            User user = userRepository.findById(paymentHistory.getFriendUser().getId()).orElse(null);
+            user.setAcorn(user.getAcorn() + paymentHistory.getAcornCnt());
+            userRepository.saveAndFlush(user);
+            return paymentHistoryRepository.saveAndFlush(paymentHistory);
+        }
+
     }
 
     public List<PaymentHistory> list(String username) {
