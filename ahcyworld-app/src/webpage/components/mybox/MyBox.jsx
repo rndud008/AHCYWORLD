@@ -16,8 +16,7 @@ const MyBox = () => {
     const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
-    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] =
-        useState(false);
+    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -71,9 +70,7 @@ const MyBox = () => {
         fetchFriendRequests();
     }, [isLogin, userInfo, isFriendRequstModalOpen]);
 
-    const minimiPicture = `${process.env.PUBLIC_URL}/image/${
-        hompyInfo.minimiPicture || "default_img.png"
-    }`;
+    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`;
 
     // 미니 홈피로 이동
     const moveToHompy = (id) => {
