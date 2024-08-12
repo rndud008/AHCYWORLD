@@ -112,50 +112,51 @@ const MyBox = () => {
         </div>
       </div>
 
-      <div className="middle">
-        <div className="minimi-box">
-          <img
-            src={minimiPicture}
-            alt="미니홈피 이미지"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </div>
-        <div className="info-box">
-          <ul>
-            <li>
-              <span>오늘방문자</span>
-              <span>{hompyInfo.todayVisitor}</span>
-            </li>
-            <li>
-              <span>총방문자</span>
-              <span>{hompyInfo.totalVisitor}</span>
-            </li>
-            <li className="friend-request" onClick={openFriendRequestModal}>
-              <span>일촌신청</span>
-              <span>{friendRequest.length}</span>
-            </li>
-            <FriendRequestModal
-              isOpen={isFriendRequstModalOpen}
-              onClose={closeFriendRequestModal}
-              onRequestUpdate={handleFriendRequestUpdate}
-            />
-            <li onClick={openModal} className="acorn-status">
-              내 도토리
-              <img src={acorn} />
-              {isLogin ? <span>{userInfo.acorn}</span> : <span>0</span>}
-            </li>
-            <li className="acorn-status">
-              <span className="my-acorn">
-                <img src={acorn} alt="" />
-                <span>{userInfo.acorn}</span>
-              </span>
-              <button className="acorn-btn" onClick={openModal}>
-                충전
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
+            <div className='middle'>
+                <div className='minimi-box'>
+                    <img
+                        src={minimiPicture}
+                        alt='미니홈피 이미지'
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                </div>
+                <div className='info-box'>
+                    <ul>
+                        <li>
+                            <span>오늘방문자</span>
+                            <span>{hompyInfo.todayVisitor}</span>
+                        </li>
+                        <li>
+                            <span>총방문자</span>
+                            <span>{hompyInfo.totalVisitor}</span>
+                        </li>
+                        <li className='friend-request' onClick={openFriendRequestModal}>
+                            <span>일촌신청</span>
+                            <span>{friendRequest.length}</span>
+                        </li>
+                        <FriendRequestModal
+                        isOpen={isFriendRequstModalOpen}
+                        onClose={closeFriendRequestModal}
+                        onRequestUpdate={handleFriendRequestUpdate}
+                        />
+
+                        <li onClick={openModal} className='acorn-status'>
+                            내 도토리
+                            <img src={acorn} />
+                            {isLogin ? <span>{userInfo.acorn}</span> : <span>0</span>}
+                        <li className='acorn-status'>
+                            <span className='my-acorn'>
+                                <img src={acorn} alt='' />
+                                <span>{userInfo.acorn}</span>
+                            </span>
+                            <button className='acorn-btn' onClick={openModal}>
+                                충전
+                            </button>
+                        </li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
       <div className="bottom">
         {/*<button className='hompy-btn' onClick={() => {moveToHompy(hompyInfo.id)}}>내 미니홈피</button>*/}
