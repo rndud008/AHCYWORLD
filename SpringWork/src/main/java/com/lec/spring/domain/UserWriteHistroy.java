@@ -30,6 +30,8 @@ public class UserWriteHistroy extends BaseEntity{
 
     private String postType;
 
+    private Long PostId;
+
     private String subject;
 
     @Lob

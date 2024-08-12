@@ -48,7 +48,7 @@ const FolderModal = () => {
                 placeholder="폴더 이름을 입력하세요"
               /><br/>
             </Form.Group>
-              {errors.name && <p className="error-message">{errors.name}</p>}
+              {errors.name && <p className="folder-error-message">{errors.name}</p>}
 
             <Form.Group className="folder-status">
               <Form.Label>공개범위 :</Form.Label>
@@ -67,7 +67,7 @@ const FolderModal = () => {
                 ))}
               </div>
             </Form.Group>
-                {errors.status && <p className="error-message">{errors.status}</p>}
+                {errors.status && <p className="folder-error-message">{errors.status}</p>}
             <div className="folder-button-group">
               <Button variant="primary" type="submit">
                 {modalName === "폴더 생성" ? "추가" : "수정"}

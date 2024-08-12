@@ -16,7 +16,7 @@ const PostList = () => {
 
   return (
     <>
-      <Container>
+      <Container className="postContainer">
         <div className="postListHeader">
           {folder && <h4>{folder.name}</h4>}
           {parseInt(hompyId) === hompyInfo?.id && (

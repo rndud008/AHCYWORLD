@@ -4,10 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginContext } from "../../../../../webpage/components/login/context/LoginContextProvider";
 
-import {
-  detailListHandleOpen,
-  postDelete,
-} from "../../utils/postUtils";
+import { detailListHandleOpen, postDelete } from "../../utils/postUtils";
 
 import Comment from "./PostListDetailItemComment/Comment";
 import DetailModal from "./PostListDetailItemModal/DetailModal";
@@ -28,7 +25,7 @@ const PostListDetailItem = ({ item }) => {
   const postId = item?.id;
 
   useEffect(() => {
-    if(postId){
+    if (postId) {
       photoAndVideoCommentListAxios(dispatch, postId);
     }
   }, [postId]);
@@ -104,25 +101,32 @@ const PostListDetailItem = ({ item }) => {
         <span>작성자 : {item.folder.hompy.user.name}</span>
         <span>스크랩 : {item.scrap}</span>
       </div>
+
       <div className="postDetailListItemDetail">
-        {item.fileList.length > 0 && (
-          <div className="postDetailListItemDetailImgAndPhoto">
+        {postName.includes("photo") && item.fileList.length > 0 && (
+          <div className="postDetailListItemDetailPhotoList">
             {item.fileList.map((fileItem, index) => {
-              if (postName.includes("photo") && fileItem.image === true) {
-                return (
+              return (
+                fileItem.image === true && (
                   <img
                     className="postDetailListItemDetailImg"
                     key={`photo-${fileItem.fileName}-${fileItem.id}`}
                     src={`http://localhost:8070/post/${fileItem.fileName}`}
                     alt={fileItem.fileName}
                   />
-                );
-              } else if (
-                postName.includes("video") &&
-                fileItem.video === true
-              ) {
-                return (
+                )
+              );
+            })}
+          </div>
+        )}
+
+        {postName.includes("video") && item.fileList.length > 0 && (
+          <div className="postDetailListItemDetailVideoList">
+            {item.fileList.map((fileItem, index) => {
+              return (
+                fileItem.video === true && (
                   <video
+                    className="postDetailListItemDetailVideo"
                     key={`video-${fileItem.fileName}-${fileItem.id}`}
                     width="300"
                     controls
@@ -132,9 +136,8 @@ const PostListDetailItem = ({ item }) => {
                       src={`http://localhost:8070/video/${fileItem.fileName}`}
                     />
                   </video>
-                );
-              }
-              return null;
+                )
+              );
             })}
           </div>
         )}

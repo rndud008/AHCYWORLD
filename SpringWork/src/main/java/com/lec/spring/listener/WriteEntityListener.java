@@ -67,6 +67,7 @@ public class WriteEntityListener {
 
         userWriteHistroy.setHompy(post.getFolder().getHompy());
         userWriteHistroy.setPostType(post.getFolder().getBoardType().getName());
+        userWriteHistroy.setPostId(post.getId());
         userWriteHistroy.setSubject(post.getSubject());
         userWriteHistroy.setContent(post.getContent());
         userWriteHistroy.setStatus(action);

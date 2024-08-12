@@ -55,3 +55,30 @@
   overflow: auto;
   height: 300px;
 }
+
+
+.post-error-message{
+  margin-top: 10px;
+  color: rgb(255, 33, 33);
+  text-align: center;
+  transform: 0.3s;
+  animation: scale 1s infinite;
+}
+
+@keyframes scale {
+  0%, 100%{
+    transform:scale(1);
+  }
+  20%{
+    transform: scale(1.1);
+  }
+  40%{
+    transform:  scale(1.2);
+  }
+  60%{
+    transform: scale(1.1);
+  }
+  80%{
+    transform: scale(1);
+  }
+}

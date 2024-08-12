@@ -55,7 +55,7 @@ const PostWrite = () => {
               placeholder="제목을 입력하세요."
             />
           </Form.Group>
-          {errors.subject && <div className="error-message">{errors.subject}</div>}
+          {errors.subject && <div className="post-error-message">{errors.subject}</div>}
           <Form.Group className="postContent" controlId="formContent">
             <Form.Label>내용 :</Form.Label>
             <Form.Control
@@ -67,7 +67,7 @@ const PostWrite = () => {
               rows={3}
             />
           </Form.Group>
-          {errors.content && <div className="error-message">{errors.content}</div>}
+          {errors.content && <div className="post-error-message">{errors.content}</div>}
           <div className="post-button-group">
             <div>
               <Button
