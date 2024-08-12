@@ -85,7 +85,7 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
                     닫기
                 </Button>
             </Modal.Footer>
-        </Modal>
+         </Modal>
     );
 };
 

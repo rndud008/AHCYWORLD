@@ -3,7 +3,7 @@ import { Button, ListGroup, Modal } from "react-bootstrap";
 import { friendShipResponse, myFriendRequests } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
-const FriendRequestModal = ({ isOpen, onClose }) => {
+const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
     const { userInfo } = useContext(LoginContext);
     const [friendRequests, setFriendRequests] = useState([]);
     const [updatedRequests, setUpdatedRequests] = useState([]);
@@ -14,6 +14,7 @@ const FriendRequestModal = ({ isOpen, onClose }) => {
                 const response = await myFriendRequests(userInfo.username);
                 setFriendRequests(response.data);
                 setUpdatedRequests(response.data);
+                onRequestUpdate(response.data); // 미니홈피와 myBox 일촌신청 연동
             } catch (error) {
                 console.error("myFriendRequests Error: ", error);
             }
@@ -31,7 +32,7 @@ const FriendRequestModal = ({ isOpen, onClose }) => {
     };
 
     return (
-        <Modal show={isOpen} onHide={onClose}>
+     <Modal show={isOpen} onHide={onClose}>
             <Modal.Header closeButton>
                 <Modal.Title>받은 일촌신청 목록</Modal.Title>
             </Modal.Header>
@@ -66,7 +67,7 @@ const FriendRequestModal = ({ isOpen, onClose }) => {
                     닫기
                 </Button>
             </Modal.Footer>
-        </Modal>
+         </Modal> 
     );
 };
 

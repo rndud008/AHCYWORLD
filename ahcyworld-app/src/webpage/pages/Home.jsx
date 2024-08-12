@@ -116,7 +116,7 @@ const Home = ({itemKind}) => {
 
                 <br />
                 <br />
-                {/* {isLogin ? (
+                 {isLogin ? (
                     <>
                         <Button onClick={toggleFriendList}>
                             {isFriendListVisible ? "친구목록닫기" : "친구목록보기"}
@@ -156,7 +156,7 @@ const Home = ({itemKind}) => {
                     isOpen={isAddFriendModalOpen}
                     onClose={closeAddFriendModal}
                     selectedFriend={selectedFriend}
-                /> */}
+                /> 
             </div>
         </div>
     );

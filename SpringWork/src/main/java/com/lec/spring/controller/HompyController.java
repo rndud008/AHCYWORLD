@@ -56,6 +56,20 @@ public class HompyController {
 
     }
 
+    // userId 를 입력받아 해당 유저의 HompyId를 반환함.
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Long> getHompyIdByUserId(@PathVariable Long userId) {
+        User user = new User();
+        user.setId(userId);  // userId를 설정합니다.
+
+        Hompy hompy = hompyService.findHompyByuser(user);
+        if (hompy != null) {
+            return ResponseEntity.ok(hompy.getId());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // 프로필 이미지
     @PostMapping("/{hompyId}/profileImg")
     public ResponseEntity<?> updateProfileImg(@PathVariable Long hompyId, @RequestParam("file") MultipartFile file) {

@@ -1,143 +1,97 @@
-/* .layout-container {
-  overflow-x: hidden;
-  min-height: 100vh;
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.content-wrapper {
-  width: 65%;
-  height: 800px;
-  padding: 20px;
-  padding-top: 60px;
-  padding-bottom: 60px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.visitAndtitle{
+  /* outline: 3px solid rgb(230, 103, 40); */
+  margin-top: 10px;
+  margin-left: 10px;
   display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  margin-right: 530px;
+  align-items: center;
 }
-
-
-
-.left-panel, .right-panel {
-  flex: 1;
-  box-sizing: border-box;
-  margin-top: 60px;
-}
- */
 
 .visitor-info {
-  /* position: absolute; */
-  /* top: 70px; */
-  /* left: 190px; */
   font-size: 15px;
   font-weight: bold;
   padding: 5px;
-  border-radius: 5px;
-  /* z-index: 1; */
-  flex: 4;
+  text-align: center;
+  flex: 3;
 }
 
 .homepage-title {
-  /* position: absolute; */
-  /* top: 45px; */
-  /* right: 58%; */
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
-  padding: 5px;
-  border-radius: 5px;
-  /* z-index: 1; */
+  margin-left: 30px;
   flex: 8;
 }
 
- .background-image {
-  /* position: absolute; */
-  /* width: 1400px; */
+.background-image {
   height: 934px;
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-position: center; */
   z-index: -1;
   display: flex;
 }
 
-.text1{
-  margin-left: 50px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  padding: 10px;
+.outline-container{
+  /* background-color: aqua; */
+  position: relative;
   width: 1400px;
-  outline: auto;
+  height: 850px;
   display: flex;
-  background-color: aqua;
+  justify-content: center;
+  align-items: center;
+  margin: 45px;
 }
 
-.text1-1{
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 1300px;
-  outline: 3px solid red;
+.outline-image {
+  position: absolute; /* 이미지가 배경처럼 동작하도록 설정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* 이미지가 가장 뒤에 위치하도록 설정 */
+}
+
+.inline-container{
+  /* outline: 3px solid red; */
+  position: relative;
+  z-index: 2; /* 다른 요소들이 이미지 위에 배치되도록 설정 */
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  margin-left: 60px;
+  box-sizing: border-box;
   display: flex;
-  background-color: red;
   flex-direction: column;
 }
 
-.text1-2{
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-right: 10px;
-  width: 90px;
-  outline: 3px solid blueviolet;
-  background-color: blueviolet;
-  display: flex;
-  padding-top: 70px;
+.menubar {
+  /* outline: 3px solid blueviolet; */
+  position: relative;
+  right: 45px;
+  bottom: 121px;
+  z-index: 2;
 }
 
-.text1-3{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  width: 330px;
-  outline: 3px solid rgb(35, 90, 199);
-  background-color:  rgb(35, 90, 199);
+.left-content{
+  /* outline: 3px solid rgb(35, 90, 199); */
+  width: 420px;
+  margin-left: 20px;
   flex:3;
 }
-.text1-4{
-  margin:10px;
-  /* margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px; */
+.right-content{
+  /* outline: 3px solid rgb(29, 151, 112); */
   width: 850px;
-  outline: 3px solid rgb(29, 151, 112);
-  background-color:  rgb(29, 151, 112);
+  margin-left: 10px;
   flex:8;
 }
 
-.text1-5{
-  margin-top: 10px;
-  margin-left: 10px;
-  outline: 3px solid rgb(230, 103, 40);
-  background-color: rgb(230, 103, 40);
-  display: flex;
-  align-items: center;
-}
-.text1-6{
-  margin-left: 10px;
-  outline: 3px solid  rgb(186, 207, 30);
-  background-color: rgb(186, 207, 30);
+.maincontent{
+  /* outline: 3px solid  rgb(186, 207, 30); */
   display: flex;
 }
 
-.text2{
-  margin-left: 50px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  outline: 1px solid blue;
-  height: 200px;
-  width: 250px;
-  background-color: blue;
+.bgmbox{
+  /* outline: 1px solid blue; */
+  margin-left: 8px;
+  margin-top: 45px;
+  width: 380px;
 }
 
