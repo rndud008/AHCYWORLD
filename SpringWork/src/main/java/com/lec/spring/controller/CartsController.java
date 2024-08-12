@@ -31,6 +31,12 @@ public class CartsController {
         return new ResponseEntity<>(cartsService.cartsList(id),HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/items")
+    @CrossOrigin
+    public ResponseEntity<?> userItemList(@PathVariable Long id){
+        return new ResponseEntity<>(cartsService.userItemList(id),HttpStatus.OK);
+    }
+
     @DeleteMapping("delete/{id}")
     @CrossOrigin
     public ResponseEntity<?> deleteCartItem(@PathVariable Long id){

@@ -32,7 +32,7 @@
 }
 
 .itemTable{
-    border: 1px solid black;
+
     border-spacing: 90px;
     width: 400px;
     margin-left: auto;
@@ -42,6 +42,10 @@
 .pushItem{
     background-color: orange;
     border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
     
 }
 .pushItem:active{
@@ -52,5 +56,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.acorn-img{
+    width: 25px;
+    height: 25px;
 }
 

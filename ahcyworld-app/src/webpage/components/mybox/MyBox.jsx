@@ -55,7 +55,7 @@ const MyBox = () => {
                         <li>
                             내 도토리
                             <img src={acorn} />
-                            <span>{userInfo.acorn}</span>
+                            {/* <span>{userInfo.acorn}</span> */}
                         </li>
                     </ul>
                 </div>

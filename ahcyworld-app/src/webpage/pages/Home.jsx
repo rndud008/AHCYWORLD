@@ -27,7 +27,7 @@ const StyledMyBox = styled.div`
     margin-top: 20px;
 `;
 
-const Home = () => {
+const Home = ({itemKind}) => {
     const { isLogin, logout, userInfo } = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
