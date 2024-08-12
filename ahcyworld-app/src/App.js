@@ -21,11 +21,19 @@ import HompySetting from "./minihompy/pages/HompySetting";
 import Cart from "./webpage/pages/Cart";
 import { useSelector } from "react-redux";
 
+import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
+import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
+import Home from "./webpage/pages/Home";
+import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
+import Item from "./webpage/pages/Item";
+
+
 function App() {
-    const { postName } = useParams();
+  const { postName } = useParams();
+  const [itemkind, setItemKind] = useState('all');
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(0);
-  const { userInfo, hompyInfo } = useContext(LoginContext);
+  const { hompyInfo } = useContext(LoginContext);
   const folder = useSelector(state => state.folder.folder);
 
 
@@ -33,12 +41,13 @@ function App() {
     <div>
       {/* 1. 웹페이지 해당 라우트 각 상위페이지 에서 <OUTLET/> 적용-> 자손들을 보여주는기능. */}
       <Routes>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Home />} />
+        <Route path="/" element={<Header setItemKind={setItemKind} />}>
+          <Route index element={<Home itemkind={itemkind} />} />
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
           <Route path="admin" element={<Admin />} />
           <Route path="cart/:userId" element={<Cart/>}/>
+          <Route path="item" element={<Item itemkind={itemkind}/>}/>
 
         </Route>
         {/* 2. 미니홈피 페이지 */}

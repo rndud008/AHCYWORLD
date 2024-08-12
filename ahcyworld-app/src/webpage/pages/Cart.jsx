@@ -4,7 +4,8 @@ import { resolvePath, useNavigate, useParams } from 'react-router-dom';
 import { SERVER_HOST } from "../../apis/api";
 import * as Swal from "../../apis/alert";
 import AcornPayModal from '../items/components/AcornPayModal';
-import { LoginContext } from '../login/context/LoginContextProvider';
+import { LoginContext } from '../../webpage/components/login/context/LoginContextProvider';
+import acorn from "../../upload/acorn.png"
 
 const Cart = () => {
     const { userId } = useParams();
@@ -179,7 +180,7 @@ const Cart = () => {
                                 <div>{cart.item.itemName}</div>
                                 <div style={{ color: '#888' }}>{cart.item.itemType}</div>
                             </div>
-                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price}도토리</div>
+                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                             <button onClick={() => handelDeleteItem(cart.id)} style={{ marginLeft: '10px' }}>❌</button>
 
                         </div>
@@ -187,7 +188,7 @@ const Cart = () => {
                     ))}
                 </div>
                 <div style={{ textAlign: 'right', marginTop: '10px' }}><hr />
-                    <div>총 주문금액: {totalAcorn}도토리</div>
+                    <div>총 주문금액: {totalAcorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
