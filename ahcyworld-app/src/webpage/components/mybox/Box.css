@@ -1,0 +1,42 @@
+/* Box.css */
+:root {
+    --main-color: #e66e28;
+}
+
+.box-container {
+    width: 100%;
+    height: 85px;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    /* border: 1px solid salmon; */
+}
+
+.payment-container, 
+.cart-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payCart-button {
+    width: 90%;
+    height: 70%;
+    background-color: var(--main-color);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.payCart-button:hover {
+    transform: scale(1.05);
+}

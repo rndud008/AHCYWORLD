@@ -63,7 +63,9 @@ const BgmPlayer = () => {
           <button>
             <FaForward />
           </button>
+          <div className="time-info">
           <span>00:02 / 04:26</span>
+          </div>
         </div>
         <div className="controls-box">
           

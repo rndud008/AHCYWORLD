@@ -11,6 +11,10 @@ import LoginForm from "../components/login/login/LoginForm";
 import "./css/Home.css";
 import { LoginContext } from "../components/login/context/LoginContextProvider";
 import MyBox from "../components/mybox/MyBox";
+import SlideImg from "../components/slideImg/SlideImg";
+import News from "../components/news/News";
+import BestItem from "../components/bestItem/BestItem";
+import Box from "../components/mybox/Box";
 
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
@@ -101,22 +105,37 @@ const Home = ({itemKind}) => {
     }, [isAddFriendModalOpen, isLogin]);
 
     return (
-        <div className='home-container'>
-            <div className='body-container'>
-                {isLogin ? (
-                    <StyledMyBox>
-                        <MyBox />
-                    </StyledMyBox>
-                ) : (
-                    <StyledLoginBox>
-                        {" "}
-                        <LoginForm />
-                    </StyledLoginBox>
-                )}
+        <div className="home-container">
+            <div className="content-container">
+                <div className="top-row">
+                    {isLogin ? (
+                        <StyledMyBox>
+                            <MyBox />
+                            <Box />
+                        </StyledMyBox>
+                    ) : (
+                        <StyledLoginBox>
+                            {" "}
+                            <LoginForm />
+                        </StyledLoginBox>
+                    )}
+                    <SlideImg className="slideImg" />
+                </div>
 
-                <br />
-                <br />
-                {/* {isLogin ? (
+                <div className="bottom-row">
+                    <div className="new-container">
+                        <News />
+                    </div>
+                    <div className="bestItem-container">
+                        <BestItem />
+                    </div>
+                </div>
+            </div>
+
+
+            <br />
+            <br />
+            {/* {isLogin ? (
                     <>
                         <Button onClick={toggleFriendList}>
                             {isFriendListVisible ? "친구목록닫기" : "친구목록보기"}
@@ -157,7 +176,6 @@ const Home = ({itemKind}) => {
                     onClose={closeAddFriendModal}
                     selectedFriend={selectedFriend}
                 /> */}
-            </div>
         </div>
     );
 };

@@ -154,7 +154,7 @@ const DiaryHome = () => {
                     onClickDay={handleDateClick} // 날짜 클릭 시 핸들러
                     activeStartDate={new Date(activeMonth)}
                 />
-                <Button className="move-to-today" onClick={moveToToday}>오늘로 이동</Button>
+                <button className="move-to-today" onClick={moveToToday}>오늘로 이동</button>
                 <DiaryModal
                     show={showModal}
                     onHide={handleCloseModal}

@@ -28,7 +28,7 @@ public class User extends BaseEntity {
     @JsonIgnore
     private String password;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = true)
     private String name;
 
     @Column(unique = true)

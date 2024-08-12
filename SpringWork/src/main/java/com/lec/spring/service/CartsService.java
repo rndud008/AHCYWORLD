@@ -6,14 +6,15 @@ import com.lec.spring.domain.User;
 import com.lec.spring.repository.CartsRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CartsService {
@@ -103,6 +104,19 @@ public class CartsService {
             });
             return cartsRepository.saveAllAndFlush(updateItems);
         }
+    }
+
+    // Top3 출력
+    public Map<String, List<Item>> getTopSellingItems(){
+        Map<String, List<Item>> topSellingItems = new HashMap<>();
+        List<String> itemTypes = List.of("배경음악", "글꼴", "스킨", "미니미", "미니룸");
+
+        for (String itemType : itemTypes) {
+            Pageable topThree = PageRequest.of(0, 3);
+            List<Item> items = cartsRepository.findTopSellingItemsByType(itemType, topThree);
+            topSellingItems.put(itemType, items);
+        }
+        return topSellingItems;
     }
 
 }

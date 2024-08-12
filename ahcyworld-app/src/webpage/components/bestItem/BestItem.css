@@ -1,0 +1,65 @@
+/* BestItem.css */
+.bestItems-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f7f7f7; /* 부드러운 배경색 */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 더 부드러운 그림자 */
+}
+
+.best-item-title {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.item-type-section {
+    margin-bottom: 40px;
+    padding: 25px;
+    background-color: #ffffff; /* 화이트 카드 스타일 */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 부드러운 호버 효과 */
+}
+
+.item-type-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.item-type-section h2 {
+    font-size: 2em; /* 큰 제목 */
+    color: var(--main-color);
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.item-card {
+    display: flex; /* 가로 정렬 */
+    justify-content: space-between; /* 양 끝으로 배치 */
+    align-items: center; /* 세로 가운데 정렬 */
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.item-card:last-child {
+    border-bottom: none;
+}
+
+.item-card:hover {
+    background-color: #f4f4f4;
+}
+
+.item-name {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+}
+
+.item-price {
+    color: var(--main-color);
+    font-weight: 700;
+    font-size: 1.3em;
+}

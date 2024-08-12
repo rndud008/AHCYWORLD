@@ -14,6 +14,9 @@ select * from payment_history;
 select * from attachment;
 select * from user_write_histroy;
 select * from board_type;
+select * from item;
+select * from carts;
+
 select * from email_authentication;
 
 alter table post modify column content Longtext;
@@ -43,7 +46,7 @@ update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 100000
-where id = 4;
+where id = 6;
 
 
 
@@ -65,7 +68,9 @@ from ah_user
 where username = "user3"
 ;
 
-
+update ah_user
+set password = '$2a$10$OxHpaTkFU5iM71nIXZpeg.HFUaSGW2hawORg31tkbhdMQ9k7eMbEu'
+where id = 1;
 
 
 

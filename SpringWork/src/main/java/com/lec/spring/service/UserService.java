@@ -124,4 +124,18 @@ public class UserService {
         return "ok";
     }
 
+    @Transactional
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void update(User user) {
+        try {
+            userRepository.save(user);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("유저 정보 업데이트 오류", e);
+        }
+    }
 }

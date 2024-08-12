@@ -272,9 +272,9 @@ const GuestBookHome = () => {
                                 />
                             </Col>
                             <Col xs="auto">
-                                <Button type="submit" className="submit-button">
+                                <button type="submit" className="submit-button">
                                     확인
-                                </Button>
+                                </button>
                             </Col>
                         </Row>
                     </Form>

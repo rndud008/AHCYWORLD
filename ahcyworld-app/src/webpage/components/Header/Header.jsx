@@ -8,6 +8,8 @@ import logo from "../../../upload/LOGO2.png";
 import styled from "styled-components";
 import "./Header.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
+import SlideImg from "../slideImg/SlideImg";
+import News from "../news/News";
 
 
 const Header = ({setItemKind}) => {
@@ -25,7 +27,7 @@ const Header = ({setItemKind}) => {
         <>
             <div className="header-container">
                 <div className='header-box'>
-                    <div className='logo-contain'>
+                    <div className='logo-box' onClick={() => navigate("/")}>
                         <img src={logo} alt='Acyworld LOGO' />
                     </div>
                     <div className='search-select'>

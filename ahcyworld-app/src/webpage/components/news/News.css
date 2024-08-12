@@ -1,0 +1,53 @@
+/* News.css */
+.news-container {
+    width: 100%;
+    padding: 30px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news-title{
+    font-weight: bold;
+}
+
+.news-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.news-table th, .news-table td {
+    padding: 15px 20px; /* 넉넉한 패딩 */
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    background-color: #ffffff;
+}
+
+.news-table th {
+    background-color: var(--main-color); /* 주 색상 적용 */
+    color: #ffffff; /* 흰색 텍스트 */
+    font-size: 1.2em;
+    font-weight: 700;
+    text-transform: uppercase; /* 대문자 처리 */
+}
+
+.news-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 부드러운 호버 효과 */
+}
+
+.news-item:hover {
+    background-color: #f4f4f4;
+    transform: translateY(-2px);
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}

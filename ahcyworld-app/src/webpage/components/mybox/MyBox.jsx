@@ -5,11 +5,23 @@ import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png";
 import { getLogedUser, myFriendRequests } from "../../../apis/auth";
 import FriendRequestModal from "../../../minihompy/components/friendShip/FriendRequestModal";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { SERVER_HOST } from "../../../apis/api";
+import { Modal } from "react-bootstrap";
+import UpdateUser from "./UpdateUser";
+import * as Swal from "../../../apis/alert";
+
 const MyBox = () => {
     const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
+
+    // 내 정보 수정
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -25,6 +37,20 @@ const MyBox = () => {
 
     const closeFriendRequestModal = () => {
         setIsFriendRequestModalOpen(false);
+    };
+
+    const handleFriendRequestUpdate = (updateRequests) => {
+        setFriendRequest(updateRequests);
+    };
+
+    const openEditModal = () => {
+        console.log("userInfo : ", userInfo);
+        console.log("hompyInfo : ", hompyInfo);
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
     };
 
     useEffect(() => {
@@ -44,7 +70,15 @@ const MyBox = () => {
         fetchFriendRequests();
     }, [isLogin, userInfo, isFriendRequstModalOpen]);
 
-    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture}`;
+    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`;
+
+    // 미니 홈피로 이동
+    const moveToHompy = (id) => {
+        // console.log("hompyInfo: ", hompyInfo)
+        const url = `/hompy/${id}`;
+        const windowFeatures = 'width=1500,height=1200,scrollbars=yes,resizable=yes';
+        window.open(url, '_blank', windowFeatures);
+    }
 
     const openMinihompy = () => {
         window.open(
@@ -59,6 +93,10 @@ const MyBox = () => {
             <div className='top'>
                 <div className='name-box'>{isLogin ? <span>{userInfo.name}</span> : <span></span>}</div>
 
+                <div className="btn-box">
+                    <button onClick={openEditModal} className='user-btn'>
+                        내 정보 수정
+                    </button>
                 <div className='topbtn-box'>
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
                     <button onClick={() => logout()} className='logout-btn'>
@@ -89,7 +127,15 @@ const MyBox = () => {
                             <span>일촌신청</span>
                             <span>{friendRequest.length}</span>
                         </li>
-                        <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
+                        <FriendRequestModal
+                        isOpen={isFriendRequstModalOpen}
+                        onClose={closeFriendRequestModal}
+                        onRequestUpdate={handleFriendRequestUpdate}
+                        />
+                        <li onClick={openModal} className='acorn-status'>
+                            내 도토리
+                            <img src={acorn} />
+                            {isLogin ? <span>{userInfo.acorn}</span> : <span>0</span>}
                         <li className='acorn-status'>
                             <span className='my-acorn'>
                                 <img src={acorn} alt='' />
@@ -104,10 +150,17 @@ const MyBox = () => {
             </div>
 
             <div className='bottom'>
+                {/*<button className='hompy-btn' onClick={() => {moveToHompy(hompyInfo.id)}}>내 미니홈피</button>*/}
+                <button className="hompy-btn">알림</button>
                 <button className='hompy-btn' onClick={() => openMinihompy(hompyInfo.id)}>
                     내 미니홈피
                 </button>
             </div>
+
+            <UpdateUser 
+                isEditModalOpen={isEditModalOpen}
+                closeEditModal={closeEditModal}
+            />
         </div>
     );
 };

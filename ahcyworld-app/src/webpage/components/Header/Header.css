@@ -1,3 +1,4 @@
+/* Header.css */
 :root {
     --main-color: #e66e28;
 }
@@ -24,7 +25,7 @@
 
 .logo-contain {
     /* outline: 3px solid red; */
-
+    cursor: pointer;
     width: 40%;
 }
 

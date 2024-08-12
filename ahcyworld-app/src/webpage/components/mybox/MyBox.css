@@ -5,9 +5,9 @@
 .mybox-container {
     /* outline: 2px solid black; */
     width: 100%;
-    height: 280px;
+    height: 300px;
     max-width: 500px;
-    margin: 30px auto;
+    margin: 0 auto 30px auto;
     padding: 5px;
     background-color: #ffffff;
     border-radius: 10px;
@@ -32,6 +32,23 @@
 }
 .topbtn-box {
     /* outline: 2px solid blue; */
+    margin-top: 20px;
+}
+
+.user-btn {
+    width: 120px;
+    background-color: var(--main-color);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 3px 5px;
+    border: 0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.acorn-btn:hover {
+    transform: scale(1.05);
 }
 
 .logout-btn {
@@ -128,7 +145,7 @@
 
 /* 박스 하단 */
 .bottom {
-    /* outline: 2px solid lime; */
+    outline: 2px solid lime;
 
     width: 100%;
     height: 70px;
@@ -138,7 +155,7 @@
 }
 
 .hompy-btn {
-    width: 300px;
+    width: 150px;
     height: 50px;
     border: 0;
     border-radius: 20px;
@@ -147,6 +164,7 @@
     font-size: 20px;
     font-weight: 600;
     transition: all 0.3s ease;
+    justify-content: space-between;
 }
 
 .hompy-btn:hover {

@@ -3,15 +3,12 @@
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    height: 750px;
-    /* margin-left: -500px; */
-    padding: 20px;
-    margin-bottom: 20px;
+    height: 680px;
     display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    overflow-y: auto;
+    flex-direction: column; /* 세로로 나열되도록 설정 */
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 5px;
 }
 
 /* 달력 */
@@ -29,7 +26,7 @@
 .react-calendar__navigation {
     background: rgb(248, 219, 224); /* 직접 색상 값을 사용 */
     border-bottom: 4px solid brown;
-    height: 110px;
+    height: 80px;
     border: 2px solid black;
     border-radius: 20px 20px 0 0;
     margin-bottom: 0.5px;
@@ -73,7 +70,7 @@
 /* 일 (각 타일) */
 .react-calendar__tile {
     text-align: center;
-    height: 90px;
+    height: 75px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -109,6 +106,29 @@
     justify-content: flex-end;
     align-self: flex-end;
     margin-top: auto;
-    padding-top: 10px;
     width: auto;
+    background: linear-gradient(145deg, #F8DBE0, #FEC0CA); /* 기존 색상을 사용한 그라데이션 배경 */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #A5292A; /* 텍스트 색상 */
+    font-weight: bold; /* 텍스트 굵기 */
+    cursor: pointer; /* 커서 모양을 포인터로 변경 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감을 주는 그림자 */
+    transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.move-to-today:hover {
+    background: linear-gradient(145deg, #FEC0CA, #F8DBE0); /* 마우스 오버 시 배경 색상 전환 */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+    transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.move-to-today:active {
+    background: linear-gradient(145deg, #F8DBE0, #FEC0CA); /* 클릭 시 배경 색상 유지 */
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+    transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
 }
