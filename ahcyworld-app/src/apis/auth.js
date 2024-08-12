@@ -37,11 +37,23 @@ export const userList = () => {
     return api.get(`${SERVER_HOST}/user/list`);
 };
 
+export const hompyList = () => {
+    return api.get(`${SERVER_HOST}/hompy/list`);
+};
+
 export const checkFriendShip = (username, friendUsername) => {
     return api.get(`${SERVER_HOST}/friend/check-friendship`, {
         params: { username, friendUsername },
     });
 };
+
+export const myFriendRequests = (username) => {
+    return api.get(`${SERVER_HOST}/friend/friend-requests`, {
+        params: { username },
+    });
+};
+
+export const getPaymentList = () => api.get(`${SERVER_HOST}/payment/list`);
 
 export const addFriend = (friendType1, friendType2, message, username, friendUsername) => {
     return api.post(
@@ -49,12 +61,6 @@ export const addFriend = (friendType1, friendType2, message, username, friendUse
         { friendType1, friendType2, message, username, friendUsername },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
-};
-
-export const myFriendRequests = (username) => {
-    return api.get(`${SERVER_HOST}/friend/friend-requests`, {
-        params: { username },
-    });
 };
 
 export const friendShipResponse = (id, reply) => {
@@ -74,6 +80,17 @@ export const addInfo = (username, gender, birthDay) => {
     return api.post(
         `${SERVER_HOST}/user/addinfo`,
         { username, gender, birthDay },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+};
+
+export const resetHompy = (hompyId) => {
+    const params = new URLSearchParams();
+    params.append("hompyId", hompyId);
+
+    return api.post(
+        `${SERVER_HOST}/hompy/reset`,
+        { hompyId },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 };

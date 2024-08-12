@@ -3,6 +3,7 @@
 }
 
 .login-container {
+    /* outline: 2px solid lime; */
     width: 100%;
     height: 280px;
     max-width: 500px;
@@ -14,9 +15,11 @@
 }
 
 .login-form {
+    /* outline: 2px solid black; */
+    height: 260px;
     display: grid;
     grid-template-columns: 1fr;
-    row-gap: 12px;
+    /* row-gap: 12px; */
 }
 
 .login-form label {
@@ -27,6 +30,7 @@
 }
 
 .input-box input {
+    /* outline: 2px solid lime; */
     width: 300px;
     padding: 10px;
     border-radius: 6px;
@@ -37,13 +41,11 @@
 
 .login-form input:focus {
     outline: none;
-    border-color: #e66e28;
+    border-color: var(--main-color);
     box-shadow: 0 0 0 1px rgba(230, 110, 40, 0.2);
 }
 
 .login-box {
-    /* outline: 2px solid blue; */
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,32 +54,12 @@
 }
 
 .btn-box {
+    /* outline: 2px solid red; */
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-bottom: 20px;
 }
 
-/* .login-btn {
-    height: 50px;
-    width: 50px;
-    border: none;
-    border-radius: 40px;
-    background: none;
-    color: #000;
-    font-size: 30px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.login-btn:hover {
-    background-color: var(--main-color);
-    color: #fff;
-    transform: scale(1.05);
-} */
-/* 로그인 버튼 스타일링 */
-/* 로그인 버튼 스타일링 */
 .login-btn {
     height: 50px;
     width: 150px;
@@ -93,7 +75,6 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    outline: none;
     border: 2px solid transparent;
 }
 
@@ -115,6 +96,7 @@
 }
 
 .join-box {
+    /* outline: 2px solid blue; */
     display: flex;
     align-items: center;
     margin-top: 10px;
@@ -127,6 +109,7 @@
     align-items: center;
     column-gap: 8px;
     font-size: 12px;
+    padding-left: 0;
 }
 
 .check-label {

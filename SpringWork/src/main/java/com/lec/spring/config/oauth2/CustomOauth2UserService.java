@@ -62,7 +62,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             User newUser = User.builder()
                     .username(username.toUpperCase())
                     .password(password)
-                    .email(email.toUpperCase())
+                    .email(email)
                     .name(name)
                     .role("ROLE_MEMBER")
                     .gender(gender)

@@ -34,11 +34,17 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Pagenation list(Integer page, String url, String type){
         Pagenation pagenation = new Pagenation();
+        Page<Item> itemPage;
 
         //현재 페이지
         if(page == null || page < -1) page = 1;
 
-        Page<Item> itemPage = itemRepository.findByItemType(type, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+        if(type.equals("all")){
+            itemPage = itemRepository.findAll(PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+
+        }else{
+            itemPage = itemRepository.findByItemType(type, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+        }
 
         long cnt = itemPage.getTotalElements();
         int totalPage = itemPage.getTotalPages();

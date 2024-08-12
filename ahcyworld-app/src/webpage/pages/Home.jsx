@@ -15,7 +15,7 @@ import MyBox from "../components/mybox/MyBox";
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
     width: 350px;
-    height: 270px;
+    height: 280px;
     margin-left: 30px;
     margin-top: 20px;
 `;
@@ -27,7 +27,7 @@ const StyledMyBox = styled.div`
     margin-top: 20px;
 `;
 
-const Home = () => {
+const Home = ({itemKind}) => {
     const { isLogin, logout, userInfo } = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
@@ -42,14 +42,6 @@ const Home = () => {
     const [selectedFriend, setSelectedFriend] = useState(null);
 
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
-
-    const paymentopenModal = () => {
-        setIsPaymentModalOpen(true);
-    };
-
-    const paymentcloseModal = () => {
-        setIsPaymentModalOpen(false);
-    };
 
     const openAddFriendModal = (friend) => {
         setSelectedFriend(friend);

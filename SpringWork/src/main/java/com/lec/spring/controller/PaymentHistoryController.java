@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/payment")
 public class PaymentHistoryController {
@@ -19,6 +21,13 @@ public class PaymentHistoryController {
     @PostMapping("/save")
     @CrossOrigin
     public ResponseEntity<?> save(@RequestBody PaymentHistory paymentHistory) {
+        System.out.println(paymentHistory);
         return new ResponseEntity<>(paymentHistoryService.save(paymentHistory), HttpStatus.CREATED);
+//        return new ResponseEntity<>(paymentHistory,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/list")
+    public List<PaymentHistory> list() {
+        return paymentHistoryService.findAll();
     }
 }

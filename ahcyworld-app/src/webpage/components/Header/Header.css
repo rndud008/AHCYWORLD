@@ -22,13 +22,13 @@
     min-width: 1400px;
 }
 
-.logo-box {
+.logo-contain {
     /* outline: 3px solid red; */
 
     width: 40%;
 }
 
-.logo-box img {
+.logo-contain img {
     width: 350px;
     height: 70px;
 }
@@ -71,12 +71,7 @@
     font-size: 25px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.search-btn:hover {
-    background-color: #d55a24;
-    transform: scale(1.05);
+    margin-left: 10px;
 }
 
 .search-btn:focus {

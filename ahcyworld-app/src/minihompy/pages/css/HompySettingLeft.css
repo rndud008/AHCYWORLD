@@ -1,0 +1,71 @@
+.settingLeft_container {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 36%;
+  height: 750px;
+  margin-left: 100px;
+  margin-bottom: 20px;
+}
+
+.setting-title {
+  border-bottom: 2px solid #A9ACAE;
+  
+}
+
+.fisetting {
+  color: #A9ACAE;
+}
+
+.setting-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 35px;
+  padding: 10px 20px;
+}
+
+.setting-h2 {
+  margin-top: 5px;
+}
+
+
+/* 기본메뉴설정 */
+.setmenu-icon {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.setmenu-h4 {
+  margin-top: 10px;
+}
+
+/* 기본메뉴설정 -> 기본정보 */
+.selectsetmenu {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  padding: 3px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.selectsetmenu h5:hover {
+  background-color: #147DAF;
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+}
+
+.select-h5 {
+  margin-top: 10px;
+}
