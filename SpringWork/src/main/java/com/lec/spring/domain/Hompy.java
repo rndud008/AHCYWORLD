@@ -53,23 +53,23 @@ public class Hompy {
             this.profilePicture = "/upload/default_profile.png";
         }
 
-        //        // 미니미 기본이미지
-//        if (this.minimiPicture == null) {
-//            if (user != null && "MALE".equalsIgnoreCase(user.getGender())) {
-//                this.minimiPicture = "male.png"; // 성별이 남자일때 미니미
-//            } else {
-//                this.minimiPicture = "female.png"; // 성별이 여자일때 미니미
-//            }
-//        }
-//
-//        // 미니룸 기본이미지
-//        if (this.miniRoom == null) {
-//            this.miniRoom = "miniroom.png";
-//        }
-//
-//        // 미니홈피 스킨 기본이미지
-//        if (this.miniHompySkin == null) {
-//            this.miniHompySkin = "mainskin.png";
-//        }
+                // 미니미 기본이미지
+        if (this.minimiPicture == null) {
+            if (user != null && "MALE".equalsIgnoreCase(user.getGender())) {
+                this.minimiPicture = "male.png"; // 성별이 남자일때 미니미
+            } else {
+                this.minimiPicture = "female.png"; // 성별이 여자일때 미니미
+            }
+        }
+
+        // 미니룸 기본이미지
+        if (this.miniRoom == null) {
+            this.miniRoom = "miniroom.png";
+        }
+
+        // 미니홈피 스킨 기본이미지
+        if (this.miniHompySkin == null) {
+            this.miniHompySkin = "background.png";
+        }
     }
 }

@@ -9,14 +9,7 @@ import Menu from "../menu/Menu";
 import BgmPlayer from "../musicPlayer/BgmPlayer";
 import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
 
-const Layout = ({
-  hompy,
-  user,
-  children,
-  showTitle = true,
-  showVisitorInfo = true,
-  LeftPanelComponent,
-}) => {
+const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   const [visitorInfo, setVisitorInfo] = useState({
     todayVisitor: 0,
     totalVisitor: 0,
@@ -27,10 +20,9 @@ const Layout = ({
 
   const { postName } = useParams();
   const location = useLocation();
-  const isSettingPage = location.pathname.includes('/setting'); // 셋팅페이지 경로감지
+  const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
 
   // console.log(postName, "Layout");
-
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -50,9 +42,7 @@ const Layout = ({
 
       if (userId && !hasVisited) {
         try {
-          const response = await axios.post(
-            `http://localhost:8070/hompy/${hompyId}/visit`
-          );
+          const response = await axios.post(`http://localhost:8070/hompy/${hompyId}/visit`);
           setVisitorInfo({
             todayVisitor: response.data.todayVisitor || 0,
             totalVisitor: response.data.totalVisitor || 0,
@@ -69,24 +59,19 @@ const Layout = ({
   }, [user]);
 
   useEffect(() => {
-    if (userId) {
+    if (hompyId) {
       axios
-        .get(`http://localhost:8070/hompy/${userId}`)
+        .get(`http://localhost:8070/hompy/${hompyId}`)
         .then((response) => {
           const hompyData = response.data;
 
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
-          const hompySkinImagePath = hompyData.miniHompySkin
-            ? `http://localhost:8070${hompyData.miniHompySkin}`
-            : `${process.env.PUBLIC_URL}/image/mainskin.png`;
-
+          const hompySkinImagePath = `${process.env.PUBLIC_URL}/image/${hompyData.miniHompySkin}`;
+          console.log(response); // 경로 확인용
           setMiniHompySkin(hompySkinImagePath);
         })
         .catch((error) => {
-          console.error(
-            "데이터를 불러오지 못했습니다. 관리자에게 문의하세요.",
-            error
-          );
+          console.error("데이터를 불러오지 못했습니다. 관리자에게 문의하세요.", error);
         });
     }
   }, [userId]);
@@ -103,86 +88,71 @@ const Layout = ({
   };
 
   return (
-    <div className="container-fluid p-0 position-relative layout-container">
+    <>
       {/* 배경 이미지 */}
       <div
         className="background-image"
         style={{
-          backgroundImage: `url(${miniHompySkin}`,
+          backgroundImage: `url(${miniHompySkin})`,
         }}
       >
-        <div className="text1">
           {/* 컨테이너 아웃라인 */}
-          <div className="text1-1">
+        <div className="container-fluid p-0 position-relative outline-container">
+          <img src="/image/outerbox.png" className="outline-image"/>
+          <div className="inline-container">
             {/* 컨테이너 내부라인 */}
             <div>
-              <div className="text1-5">
-                {/* 방문자/ 타이틀 */}
-                {showVisitorInfo && (
+              <div className="visitAndtitle">
+                {/* 방문자 */}
                   <div className="visitor-info">
-                    TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL{" "}
-                    {visitorInfo?.totalVisitor}
+                    TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo?.totalVisitor}
                   </div>
-                )}
-                {showTitle && (
-                    <div className="homepage-title">{hompy.title}</div>
-                  )}
+                {/* 미니홈피 타이틀 */}
+                <div className="homepage-title">{hompy.title}</div>
               </div>
             </div>
-            <div className="text1-6">
-              <div className="text1-3">
+            <div className="maincontent">
+              <div className="left-content">
                 {/* <좌측> 프로필, 폴더, 관리 */}
-                {postName === undefined && <Left user={user} hompy={hompy} />}
-                {postName && <BoardTypeList />}
+                {isSettingPage ? (
+                  LeftPanelComponent ? (
+                    <LeftPanelComponent />
+                  ) : null
+                ) : (
+                  <>
+                    {postName === undefined && (
+                      <Left
+                        user={user}
+                        hompy={hompy}
+                      />
+                    )}
+                    {postName && <BoardTypeList />}
+                  </>
+                )}
               </div>
-              <div className="text1-4">
-                {/* <우측> 게시물 들  */}
-                {children || <Right hompy={hompy} user={user} />}
-                {/* children을 통해 오른쪽 컴포넌트를 대체 */}
+
+            {/* <우측> 게시물 들  */}
+            {/* children을 통해 오른쪽 컴포넌트를 대체 */}
+              <div className="right-content">
+                {children || (
+                  <Right hompy={hompy} user={user} />
+                )}
               </div>
             </div>
           </div>
-          <div className="text1-2">
-            {/* 메뉴 자리 */}
+
+          {/* 메뉴 자리 */}
+          <div className="menubar">
             <Menu />
           </div>
         </div>
-        <div className="text2">
+        
+        <div className="bgmbox">
           {/* Bgm 자리 */}
           <BgmPlayer />
         </div>
       </div>
-
-      {/* TODAY | TOTAL 조건부 랜더링 (관리페이지에서 사용함) */}
-      {/* {showVisitorInfo && (
-        <div className="visitor-info">
-          TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo?.totalVisitor}
-        </div>
-      )} */}
-
-      {/* 김세진님의 미니홈피 조건부 랜더링 (관리페이지에서 사용함) */}
-      {/* {showTitle && (
-        <div className="homepage-title">{hompy.title}</div>
-      )} */}
-
-      {/* 메인 컨텐츠 */}
-      <div className="d-flex justify-content-center align-items-center min-vh-100">
-        <div className="left-panel">
-          {/* {isSettingPage ? (
-            LeftPanelComponent ? <LeftPanelComponent /> : null
-          ) : (
-            <>
-              {postName === undefined && <Left user={user} hompy={hompy} />}
-              {postName && <BoardTypeList />}
-            </>
-          )} */}
-        </div>
-      </div>
-      <div className="right-panel">
-        {/* {children || <Right hompy={hompy} user={user} />} */}
-        {/* children을 통해 오른쪽 컴포넌트를 대체 */}
-      </div>
-    </div>
+    </> 
   );
 };
 

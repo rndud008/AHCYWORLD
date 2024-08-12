@@ -27,6 +27,10 @@ const MyBox = () => {
         setIsFriendRequestModalOpen(false);
     };
 
+    const handleFriendRequestUpdate = (updateRequests) => {
+        setFriendRequest(updateRequests);
+    };
+
     useEffect(() => {
         // console.log(hompyInfo);
         const fetchFriendRequests = async () => {
@@ -81,7 +85,11 @@ const MyBox = () => {
                         <li className='friend-request' onClick={openFriendRequestModal}>
                             일촌신청<span>{friendRequest.length}</span>
                         </li>
-                        <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
+                        <FriendRequestModal 
+                        isOpen={isFriendRequstModalOpen} 
+                        onClose={closeFriendRequestModal} 
+                        onRequestUpdate={handleFriendRequestUpdate}
+                        />
                         <li onClick={openModal} className='acorn-status'>
                             내 도토리
                             <img src={acorn} />
