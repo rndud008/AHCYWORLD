@@ -98,6 +98,7 @@ const MyBox = () => {
                         onClose={closeFriendRequestModal}
                         onRequestUpdate={handleFriendRequestUpdate}
                         />
+
                         <li onClick={openModal} className='acorn-status'>
                             내 도토리
                             <img src={acorn} />
@@ -110,6 +111,7 @@ const MyBox = () => {
                             <button className='acorn-btn' onClick={openModal}>
                                 충전
                             </button>
+                        </li>
                         </li>
                     </ul>
                 </div>
