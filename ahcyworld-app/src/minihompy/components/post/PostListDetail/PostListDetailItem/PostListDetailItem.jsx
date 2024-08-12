@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, ButtonGroup, Form, Modal } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoginContext } from "../../../../../webpage/components/login/context/LoginContextProvider";
 
 import {
   detailListHandleOpen,
-  photoAndVideoCommentListAxios,
   postDelete,
 } from "../../utils/postUtils";
 
@@ -14,6 +13,7 @@ import Comment from "./PostListDetailItemComment/Comment";
 import DetailModal from "./PostListDetailItemModal/DetailModal";
 import DetailScrapModal from "./PostListDetailItemModal/DetailScrapModal";
 import "./PostListDetailItem.style.css";
+import { photoAndVideoCommentListAxios } from "../../utils/commentUtils";
 
 const PostListDetailItem = ({ item }) => {
   const { hompyInfo, userInfo } = useContext(LoginContext);
@@ -25,15 +25,13 @@ const PostListDetailItem = ({ item }) => {
   const [commentShow, setCommentShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const postId = item?.id;
 
   useEffect(() => {
-    if(folderId){
-
+    if(postId){
       photoAndVideoCommentListAxios(dispatch, postId);
     }
-  }, [folderId,postName,hompyId]);
+  }, [postId]);
 
   return (
     <div className="postDetailListItem">

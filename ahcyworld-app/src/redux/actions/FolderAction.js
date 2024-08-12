@@ -31,7 +31,8 @@ function createFolderAxios(hompyId, postName, folder) {
 
     const { data } = response;
 
-    dispatch({ type: "CREATE_FOLDER", payload: { data } });
+    await dispatch({ type: "CREATE_FOLDER", payload: { data } });
+    await dispatch(FolderAction.clickFolder(data.id));
   };
 }
 
@@ -64,6 +65,7 @@ function deleteFolderAxios(hompyId, postName, folderId) {
 
     if (status === 200) {
       dispatch({ type: "DELETE_FOLDER", payload: { folderId } });
+      dispatch(FolderAction.getFolderListAxios(hompyId,postName))
     }
   };
 }

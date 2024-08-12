@@ -18,6 +18,10 @@
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
   /* outline: 1px solid rgb(12, 188, 237); */
 }
+.form-check .form-check-input{
+  float: none;
+  margin-left: 0;
+}
 
 .board-type-list-group-item div label:hover{
   margin-left: 10px;

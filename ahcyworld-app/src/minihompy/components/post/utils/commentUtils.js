@@ -22,16 +22,7 @@ export const commentDeleteAxios = async (dispatch, commentId, postId,postName) =
   
   
   try{
-
-    // const confuse = await Swal.confirm('삭제하시겠습니까?','다시한번 확인해주세요','warning');
-    // console.log(confuse)
-
-    // if(!confuse) {
-    //   console.log('??',confuse)
-    //   return;
-    // }
       
-
     if(!window.confirm('삭제하시겠습니까?')) return;
 
     await dispatch(CommentAction.commentDeleteAxios(commentId, postId, postName))
@@ -56,3 +47,12 @@ export const showState =(dispatch,state) =>{
 export const contentState = (dispatch,data) =>{
   dispatch(CommentAction.contentState(data))
 }
+
+
+export const photoAndVideoCommentListAxios = async (dispatch,postId) => {
+  try {
+    await dispatch(CommentAction.photoAndVideoCommentListAxios(postId));
+  } catch (e) {
+    Swal.alert("댓글정보를 받아오는데 실패했습니다","다시한번 시도해주세요.","error")
+  }
+};

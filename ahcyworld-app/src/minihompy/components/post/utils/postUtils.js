@@ -134,15 +134,6 @@ export const handleClose = (dispatch) => {
 
 };
 
-export const photoAndVideoCommentListAxios = async (dispatch,postId) => {
-  try {
-    await dispatch(CommentAction.photoAndVideoCommentListAxios(postId));
-  } catch (e) {
-    Swal.alert("댓글정보를 받아오는데 실패했습니다","다시한번 시도해주세요.","error")
-  }
-};
-
-
 export const detailListHandleOpen = async (e,setShow,show,dispatch,hompyId,postName) => {
   const { name } = e.target;
   console.log(name)
