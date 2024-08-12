@@ -4,7 +4,6 @@ import Header from "./webpage/components/Header/Header";
 import Hompy from "./minihompy/pages/Hompy";
 import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
-import Admin from "./webpage/pages/Admin";
 import Menu from "./minihompy/components/menu/Menu";
 import GuestBookHome from "./minihompy/components/guestBook/GuestBookHome";
 import DiaryHome from "./minihompy/components/diary/DiaryHome";
@@ -23,6 +22,7 @@ import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
 import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
 import Home from "./webpage/pages/Home";
 import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
+import Admin from "./webpage/pages/Admin/Admin";
 
 function App() {
     const { postName } = useParams();
@@ -40,8 +40,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
-          <Route path="admin" element={<Admin />} />
         </Route>
+          <Route path="admin" element={<Admin />} />
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (
           <Route path="/hompy/:hompyId" element={<Menu userId={hompyInfo.id} />}>

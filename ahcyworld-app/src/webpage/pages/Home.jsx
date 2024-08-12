@@ -15,7 +15,7 @@ import MyBox from "../components/mybox/MyBox";
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
     width: 350px;
-    height: 270px;
+    height: 280px;
     margin-left: 30px;
     margin-top: 20px;
 `;
@@ -39,8 +39,6 @@ const Home = () => {
 
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
-
-    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
     const openAddFriendModal = (friend) => {
         setSelectedFriend(friend);

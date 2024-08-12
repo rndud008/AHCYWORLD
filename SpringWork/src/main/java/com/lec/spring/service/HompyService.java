@@ -1,20 +1,33 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Folder;
 import com.lec.spring.domain.Hompy;
+import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.FolderRepository;
 import com.lec.spring.repository.HompyRepository;
+import com.lec.spring.repository.PostRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class HompyService {
 
     private final HompyRepository hompyRepository;
+    private final FolderRepository hompyFolderRepository;
+    private final PostRepository postRepository;
+    private final FolderRepository folderRepository;
 
-    public HompyService(HompyRepository hompyRepository) {
+    public HompyService(HompyRepository hompyRepository
+            , FolderRepository hompyFolderRepository, PostRepository postRepository, FolderRepository folderRepository) {
         this.hompyRepository = hompyRepository;
+        this.hompyFolderRepository = hompyFolderRepository;
+        this.postRepository = postRepository;
+        this.folderRepository = folderRepository;
     }
 
-    public Hompy findById(Long id){
+    public Hompy findById(Long id) {
         return hompyRepository.findById(id).orElse(null);
     }
 
@@ -108,5 +121,44 @@ public class HompyService {
         } else {
             throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
         }
+    }
+
+    public List<Hompy> hompyList() {
+        return hompyRepository.findAll();
+    }
+
+    public String resetHompy(Hompy hompy) {
+
+        hompy.setProfilePicture(null);
+        hompy.setStatusMessage(null);
+        hompy.setTodayVisitor(0L);
+        hompy.setTotalVisitor(0L);
+        hompy.setMiniHompySkin(null);
+        hompy.setMiniRoom(null);
+        hompy.setMinimiPicture(null);
+        hompy.setProfile(null);
+        hompy.setMenuColor("#147DAF,#FFF,#147DAF");
+        hompy.setMenuStatus("visible,visible,visible,visible");
+
+
+        hompy = hompyRepository.saveAndFlush(hompy);
+        System.out.println(hompy);
+
+        List<Folder> folderList = folderRepository.findAll();
+//        List<Post> postList = postRepository.findAll();
+
+        for (Folder folder : folderList) {
+            if (folder.getHompy().getId() == hompy.getId()) {
+                folderRepository.delete(folder);
+//                for (Post post : postList) {
+//                    if (post.getFolder().getId() == folder.getId()) {
+//                        postRepository.delete(post);
+//                    }
+//                }
+            }
+        }
+
+
+        return "success";
     }
 }
