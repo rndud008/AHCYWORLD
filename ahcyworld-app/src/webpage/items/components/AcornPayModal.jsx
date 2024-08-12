@@ -4,12 +4,23 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import '../css/AcornPayModal.css';
-import { itemconfirm } from '../../../apis/alert';
+import { itemconfirm, alert } from '../../../apis/alert';
 import { userInfo } from '../../../apis/auth';
+import PaymentModal from '../../payment/PaymentModal';
+import acorn from "../../../upload/acorn.png";
 
 const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, userInfo }) => {
     const [payItems, setPayItems] = useState([])
     const navigate = useNavigate();
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+    const paymentopenModal = () => {
+        setIsPaymentModalOpen(true);
+    };
+
+    const paymentcloseModal = () => {
+        setIsPaymentModalOpen(false);
+    };
     useEffect(() => {
         if (isOpen) {
             console.log(userInfo)
@@ -39,23 +50,34 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
 
     const payedItem = () => {
 
-        axios({
-            method: 'POST',
-            url: `${SERVER_HOST}/cart/payed/item`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify(selectItem),
-            params: {
-                id: userInfo.id,
-                totalAcorn: totalAcorn,
+        if(selectItem.length === 0){
+            alert("주의","구매할 아이템이 없습니다.","warning",()=>onClose)
+        }else{
+            if(userInfo.acorn >= totalAcorn){
+                axios({
+                    method: 'POST',
+                    url: `${SERVER_HOST}/cart/payed/item`,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(selectItem),
+                    params: {
+                        id: userInfo.id,
+                        totalAcorn: totalAcorn,
+                    }
+                }).then((response) => {
+                    const { data, status } = response;
+                    if (status === 200) {
+                        itemconfirm("구매 성공","미니홈피로 이동하시겠습니까?","success",()=>navigate(`/hompy/${hompyInfo.id}`),onClose)
+                    }
+                });
+            }else{
+                itemconfirm("구매 실패","도토리가 부족합니다 충전하시겠습니까?","warning",()=> {
+                    paymentopenModal();
+                },onClose)
             }
-        }).then((response) => {
-            const { data, status } = response;
-            if (status === 200) {
-                itemconfirm("구매 성공!!","미니홈피로 이동하시겠습니까?","success",()=>navigate(`/hompy/${hompyInfo.id}`),onClose)
-            }
-        });
+
+        } 
     }
 
     const alertPayed = () => {
@@ -101,16 +123,16 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
                                         <div>{payitem.item.itemName}</div>
                                         <div style={{ color: '#888' }}>{payitem.item.itemType}</div>
                                     </div>
-                                    <div style={{ width: '100px', textAlign: 'right' }}>{payitem.item.price}도토리</div>
+                                    <div style={{ width: '100px', textAlign: 'right' }}>{payitem.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                                 </div>
 
                             ))}
                         </div>
                         <div style={{ textAlign: 'right', marginTop: '10px' }}><hr />
-                            <div>내 보유도토리: {null}</div>
-                            <div>총 상품도토리: {totalAcorn}도토리</div>
+                            <div style={{}}>내 보유도토리: {userInfo.acorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
+                            <div>총 상품도토리: {totalAcorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                             <hr/>
-                            <div>잔여 도토리: {null}도토리</div>
+                            <div>잔여 도토리: {(userInfo.acorn-totalAcorn)} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                             <div></div>
                         </div>
                     </div>
@@ -118,6 +140,7 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
                         <button onClick={onClose}>결제취소</button>
                         <button onClick={()=>alertPayed()}>결제</button>
                     </div>
+                    <PaymentModal isOpen={isPaymentModalOpen} onClose={paymentcloseModal}/>
                 </div>
             </div>
         </div>
