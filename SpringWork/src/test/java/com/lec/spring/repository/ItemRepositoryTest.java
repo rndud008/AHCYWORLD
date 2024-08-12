@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Carts;
+import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.User;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +26,8 @@ class ItemRepositoryTest {
     PasswordEncoder passwordEncoder;
     @Autowired
     CartsRepository cartsRepository;
+    @Autowired
+    HompyRepository hompyRepository;
 
     @Test
     void storyRoom(){
@@ -146,10 +150,35 @@ class ItemRepositoryTest {
 
     @Test
     void user(){
-         User user = userRepository.findByUsername("se");
+         User user = userRepository.findByUsername("sejin");
 
          user.setPassword(passwordEncoder.encode("1234"));
          userRepository.save(user);
+    }
+
+    @Test
+    void createuser(){
+        User user = User.builder()
+                .username("jin".toUpperCase())
+                .password(passwordEncoder.encode("1234"))
+                .role("ROLE_MEMBER")
+                .birthDay(LocalDate.now())
+                .email("jjj@mail.com")
+                .gender("MALE")
+                .name("진")
+                .acorn(30000L)
+                .build();
+        user = userRepository.saveAndFlush(user);
+
+        Hompy hompy = Hompy.builder()
+                .user(user)
+                .menuColor("#147DAF,#FFF,#147DAF")
+                .menuStatus("visible,visible,visible,visible")
+                .profilePicture("/upload/default_profile.png")
+                .title("진님의 미니홈피")
+                .build();
+
+        hompyRepository.saveAndFlush(hompy);
     }
 
 }
