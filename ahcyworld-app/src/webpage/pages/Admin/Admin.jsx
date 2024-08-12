@@ -87,8 +87,8 @@ const Admin = () => {
                 <div className='main-container'>
                     <div className='headline'>헤드라인</div>
                     <div className='showbox'>
-                        {/* <Users /> */}
-                        {/* <PaymentHistory/> */}
+                        <Users />
+                        <PaymentHistory/>
                         <UserStatistics />
                         <PaymentStatistics/>
                     </div>

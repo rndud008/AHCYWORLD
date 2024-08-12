@@ -1,10 +1,10 @@
 import "./App.css";
 import { Route, Routes, useParams } from "react-router-dom";
+import Admin from "./webpage/pages/Admin/Admin";
 import Header from "./webpage/components/Header/Header";
 import Hompy from "./minihompy/pages/Hompy";
 import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
-import Admin from "./webpage/pages/Admin";
 import Menu from "./minihompy/components/menu/Menu";
 import GuestBookHome from "./minihompy/components/guestBook/GuestBookHome";
 import DiaryHome from "./minihompy/components/diary/DiaryHome";
@@ -25,7 +25,6 @@ import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
 import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
 import Home from "./webpage/pages/Home";
 import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
-import Home from "./webpage/pages/Home"
 import Item from "./webpage/pages/Item";
 
 
