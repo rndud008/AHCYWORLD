@@ -1,15 +1,21 @@
+/* home.css */
 .home-container {
     outline: 2px solid red;
     display: flex;
+    flex-direction: column;
     align-items: center; 
-    justify-content: center;
+    justify-content: flex-start;
     width: 100vw;
     height: 100vh;
 }
 
 .body-container {
     outline: 2px solid blue;
-    width: 1400px;
-    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;       /* 상단에 맞추어 정렬 */
+    width: 100%;
+    max-width: 1400px;
     box-sizing: border-box; 
+    margin-bottom: 20px;
 }

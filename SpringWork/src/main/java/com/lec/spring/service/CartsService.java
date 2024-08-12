@@ -6,14 +6,15 @@ import com.lec.spring.domain.User;
 import com.lec.spring.repository.CartsRepository;
 import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CartsService {
@@ -96,6 +97,21 @@ public class CartsService {
             });
             return cartsRepository.saveAllAndFlush(updateItems);
         }
+    }
+
+    // Top3 출력
+    public Map<String, List<Item>> getTopSellingItems(){
+        Map<String, List<Item>> topSellingItems = new HashMap<>();
+
+        Pageable topThree = PageRequest.of(0, 3);
+        List<Item> items = cartsRepository.findTopSellingItemsByType(topThree);
+
+        for (Item item : items) {
+            String itemType = item.getItemType();
+
+            topSellingItems.computeIfAbsent(itemType, k -> new ArrayList<>()).add(item);
+        }
+        return topSellingItems;
     }
 
 }

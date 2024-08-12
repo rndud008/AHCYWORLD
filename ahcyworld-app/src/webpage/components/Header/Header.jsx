@@ -8,6 +8,8 @@ import logo from "../../../upload/LOGO2.png";
 import styled from "styled-components";
 import "./Header.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
+import SlideImg from "../slideImg/SlideImg";
+import News from "../news/News";
 
 
 const Header = () => {

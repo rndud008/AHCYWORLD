@@ -11,6 +11,9 @@ import LoginForm from "../components/login/login/LoginForm";
 import "./css/Home.css";
 import { LoginContext } from "../components/login/context/LoginContextProvider";
 import MyBox from "../components/mybox/MyBox";
+import SlideImg from "../components/slideImg/SlideImg";
+import News from "../components/news/News";
+import BestItem from "../components/bestItem/BestItem";
 
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
@@ -41,7 +44,8 @@ const Home = () => {
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
-    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
+    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] =
+        useState(false);
 
     const paymentopenModal = () => {
         setIsPaymentModalOpen(true);
@@ -86,9 +90,15 @@ const Home = () => {
 
                     const statues = {};
                     for (const user of response.data) {
-                        if (!userInfo.username || !(userInfo.username === undefined)) {
+                        if (
+                            !userInfo.username ||
+                            !(userInfo.username === undefined)
+                        ) {
                             try {
-                                const respon = await checkFriendShip(userInfo.username, user.name);
+                                const respon = await checkFriendShip(
+                                    userInfo.username,
+                                    user.name
+                                );
                                 statues[user.name] = respon.data.friend;
                             } catch (error) {
                                 console.error("checkFriendShip Error: ", error);
@@ -109,8 +119,8 @@ const Home = () => {
     }, [isAddFriendModalOpen, isLogin]);
 
     return (
-        <div className='home-container'>
-            <div className='body-container'>
+        <div className="home-container">
+            <div className="body-container">
                 {isLogin ? (
                     <StyledMyBox>
                         <MyBox />
@@ -121,10 +131,14 @@ const Home = () => {
                         <LoginForm />
                     </StyledLoginBox>
                 )}
+                <SlideImg className="slideImg" />
+            </div>
+            <News className="news" />
+            <BestItem className="bestItem" />
 
-                <br />
-                <br />
-                {/* {isLogin ? (
+            <br />
+            <br />
+            {/* {isLogin ? (
                     <>
                         <Button onClick={toggleFriendList}>
                             {isFriendListVisible ? "친구목록닫기" : "친구목록보기"}
@@ -165,7 +179,6 @@ const Home = () => {
                     onClose={closeAddFriendModal}
                     selectedFriend={selectedFriend}
                 /> */}
-            </div>
         </div>
     );
 };

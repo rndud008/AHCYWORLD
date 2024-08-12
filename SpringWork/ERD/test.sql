@@ -12,6 +12,8 @@ select * from post;
 select * from attachment;
 select * from user_write_histroy;
 select * from board_type;
+select * from item;
+select * from carts;
 
 alter table user_write_histroy drop column update_at;
 #  컬럼 삭제.
@@ -38,7 +40,7 @@ update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 100000
-where id = 4;
+where id = 5;
 
 
 insert into post (create_at, folder_id, content, subject)

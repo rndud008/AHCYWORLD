@@ -1,0 +1,37 @@
+/* SlideImg.css */
+.slideImg-container {
+    width: 60%;
+    margin: 20px; /* 상하 20px의 여백과 좌우 자동 정렬 */
+}
+
+.carousel .carousel-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px; /* 슬라이드 이미지에 둥근 모서리를 적용 */
+}
+
+/* 좌우 버튼 css */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #e66e28; /* 원하는 색상으로 변경 */
+    border-radius: 50%; /* 모서리를 둥글게 */
+    width: 40px; /* 버튼 크기 조정 */
+    height: 40px; /* 버튼 크기 조정 */
+}
+
+/* 버튼에 마우스를 올렸을 때의 색상 변경 */
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    background-color: #d55a24; /* 원하는 호버 색상으로 변경 */
+}
+
+/* 아이콘 색상을 흰색으로 설정 */
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+    color: #ffffff; /* 원하는 아이콘 색상 */
+}
+
+img.example-img {
+    width: 100% ; 
+    height: auto ;
+}

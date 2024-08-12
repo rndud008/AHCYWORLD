@@ -60,4 +60,8 @@ public class CartsController {
 //        return new ResponseEntity<>("sejin",HttpStatus.OK);
     }
 
+    @GetMapping("/top-selling-items")
+    public ResponseEntity<?> getTopSellingItems(){
+        return ResponseEntity.ok(cartsService.getTopSellingItems());
+    }
 }

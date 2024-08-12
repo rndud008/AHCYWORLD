@@ -46,14 +46,19 @@ const MyBox = () => {
 
     const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture}`;
 
+    const changeUserInfo = (id) => {
+        // 내 정보 수정 해야함
+        
+    }
+
     return (
         <div className='mybox-container'>
             <div className='top'>
                 <div className="name-box">{isLogin ? <span>{userInfo.name}</span> : <span></span>}</div>
 
                 <div className="btn-box">
-                    <button onClick={openModal} className='acorn-btn'>
-                        도토리 구매
+                    <button onClick={() => {changeUserInfo(userInfo.id)}} className='user-btn'>
+                        내 정보 수정
                     </button>
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
                     <button onClick={() => logout()} className='logout-btn'>
