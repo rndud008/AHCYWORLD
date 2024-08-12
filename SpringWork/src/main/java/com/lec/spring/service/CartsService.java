@@ -53,6 +53,14 @@ public class CartsService {
     }
 
     @Transactional
+    public List<Carts> userItemList(Long id){
+        User user = userRepository.findById(id).orElse(null);
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+
+        return cartsRepository.findByUserAndCartsStatus(user,"Y", sort);
+    }
+
+    @Transactional
     public int deleteCartsItem(Long id){
         Carts carts = cartsRepository.findById(id).orElse(null);
         if(carts == null){
@@ -93,7 +101,6 @@ public class CartsService {
 
             updateItems.forEach(item -> {
                 item.setCartsStatus("Y");
-                item.setCreateAt(LocalDateTime.now());
             });
             return cartsRepository.saveAllAndFlush(updateItems);
         }

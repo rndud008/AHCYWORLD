@@ -15,9 +15,10 @@ select * from board_type;
 select * from item;
 select * from carts;
 
+select * from email_authentication;
 alter table user_write_histroy drop column update_at;
 #  컬럼 삭제.
-
+delete from email_authentication;
 insert into post (create_at,folder_id,content,subject)
 select create_at,folder_id,content,subject
 from friend;
@@ -65,8 +66,8 @@ where username = "user3"
 
 
 update item
-set file_name='포치코1.png'
-where id = 90;
+set item_name='풍물놀이_꾕과리'
+where id = 31;
 
 update item
 set item_name='글꼴4'

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Member = () => {
     const navigate = useNavigate();
-    const [itemKind, setItemKind] = useState("배경음악");
+    // const [itemKind, setItemKind] = useState("배경음악");
 
     const [user, setUser] = useState({});
     useEffect(() => {
@@ -28,7 +28,7 @@ const Member = () => {
 
     return (
         <div>
-            <h1 style={{ fontFamily: "'Nanum Pen Script', cursive" }}>Member</h1>
+            {/* <h1 style={{ fontFamily: "'Nanum Pen Script', cursive" }}>Member</h1>
 
             <button
                 onClick={() => {
@@ -73,7 +73,7 @@ const Member = () => {
             <button onClick={() => navigate(`/cart/${user.id}`)}>장바구니</button>
             <div>내가 가지고 있는 도토리: {user.acorn}</div>
             <hr />
-            <ItemList itemKind={itemKind} />    
+            <ItemList itemKind={itemKind} />     */}
         </div>
     );
 };
