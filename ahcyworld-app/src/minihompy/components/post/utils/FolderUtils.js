@@ -1,5 +1,6 @@
 import { FolderAction } from "../../../../redux/actions/FolderAction";
 import { PostAction } from "../../../../redux/actions/PostAction";
+import * as Swal from "../../../../apis/alert"
 
 export const radioName = [
   {
@@ -24,12 +25,15 @@ export const list = async (postName, dispatch, hompyId) => {
 
 export const handleClose = (dispatch) => {
   dispatch(FolderAction.showState(false));
+  dispatch(FolderAction.errorState("status", false));
+      dispatch(FolderAction.errorState("name", false));
 };
 
-export const handleShow = (e, dispatch) => {
+export const handleShow = (e, dispatch,folderId) => {
   const { value, id } = e.target;
+
   dispatch(FolderAction.afterCreateFolderState());
-  if (id !== null) {
+  if (id !== "") {
     dispatch(FolderAction.clickFolder(id));
   }
 
@@ -49,8 +53,9 @@ export const createSubmit = async (
   const valid = folderValidation(createFolder, dispatch);
 
   if (!valid) {
-    return alert("폴더작성 실패");
+    return Swal.alert("폴더작성 실패","올바르게 입력해주세요.","error")
   }
+    
 
   await dispatch(
     FolderAction.createFolderAxios(hompyId, postName, createFolder)
@@ -70,8 +75,9 @@ export const updateSubmit = async (
   const valid = folderValidation(updateFolder, dispatch);
 
   if (!valid) {
-    return alert("폴더수정 실패");
+    return Swal.alert("폴더수정 실패","올바르게 입력해주세요.","error")
   }
+  
 
   await dispatch(
     FolderAction.updateFolderAxios(hompyId, postName, updateFolder)
@@ -81,6 +87,11 @@ export const updateSubmit = async (
 
 export const changeValue = (e, dispatch) => {
   const { value, name } = e.target;
+
+  const valid =folderValidation("", dispatch, e);
+
+  if(!valid) return ;
+  
   dispatch(FolderAction.beforeCreateFolderState(name, value));
 };
 
@@ -100,27 +111,47 @@ export const folderDelete = async (dispatch, hompyId, postName, id) => {
   dispatch(FolderAction.deleteFolderAxios(hompyId, postName, id));
 };
 
-function folderValidation(createFolder, dispatch) {
+function folderValidation(folder, dispatch, e="") {
   let valid = true;
+  if(folder !== ""){
+    if (
+      !folder?.name ||
+      folder?.name.trim() === "" ||
+      folder.name.length > 10
+    ) {
+      dispatch(
+        FolderAction.errorState("name", "폴더이름은 10글자 이하로 입력해주세요.")
+      );
+      valid = false;
+    } else {
+      dispatch(FolderAction.errorState("name", false));
+    }
+  
+    if (!folder?.status || folder?.status.trim() === "") {
+      dispatch(FolderAction.errorState("status", "공개범위를 설정해주세요."));
+      valid = false;
+    } else {
+      dispatch(FolderAction.errorState("status", false));
+    }
+  }else if(e !==""){
+    const {name,value} = e.target;
+    if(name.includes('name')  && (!value && value.trim() === ""|| value.length > 10)){
+      dispatch(
+        FolderAction.errorState("name", "폴더이름은 10글자 이하로 입력해주세요.")
+      );
+      valid = false;
+    }else{
+      
+      dispatch(FolderAction.errorState("name", false));
+    }
+    
+    if(name.includes('status') && (!value && value.trim() === "")){
+      dispatch(FolderAction.errorState("status", "공개범위를 설정해주세요."));
+      valid = false;
+    }else{
+      dispatch(FolderAction.errorState("status", false));
+    }
 
-  if (
-    !createFolder?.name ||
-    createFolder?.name.trim() === "" ||
-    createFolder.name.length > 10
-  ) {
-    dispatch(
-      FolderAction.errorState("name", "폴더이름은 10글자 이하로 입력해주세요.")
-    );
-    valid = false;
-  } else {
-    dispatch(FolderAction.errorState("name", false));
-  }
-
-  if (!createFolder?.status || createFolder?.status.trim() === "") {
-    dispatch(FolderAction.errorState("status", "공개범위를 설정해주세요."));
-    valid = false;
-  } else {
-    dispatch(FolderAction.errorState("status", false));
   }
 
   return valid;

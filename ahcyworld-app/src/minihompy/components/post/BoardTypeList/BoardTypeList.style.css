@@ -1,3 +1,59 @@
-.list-group-item{
-  justify-content: space-between;
+.board-type-name{
+  text-align: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.board-type-name h2{
+  margin-bottom: 0;
+  cursor: default
+}
+
+.board-type-list-group{
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  scrollbar-width: thin;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+
+.board-type-folder{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  justify-content: center;
+  height: 50px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  /* outline: 1px solid rgb(12, 188, 237); */
+}
+
+.board-type-folder button{
+  margin :0 10px;
+  border-radius: 20px;
+  outline: 1px solid rgb(12, 188, 237);
+  transform: 0.2;
+}
+
+.board-type-folder button:hover{
+  animation: bounce 0.8s infinite;
+  background-color: rgb(12, 188, 237);
+  color: white;
+  opacity: 0.5;
+}
+@keyframes bounce {
+  0%, 100%{
+    transform: translateY(0);
+  }
+  30%{
+    transform: translateY(-10px);
+  }
+  50%{
+    transform:  translateY(0);
+  }
+  70%{
+    transform: translateY(-5px);
+  }
 }

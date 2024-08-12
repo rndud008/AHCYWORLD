@@ -30,10 +30,10 @@ const BoardTypeList = () => {
   return (
     <>
       <Container>
-        <div>
+        <div className="board-type-name">
           <h2>{BoardTypeName}</h2>
         </div>
-        <ListGroup>
+        <ListGroup className="board-type-list-group">
           {folderList &&
             folderList.map((item) => (
               <>
@@ -51,16 +51,16 @@ const BoardTypeList = () => {
             ))}
         </ListGroup>
         {parseInt(hompyId) === hompyInfo?.id && (
-          <div>
-            <Button onClick={(e) => handleShow(e, dispatch)} value="폴더 생성">
-              폴더 추가
+          <div className="board-type-folder">
+            <Button variant="none" onClick={(e) => handleShow(e, dispatch)} value="폴더 생성">
+              추가
             </Button>
-            <Button
+            <Button  variant="none"
               onClick={() =>
                 folderDelete(dispatch, hompyId, postName, folder.id)
               }
             >
-              폴더 삭제
+              삭제
             </Button>
           </div>
         )}

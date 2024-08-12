@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Button, Container, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LoginContext } from "../../../../../webpage/components/login/context/LoginContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +13,11 @@ import {
 import { commentListAxios } from "../../utils/commentUtils";
 import Comment from "./commnet/Comment";
 import PostModal from "./PostModal/PostModal";
+import "./PostDetail.style.css"
+import "react-color-palette/css";
+import { ColorPicker, useColor } from "react-color-palette";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const PostDetail = () => {
   const { userInfo, hompyInfo } = useContext(LoginContext);
@@ -25,16 +30,18 @@ const PostDetail = () => {
     detailPage(dispatch, hompyId, postName, folderId, postId, navigate);
     commentListAxios(dispatch, postId, postName);
   }, []);
+  const [color,setColor] = useColor('#561ecb')
 
   return (
     <>
-      <>
-        <div>
+    {post.id && 
+      <Container>
+        <div className="postDetail">
           <div>
             <h4>{post?.subject}</h4>
           </div>
           <div>
-            <Button
+            <Button 
               onClick={() => postList(navigate, hompyId, postName, folderId)}
             >
               목록
@@ -69,7 +76,7 @@ const PostDetail = () => {
             )}
           </div>
         </div>
-        <div>
+        <div className="postDetailHeader">
           <div>
             <span>작성자 : {post?.folder.hompy.user.name}</span>
           </div>
@@ -81,28 +88,33 @@ const PostDetail = () => {
           </div>
         </div>
         <div>
+          <ListGroup className="postDetailDownloadList">
           {post?.fileList.map((item) => (
-            <ListGroup>
-              <ListGroupItem>
-                <Button variant="none" onClick={() => download(item)}>
-                  {item.sourceName}
+              <ListGroupItem className="postDetailDownload">
+                  <span>{item.sourceName}</span>
+                <Button onClick={() => download(item)}>
+                <FontAwesomeIcon icon={faDownload} />
                 </Button>
               </ListGroupItem>
-            </ListGroup>
           ))}
+          </ListGroup>
         </div>
-        <div>
+        <div className="postDetailContent">
           <span>{post?.content}</span>
         </div>
-        <div>
+
           <Comment />
-        </div>
-      </>
-      {parseInt(hompyId) === hompyInfo?.id && (
-        <>
-          <PostModal />
-        </>
-      )}
+
+        {parseInt(hompyId) === hompyInfo?.id && (
+          <>
+            <PostModal />
+          </>
+        )}
+      </Container>
+    }
+    <div style={{width:"200px"}}>
+    <ColorPicker hideInput={['hsv']} height={100} color={color} onChange={setColor} />
+    </div>
     </>
   );
 };

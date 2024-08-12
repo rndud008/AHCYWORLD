@@ -7,8 +7,11 @@ import {
 } from "../../../utils/commentUtils";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginContext } from "../../../../../../webpage/components/login/context/LoginContextProvider"; 
+import { LoginContext } from "../../../../../../webpage/components/login/context/LoginContextProvider";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import "./Comment.style.css"
 
 const Comment = () => {
   const { userInfo } = useContext(LoginContext);
@@ -21,49 +24,50 @@ const Comment = () => {
 
   return (
     <>
-      <div>
-        <Button onClick={() => showState(dispatch, show)}>
-          {show === false ? "댓글보기" : "댓글닫기"}
-        </Button>
+      <div className="postDetailCommentTool">
+        <div  className="commentToggle">
+          <Button onClick={() => showState(dispatch, show)}>
+            {show === false ? "댓글보기" : "댓글닫기"}
+          </Button>
+        </div>
+        <div className="commentInputSection">
+          <input
+            onChange={(e) => contentState(dispatch, e.target.value)}
+            placeholder="댓글입력"
+          />
+          <Button
+            onClick={() =>
+              commentWriteAxios(dispatch, userInfo, post, content, postName)
+            }
+          >
+            확인
+          </Button>
+        </div>
       </div>
       {show && (
-        <div>
+        <div className="postDetailCommentList">
           {commentList.count === 0
-            ? "작성된 댓글이 없습니다."
+            ? <div className="commentNotFound">작성된 댓글이 없습니다.</div>
             : commentList.data?.map((item) => (
-                <div style={{ display: "flex" }}>
+              <>
+                <div className="postDetailComment">
                   <p>{item.user.name}</p>
                   <p>{item.createAt}</p>
-                  <p>{item.content}</p>
-
                   {item.user.id === userInfo.id && (
                     <Button
-                      onClick={() =>
-                        commentDeleteAxios(dispatch, item.id, postId, postName)
-                      }
+                    onClick={() =>
+                      commentDeleteAxios(dispatch, item.id, postId, postName)
+                    }
                     >
-                      삭제
+                      <FontAwesomeIcon icon={faCircleXmark} />
                     </Button>
                   )}
                 </div>
+                  <p>{item.content}</p>
+              </>
               ))}
         </div>
       )}
-
-      <div>
-        <label>댓글</label>
-        <input
-          onChange={(e) => contentState(dispatch, e.target.value)}
-          placeholder="댓글입력"
-        />
-        <Button
-          onClick={() =>
-            commentWriteAxios(dispatch, userInfo, post, content, postName)
-          }
-        >
-          확인
-        </Button>
-      </div>
     </>
   );
 };

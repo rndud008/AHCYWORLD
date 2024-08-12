@@ -1,8 +1,33 @@
 .postListHeader{
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px 0;
+}
+.postListHeader h4{
+  margin-left: 10px;
+  margin-bottom: 0;
 }
 
-.postListHeader div{
-  text-align: center;
+.postListHeader div button{
+  padding: 0;
+  width: 70px;
+  margin-right: 40px;
+}
+.postListHeader div button a:hover{
+  background-color: rgb(0, 191, 255);
+  opacity: 0.5;
+  color: white;
+}
+
+.postListHeader div button a{
+  display: inline-block;
+  width: 100px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
 }

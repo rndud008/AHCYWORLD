@@ -186,6 +186,12 @@ function postUpdate(hompyId,postName,folderId,formData,navigate,postId){
   }
 }
 
+function postErrorState(name,value){
+  return (dispatch,getState)=>{
+    dispatch({type:"POST_ERROR_STATE",payload:{name,value}})
+  }
+}
+
 
 export const PostAction = {
   axiosPostList,
@@ -198,4 +204,5 @@ export const PostAction = {
   showState,
   moveFolderIdState,
   postUpdate,
+  postErrorState,
 };

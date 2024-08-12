@@ -32,8 +32,11 @@ public class UserWriteHistroy extends BaseEntity{
 
     private String subject;
 
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
+    @Lob
     @Column(columnDefinition = "LONGTEXT")
     @Convert(converter = AttachmentListConverter.class)
     @ToString.Exclude

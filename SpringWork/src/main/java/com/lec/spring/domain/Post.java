@@ -43,7 +43,8 @@ public class Post extends BaseEntity{
     @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
     @Column(insertable = false)

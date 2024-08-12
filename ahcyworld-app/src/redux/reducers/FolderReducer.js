@@ -6,6 +6,7 @@ let initialState = {
   show: false,
   modalName: "",
   errors: {},
+  createFolder:{},
 };
 
 function FolderReducer(state = initialState, action) {
@@ -39,17 +40,20 @@ function FolderReducer(state = initialState, action) {
           folder: state.folderList.find(
             (item) => parseInt(item.id) === parseInt(payload.folderId)
           ),
+          createFolder: state.folderList.find(
+            (item) => parseInt(item.id) === parseInt(payload.folderId)
+          ),
         } || null
       );
     case "BEFORE_CREATE_FOLDER_STATE":
       return {
         ...state,
-        folder: { ...state.folder, [payload.name]: payload.value },
+        createFolder: { ...state.createFolder, [payload.name]: payload.value },
       };
     case "AFTER_CREATE_FOLDER_STATE":
       return {
         ...state,
-        folder: {},
+        createFolder:{},
       };
     case "FOLDER_SHOW_STATE":
       return { ...state, show: payload.data };
