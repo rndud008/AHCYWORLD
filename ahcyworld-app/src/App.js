@@ -5,11 +5,11 @@ import Hompy from "./minihompy/pages/Hompy";
 import Join from "./webpage/pages/Join";
 import Member from "./webpage/pages/Member";
 import Admin from "./webpage/pages/Admin";
+import Menu from "./minihompy/components/menu/Menu";
 import GuestBookHome from "./minihompy/components/guestBook/GuestBookHome";
 import DiaryHome from "./minihompy/components/diary/DiaryHome";
 import { useContext, useEffect, useState } from "react";
 import Profile from "./minihompy/pages/Profile";
-import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
 import Post from "./minihompy/components/post/Post";
 import PostListDetail from "./minihompy/components/post/PostListDetail/PostListDetail";
 import PostWrite from "./minihompy/components/post/PostWrite/PostWrite";
@@ -20,8 +20,11 @@ import PostDetail from "./minihompy/components/post/PostList/PostDetail/PostDeta
 import HompySetting from "./minihompy/pages/HompySetting";
 import Cart from "./webpage/pages/Cart";
 import { useSelector } from "react-redux";
-import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage"
-import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage"
+import DiaryModal from "./minihompy/components/diary/DiaryModal";
+import DiaryUpdatePage from "./minihompy/components/diary/DiaryUpdatePage";
+import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
+import Home from "./webpage/pages/Home";
+import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
 import Home from "./webpage/pages/Home"
 import Item from "./webpage/pages/Item";
 
@@ -42,11 +45,11 @@ function App() {
           <Route index element={<Home itemkind={itemkind} />} />
           <Route path="join" element={<Join />} />
           <Route path="member" element={<Member />} />
-          <Route path="admin" element={<Admin />} />
           <Route path="cart/:userId" element={<Cart/>}/>
           <Route path="item" element={<Item itemkind={itemkind}/>}/>
 
         </Route>
+          <Route path="admin" element={<Admin />} />
         {/* 2. 미니홈피 페이지 */}
         {hompyInfo && (
           <Route path="/hompy/:hompyId" >

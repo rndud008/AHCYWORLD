@@ -30,4 +30,8 @@ public class PaymentHistoryService {
     public List<PaymentHistory> list(String username) {
         return null;
     }
+
+    public List<PaymentHistory> findAll() {
+        return paymentHistoryRepository.findAll();
+    }
 }

@@ -30,7 +30,7 @@ class PostTest {
     PasswordEncoder passwordEncoder;
 
     @Test
-    void test(){
+    void test() {
         // --- 게시판 타입 생성.
 //        BoardType boardType = new BoardType();
 //        boardType.setName("게시판");
@@ -66,37 +66,48 @@ class PostTest {
 
         User user = userRepository.findById(5l).orElse(null);
 
-        Hompy hompy = new Hompy();
-        hompy.setUser(user);
-        hompy.setProfilePicture("1");
-        hompy.setStatusMessage("12");
-        hompy.setTitle(user.getName() + "의 아싸월드");
-        hompy.setProfile(user.getName() + "의 아싸월드 에 오신걸 환영합니다.");
+//        Hompy hompy = new Hompy();
+//        hompy.setUser(user);
+//        hompy.setProfilePicture("1");
+//        hompy.setStatusMessage("12");
+//        hompy.setTitle(user.getName() + "의 아싸월드");
+//        hompy.setProfile(user.getName() + "의 아싸월드 에 오신걸 환영합니다.");
         // 메뉴색상 default 색상 설정.
         // 메뉴상태 게시파 사진판,사진첩,동영상,방명록 default : visible
 
-        hompyRepository.save(hompy);
-        System.out.println(hompy);
+//        hompyRepository.save(hompy);
+//        System.out.println(hompy);
 
 //        Hompy hompy = hompyRepository.findByUser(user);
+
+        Hompy hompy1 = hompyRepository.findById(1L).orElse(null);
+        Hompy hompy2 = hompyRepository.findById(2L).orElse(null);
+        Hompy hompy3 = hompyRepository.findById(3L).orElse(null);
+        Hompy hompy4 = hompyRepository.findById(4L).orElse(null);
+        Hompy hompy5 = hompyRepository.findById(5L).orElse(null);
+        Hompy hompy6 = hompyRepository.findById(6L).orElse(null);
+        Hompy hompy7 = hompyRepository.findById(7L).orElse(null);
+        Hompy hompy8 = hompyRepository.findById(8L).orElse(null);
+
+        BoardType boardType1 = new BoardType();
 
         Folder folder = new Folder();
         // 게시판 폴더
 
-        folder.setHompy(hompy);
+        folder.setHompy(hompy7);
         folder.setName("게시판 기본 폴더.");
         folder.setBoardType(boardTypeRepository.findById(1l).orElse(null));
         folderRepository.save(folder);
 
         Folder folder1 = new Folder();
 
-        folder1.setHompy(hompy);
+        folder1.setHompy(hompy8);
         folder1.setName("사진첩 기본 폴더.");
         folder1.setBoardType(boardTypeRepository.findById(2l).orElse(null));
         folderRepository.save(folder1);
 
         Folder folder2 = new Folder();
-        folder2.setHompy(hompy);
+        folder2.setHompy(hompy1);
         folder2.setName("동영상 기본 폴더.");
         folder2.setBoardType(boardTypeRepository.findById(3l).orElse(null));
         folderRepository.save(folder2);
@@ -149,7 +160,6 @@ class PostTest {
 
         attachmentRepository.save(attachment1);
         // 첨부파일 저장.
-
 
 
         post2.setFileList(attachmentRepository.findByPostId(post2.getId()));

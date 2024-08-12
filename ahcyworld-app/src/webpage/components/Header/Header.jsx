@@ -25,7 +25,7 @@ const Header = ({setItemKind}) => {
         <>
             <div className="header-container">
                 <div className='header-box'>
-                    <div className='logo-box'>
+                    <div className='logo-contain'>
                         <img src={logo} alt='Acyworld LOGO' />
                     </div>
                     <div className='search-select'>

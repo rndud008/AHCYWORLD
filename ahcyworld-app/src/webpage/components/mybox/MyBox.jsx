@@ -46,15 +46,20 @@ const MyBox = () => {
 
     const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture}`;
 
+    const openMinihompy = () => {
+        window.open(
+            "http://localhost:3000/hompy/${hompyId}", // 열고 싶은 URL
+            "_blank", // 새로운 창을 엽니다.
+            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+        );
+    };
+
     return (
         <div className='mybox-container'>
             <div className='top'>
-                <div className="name-box">{isLogin ? <span>{userInfo.name}</span> : <span></span>}</div>
+                <div className='name-box'>{isLogin ? <span>{userInfo.name}</span> : <span></span>}</div>
 
-                <div className="btn-box">
-                    <button onClick={openModal} className='acorn-btn'>
-                        도토리 구매
-                    </button>
+                <div className='topbtn-box'>
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
                     <button onClick={() => logout()} className='logout-btn'>
                         로그아웃
@@ -73,26 +78,35 @@ const MyBox = () => {
                 <div className='info-box'>
                     <ul>
                         <li>
-                            오늘방문자<span>{hompyInfo.todayVisitor}</span>
+                            <span>오늘방문자</span>
+                            <span>{hompyInfo.todayVisitor}</span>
                         </li>
                         <li>
-                            총방문자<span>{hompyInfo.totalVisitor}</span>
+                            <span>총방문자</span>
+                            <span>{hompyInfo.totalVisitor}</span>
                         </li>
                         <li className='friend-request' onClick={openFriendRequestModal}>
-                            일촌신청<span>{friendRequest.length}</span>
+                            <span>일촌신청</span>
+                            <span>{friendRequest.length}</span>
                         </li>
                         <FriendRequestModal isOpen={isFriendRequstModalOpen} onClose={closeFriendRequestModal} />
-                        <li onClick={openModal} className='acorn-status'>
-                            내 도토리
-                            <img src={acorn} />
-                            {isLogin ? <span>{userInfo.acorn}</span> : <span>0</span>}
+                        <li className='acorn-status'>
+                            <span className='my-acorn'>
+                                <img src={acorn} alt='' />
+                                <span>{userInfo.acorn}</span>
+                            </span>
+                            <button className='acorn-btn' onClick={openModal}>
+                                충전
+                            </button>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <div className='bottom'>
-                <button className='hompy-btn'>내 미니홈피</button>
+                <button className='hompy-btn' onClick={() => openMinihompy(hompyInfo.id)}>
+                    내 미니홈피
+                </button>
             </div>
         </div>
     );
