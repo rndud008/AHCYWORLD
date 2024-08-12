@@ -100,7 +100,7 @@ function beforeCreateFolderState(name,value){
 
 function afterCreateFolderState(){
   return (dispatch,getState) => {
-    dispatch({type:"AFTER_CREATE_FOLDER_STATE",payload:{}})
+    dispatch({type:"AFTER_CREATE_FOLDER_STATE"})
   }
 }
 

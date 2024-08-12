@@ -6,6 +6,7 @@ import Layout from "../Layout/Layout";
 import { axiosPostList } from "./utils/postUtils";
 import { findByHompyIdAxios } from "./utils/hompyUtils";
 import { list } from "./utils/FolderUtils";
+import * as Swal from "../../../apis/alert"
 
 const keyword =['board','photo','video'];
 
@@ -19,19 +20,21 @@ const Post = () => {
 
   useEffect(() => {
     if(keyword.some(item => postName.includes(item))){
-
       list(postName, dispatch, hompyId);
       findByHompyIdAxios(dispatch, hompyId);
     }
-  }, [postName, hompyId]);
+  }, [postName, hompyId,dispatch]);
 
   useEffect(() => {
     if (folder || folder?.length > 0) {
-      axiosPostList(dispatch, folder.id, hompyId, postName, page);
-      navigate(`/hompy/${hompyId}/${postName}/${folder.id}`);
+      try{
+        axiosPostList(dispatch, folder?.id, hompyId, postName, page);
+      }catch(e){
+        Swal.alert("게시글을 불러오는데 실패했습니다.",e,"error");
+      }
+      navigate(`/hompy/${hompyId}/${postName}/${folder?.id}`);
     }
-  }, [page, folder,dispatch]);
-
+  }, [page, folder?.id]);
 
   return (
     <>

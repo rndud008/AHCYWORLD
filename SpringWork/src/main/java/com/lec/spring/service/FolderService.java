@@ -76,7 +76,6 @@ public class FolderService {
 
     public List<Folder> folderListByBoardType(BoardType boardType, Hompy miniHompy, Friend friend, String action) {
         List<Folder> folderList = new ArrayList<>();
-        List<Folder> folders = new ArrayList<>();
 
         if (action.equals("OWNER")) {
             folderList = folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);

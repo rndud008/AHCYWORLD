@@ -22,7 +22,7 @@ const createPageNumber = (start, end) => {
 };
 
 const PageNation = () => {
-  const { hompyId, postName } = useParams();
+  const { hompyId, postName, folderId } = useParams();
 
   const pageAndPostList = useSelector((state) => state.post.pageAndPostList);
 
@@ -31,7 +31,7 @@ const PageNation = () => {
     pageAndPostList.endpage
   );
 
-  const folderId = pageAndPostList.folder?.id;
+  // const folderId = pageAndPostList.folder?.id;
 
   const dispatch = useDispatch();
 
@@ -45,76 +45,66 @@ const PageNation = () => {
   const page = pageAndPostList.page;
 
   return (
-    <Container>
-      {pageAndPostList.url && (
+    <>
+      {pageAndPostList.url && folderId && (
         <ul className="pageNation">
           {page > 1 && (
-            <PageItem>
-              <Link
-                onClick={() => pageSave(1)}
-                to={`/hompy/${hompyId}/${postName}/${folderId}?page=${
-                  1
-                }`}
-              >
-                <FontAwesomeIcon icon={faAnglesLeft} />
-              </Link>
-            </PageItem>
+            <Link
+              onClick={() => pageSave(1)}
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${1}`}
+            >
+              <FontAwesomeIcon icon={faAnglesLeft} />
+            </Link>
           )}
-        {page > 1 &&
-        
-          <PageItem>
+
+          {page > 1 && (
+            // <PageItem>
             <Link
               onClick={() => pageSave(start - 1)}
               to={`/hompy/${hompyId}/${postName}/${folderId}?page=${start - 1}`}
             >
               <FontAwesomeIcon icon={faAngleLeft} />
             </Link>
-          </PageItem>
-        }
+          )}
 
           {pagesNumbers.map((item) => {
             if (item === parseInt(page)) {
               return (
-                <PageItem key={item} className="active">
-                  <span>{item}</span>
-                </PageItem>
+                <Link key={item} className="postPageActive">
+                  {item !==0 ? item: '1'}
+                </Link>
               );
             } else {
               return (
-                <PageItem key={item}>
-                  <Link
-                    onClick={() => pageSave(item)}
-                    to={`/hompy/${hompyId}/${postName}/${folderId}?page=${item}`}
-                  >
-                    {item}
-                  </Link>
-                </PageItem>
+                <Link
+                  onClick={() => pageSave(item)}
+                  to={`/hompy/${hompyId}/${postName}/${folderId}?page=${item}`}
+                >
+                  {item}
+                </Link>
               );
             }
           })}
           {total > end && (
-            <PageItem>
-              <Link
-                onClick={() => pageSave(end + 1)}
-                to={`/hompy/${hompyId}/${postName}/${folderId}?page=${end + 1}`}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </Link>
-            </PageItem>
+            <Link
+              onClick={() => pageSave(end + 1)}
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${end + 1}`}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </Link>
           )}
+
           {page < total && (
-            <PageItem>
-              <Link
-                onClick={() => pageSave(total)}
-                to={`/hompy/${hompyId}/${postName}/${folderId}?page=${total}`}
-              >
-                <FontAwesomeIcon icon={faAnglesRight} />
-              </Link>
-            </PageItem>
+            <Link
+              onClick={() => pageSave(total)}
+              to={`/hompy/${hompyId}/${postName}/${folderId}?page=${total}`}
+            >
+              <FontAwesomeIcon icon={faAnglesRight} />
+            </Link>
           )}
         </ul>
       )}
-    </Container>
+    </>
   );
 };
 

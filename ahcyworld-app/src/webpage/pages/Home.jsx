@@ -19,7 +19,7 @@ import Box from "../components/mybox/Box";
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
     width: 350px;
-    height: 270px;
+    height: 280px;
     margin-left: 30px;
     margin-top: 20px;
 `;
@@ -45,16 +45,7 @@ const Home = ({itemKind}) => {
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
-    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] =
-        useState(false);
-
-    const paymentopenModal = () => {
-        setIsPaymentModalOpen(true);
-    };
-
-    const paymentcloseModal = () => {
-        setIsPaymentModalOpen(false);
-    };
+    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
     const openAddFriendModal = (friend) => {
         setSelectedFriend(friend);
@@ -91,15 +82,9 @@ const Home = ({itemKind}) => {
 
                     const statues = {};
                     for (const user of response.data) {
-                        if (
-                            !userInfo.username ||
-                            !(userInfo.username === undefined)
-                        ) {
+                        if (!userInfo.username || !(userInfo.username === undefined)) {
                             try {
-                                const respon = await checkFriendShip(
-                                    userInfo.username,
-                                    user.name
-                                );
+                                const respon = await checkFriendShip(userInfo.username, user.name);
                                 statues[user.name] = respon.data.friend;
                             } catch (error) {
                                 console.error("checkFriendShip Error: ", error);
@@ -136,7 +121,7 @@ const Home = ({itemKind}) => {
                     )}
                     <SlideImg className="slideImg" />
                 </div>
-                
+
                 <div className="bottom-row">
                     <div className="new-container">
                         <News />
@@ -146,7 +131,7 @@ const Home = ({itemKind}) => {
                     </div>
                 </div>
             </div>
-            
+
 
             <br />
             <br />

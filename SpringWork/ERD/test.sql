@@ -3,12 +3,14 @@ show tables;
 drop table if exists attachment_id;
 
 select *
+from hompy;
+select *
 from folder;
+select * from post;
 select * from friend;
 select * from ah_user;
 select* from friend;
 select * from payment_history;
-select * from post;
 select * from attachment;
 select * from user_write_histroy;
 select * from board_type;
@@ -16,6 +18,9 @@ select * from item;
 select * from carts;
 
 select * from email_authentication;
+
+alter table post modify column content Longtext;
+
 alter table user_write_histroy drop column update_at;
 #  컬럼 삭제.
 delete from email_authentication;
@@ -44,11 +49,13 @@ set acorn = 100000
 where id = 6;
 
 
+
 insert into post (create_at, folder_id, content, subject)
 select create_at, folder_id, content, subject
 from post;
 
 describe ah_user;
+describe hompy;
 
 alter table ah_user modify birth_day date null;
 alter table ah_user modify gender varchar(255) null;
@@ -100,3 +107,21 @@ delete
 from hompy;
 alter table hompy
     AUTO_INCREMENT = 1;
+
+insert into board_type (name) values ('게시판');
+insert into board_type (name) values ('사진첩');
+insert into board_type (name) values ('동영상');
+
+delete
+from board_type;
+alter table board_type
+    AUTO_INCREMENT = 1;
+
+delete from payment_history;
+alter table payment_history
+    AUTO_INCREMENT = 1;
+
+
+SELECT SUM(payment) AS total_payment
+FROM payment_history
+WHERE create_at like '2024-08%';

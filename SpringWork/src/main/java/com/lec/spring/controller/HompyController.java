@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -47,6 +48,26 @@ public class HompyController {
 //        hompy.setUser(user); // hompy에 user 정보를 설정
 
         return hompy;
+    }
+
+    @GetMapping("/list")
+    public List<Hompy> hompyList() {
+        return hompyService.hompyList();
+
+    }
+
+    // userId 를 입력받아 해당 유저의 HompyId를 반환함.
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Long> getHompyIdByUserId(@PathVariable Long userId) {
+        User user = new User();
+        user.setId(userId);  // userId를 설정합니다.
+
+        Hompy hompy = hompyService.findHompyByuser(user);
+        if (hompy != null) {
+            return ResponseEntity.ok(hompy.getId());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // 프로필 이미지
@@ -121,7 +142,7 @@ public class HompyController {
             @RequestParam String menuColor,
             @RequestParam String menuStatus) {
 
-      Hompy hompy = hompyService.findById(hompyId);
+        Hompy hompy = hompyService.findById(hompyId);
 
         return hompyService.menu(hompy.getUser(), menuColor, menuStatus);
     }
@@ -195,7 +216,7 @@ public class HompyController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        User user= hompy.getUser();
+        User user = hompy.getUser();
         Long userId = user.getId();
 
         // 필요한 필드만 업데이트
@@ -205,5 +226,17 @@ public class HompyController {
         // 업데이트된 객체를 저장
         Hompy updatedHompy = hompyService.updateHompy(hompy);
         return ResponseEntity.ok(updatedHompy);
+    }
+
+    @PostMapping("/reset")
+    public String reset(@RequestParam Long hompyId) {
+        Hompy hompy = hompyService.findById(hompyId);
+        System.out.println(hompy);
+        if (hompy == null) {
+            return "FAIL";
+        }
+        String result = hompyService.resetHompy(hompy);
+
+        return result;
     }
 }

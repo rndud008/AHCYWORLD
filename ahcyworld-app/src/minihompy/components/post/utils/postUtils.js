@@ -3,6 +3,7 @@ import { CommentAction } from "../../../../redux/actions/CommentAction";
 import { PostAction } from "../../../../redux/actions/PostAction";
 import { list } from "./FolderUtils";
 import { FolderAction } from "../../../../redux/actions/FolderAction";
+import * as Swal from "../../../../apis/alert"
 
 
 export const nameCheck = (postName) => {
@@ -60,7 +61,7 @@ export const download = async (item) => {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   } else {
-    alert("파일이 존재하지 않습니다.");
+    Swal.alert("다운로드 실패","파일이 존재하지 않습니다.","error")
   }
 };
 
@@ -75,7 +76,8 @@ export const postList = (navigate,hompyId,postName,folderId) => {
 };
 
 export const postDelete = async (dispatch,hompyId,postName,folderId,postId,navigate) => {
-  if (!window.confirm("삭제 하시겠습니까?")) return;
+  if (!window.alert('삭제하시겠습니까?')) return;
+
 
   dispatch(
     PostAction.deletePostAxios(hompyId, postName, folderId, postId, navigate)
@@ -119,7 +121,6 @@ export const detailMoveFolder = async (e,dispatch,hompyId,postName,folderId,post
 
 export const changeValue = (e, dispatch) => {
   const id = e.target.id.split("-")[3];
-  console.log('chn',id)
   dispatch(PostAction.moveFolderIdState(id))
 };
 
@@ -137,7 +138,7 @@ export const photoAndVideoCommentListAxios = async (dispatch,postId) => {
   try {
     await dispatch(CommentAction.photoAndVideoCommentListAxios(postId));
   } catch (e) {
-    alert(e);
+    Swal.alert("댓글정보를 받아오는데 실패했습니다","다시한번 시도해주세요.","error")
   }
 };
 
@@ -153,8 +154,8 @@ export const detailListHandleOpen = async (e,setShow,show,dispatch,hompyId,postN
     try {
       await dispatch(FolderAction.getScrapFolderListAxios(hompyId, postName));
     } catch (error) {
-      alert(error.response.data);
-      return;
+     
+      return Swal.alert('스크랩을 진행할수 없습니다.',error.response.data,'error');
     }
 
     setShow({ ...show, scrapFolder: true });
@@ -180,7 +181,6 @@ export const detailListHandleClose = (e,setShow,show) => {
 export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,dispatch,navigate,hompyInfo) => {
   e.preventDefault();
 
-  console.log('scrap',item)
   const response = await api.post(
     `http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${scrapFolderId}`,
     item
@@ -190,7 +190,7 @@ export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,d
   console.log(data);
 
   if (status === 200) {
-    alert("스크랩 완료");
+    Swal.alert("스크랩 완료", "스크랩 게시물로 이동합니다.",'success')
     await dispatch(FolderAction.clickFolder(scrapFolderId));
     navigate(`/hompy/${hompyInfo.id}/${postName}/${scrapFolderId}`);
   } else {
@@ -198,7 +198,7 @@ export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,d
   }
 };
 
-export const writeAndUpdateChangeValue = (e, fileId = "", post, setPost) => {
+export const writeAndUpdateChangeValue = (e, fileId = "", post, setPost,dispatch) => {
   const { value, name } = e.target;
 
   if (fileId !== "") {
@@ -213,6 +213,7 @@ export const writeAndUpdateChangeValue = (e, fileId = "", post, setPost) => {
     console.log('update update',updateFileList)
   } else {
     setPost({ ...post, [name]: value });
+    postValidation(post,dispatch)
   }
 };
 
@@ -229,7 +230,7 @@ export const fileAdd = (post,setPost,action,originFileList="") => {
         ],
       });
     } else {
-      alert("파일은 10개까지만 추가 됩니다.");
+      Swal.alert('파일추가는 10까지 가능합니다.','다시한번 확인해주세요','warning')
     }
   
   }else if(action.includes('UPDATE')){
@@ -243,7 +244,7 @@ export const fileAdd = (post,setPost,action,originFileList="") => {
         ],
       });
     } else {
-      alert("파일은 10개까지만 추가됩니다.");
+      Swal.alert('파일등록은 10개 까지 가능합니다.','다시한번 확인해주세요','warning')
     }
   }
   
@@ -265,8 +266,13 @@ export const fileDelete = (id, post, setPost, e, action, originFileList, setOrig
   }
 };
 
+
 export const writeSubmit = async (e,post,dispatch,hompyId,postName,folderId,navigate) => {
   e.preventDefault();
+
+  const valid = postValidation(post,dispatch);
+
+  if(!valid) return Swal.alert('작성실패','다시한번 확인해주세요','warning')
 
   const formData = new FormData();
 
@@ -294,6 +300,27 @@ export const writeSubmit = async (e,post,dispatch,hompyId,postName,folderId,navi
   );
 };
 
+function postValidation(post,dispatch){
+  let valid =true;
+
+  if(post.subject.trim()==="" || !post?.subject){
+    dispatch(PostAction.postErrorState("subject","제목은 필수 입력 입니다."))
+    valid = false;
+  }else{
+    dispatch(PostAction.postErrorState("subject",false))
+  }
+
+  if(post.content.trim()==="" || !post?.content){
+    dispatch(PostAction.postErrorState("content","내용은 필수 입력 입니다."))
+    valid = false;
+  }else{
+    dispatch(PostAction.postErrorState("content",false))
+  }
+
+  return valid;
+
+}
+
 export const fileReCreate = (id,originFileList,setOriginFileList) => {
   const updateOriginFileList = originFileList.map((item) =>
     item.id !== id ? item : { ...item, status: true }
@@ -303,6 +330,10 @@ export const fileReCreate = (id,originFileList,setOriginFileList) => {
 
 export const updateSubmit = async (e, post, originFileList, hompyId, postName, folderId, navigate, postId, dispatch) => {
   e.preventDefault();
+
+  const valid = postValidation(post, dispatch);
+
+  if(!valid) return Swal.alert('수정실패','다시한번 확인해주세요','warning')
 
   const formData = new FormData();
 

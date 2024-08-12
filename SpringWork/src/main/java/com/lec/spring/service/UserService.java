@@ -41,8 +41,6 @@ public class UserService {
     @Transactional
     public User join(User user, String provider) {
 
-
-
         String username = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
@@ -67,7 +65,7 @@ public class UserService {
 
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
-        user.setEmail(email.toUpperCase());
+        user.setEmail(email.toLowerCase());
         user.setName(name);
         user.setGender(gender);
         user.setBirthDay(birthDay);

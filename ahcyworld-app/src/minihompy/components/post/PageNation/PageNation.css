@@ -1,8 +1,26 @@
 .pageNation {
+  margin-top: 10px;
   display: flex;
   list-style: none;
+  text-align: center;
+  justify-content: center;
 }
 
-.pageNation li a {
+.pageNation a {
   text-decoration: none;
+  margin:0 5px;
+  font-size: 17px;
+  width: 30px;
+  border-radius: 50px;
+  border: 1px solid rgb(235, 101, 12);
+}
+
+.postPageActive {
+  color: white;
+  background-color:  rgb(235, 101, 12);
+  opacity: 0.5;
+}
+
+.pageNation a:hover {
+  background-color:  rgb(235, 101, 12);
 }

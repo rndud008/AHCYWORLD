@@ -3,7 +3,7 @@
 }
 
 .mybox-container {
-    outline: 2px solid black;
+    /* outline: 2px solid black; */
     width: 100%;
     height: 300px;
     max-width: 500px;
@@ -25,12 +25,12 @@
     justify-content: space-between;
 }
 
-.name-box{
+.name-box {
     /* outline: 2px solid red; */
     position: relative;
     left: 55px;
 }
-.btn-box{
+.topbtn-box {
     /* outline: 2px solid blue; */
     margin-top: 20px;
 }
@@ -53,11 +53,14 @@
 
 .logout-btn {
     background: none;
-    border: 0;
+    border: 1px solid rgb(131, 131, 131);
     transition: all 0.3s ease;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 .logout-btn:hover {
     transform: scale(1.1);
+    border: 1px solid rgb(131, 131, 131);
 }
 
 /* 박스 중앙 */
@@ -102,22 +105,42 @@
 .info-box ul li img {
     width: 15px;
     height: 15px;
-
-    position: relative;
-    right: 15px;
 }
 
-.friend-request, .acorn-status {
+.friend-request,
+.acorn-status {
+    /* outline: 2px solid red; */
     transition: all 0.3s ease;
+    border-radius: 10px;
+    padding: 0;
 }
 
-.friend-request:hover, .acorn-status:hover {
+.friend-request:hover {
     cursor: pointer;
-    background-color: #f0f0f0;
-    border-radius: 5px;
+    background: none;
+    border: 1px solid rgb(131, 131, 131);
     transform: scale(1.05);
 }
 
+.my-acorn{
+    display: flex;
+    align-items: center;
+}
+
+.acorn-btn {
+    width: 50px;
+    /* background-color: var(--main-color); */
+    background: none;
+    color: #000;
+    border: 1px solid rgb(131, 131, 131);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.acorn-btn:hover {
+    transform: scale(1.05);
+}
 
 
 /* 박스 하단 */

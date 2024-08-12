@@ -4,12 +4,12 @@ import axios from "axios";
 import { SERVER_HOST } from "../../apis/api";
 
 // login(localStorage.getItem('username'), localStorage.getItem('password'), localStorage.getItem('rememberId'));
-const Payment = (user, acorns, navigatorFunction) => {
-    console.log(user);
+const Payment = (user, acorns, navigatorFunction, friendData) => {
 
     const { IMP } = window;
     IMP.init("imp56251871");
     if (IMP) {
+        
         const data = {
             pg: "html5_inicis", // PG사
             pay_method: "card", // 결제수단
@@ -24,6 +24,7 @@ const Payment = (user, acorns, navigatorFunction) => {
             // 결제 완료 후 콜백 함수
             const savePayment = await {
                 user: { ...user },
+                friendUser: {...friendData.friendUser},
                 merchantUid: data.merchant_uid,
                 impUid: response.imp_uid,
                 payment: acorns * 10,
@@ -42,7 +43,8 @@ const Payment = (user, acorns, navigatorFunction) => {
                     const { data, status, error_msg } = response;
                     if (status === 201) {
                         window.alert("결제 되었습니다.");
-                        navigatorFunction("/member");
+                        console.log(data)
+                        navigatorFunction("/");
                     } else {
                         console.log("실패: " + error_msg);
                     }

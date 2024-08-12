@@ -1,0 +1,17 @@
+.post-list-table tbody tr td{
+  text-align: center;
+  text-decoration: none;
+
+}
+
+.post-list-table tbody tr td a{
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.post-list-table tbody tr td a:hover{
+ scale: 1.2;
+}

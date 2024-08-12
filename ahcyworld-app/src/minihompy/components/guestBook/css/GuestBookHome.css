@@ -1,17 +1,14 @@
 /* 기존 CSS */
 .container {
- background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  height: 750px;
-  /* margin-left: -500px; */
-  display: flex;
-  flex-direction: column; /* 세로로 나열되도록 설정 */
-  padding: 20px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  overflow-y: auto;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 680px;
+    display: flex;
+    flex-direction: column; /* 세로로 나열되도록 설정 */
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 5px;
 }
 
 .form-container {
@@ -37,7 +34,7 @@
 }
 
 .custom-textarea {
-    height: 80px; /* 높이 조절 */
+    height: 100px; /* 높이 조절 */
     resize: none; /* 사용자가 크기 조절하지 못하도록 함 */
 }
 
@@ -54,8 +51,35 @@
 }
 
 .submit-button {
-    padding: 5px 10px;
-    font-size: 14px;
+    font-size: 14px; /* 텍스트 크기 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    background: linear-gradient(145deg, #f0f0f0, #d0d0d0); /* 가벼운 그라데이션 배경 */
+    border: 2px solid #ccc; /* 회색 테두리 */
+    color: #333; /* 텍스트 색상 */
+    font-weight: bold; /* 텍스트 굵기 */
+    cursor: pointer; /* 커서 모양을 포인터로 변경 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감을 주는 그림자 */
+    transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.submit-button:hover {
+    background: linear-gradient(145deg, #e0e0e0, #c0c0c0); /* 마우스 오버 시 배경 색상 변경 */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+    transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.submit-button:active {
+    background: linear-gradient(145deg, #d0d0d0, #b0b0b0); /* 클릭 시 배경 색상 변경 */
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+    transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.submit-button:focus {
+    outline: none; /* 포커스 시 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 약간의 하이라이트 추가 */
 }
 
 .guestbook-container {

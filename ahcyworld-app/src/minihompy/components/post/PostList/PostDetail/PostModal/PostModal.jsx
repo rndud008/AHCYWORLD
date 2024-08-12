@@ -1,13 +1,9 @@
 import React from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import {useNavigate, useParams } from "react-router-dom";
-import {
-  changeValue,
-  handleClose,
-  moveFolder,
-} from "../../../utils/postUtils";
+import { useNavigate, useParams } from "react-router-dom";
+import { changeValue, handleClose, moveFolder } from "../../../utils/postUtils";
 import { useDispatch, useSelector } from "react-redux";
-
+import "./PostModal.style.css";
 
 const PostModal = () => {
   const dispatch = useDispatch();
@@ -38,8 +34,8 @@ const PostModal = () => {
               )
             }
           >
-            <Form.Group>
-              <Form.Label>폴더 리스트 :</Form.Label>
+            <Form.Group className="modalFolderList">
+              <Form.Label>{`<폴더 리스트>`}</Form.Label>
               <div>
                 {folderList &&
                   folderList.map((item) => {
@@ -58,12 +54,14 @@ const PostModal = () => {
               </div>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-              이동
-            </Button>
-            <Button variant="secondary" onClick={() => handleClose(dispatch)}>
-              취소
-            </Button>
+            <div className="modalFolderListButton">
+              <Button variant="primary" type="submit">
+                이동
+              </Button>
+              <Button variant="secondary" onClick={() => handleClose(dispatch)}>
+                취소
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>

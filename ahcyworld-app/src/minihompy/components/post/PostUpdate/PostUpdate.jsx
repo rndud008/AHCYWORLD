@@ -25,6 +25,8 @@ const PostUpdate = () => {
 
   const navigate = useNavigate();
 
+  const errors = useSelector(state => state.post.errors);
+
   useEffect(() => {
     findPost(dispatch, hompyId, postName, folderId, postId);
   }, []);
@@ -39,7 +41,9 @@ const PostUpdate = () => {
   return (
     parseInt(hompyId) === hompyInfo?.id && (
       <Container>
-        <div>{postName && nameCheck(postName) + "수정"}</div>
+        <div className="postName">
+          {postName && nameCheck(postName) + "수정"}
+        </div>
         <Form
           onSubmit={(e) =>
             updateSubmit(
@@ -56,29 +60,32 @@ const PostUpdate = () => {
           }
           encType="multipart/form-data"
         >
-          <Form.Group controlId="formSubject">
+          <Form.Group className="postSubject" controlId="formSubject">
             <Form.Label>제목 :</Form.Label>
             <Form.Control
               type="text"
               name="subject"
               value={post?.subject}
-              onChange={(e) => writeAndUpdateChangeValue(e, "", post, setPost)}
+              onChange={(e) => writeAndUpdateChangeValue(e, "", post, setPost,dispatch)}
               placeholder="제목을 입력하세요."
             />
           </Form.Group>
+          {errors.subject && <div className="error-message">{errors.subject}</div>}
 
-          <Form.Group controlId="formContent">
+          <Form.Group className="postContent" controlId="formContent">
+            <Form.Label>내용 :</Form.Label>
             <Form.Control
               as="textarea"
               name="content"
               value={post?.content}
-              onChange={(e) => writeAndUpdateChangeValue(e, "", post, setPost)}
+              onChange={(e) => writeAndUpdateChangeValue(e, "", post, setPost,dispatch)}
               placeholder="내용을 입력하세요."
               rows={3}
             />
           </Form.Group>
+          {errors.content && <div className="error-message">{errors.content}</div>}
 
-          <div className="write-button-group">
+          <div className="post-button-group">
             <div>
               <Button
                 type="button"
@@ -95,70 +102,75 @@ const PostUpdate = () => {
             </div>
           </div>
 
-          {originFileList &&
-            originFileList?.map((item, idx) => (
-              <Form.Group key={item.id} className="files">
-                <Form.Control
-                  type="text"
-                  name={`originFileList${item.id}`}
-                  value={item.sourceName}
-                  readOnly
-                />
-                {item?.status !== false ? (
-                  <Button
-                    type="button"
-                    variant="danger"
-                    name="originFileList"
-                    onClick={(e) =>
-                      fileDelete(
-                        item.id,
-                        post,
-                        setPost,
-                        e,
-                        "UPDATE",
-                        originFileList,
-                        setOriginFileList
-                      )
-                    }
-                  >
-                    삭제
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    variant="danger"
-                    name="originFileList"
-                    onClick={() =>
-                      fileReCreate(item.id, originFileList, setOriginFileList)
-                    }
-                  >
-                    삭제취소
-                  </Button>
-                )}
-              </Form.Group>
-            ))}
-
-          {post?.fileList.map((item, idx) => (
-            <Form.Group key={item.id} className="files">
-              <Form.Control
-                type="file"
-                name={`fileList${item.id}`}
-                onChange={(e) =>
-                  writeAndUpdateChangeValue(e, item.id, post, setPost)
-                }
-              />
-              <Button
-                type="button"
-                variant="danger"
-                name="fileList"
-                onClick={(e) =>
-                  fileDelete(item.id, post, setPost, e, "UPDATE", "", "")
-                }
-              >
-                삭제
-              </Button>
+          {originFileList && (
+            <Form.Group className="files">
+              {originFileList?.map((item, idx) => (
+                <div className="file">
+                  <Form.Control
+                    type="text"
+                    name={`originFileList${item.id}`}
+                    value={item.sourceName}
+                    readOnly
+                  />
+                  {item?.status !== false ? (
+                    <Button
+                      type="button"
+                      variant="danger"
+                      name="originFileList"
+                      onClick={(e) =>
+                        fileDelete(
+                          item.id,
+                          post,
+                          setPost,
+                          e,
+                          "UPDATE",
+                          originFileList,
+                          setOriginFileList
+                        )
+                      }
+                    >
+                      삭제
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      variant="danger"
+                      name="originFileList"
+                      onClick={() =>
+                        fileReCreate(item.id, originFileList, setOriginFileList)
+                      }
+                    >
+                      삭제취소
+                    </Button>
+                  )}
+                </div>
+              ))}
             </Form.Group>
-          ))}
+          )}
+
+          <Form.Group className="files">
+            {post?.fileList.map((item, idx) => (
+              <div className="file">
+                <Form.Control
+                  type="file"
+                  name={`fileList${item.id}`}
+                  onChange={(e) =>
+                    writeAndUpdateChangeValue(e, item.id, post, setPost)
+                  }
+                />
+                <Button
+                  type="button"
+                  variant="danger"
+                  name="fileList"
+                  onClick={(e) =>
+                    fileDelete(item.id, post, setPost, e, "UPDATE", "", "")
+                  }
+                >
+                  삭제
+                </Button>
+              </div>
+            ))}
+          </Form.Group>
         </Form>
       </Container>
     )

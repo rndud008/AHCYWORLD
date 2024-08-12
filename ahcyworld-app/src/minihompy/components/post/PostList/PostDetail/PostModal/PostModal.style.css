@@ -1,0 +1,35 @@
+.modalFolderList{
+  height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.modalFolderList label:first-child{
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.modalFolderList label{
+  font-size: 17px
+}
+
+.modalFolderList div div{
+  margin-left: 10px;
+}
+
+.modalFolderList label:not(:first-child):hover{
+  margin-left: 10px;
+  scale: 1.2;
+}
+.modalFolderListButton{
+  display: flex;
+  justify-content: center;
+}
+
+.modalFolderListButton button{
+  margin: 10px 5px;
+  width: 100px;
+}

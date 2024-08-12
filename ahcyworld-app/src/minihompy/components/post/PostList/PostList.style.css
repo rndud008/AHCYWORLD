@@ -1,0 +1,31 @@
+.post-list-table{
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: none;
+  align-items: center;
+}
+
+.post-list-table thead tr th {
+  text-align: center;
+}
+
+.postBackImg{
+  background-image:url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDAzMDVfMTIy%2FMDAxNzA5NTgwNjcxMTM1.dlqi3oX-sfSmqFzlYupEBkDw7nm1brLujJLL7tNy2B0g.wvF6gkLRoUpsoXXGI2sIdGr_cXCgZ4LFzEzCb9APIkIg.PNG%2F%25BD%25BA%25C5%25A9%25B8%25B0%25BC%25A6_2024-03-05_042609.png&type=sc960_832");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 500px;
+  width: 100%;
+  font-size: 40px;
+  text-align: center;
+  display: flexbox;
+  align-items: center;
+}
+
+.postBackImg p{
+  background: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 60px;
+}

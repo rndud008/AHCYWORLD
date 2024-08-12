@@ -4,6 +4,7 @@ import { LoginContext } from "../../../../../webpage/components/login/context/Lo
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { folderClick, handleShow } from "../../utils/FolderUtils";
+import "./Folder.style.css";
 
 const Folder = ({ item }) => {
   const { hompyInfo } = useContext(LoginContext);
@@ -15,27 +16,25 @@ const Folder = ({ item }) => {
   return (
     <>
       {folder && (
-        <ListGroup.Item key={item.id} className="d-flex align-items-center">
+        <ListGroup.Item key={item.id} className="board-type-list-group-item">
           <Form.Check
             type="radio"
             id={`folder-radio-${item.id}`}
             name="folder"
             value={item.name}
             label={item.name}
-            className="me-3"
             onClick={(e) =>
               folderClick(e, dispatch, navigate, hompyId, postName)
             }
             checked={item.id === folder.id}
           />
           {parseInt(hompyId) === hompyInfo?.id && (
-            <Button
-              variant="primary"
+            <button
               id={item.id}
               onClick={(e) => handleShow(e, dispatch)}
             >
-              폴더 수정
-            </Button>
+              수정
+            </button>
           )}
         </ListGroup.Item>
       )}
