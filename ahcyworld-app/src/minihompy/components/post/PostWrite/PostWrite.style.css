@@ -1,0 +1,57 @@
+.files{
+  display: flex;
+  flex-direction: column;
+  max-height: 180px;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.file{
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.file button{
+  margin-left: 10px;
+  font-size: 15px;
+  width: 60px;
+}
+
+.post-button-group{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.post-button-group div:nth-child(2) button{
+  margin-left: 5px;
+}
+
+.postName{
+  /* outline: 1px solid blue; */
+  font-size: 25px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  padding: 10px 0;
+}
+.postSubject{
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+}
+.postSubject label{
+  width: 50px;
+}
+.postContent{
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+}
+.postContent label{
+  width: 50px;
+}
+.postContent textarea{
+  resize: none;
+  overflow: auto;
+  height: 300px;
+}

@@ -1,0 +1,95 @@
+.postDetail{
+  /* outline: 1px solid blue; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  padding: 10px 0 ;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.postDetail h4{
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+
+.postDetail button {
+  margin: 0 5px;
+  background: none;
+  border-radius: 30px;
+  height: 40px;
+  color: black;
+}
+.postDetail button:hover {
+  opacity: 0.6;
+  animation: bounce 0.8s infinite;
+}
+@keyframes bounce {
+  0%, 100%{
+    transform: translateY(0);
+  }
+  30%{
+    transform: translateY(-10px);
+  }
+  50%{
+    transform:  translateY(0);
+  }
+  70%{
+    transform: translateY(-5px);
+  }
+}
+
+.postDetailHeader{
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  border-radius: 10px;
+  padding: 0 10px;
+  height: 40px;
+  align-items: center;
+}
+
+.postDetailHeader div span{
+  font-size: 17px;
+}
+
+.postDetailDownloadList{
+  max-height: 80px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.postDetailDownload{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+
+.postDetailDownload span{
+  font-size: 14px;
+}
+
+.postDetailDownload button{
+  display: flex;
+  width: 100px;
+  font-size: 20px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.postDetailDownload button:hover svg{
+  color: black;
+}
+.postDetailContent{
+  margin-top: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}

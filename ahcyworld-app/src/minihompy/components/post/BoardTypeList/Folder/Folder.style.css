@@ -1,0 +1,39 @@
+
+.board-type-list-group-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 45px;
+}
+
+.board-type-list-group-item div{
+  height: 20px;
+}
+.board-type-list-group-item div label{
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+  /* outline: 1px solid rgb(12, 188, 237); */
+}
+
+.board-type-list-group-item div label:hover{
+  margin-left: 10px;
+ scale: 1.2;
+}
+
+
+.board-type-list-group-item button{
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 15px;
+  /* outline: 1px solid rgb(12, 188, 237); */
+}
+
+.board-type-list-group-item button:hover{
+  background-color:  rgba(12, 188, 237,0.5);
+  border-radius: 50px;
+}

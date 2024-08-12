@@ -1,0 +1,29 @@
+.photoAndVideoToggle{
+  margin: 10px 10px 0 10px;
+
+}
+
+.postDetailListCommentList{
+  /* outline: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  height: 150px;
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.postDetailListCommentList p:not(:first-child){
+  overflow-wrap: break-word;
+  margin-bottom: 0;
+  margin-left: 10px;
+  padding-bottom: 5px;
+}
+
+.postDetailComment p:not(:first-child), .postDetailComment button{
+  margin-bottom: 0;
+  margin-left: 10px;
+}

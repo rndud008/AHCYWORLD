@@ -1,0 +1,72 @@
+
+.folder-modal-form{
+  display: flex;
+
+}
+
+.folder-modal-form label{
+  font-size: 15px;
+  margin-bottom: 0;
+  white-space: nowrap;
+  height: 30px;
+
+}
+
+.folder-modal-form input{
+  margin-left: 5px;
+  height: 30px;
+
+}
+
+.folder-status{
+  display: flex;
+  align-items: center;
+}
+
+.folder-status label{
+  flex :3;
+}
+
+.folder-status-value{
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+  flex :9;
+}
+
+.folder-button-group{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.folder-button-group button{
+  margin: 0 5px;
+}
+
+.error-message{
+  margin-top: 10px;
+  color: rgb(255, 33, 33);
+  text-align: center;
+  transform: 0.3s;
+  animation: scale 1s infinite;
+}
+
+@keyframes scale {
+  0%, 100%{
+    transform:scale(1);
+  }
+  20%{
+    transform: scale(1.1);
+  }
+  40%{
+    transform:  scale(1.2);
+  }
+  60%{
+    transform: scale(1.1);
+  }
+  80%{
+    transform: scale(1);
+  }
+}
+

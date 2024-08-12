@@ -1,0 +1,84 @@
+
+.postDetailCommentTool{
+  display: flex;
+  align-items: center;
+}
+
+.commentToggle{
+  flex: 2;
+}
+
+.commentToggle button{
+  width: 120px;
+  height: 30px;
+  padding: 0;
+}
+
+.commentInputSection{
+  flex: 10;
+  display: flex;
+  align-items: center;
+}
+
+.commentInputSection input{
+  height: 30px;
+  flex: 11;
+}
+
+.commentInputSection button{
+  margin-left: 5px;
+  height: 30px;
+  padding: 0;
+  flex:1
+}
+.postDetailCommentList{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  height: 180px;
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+.postDetailComment{
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+.postDetailComment button{
+  padding: 0;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+}
+
+.postDetailComment button:hover svg{
+  color: red;
+}
+.postDetailComment button:hover{
+  background-color: white;
+  border: none;
+}
+.postDetailCommentList p:not(:first-child){
+  overflow-wrap: break-word;
+  margin-bottom: 0;
+  margin-left: 10px;
+  padding-bottom: 5px;
+}
+
+.postDetailComment p, .postDetailComment button{
+  margin-bottom: 0;
+
+}
+
+.commentNotFound{
+  text-align: center;
+  font-size: 17px;
+  margin-top: 10px;
+}
