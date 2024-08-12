@@ -14,6 +14,7 @@ import MyBox from "../components/mybox/MyBox";
 import SlideImg from "../components/slideImg/SlideImg";
 import News from "../components/news/News";
 import BestItem from "../components/bestItem/BestItem";
+import Box from "../components/mybox/Box";
 
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
@@ -120,21 +121,32 @@ const Home = ({itemKind}) => {
 
     return (
         <div className="home-container">
-            <div className="body-container">
-                {isLogin ? (
-                    <StyledMyBox>
-                        <MyBox />
-                    </StyledMyBox>
-                ) : (
-                    <StyledLoginBox>
-                        {" "}
-                        <LoginForm />
-                    </StyledLoginBox>
-                )}
-                <SlideImg className="slideImg" />
+            <div className="content-container">
+                <div className="top-row">
+                    {isLogin ? (
+                        <StyledMyBox>
+                            <MyBox />
+                            <Box />
+                        </StyledMyBox>
+                    ) : (
+                        <StyledLoginBox>
+                            {" "}
+                            <LoginForm />
+                        </StyledLoginBox>
+                    )}
+                    <SlideImg className="slideImg" />
+                </div>
+                
+                <div className="bottom-row">
+                    <div className="new-container">
+                        <News />
+                    </div>
+                    <div className="bestItem-container">
+                        <BestItem />
+                    </div>
+                </div>
             </div>
-            <News className="news" />
-            <BestItem className="bestItem" />
+            
 
             <br />
             <br />

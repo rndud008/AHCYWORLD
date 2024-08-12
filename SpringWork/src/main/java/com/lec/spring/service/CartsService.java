@@ -109,14 +109,12 @@ public class CartsService {
     // Top3 출력
     public Map<String, List<Item>> getTopSellingItems(){
         Map<String, List<Item>> topSellingItems = new HashMap<>();
+        List<String> itemTypes = List.of("배경음악", "글꼴", "스킨", "미니미", "미니룸");
 
-        Pageable topThree = PageRequest.of(0, 3);
-        List<Item> items = cartsRepository.findTopSellingItemsByType(topThree);
-
-        for (Item item : items) {
-            String itemType = item.getItemType();
-
-            topSellingItems.computeIfAbsent(itemType, k -> new ArrayList<>()).add(item);
+        for (String itemType : itemTypes) {
+            Pageable topThree = PageRequest.of(0, 3);
+            List<Item> items = cartsRepository.findTopSellingItemsByType(itemType, topThree);
+            topSellingItems.put(itemType, items);
         }
         return topSellingItems;
     }

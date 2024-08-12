@@ -1,57 +1,53 @@
 /* News.css */
 .news-container {
-    width: 50%; 
-    padding: 20px;
+    width: 100%;
+    padding: 30px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news-title{
+    font-weight: bold;
 }
 
 .news-table {
-    width: 100%; /* 테이블 너비를 100%로 설정 */
-    border-collapse: collapse; /* 테이블 셀 간 경계 제거 */
-    max-height: 500px;
-    overflow-y: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .news-table th, .news-table td {
-    padding: 10px; /* 셀 내 여백 */
-    border: 1px solid #ddd; /* 셀 테두리 색상 */
-    text-align: left; /* 텍스트 왼쪽 정렬 */
+    padding: 15px 20px; /* 넉넉한 패딩 */
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    background-color: #ffffff;
 }
 
 .news-table th {
-    background-color: #f4f4f4; /* 헤더 배경색 */
-    color: #333; /* 헤더 텍스트 색상 */
+    background-color: var(--main-color); /* 주 색상 적용 */
+    color: #ffffff; /* 흰색 텍스트 */
+    font-size: 1.2em;
+    font-weight: 700;
+    text-transform: uppercase; /* 대문자 처리 */
 }
 
 .news-item {
-    cursor: pointer; /* 클릭 가능 커서 */
-    transition: background-color 0.3s; /* 배경색 변경 효과 */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 부드러운 호버 효과 */
 }
 
 .news-item:hover {
-    background-color: #f1f1f1; /* 호버 시 배경색 변경 */
+    background-color: #f4f4f4;
+    transform: translateY(-2px);
 }
 
 .pagination-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination-item {
-    cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    margin: 0 5px;
-    border-radius: 4px;
-    background-color: #f4f4f4;
-    transition: backgound-color 0.3s;
-}
-
-.pagination-item.active {
-    background-color: #007bff; /* 활성 페이지 색상 */
-    color: white; /* 텍스트 색상 */
-}
-
-.pagination-item:hover {
-    background-color: #e9ecef; /* 호버 시 배경색 */
+    align-items: center;
+    margin-top: 30px;
 }

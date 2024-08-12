@@ -5,11 +5,23 @@ import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png";
 import { getLogedUser, myFriendRequests } from "../../../apis/auth";
 import FriendRequestModal from "../../../minihompy/components/friendShip/FriendRequestModal";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { SERVER_HOST } from "../../../apis/api";
+import { Modal } from "react-bootstrap";
+import UpdateUser from "./UpdateUser";
+import * as Swal from "../../../apis/alert";
+
 const MyBox = () => {
     const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
+
+    // 내 정보 수정
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -25,6 +37,16 @@ const MyBox = () => {
 
     const closeFriendRequestModal = () => {
         setIsFriendRequestModalOpen(false);
+    };
+
+    const openEditModal = () => {
+        console.log("userInfo : ", userInfo);
+        console.log("hompyInfo : ", hompyInfo);
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
     };
 
     useEffect(() => {
@@ -44,11 +66,14 @@ const MyBox = () => {
         fetchFriendRequests();
     }, [isLogin, userInfo, isFriendRequstModalOpen]);
 
-    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture}`;
+    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`;
 
-    const changeUserInfo = (id) => {
-        // 내 정보 수정 해야함
-        
+    // 미니 홈피로 이동
+    const moveToHompy = (id) => {
+        // console.log("hompyInfo: ", hompyInfo)
+        const url = `/hompy/${id}`;
+        const windowFeatures = 'width=1500,height=1200,scrollbars=yes,resizable=yes';
+        window.open(url, '_blank', windowFeatures);
     }
 
     return (
@@ -57,7 +82,7 @@ const MyBox = () => {
                 <div className="name-box">{isLogin ? <span>{userInfo.name}</span> : <span></span>}</div>
 
                 <div className="btn-box">
-                    <button onClick={() => {changeUserInfo(userInfo.id)}} className='user-btn'>
+                    <button onClick={openEditModal} className='user-btn'>
                         내 정보 수정
                     </button>
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
@@ -97,8 +122,14 @@ const MyBox = () => {
             </div>
 
             <div className='bottom'>
-                <button className='hompy-btn'>내 미니홈피</button>
+                <button className='hompy-btn' onClick={() => {moveToHompy(hompyInfo.id)}}>내 미니홈피</button>
+                <button className="hompy-btn">알림</button>
             </div>
+
+            <UpdateUser 
+                isEditModalOpen={isEditModalOpen}
+                closeEditModal={closeEditModal}
+            />
         </div>
     );
 };

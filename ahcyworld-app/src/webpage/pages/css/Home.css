@@ -1,21 +1,42 @@
 /* home.css */
 .home-container {
-    outline: 2px solid red;
+    /* outline: 2px solid red; */
     display: flex;
     flex-direction: column;
     align-items: center; 
-    justify-content: flex-start;
     width: 100vw;
     height: 100vh;
 }
 
-.body-container {
-    outline: 2px solid blue;
+.content-container {
+    /* outline: 2px solid blue; */
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;       /* 상단에 맞추어 정렬 */
+    flex-direction: column;
     width: 100%;
     max-width: 1400px;
     box-sizing: border-box; 
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
     margin-bottom: 20px;
+}
+
+.bottom-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1400px;
+    margin-top: 50px;
+}
+
+.new-container {
+    width: 50%;
+}
+
+.bestItem-container {
+    width: 50%;
 }

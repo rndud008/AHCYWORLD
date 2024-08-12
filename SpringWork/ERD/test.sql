@@ -41,7 +41,7 @@ update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 100000
-where id = 5;
+where id = 6;
 
 
 insert into post (create_at, folder_id, content, subject)
@@ -61,7 +61,9 @@ from ah_user
 where username = "user3"
 ;
 
-
+update ah_user
+set password = '$2a$10$OxHpaTkFU5iM71nIXZpeg.HFUaSGW2hawORg31tkbhdMQ9k7eMbEu'
+where id = 1;
 
 
 

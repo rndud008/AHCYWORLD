@@ -2,6 +2,7 @@
 .slideImg-container {
     width: 60%;
     margin: 20px; /* 상하 20px의 여백과 좌우 자동 정렬 */
+    border: 1px solid seagreen;
 }
 
 .carousel .carousel-item img {

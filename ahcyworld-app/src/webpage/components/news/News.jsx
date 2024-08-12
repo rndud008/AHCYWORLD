@@ -68,6 +68,7 @@ const News = () => {
                 <div className='noNews'>Loading...</div>
             ) : news.length > 0 ? (
                 <>
+                <h2 className="news-title">연예 뉴스</h2>
                 <table className='news-table'>
                     <thead>
                         <tr>
@@ -89,17 +90,20 @@ const News = () => {
                     </tbody>
                 </table>
                 
-                <Pagination>
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <Pagination.Item
-                            key={index + 1}
-                            active={index + 1 === currentPage}
-                            onClick={() => paginate(index + 1)}
-                        >
-                            {index + 1}
-                        </Pagination.Item>
-                    ))}
-                </Pagination>
+                <div className="pagination-container">
+                    <Pagination>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <Pagination.Item
+                                key={index + 1}
+                                active={index + 1 === currentPage}
+                                onClick={() => paginate(index + 1)}
+                            >
+                                {index + 1}
+                            </Pagination.Item>
+                        ))}
+                    </Pagination>
+                </div>
+                
                 </>
             ) : (
                 <div className='noNews'>No News Available</div>
