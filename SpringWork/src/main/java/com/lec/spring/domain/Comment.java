@@ -17,11 +17,11 @@ public class Comment extends BaseEntity{
     private Long id;
 
     @ManyToOne(optional = false)
-    @ToString.Exclude
+//    @ToString.Exclude
     private User user;
 
     @ManyToOne(optional = false)
-    @JsonIgnore
+//    @JsonIgnore
     private Post post;
 
     @Column(nullable = false)

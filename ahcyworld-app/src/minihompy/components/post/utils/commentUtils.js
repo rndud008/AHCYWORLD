@@ -18,7 +18,6 @@ export const commentWriteAxios = async (
 ) => {
   try {
 
-    console.log(content,'create')
     const valid = commentValidation(dispatch, content.content, post.id);
 
     if(!valid) return;
