@@ -1,14 +1,21 @@
 /* SlideImg.css */
 .slideImg-container {
     width: 60%;
+    height: 430px;
     margin: 20px; /* 상하 20px의 여백과 좌우 자동 정렬 */
     border: 1px solid seagreen;
 }
 
+.carousel,
+.carousel-item {
+    height: 100%;
+}
+
 .carousel .carousel-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 15px; /* 슬라이드 이미지에 둥근 모서리를 적용 */
+    object-fit: cover;
 }
 
 /* 좌우 버튼 css */
@@ -32,7 +39,13 @@
     color: #ffffff; /* 원하는 아이콘 색상 */
 }
 
+.example-img-container {
+    width: 100%;
+    height: 100%; /* 부모 컨테이너의 높이를 상속받아야 합니다 */
+}
+
 img.example-img {
-    width: 100% ; 
-    height: auto ;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너를 채웁니다 */
 }
