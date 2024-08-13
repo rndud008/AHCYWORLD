@@ -28,6 +28,7 @@ public class UserWriteHistroy extends BaseEntity{
 
     private String username;
 
+    // 게시물, 사진첩, 동영상 (BoardType의 name)
     private String postType;
 
     private String subject;

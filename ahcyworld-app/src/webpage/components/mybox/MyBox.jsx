@@ -48,9 +48,9 @@ const MyBox = () => {
 
     const openMinihompy = () => {
         window.open(
-            "http://localhost:3000/hompy/${hompyId}", // 열고 싶은 URL
+            `http://localhost:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
             "_blank", // 새로운 창을 엽니다.
-            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+            "width=1700,height=850,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
         );
     };
 

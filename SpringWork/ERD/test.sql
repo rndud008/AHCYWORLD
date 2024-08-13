@@ -7,14 +7,17 @@ from hompy;
 select *
 from folder;
 select * from post;
+select * from user_write_histroy;
+
 select * from friend;
 select * from ah_user;
 select* from friend;
 select * from payment_history;
 select * from attachment;
-select * from user_write_histroy;
 select * from board_type;
 select * from email_authentication;
+select * from item;
+
 alter table user_write_histroy drop column update_at;
 #  컬럼 삭제.
 delete from email_authentication;

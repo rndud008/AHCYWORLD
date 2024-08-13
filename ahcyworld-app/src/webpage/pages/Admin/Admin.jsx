@@ -9,13 +9,22 @@ import Users from "./components/Users";
 import PaymentHistory from "./components/PaymentHistory";
 import UserStatistics from "./components/UserStatistics";
 import PaymentStatistics from "./components/PaymentStatistics";
+import PostHistory from "./components/PostHistory";
+import Items from "./components/Items";
+import { FaUser } from "react-icons/fa";
+import { RiGameLine } from "react-icons/ri";
+import { BsPostcard } from "react-icons/bs";
+import { GrHomeRounded } from "react-icons/gr";
+import ItemUpload from "./components/ItemUpload";
 
 const Admin = () => {
     const { isLogin, roles } = useContext(LoginContext);
     const navigate = useNavigate();
     const [openMenu, setOpenMenu] = useState(null);
+    const [subMenu, setSubMenu] = useState(null);
 
     const toggleMenu = (menu) => {
+        // console.log(menu);
         setOpenMenu(openMenu === menu ? null : menu);
     };
 
@@ -36,6 +45,10 @@ const Admin = () => {
         // console.log(roles);
     }, []);
 
+    const handleSubMenuClick = (menu) => {
+        setSubMenu(menu);
+    };
+
     return (
         <>
             {/* {isLogin && roles.isAdmin && ( */}
@@ -52,32 +65,44 @@ const Admin = () => {
                     </div>
                     <div className='menu-box'>
                         <ul>
-                            <li onClick={() => navigate("/admin")}>▶ 메인</li>
+                            <li onClick={() => navigate("/admin")}>
+                                <GrHomeRounded />
+                                &nbsp;메인
+                            </li>
+                            <br />
                             <li>
-                                <div onClick={() => toggleMenu("userManagement")}>▶ 사용자관리</div>
+                                <div onClick={() => toggleMenu("userManagement")}>
+                                    <FaUser />
+                                    &nbsp;사용자관리
+                                </div>
                                 {openMenu === "userManagement" && (
                                     <ul>
-                                        <li>사용자목록</li>
-                                        <li>구매내역</li>
-                                        <li>통계</li>
+                                        <li onClick={() => handleSubMenuClick("userList")}>사용자목록</li>
+                                        <li onClick={() => handleSubMenuClick("paymentHistory")}>구매내역</li>
+                                        <li onClick={() => handleSubMenuClick("statistics")}>통계</li>
                                     </ul>
                                 )}
                             </li>
                             <li>
-                                <div onClick={() => toggleMenu("itemManagement")}>▶ 아이템관리</div>
+                                <div onClick={() => toggleMenu("itemManagement")}>
+                                    <RiGameLine />
+                                    &nbsp;아이템관리
+                                </div>
                                 {openMenu === "itemManagement" && (
                                     <ul>
-                                        <li>아이템리스트</li>
-                                        <li>아이템추가</li>
+                                        <li onClick={() => handleSubMenuClick("itemList")}>아이템리스트</li>
+                                        <li onClick={() => handleSubMenuClick("itemUpload")}>아이템추가</li>
                                     </ul>
                                 )}
                             </li>
                             <li>
-                                <div onClick={() => toggleMenu("postManagement")}>▶ 게시물관리</div>
+                                <div onClick={() => toggleMenu("postManagement")}>
+                                    <BsPostcard />
+                                    &nbsp;게시물관리
+                                </div>
                                 {openMenu === "postManagement" && (
                                     <ul>
-                                        <li>게시글</li>
-                                        <li>게시물</li>
+                                        <li onClick={() => handleSubMenuClick("post")}>게시글목록</li>
                                     </ul>
                                 )}
                             </li>
@@ -87,10 +112,17 @@ const Admin = () => {
                 <div className='main-container'>
                     <div className='headline'>헤드라인</div>
                     <div className='showbox'>
-                        {/* <Users /> */}
-                        {/* <PaymentHistory/> */}
-                        <UserStatistics />
-                        <PaymentStatistics/>
+                        {subMenu === "userList" && <Users />}
+                        {subMenu === "paymentHistory" && <PaymentHistory />}
+                        {subMenu === "statistics" && (
+                            <>
+                                <UserStatistics />
+                                <PaymentStatistics />
+                            </>
+                        )}
+                        {subMenu === "itemList" && <Items />}
+                        {subMenu === "itemUpload" && <ItemUpload />}
+                        {subMenu === "post" && <PostHistory />}
                     </div>
                 </div>
             </div>

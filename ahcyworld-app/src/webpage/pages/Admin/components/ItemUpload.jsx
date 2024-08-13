@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UploadItem = () => {
+const ItemUpload = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const UploadItem = () => {
     );
 };
 
-export default UploadItem;
+export default ItemUpload;
