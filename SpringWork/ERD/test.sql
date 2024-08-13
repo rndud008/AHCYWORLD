@@ -28,12 +28,18 @@ insert into post (create_at,folder_id,content,subject)
 select create_at,folder_id,content,subject
 from friend;
 
-alter table payment_history
-change COLUMN Status status VARCHAR(20);
 
+# 페이먼트 커럼추가
+alter table payment_history
+add status VARCHAR(20);
+# 컬럼에 값 추가
 update payment_history
 set status = 'accept'
 where id = 9;
+# 아이템 이름 변경
+update item
+set item_name = '폰트4'
+where id =  65;
 
 select *
 from diary;
