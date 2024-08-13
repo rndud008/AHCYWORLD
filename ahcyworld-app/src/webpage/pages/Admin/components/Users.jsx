@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { hompyList, resetHompy, userList } from "../../../../apis/auth";
 import "../css/Users.css";
 import Button from "react-bootstrap/esm/Button";
+import { RiHomeHeartLine } from "react-icons/ri";
 
 const Users = () => {
     const { isLogin, roles } = useContext(LoginContext);
@@ -149,11 +150,19 @@ const Users = () => {
                             <td>{user.acorn}</td>
                             <td>{user.createAt}</td>
                             <td className='hompy-btn-box'>
-                                <Button variant="primary" className='minihompy-go' onClick={() => goMinihompy(user.hompyId)}>
-                                    GO
+                                <Button
+                                    variant='primary'
+                                    className='minihompy-go'
+                                    onClick={() => goMinihompy(user.hompyId)}
+                                >
+                                    <RiHomeHeartLine />
                                 </Button>
-                                <Button variant="danger" className='reset-btn' onClick={() => resetMiniHompy(user.hompyId)}>
-                                    초기화
+                                <Button
+                                    variant='danger'
+                                    className='reset-btn'
+                                    onClick={() => resetMiniHompy(user.hompyId)}
+                                >
+                                    reset
                                 </Button>
                             </td>
                         </tr>

@@ -18,7 +18,7 @@ import { userList } from "../../../../apis/auth";
 ChartJS.register(LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PointElement);
 
 const UserStatistics = () => {
-    const [payments, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
     const [userCount, setUserCount] = useState({});
 
     const fetchUsers = async () => {
@@ -36,9 +36,9 @@ const UserStatistics = () => {
     }, []);
 
     useEffect(() => {
-        if (payments.length > 0) {
+        if (users.length > 0) {
             const sum = {};
-            payments.forEach((user) => {
+            users.forEach((user) => {
                 const date = new Date(user.createAt);
                 const month = date.getMonth();
                 const year = date.getFullYear();
@@ -48,7 +48,7 @@ const UserStatistics = () => {
             });
             setUserCount(sum);
         }
-    }, [payments]);
+    }, [users]);
 
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -69,7 +69,7 @@ const UserStatistics = () => {
                     display: true,
                     align: "top",
                     anchor:"end",
-                    
+
                 },
             },
         ],
