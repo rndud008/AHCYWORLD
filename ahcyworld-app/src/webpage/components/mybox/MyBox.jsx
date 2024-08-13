@@ -13,11 +13,14 @@ import UpdateUser from "./UpdateUser";
 import * as Swal from "../../../apis/alert";
 
 const MyBox = () => {
-    const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
+    const { isLogin, logout, userInfo, setUserInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] =
         useState(false);
+
+    // console.log("userInfo : ", userInfo)
+    // console.log("setUserInfo : ", setUserInfo)
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -54,12 +57,20 @@ const MyBox = () => {
         setIsEditModalOpen(false);
     };
 
+    // const handleUserInfoUpdate = (updateUser) => {
+    //     if (typeof setUserInfo === 'function') {
+    //         setUserInfo(updateUser);
+    //     } else {
+    //         console.error("setUserInfo은 함수가 아님");
+    //     }
+    // }
+
     useEffect(() => {
         // console.log(hompyInfo);
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);
-                // console.log(userInfo.username);
+                // console.log(userInfo);
                 // console.log(response.data);
                 // console.log(response.data.length);
                 setFriendRequest(response.data);
@@ -74,15 +85,6 @@ const MyBox = () => {
     const minimiPicture = `${process.env.PUBLIC_URL}/image/${
         hompyInfo.minimiPicture || "default_img.png"
     }`;
-
-    // 미니 홈피로 이동
-    // const moveToHompy = (id) => {
-    //     // console.log("hompyInfo: ", hompyInfo)
-    //     const url = `/hompy/${id}`;
-    //     const windowFeatures =
-    //         "width=1500,height=1200,scrollbars=yes,resizable=yes";
-    //     window.open(url, "_blank", windowFeatures);
-    // };
 
     const openMinihompy = () => {
         window.open(

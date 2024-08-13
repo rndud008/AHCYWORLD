@@ -69,7 +69,7 @@ where username = "user3"
 ;
 
 update ah_user
-set password = '$2a$10$OxHpaTkFU5iM71nIXZpeg.HFUaSGW2hawORg31tkbhdMQ9k7eMbEu'
+set password = '$2a$10$U3WEBM9/kkWLwf8wYDTnvOhtcgESxe4aCS2UzDlgESA.CK5Dvtn.K'
 where id = 1;
 
 

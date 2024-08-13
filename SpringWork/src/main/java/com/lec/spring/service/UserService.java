@@ -130,12 +130,15 @@ public class UserService {
     }
 
     @Transactional
-    public void update(User user) {
-        try {
-            userRepository.save(user);
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException("유저 정보 업데이트 오류", e);
-        }
+    public User update(User user) {
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("유저정보 찾기 실패"));
+
+        existingUser.setName(user.getName());
+        existingUser.setGender(user.getGender());
+        existingUser.setBirthDay(user.getBirthDay());
+        existingUser.setPassword(user.getPassword());
+
+        return userRepository.save(existingUser);
     }
 }

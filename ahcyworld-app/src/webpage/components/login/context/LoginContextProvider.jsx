@@ -197,6 +197,7 @@ const LoginContextProvider = ({ children }) => {
             value={{
                 isLogin,
                 userInfo,
+                setUserInfo,
                 roles,
                 hompyInfo,
                 loginCheck,
