@@ -11,11 +11,13 @@ import { SERVER_HOST } from "../../../apis/api";
 import { Modal } from "react-bootstrap";
 import UpdateUser from "./UpdateUser";
 import * as Swal from "../../../apis/alert";
+import MessageModal from "../Message/MessageModal";
 
 const MyBox = () => {
     const { isLogin, logout, userInfo, setUserInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
+    const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] =
         useState(false);
 
@@ -24,6 +26,18 @@ const MyBox = () => {
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    // 알림 모달창
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+
+    // 메시지 모달
+    const openMessageModal = () => {
+        setIsMessageModalOpen(true);
+    };
+
+    const closeMessageModal = () => {
+        setIsMessageModalOpen(false);
+    };
+    // 메시지 모달
 
     const navigate = useNavigate();
 
@@ -80,17 +94,36 @@ const MyBox = () => {
         };
 
         fetchFriendRequests();
-    }, [isLogin, userInfo, isFriendRequstModalOpen]);
+    }, [isLogin, userInfo, isFriendRequstModalOpen, isMessageModalOpen]);
 
-    const minimiPicture = `${process.env.PUBLIC_URL}/image/${
-        hompyInfo.minimiPicture || "default_img.png"
-    }`;
+
+    useEffect(() => {
+        const fetchMessage = async () => {
+            try{
+                const response = await axios({
+                    method: "GET",
+                    url: `${SERVER_HOST}/payment/acorn/gift/${userInfo.id}`,
+                })
+                setMessageCnt(response.data.length);
+            }catch(error){
+                console.log("에러!!",error)
+            }
+            
+        }
+
+        fetchMessage();
+    }, [isMessageModalOpen])
+
+
+
+    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"
+        }`;
 
     const openMinihompy = () => {
         window.open(
             `http://localhost:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
             "_blank", // 새로운 창을 엽니다.
-            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+            "width=1700,height=850,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
         );
     };
 
@@ -157,25 +190,26 @@ const MyBox = () => {
                             ) : (
                                 <span>0</span>
                             )} */}
-                            <li className="acorn-status">
-                                <span className="my-acorn">
-                                    <img src={acorn} alt="" />
-                                    <span>{userInfo.acorn}</span>
-                                </span>
-                                <button
-                                    className="acorn-btn"
-                                    onClick={openModal}
-                                >
-                                    충전
-                                </button>
-                            </li>
+                        <li className="acorn-status">
+                            <span className="my-acorn">
+                                <img src={acorn} alt="" />
+                                <span>{userInfo.acorn}</span>
+                            </span>
+                            <button
+                                className="acorn-btn"
+                                onClick={openModal}
+                            >
+                                충전
+                            </button>
+                        </li>
                         {/* </li> */}
                     </ul>
                 </div>
             </div>
 
             <div className="bottom">
-                <button className="hompy-btn">알림 0</button>
+                <button className="hompy-btn" onClick={openMessageModal}>알림 {messageCnt}</button>
+                <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} />
                 <button
                     className="hompy-btn"
                     onClick={() => openMinihompy(hompyInfo.id)}

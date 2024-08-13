@@ -33,4 +33,16 @@ public class PaymentHistory extends BaseEntity {
 
     @Column(nullable = false)
     private int acornCnt;          // 도토리 개수
+
+    @Column(nullable = false)
+    private String status;          // 도토리 선물 수락 상태
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

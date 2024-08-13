@@ -16,6 +16,7 @@ import News from "../components/news/News";
 import BestItem from "../components/bestItem/BestItem";
 import Box from "../components/mybox/Box";
 
+
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
     width: 350px;
@@ -41,7 +42,7 @@ const Home = ({itemKind}) => {
 
     /* 모달 상태와 변경 */
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
+ 
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
@@ -56,6 +57,8 @@ const Home = ({itemKind}) => {
         setSelectedFriend(null);
         setIsAddFriendModalOpen(false);
     };
+
+    
 
     /* 모달 상태와 변경 */
 
@@ -98,11 +101,12 @@ const Home = ({itemKind}) => {
                 }
             }
         };
-
         if (userInfo) {
             fetchUsers();
         } else return;
     }, [isAddFriendModalOpen, isLogin]);
+
+    
 
     return (
         <div className="home-container">

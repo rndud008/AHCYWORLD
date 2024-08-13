@@ -43,7 +43,7 @@
 }
 .menu-box ul li {
     /* outline: 2px solid red; */
-    font-size: 14px;
+    font-size: 20px;
     margin: 10px 0;
     font-weight: bold;
     cursor: pointer;
@@ -56,7 +56,7 @@
 .menu-box ul li ul li {
     padding-left: 10px;
     margin: 5px 0;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .menu-box ul li:hover {
