@@ -169,7 +169,7 @@ export const detailListHandleClose = (e,setShow,show) => {
   }
 };
 
-export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,dispatch,navigate,hompyInfo) => {
+export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,dispatch,navigate,hompyInfo,setShow) => {
   e.preventDefault();
 
   const response = await api.post(
@@ -182,6 +182,7 @@ export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,d
 
   if (status === 200) {
     Swal.alert("스크랩 완료", "스크랩 게시물로 이동합니다.",'success')
+    detailListHandleClose(undefined,setShow)
     await dispatch(FolderAction.clickFolder(scrapFolderId));
     navigate(`/hompy/${hompyInfo.id}/${postName}/${scrapFolderId}`);
   } else {

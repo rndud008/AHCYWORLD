@@ -20,9 +20,9 @@ const DetailScrapModal = ({show,setShow,item}) => {
           <Modal.Title>스크랩</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={(e)=>postScrap(e,hompyId,postName,folderId,scrapFolderId,item,dispatch,navigate,hompyInfo)}>
-            <Form.Group>
-              <Form.Label>폴더 리스트 :</Form.Label>
+          <Form onSubmit={(e)=>postScrap(e,hompyId,postName,folderId,scrapFolderId,item,dispatch,navigate,hompyInfo,setShow)}>
+            <Form.Group className="modalFolderList">
+              <Form.Label>{`<폴더 리스트>`}</Form.Label>
               <div>
                 {scrapFolderList &&
                   scrapFolderList.map((scrapFolderItem) => {
@@ -42,6 +42,8 @@ const DetailScrapModal = ({show,setShow,item}) => {
               </div>
             </Form.Group>
 
+            <div className="modalFolderListButton">
+
             <Button variant="primary" type="submit">
               확인
             </Button>
@@ -52,6 +54,7 @@ const DetailScrapModal = ({show,setShow,item}) => {
             >
               취소
             </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>

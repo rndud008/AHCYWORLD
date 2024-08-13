@@ -24,15 +24,13 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
   const result = photoAndVideoCommentList.find(
     (findItem) => parseInt(findItem.postId) === parseInt(item.id)
   );
-
-  console.log(photoAndVideoCommentList, "???");
-  console.log(item, "????");
-  console.log(result && result);
-
   const content = useSelector((state) => state.comment.content);
+  const error = useSelector(state => state.comment.error);
 
   return (
     <>
+      {result &&
+      <>
       <div className="postDetailCommentTool photoAndVideoToggle">
         <div className="commentToggle">
           <Button onClick={() => setCommentShow(!commentShow)}>
@@ -41,7 +39,8 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
         </div>
         <div className="commentInputSection">
           <input
-            onChange={(e) => contentState(dispatch, e.target.value)}
+            value={content.id === result.postId ? content.content : ""}
+            onChange={(e) => contentState(e.target.value, dispatch,result.postId)}
             placeholder="댓글입력"
           />
           <Button
@@ -53,10 +52,13 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
           </Button>
         </div>
       </div>
+      {( error.postId=== result.postId) && error.content && <div className="post-error-message">{error.content}</div>}
+      
+      </>
+      }
 
       {commentShow && (
         <div className="postDetailListCommentList">
-          {console.log(result, "???????")}
           {result?.data?.length === 0 ? (
             <div className="commentNotFound">작성된 댓글이 없습니다.</div>
           ) : (

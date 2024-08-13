@@ -7,6 +7,7 @@ import { axiosPostList } from "./utils/postUtils";
 import { findByHompyIdAxios } from "./utils/hompyUtils";
 import { list } from "./utils/FolderUtils";
 import * as Swal from "../../../apis/alert"
+import { CommentAction } from "../../../redux/actions/CommentAction";
 
 const keyword =['board','photo','video'];
 
@@ -22,6 +23,8 @@ const Post = () => {
     if(keyword.some(item => postName.includes(item))){
       list(postName, dispatch, hompyId);
       findByHompyIdAxios(dispatch, hompyId);
+      dispatch(CommentAction.contentState(false,""));
+      dispatch(CommentAction.contentErrorState("content",false))
     }
   }, [postName, hompyId,dispatch]);
 
@@ -29,6 +32,8 @@ const Post = () => {
     if (folder || folder?.length > 0) {
       try{
         axiosPostList(dispatch, folder?.id, hompyId, postName, page);
+        dispatch(CommentAction.contentState(false,""));
+        dispatch(CommentAction.contentErrorState("content",false))
       }catch(e){
         Swal.alert("게시글을 불러오는데 실패했습니다.",e,"error");
       }
