@@ -15,6 +15,7 @@ import SlideImg from "../components/slideImg/SlideImg";
 import News from "../components/news/News";
 import BestItem from "../components/bestItem/BestItem";
 import Box from "../components/mybox/Box";
+import MessageModal from "../components/Message/MessageModal";
 
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
@@ -41,7 +42,7 @@ const Home = ({itemKind}) => {
 
     /* 모달 상태와 변경 */
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
@@ -56,6 +57,16 @@ const Home = ({itemKind}) => {
         setSelectedFriend(null);
         setIsAddFriendModalOpen(false);
     };
+
+    // 메시지 모달
+    const openMessageModal = () => {
+        setIsMessageModalOpen(true);
+    };
+
+    const closeMessageModal = () => {
+        setIsMessageModalOpen(false);
+    };
+    // 메시지 모달
 
     /* 모달 상태와 변경 */
 

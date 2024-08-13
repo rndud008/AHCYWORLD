@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { SERVER_HOST } from "../../apis/api";
+import { alert, itemconfirm } from "../../apis/alert";
 
 // login(localStorage.getItem('username'), localStorage.getItem('password'), localStorage.getItem('rememberId'));
 const Payment = (user, acorns, navigatorFunction, friendData) => {
@@ -42,9 +43,7 @@ const Payment = (user, acorns, navigatorFunction, friendData) => {
                 }).then((response) => {
                     const { data, status, error_msg } = response;
                     if (status === 201) {
-                        window.alert("결제 되었습니다.");
-                        console.log(data)
-                        navigatorFunction("/");
+                        itemconfirm("구매성공!","아이템을 구매하러 가시겠습니까?","success",()=>navigatorFunction('/item'),()=>{window.location.reload();})
                     } else {
                         console.log("실패: " + error_msg);
                     }

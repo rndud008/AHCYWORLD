@@ -1,32 +1,27 @@
-/* Box.css */
-:root {
-    --main-color: #e66e28;
-}
-
 .box-container {
     width: 100%;
     height: 85px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; /* 간격을 일정하게 */
     padding: 5px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     font-size: 18px;
-    /* border: 1px solid salmon; */
 }
 
-.payment-container, 
+.main-payment-container, 
 .cart-container {
-    width: 100%;
+    width: 45%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .payCart-button {
-    width: 90%;
-    height: 70%;
+    width: 100%; /* 버튼이 컨테이너의 전체 너비를 차지하도록 */
+    height: 60%; 
     background-color: var(--main-color);
     border-radius: 20px;
     color: #ffffff;
@@ -35,6 +30,9 @@
     cursor: pointer;
     transition: all 0.3s ease;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .payCart-button:hover {

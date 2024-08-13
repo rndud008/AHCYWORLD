@@ -15,7 +15,7 @@ const Box = () => {
     return (
         <>
             <div className='box-container'>
-                <div className='payment-container'>
+                <div className='main-payment-container'>
                     <button className='payCart-button'>결제내역</button>
                 </div>
                 <div className='cart-container'>
