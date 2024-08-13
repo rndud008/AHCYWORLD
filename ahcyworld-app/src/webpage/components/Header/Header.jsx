@@ -27,7 +27,7 @@ const Header = ({setItemKind}) => {
         <>
             <div className="header-container">
                 <div className='header-box'>
-                    <div className='logo-box' onClick={() => navigate("/")}>
+                    <div className='logo-container' onClick={() => navigate("/")}>
                         <img src={logo} alt='Acyworld LOGO' />
                     </div>
                     <div className='search-select'>

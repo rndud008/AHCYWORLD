@@ -121,7 +121,7 @@ class PostTest {
         Post post = new Post();
         post.setFolder(folder);
         post.setSubject("해성이가 집에 갔다.");
-        post.setContent("집에서 얼마나 했을까?");
+        post.setContent("집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?");
 
         postRepository.save(post);
 
@@ -129,7 +129,7 @@ class PostTest {
         Post post1 = new Post();
         post1.setFolder(folder1);
         post1.setSubject("해성이가 집에 갔다.");
-        post1.setContent("집에서 얼마나 했을까?");
+        post1.setContent("집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?");
 
         postRepository.save(post1);
         // 사진첩 id 생성을 위해 먼저 저장.
@@ -151,7 +151,7 @@ class PostTest {
         Post post2 = new Post();
         post2.setFolder(folder2);
         post2.setSubject("해성이가 집에 갔다.");
-        post2.setContent("집에서 얼마나 했을까?");
+        post2.setContent("집에서 얼마나 했을까?안했겠지? 그냥 쉬겠지? 당연하지");
 
         postRepository.save(post2);
         // 동영상 id 생성을 위해 먼저 저장.

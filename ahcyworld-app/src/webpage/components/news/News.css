@@ -7,7 +7,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.news-title{
+.news-title {
     font-weight: bold;
 }
 
@@ -21,23 +21,23 @@
 }
 
 .news-table th, .news-table td {
-    padding: 15px 20px; /* 넉넉한 패딩 */
+    padding: 15px 20px;
     border-bottom: 1px solid #eee;
     text-align: left;
     background-color: #ffffff;
 }
 
 .news-table th {
-    background-color: var(--main-color); /* 주 색상 적용 */
-    color: #ffffff; /* 흰색 텍스트 */
+    background-color: var(--main-color);
+    color: #ffffff;
     font-size: 1.2em;
     font-weight: 700;
-    text-transform: uppercase; /* 대문자 처리 */
+    text-transform: uppercase;
 }
 
 .news-item {
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* 부드러운 호버 효과 */
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .news-item:hover {

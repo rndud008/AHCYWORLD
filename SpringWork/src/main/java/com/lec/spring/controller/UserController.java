@@ -126,56 +126,56 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/user-update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id,
-                                              @RequestParam(required = false) String name,
-                                              @RequestParam(required = false) String email,
-                                              @RequestParam(required = false) String gender,
-                                              @RequestParam(required = false) String birthDay,
-                                              @RequestParam(required = false) String password) {
+    @PostMapping("/user-update/{id}")
+    public User updateUser(@PathVariable Long id,
+                           @RequestBody Map<String, String> updatedUserInfo) {
         try {
             User user = userService.findById(id);
 
             // 사용자가 없는 경우
             if (user == null){
                 System.out.println("사용자 정보 없음 : " + id);
-                return ResponseEntity.notFound().build();
+                return null;
             }
 
             // 업데이트
+            String name = updatedUserInfo.get("name");
+            String gender = updatedUserInfo.get("gender");
+            String birthDay = updatedUserInfo.get("birthDay");
+            String password = updatedUserInfo.get("password");
+
             if (name != null) {
                 user.setName(name);
-                System.out.println("setName:" +name);
-            }
-            if (email != null) {
-                user.setEmail(email);
-                System.out.println("setEmail:" +email);
+                System.out.println("setName:" + name);
             }
             if (gender != null) {
                 user.setGender(gender);
-                System.out.println("setGender:" +gender);
+                System.out.println("setGender:" + gender);
             }
-            if (birthDay != null){
+            if (birthDay != null) {
                 try {
                     user.setBirthDay(LocalDate.parse(birthDay));
-                    System.out.println("setBirthDay:" +birthDay);
-                }catch (DateTimeParseException e){
+                    System.out.println("setBirthDay:" + birthDay);
+                } catch (DateTimeParseException e) {
                     // 잘못된 날짜인 경우
-                    return ResponseEntity.badRequest().body("날짜가 잘못 입력됨");
+                    return null;
                 }
             }
             if (password != null) {
+//                if()
                 user.setPassword(passwordEncoder.encode(password));
-                System.out.println("setPassword:" +password);
+                System.out.println("setPassword:" + password);
             }
 
-            userService.update(user);
-            System.out.println("update User 정보 : " + user);
-            return ResponseEntity.ok().build();
+            User updateUser = userService.update(user);
+
+//            System.out.println("유저정보 수정 완료");
+//            System.out.println("update User 정보 : " + user);
+            return updateUser;
 
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+            return null;
         }
     }
 

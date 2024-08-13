@@ -4,13 +4,14 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./css/CalendarStyles.css";
 import moment from "moment-timezone";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryModal from "./DiaryModal";
 import { SERVER_HOST } from "../../../apis/api";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import Layout from "../Layout/Layout";
 import { Button } from "react-bootstrap";
+import * as Swal from "../../../apis/alert";
 
 const DiaryHome = () => {
     const curDate = new Date();
@@ -25,17 +26,19 @@ const DiaryHome = () => {
     const [diaryContent, setDiaryContent] = useState(null);
     const navigate = useNavigate();
     const { hompyInfo, userInfo } = useContext(LoginContext);
+    const { hompyId } = useParams();
+    const [hompy, setHompy] = useState("");
 
     // 로딩시 초기
     useEffect(() => {
         if(userInfo.id === hompyInfo.user.id){
             axios({
                 method: "get",
-                url: `${SERVER_HOST}/cyworld/cy/diaries/list/${hompyInfo.id}/${userInfo.id}`,
+                url: `${SERVER_HOST}/cyworld/cy/diaries/list/${hompyId}/${userInfo.id}`,
             })
                 .then((response) => {
                     const diaries = response.data;
-                    // console.log("diaries:", diaries);
+                    console.log("diaries:", diaries);
                     const formattedDates = diaries.map((diary) => {
                         // console.log("diaryEvenDate : ", diary.eventDate);
                         const localDate = moment(new Date(diary.eventDate)).format(
@@ -44,14 +47,17 @@ const DiaryHome = () => {
                         // console.log("localDate : ", localDate);
                         return localDate;
                     });
+                    setHompy(diaries);
+                    
                     setDayList(formattedDates);
                     // console.log("formattedDates: ", formattedDates);
                 })
                 .catch((error) => {
                     console.error("diary 없음...", error);
                 });
+                console.log("hompyId : ", hompyId);
         }
-    }, [hompyInfo.id, userInfo.id]);
+    }, [hompyId]);
 
     // 현재시간의 월
     const monthOfActiveDate = moment(value).format("YYYY-MM");
@@ -124,9 +130,18 @@ const DiaryHome = () => {
     };
 
     const handleWriteClick = () => {
-        navigate(`/hompy/${hompyInfo.id}/diary/write`, {
-            state: {date: selectedDate},
-        });
+        console.log("hompy : ", hompy);
+        console.log("hompyId : ", typeof(hompyId));
+        console.log("userInfo : ", userInfo); 
+        console.log("hompyInfo.id : ", typeof(hompyInfo.id));
+        if(hompyInfo.id === parseInt(hompyId)){
+            navigate(`/hompy/${hompyInfo.id}/diary/write`, {
+                state: {date: selectedDate},
+            });
+        }else{
+            Swal.alert("작성 권한이 없습니다.", "작성 권한이 없는 유저입니다.", "warning", () => {return})
+        }
+        
     };
 
     const moveToToday = () => {
@@ -137,7 +152,7 @@ const DiaryHome = () => {
 
     return (
         <>
-            <Layout hompy={hompyInfo} user={hompyInfo.user}>
+            <Layout hompy={hompy} user={hompy.user}>
             <div className="calendar-container">
                 <Calendar
                     locale="en-US"

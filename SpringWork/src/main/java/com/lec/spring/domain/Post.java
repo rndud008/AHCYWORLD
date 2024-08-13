@@ -1,8 +1,6 @@
 package com.lec.spring.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lec.spring.listener.WriteEntityListener;
 import jakarta.persistence.*;
 import lombok.*;

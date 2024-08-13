@@ -1,0 +1,81 @@
+.history-sort-box {
+    /* outline: 2px solid blue; */
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sorting-box {
+    /* outline: 2px solid lime; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 300px;
+}
+
+.search-form {
+    /* outline: 2px solid red; */
+    margin-left: 20px;
+}
+
+.search-form input {
+    border: 1px solid gray;
+    border-right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    width: 300px;
+    height: 40px;
+}
+
+.search-form button {
+    border: 1px solid gray;
+    border-left: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #fff;
+
+    height: 40px;
+}
+
+.post-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.post-thead th,
+.post-tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.post-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.post-thead th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.post-tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: auto;
+}
+
+.post-type,
+.subject {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+.minihompy {
+    padding: 5px 10px; /* 버튼 패딩 조정 */
+}
