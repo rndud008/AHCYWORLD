@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class PostTest {
@@ -25,6 +26,8 @@ class PostTest {
     private PostRepository postRepository;
     @Autowired
     private AttachmentRepository attachmentRepository;
+    @Autowired
+    private GuestBookRepository guestBookRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -171,10 +174,22 @@ class PostTest {
 
     @Test
     void test2(){
+        Hompy hompy = hompyRepository.findById(2l).orElse(null);
+//
+//        List<Post> postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy,List.of("전체공개","일촌공개"));
+//        Long today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("게시판")).count();
+//        Long total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("게시판")).count();
+//
+//        System.out.println("total: " +total);
+//        System.out.println("today: " +today);
 
-        User user = userRepository.findById(6l).orElse(null);
-        user.setPassword(passwordEncoder.encode("1234"));
-        userRepository.save(user);
+        List<GuestBook> guestBookList = guestBookRepository.findByHompyId(hompy.getId());
+
+        Long today = guestBookList.stream().filter(guestBook -> guestBook.getCreateAt().toLocalDate().equals(LocalDate.now())).count();
+        Long total = guestBookList.stream().count();
+
+        System.out.println("total: " + total);
+        System.out.println("today: " + today);
 
     }
 

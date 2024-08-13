@@ -31,7 +31,6 @@ import Item from "./webpage/pages/Item";
 function App() {
   const [itemkind, setItemKind] = useState('all');
   const [userId, setUserId] = useState(null);
-  const [page, setPage] = useState(0);
   const { userInfo, hompyInfo } = useContext(LoginContext);
   const folder = useSelector((state) => state.folder.folder);
 
@@ -56,16 +55,16 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route
               path="guestbook"
-              element={<GuestBookHome setUserId={setUserId} />}
+              element={<GuestBookHome />}
             />
-            <Route path=":postName" element={<Post page={page} />}>
+            <Route path=":postName" element={<Post />}>
               <Route
                 path=":folderId"
                 element={
                   folder && folder.boardType?.name.includes("게시판") ? (
                     <PostList />
                   ) : (
-                    <PostListDetail setPage={setPage} />
+                    <PostListDetail />
                   )
                 }
               />

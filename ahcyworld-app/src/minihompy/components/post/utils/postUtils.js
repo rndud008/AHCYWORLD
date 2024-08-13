@@ -76,8 +76,7 @@ export const postList = (navigate,hompyId,postName,folderId) => {
 };
 
 export const postDelete = async (dispatch,hompyId,postName,folderId,postId,navigate) => {
-  if (!window.alert('삭제하시겠습니까?')) return;
-
+  if (!window.confirm('삭제하시겠습니까?')) return;
 
   dispatch(
     PostAction.deletePostAxios(hompyId, postName, folderId, postId, navigate)
@@ -293,6 +292,8 @@ export const writeSubmit = async (e,post,dispatch,hompyId,postName,folderId,navi
 };
 
 function postValidation(post,dispatch){
+
+  console.log(post,'?')
   let valid =true;
 
   if(post.subject.trim()==="" || !post?.subject){
@@ -352,6 +353,7 @@ export const updateSubmit = async (e, post, originFileList, hompyId, postName, f
   formData.append(`delFile`, JSON.stringify(delFileIds));
 
   dispatch(PostAction.postUpdate(hompyId,postName,folderId,formData,navigate,postId,dispatch))
+  dispatch(PostAction.axiosPostList)
 };
 
 export const findPost = async (dispatch,hompyId,postName,folderId,postId) => {

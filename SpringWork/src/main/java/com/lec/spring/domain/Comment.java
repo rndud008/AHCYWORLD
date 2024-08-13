@@ -21,6 +21,7 @@ public class Comment extends BaseEntity{
     private User user;
 
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Post post;
 
     @Column(nullable = false)

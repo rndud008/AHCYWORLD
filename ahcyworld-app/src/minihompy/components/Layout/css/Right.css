@@ -193,3 +193,7 @@ li span {
   justify-content: flex-start;
 
 }
+
+.newListItem{
+  cursor: pointer;
+}
