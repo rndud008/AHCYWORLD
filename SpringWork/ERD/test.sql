@@ -22,6 +22,12 @@ insert into post (create_at,folder_id,content,subject)
 select create_at,folder_id,content,subject
 from friend;
 
+alter table payment_history
+change COLUMN Status status VARCHAR(20);
+
+update payment_history
+set status = 'accept'
+where id = 9;
 
 select *
 from diary;

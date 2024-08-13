@@ -11,6 +11,7 @@ import LoginForm from "../components/login/login/LoginForm";
 import "./css/Home.css";
 import { LoginContext } from "../components/login/context/LoginContextProvider";
 import MyBox from "../components/mybox/MyBox";
+import MessageModal from "../components/Message/MessageModal";
 
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
@@ -37,7 +38,7 @@ const Home = ({itemKind}) => {
 
     /* 모달 상태와 변경 */
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
@@ -52,6 +53,16 @@ const Home = ({itemKind}) => {
         setSelectedFriend(null);
         setIsAddFriendModalOpen(false);
     };
+
+    // 메시지 모달
+    const openMessageModal = () => {
+        setIsMessageModalOpen(true);
+    };
+
+    const closeMessageModal = () => {
+        setIsMessageModalOpen(false);
+    };
+    // 메시지 모달
 
     /* 모달 상태와 변경 */
 
@@ -157,6 +168,8 @@ const Home = ({itemKind}) => {
                     onClose={closeAddFriendModal}
                     selectedFriend={selectedFriend}
                 /> */}
+                <button style={{width: 100, height: 100}} onClick={openMessageModal}>알림 {}</button>
+                <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal}/>
             </div>
         </div>
     );
