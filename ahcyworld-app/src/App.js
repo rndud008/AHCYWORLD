@@ -26,7 +26,6 @@ import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
 import Home from "./webpage/pages/Home";
 import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
 import Item from "./webpage/pages/Item";
-import Admin from "./webpage/pages/Admin/Admin";
 
 
 function App() {
