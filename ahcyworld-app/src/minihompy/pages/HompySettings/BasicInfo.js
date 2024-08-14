@@ -11,7 +11,7 @@ const BasicInfo = ({user}) => {
         </div>
         <div className='basicinfo'>
           <h3><label>이메일</label></h3>
-          <input type='text' value={user.email} readOnly/>
+          <input type='text' value={user.email} className='basic-email-input' readOnly/>
         </div>
         <div className='basicinfo'>
           <h3><label>이름</label></h3>

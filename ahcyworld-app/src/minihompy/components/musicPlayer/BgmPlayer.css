@@ -8,35 +8,41 @@
   z-index: 1;
 }
 
-.cover-image {
-  width: 100px;
+/* .cover-image {
+  width: 350px;
   display: flex;
   justify-content: center;
   margin :10px 0;
-  /* outline: 1px solid lawngreen; */
+  outline: 1px solid lawngreen;
 }
 
 .cover-image img {
   width: 430px; 
   height: 100px;
   border-radius: 5px;
-}
+} */
 
 .track-info {
   width: 100%;
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 14px;
+  /* margin-bottom: 10px; */
+  padding: 10px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .controls {
   display: flex;
   align-items: center;
   width: 100%;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
 }
-.controls-box{
+
+.controls-box {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .controls button {
@@ -55,6 +61,90 @@
   margin: 0 5px;
 }
 
-.controls span {
-  font-size: 12px;
+
+bgm 모달
+/* 모달 창 배경 */
+.modal-bgm {
+  position: absolute;
+  top: 100%; /* BGM 플레이어 바로 아래에 배치 */
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 검은 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 모달이 위쪽에 붙음 */
+  z-index: 1000;
+}
+
+/* 모달 콘텐츠 */
+.bgm-modal-content {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%; /* 전체 너비 */
+  max-width: 400px; /* 최대 너비 제한 */
+  max-height: 660px; /* 최대 높이 설정 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 아래쪽 그림자 */
+  text-align: center;
+  overflow-y: auto; /* 콘텐츠가 넘치면 스크롤 생성 */
+}
+
+/* 모달 타이틀 */
+.bgm-modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: #333;
+  font-weight: bold;
+}
+
+.bgm-list {
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: left;
+}
+
+.bgm-list:hover {
+  background-color: #cccccc; /* 호버 시 배경색 변경 */
+}
+
+/* 닫기 버튼 스타일 */
+.bgm-modal-btn {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #4c80ff, #3366cc);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+/* 마우스 오버 시 스타일 */
+.bgm-modal-btn:hover {
+  background: linear-gradient(145deg,#4c8aff, #4c8eff);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+/* 클릭 시 스타일 */
+.bgm-modal-btn:active {
+  background: linear-gradient(145deg, #3a66cc, #2b4c99);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(1px); 
+}
+
+/* 포커스 시 스타일 */
+.bgm-modal-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
 }

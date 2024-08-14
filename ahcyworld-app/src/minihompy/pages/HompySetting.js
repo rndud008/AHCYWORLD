@@ -43,7 +43,7 @@ const HompySetting = () => {
       case "menu":
         return <MenuSetting />;
       case "friendShip":
-        return <FriendShip />;
+        return <FriendShip user={hompy.user} />;
       case "hompySkin":
         return <HompySkin />;
       case "hompyFont":

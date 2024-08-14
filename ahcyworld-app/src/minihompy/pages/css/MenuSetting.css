@@ -1,0 +1,85 @@
+.MenuSetting-container {
+  background-color: #EEEEEE;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  width: 100%;
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-visibility {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menusetting-item {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 8px;
+}
+
+.menusetting-button {
+  padding: 6px 30px;
+  border-radius: 5px;
+  border: 2px solid;
+  cursor: pointer;
+}
+
+.visibility-options {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.menu-color {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  margin-bottom: 10px;
+}
+
+.color-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menusave-button {
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+  border: 2px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.menusave-button:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.menusave-button:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(1px);
+}
+
+.menusave-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+

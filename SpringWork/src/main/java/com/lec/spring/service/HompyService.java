@@ -96,14 +96,6 @@ public class HompyService {
         }
     }
 
-    // 메뉴 상태 및 색상 설정
-    public Hompy menu(User user, String menuColor, String menuStatus) {
-        Hompy hompy = hompyRepository.findByUser(user);
-        hompy.setMenuColor(menuColor);
-        hompy.setMenuStatus(menuStatus);
-        return hompyRepository.save(hompy);
-    }
-
     // 방문자 수
     public Hompy visitCnt(User user) {
         Hompy hompy = hompyRepository.findByUser(user);
@@ -160,5 +152,19 @@ public class HompyService {
 
 
         return "success";
+    }
+
+    // 메뉴색상 및 보이기 숨기기
+    public Hompy updateMenuSettings(User user, String menuColor, String menuStatus, String menuText, String menuBorder) {
+        Hompy hompy = hompyRepository.findByUser(user);
+        if (hompy != null) {
+            hompy.setMenuColor(menuColor);
+            hompy.setMenuStatus(menuStatus);
+            hompy.setMenuText(menuText);
+            hompy.setMenuBorder(menuBorder);
+            return hompyRepository.save(hompy);
+        } else {
+            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
+        }
     }
 }

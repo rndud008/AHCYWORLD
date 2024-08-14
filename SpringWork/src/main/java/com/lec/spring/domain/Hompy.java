@@ -42,6 +42,8 @@ public class Hompy {
     private String profile;
 
     private String menuColor; // 배경, 글자, 테두리 설정.
+    private String menuText;
+    private String menuBorder;
     private String menuStatus;  // 게시판, 사진첩, 동영상, 방명록 (visible, invisible 설정.)
 
 
@@ -70,6 +72,28 @@ public class Hompy {
         // 미니홈피 스킨 기본이미지
         if (this.miniHompySkin == null) {
             this.miniHompySkin = "background.png";
+        }
+
+        // 미니홈피 스킨 기본이미지
+        if (this.miniHompySkin == null) {
+            this.miniHompySkin = "background.png";
+        }
+
+        // 메뉴 관련 기본값 설정
+        if (this.menuColor == null) {
+            this.menuColor = "#147DAF"; // 기본 배경 색상
+        }
+
+        if (this.menuText == null) {
+            this.menuText = "#fff"; // 기본 글자 색상
+        }
+
+        if (this.menuBorder == null) {
+            this.menuBorder = "#000000"; // 기본 테두리 색상
+        }
+
+        if (this.menuStatus == null) {
+            this.menuStatus = "visible,visible,visible,visible"; // 기본 메뉴 상태 (모두 visible)
         }
     }
 }

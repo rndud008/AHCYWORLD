@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -136,19 +137,6 @@ public class HompyController {
         }
     }
 
-
-    // 메뉴 상태 및 색상 설정
-    @PostMapping("/{hompyId}/menu")
-    public Hompy updateMenu(
-            @PathVariable Long hompyId,
-            @RequestParam String menuColor,
-            @RequestParam String menuStatus) {
-
-        Hompy hompy = hompyService.findById(hompyId);
-
-        return hompyService.menu(hompy.getUser(), menuColor, menuStatus);
-    }
-
     // 방문자 수
     @PostMapping("/{hompyId}/visit")
     public ResponseEntity<Hompy> visitCnt(@PathVariable Long hompyId) {
@@ -207,29 +195,6 @@ public class HompyController {
         return ResponseEntity.ok().body(Map.of("minihomeyskinPicture", minihomeyskinPicturePath));
     }
 
-    // 메뉴 상태 + 메뉴 색 바꾸기
-    @PostMapping("/{hompyId}/setting")
-    public ResponseEntity<Hompy> setting(@PathVariable Long hompyId, @RequestBody Hompy updateHompy) {
-        // 기존 Hompy 객체를 가져옴
-        Hompy hompy = hompyService.findById(hompyId);
-
-        // hompyId로 Hompy 객체를 찾지 못한 경우
-        if (hompy == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        User user = hompy.getUser();
-        Long userId = user.getId();
-
-        // 필요한 필드만 업데이트
-        hompy.setMenuColor(updateHompy.getMenuColor());
-        hompy.setMenuStatus(updateHompy.getMenuStatus());
-
-        // 업데이트된 객체를 저장
-        Hompy updatedHompy = hompyService.updateHompy(hompy);
-        return ResponseEntity.ok(updatedHompy);
-    }
-
     @PostMapping("/reset")
     public String reset(@RequestParam Long hompyId) {
         Hompy hompy = hompyService.findById(hompyId);
@@ -240,5 +205,49 @@ public class HompyController {
         String result = hompyService.resetHompy(hompy);
 
         return result;
+    }
+
+    // 메뉴 색상 및 보이기 숨기기
+    @GetMapping("/{hompyId}/menu-settings")
+    public ResponseEntity<?> getMenuSettings(@PathVariable Long hompyId) {
+        try {
+            Hompy hompy = hompyService.findById(hompyId);
+            if (hompy == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 홈피를 찾을 수 없습니다.");
+            }
+
+            Map<String, String> settings = new HashMap<>();
+            settings.put("menuColor", hompy.getMenuColor());
+            settings.put("menuStatus", hompy.getMenuStatus());
+            settings.put("menuText", hompy.getMenuText());
+            settings.put("menuBorder", hompy.getMenuBorder());
+
+            return ResponseEntity.ok(settings);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("설정을 불러오는 중 오류가 발생했습니다.");
+        }
+    }
+
+
+    @PostMapping("/{hompyId}/menu-settings")
+    public ResponseEntity<?> updateMenuSettings(@PathVariable Long hompyId, @RequestBody Map<String, String> settings) {
+        try {
+            Hompy hompy = hompyService.findById(hompyId);
+            if (hompy == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 홈피를 찾을 수 없습니다.");
+            }
+
+            User user = hompy.getUser();
+            String menuColor = settings.get("menuColor");
+            String menuStatus = settings.get("menuStatus");
+            String menuText = settings.get("menuText");
+            String menuBorder = settings.get("menuBorder");
+
+            Hompy updatedHompy = hompyService.updateMenuSettings(user, menuColor, menuStatus, menuText, menuBorder);
+
+            return ResponseEntity.ok(updatedHompy);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("설정 저장 중 오류가 발생했습니다.");
+        }
     }
 }
