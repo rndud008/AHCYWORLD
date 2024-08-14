@@ -13,7 +13,7 @@
 .file button{
   margin-left: 10px;
   font-size: 15px;
-  width: 60px;
+  width: 100px;
 }
 
 .post-button-group{
@@ -64,6 +64,8 @@
   transform: 0.3s;
   animation: scale 1s infinite;
 }
+
+
 
 @keyframes scale {
   0%, 100%{

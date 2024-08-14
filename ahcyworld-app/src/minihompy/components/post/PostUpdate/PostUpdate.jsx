@@ -12,6 +12,7 @@ import {
   writeAndUpdateChangeValue,
 } from "../utils/postUtils";
 import { LoginContext } from "../../../../webpage/components/login/context/LoginContextProvider";
+import "./PostUpdate.style.css"
 
 const PostUpdate = () => {
   const { hompyId, postName, folderId, postId } = useParams();
@@ -108,6 +109,7 @@ const PostUpdate = () => {
                 <div className="file">
                   <Form.Control
                     type="text"
+                    className={item.status === false ? "textLineThrough": ""}
                     name={`originFileList${item.id}`}
                     value={item.sourceName}
                     readOnly

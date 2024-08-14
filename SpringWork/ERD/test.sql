@@ -17,7 +17,10 @@ select * from attachment;
 select * from board_type;
 select * from item;
 select * from carts;
+select *
+from diary;
 
+select * from attachment where post_id='7285';
 select * from email_authentication;
 
 

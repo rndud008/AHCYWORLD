@@ -24,7 +24,6 @@ public class Post extends BaseEntity{
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @Builder.Default // builder 제공안함.
-
     @ToString.Exclude
     private List<Attachment> fileList = new ArrayList<>();
 
@@ -35,7 +34,7 @@ public class Post extends BaseEntity{
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "folder_id")
-//    @JsonManagedReference
+    @ToString.Exclude
     private Folder folder;
 
     @Column(nullable = false)

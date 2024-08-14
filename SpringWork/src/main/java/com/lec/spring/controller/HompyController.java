@@ -13,6 +13,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,6 +97,7 @@ public class HompyController {
     // 파일 저장 메서드
     private String saveFile(MultipartFile file) {
         String fileName = file.getOriginalFilename();
+
         Path filePath = Paths.get(UPLOADDIR, fileName);
         try {
             Files.write(filePath, file.getBytes());

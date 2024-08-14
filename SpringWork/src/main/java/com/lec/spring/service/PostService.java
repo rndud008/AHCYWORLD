@@ -6,6 +6,7 @@ import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -22,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +44,18 @@ public class PostService {
     private final UserRepository userRepository;
     private final AttachmentRepository attachmentRepository;
     private final CommentRepository commentRepository;
+    private final GuestBookRepository guestBookRepository;
+    private final DiaryRepository diaryRepository;
 
-    public PostService(FolderRepository folderRepository, PostRepository postRepository, UserRepository userRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository) {
+
+    public PostService(FolderRepository folderRepository, PostRepository postRepository, UserRepository userRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository, GuestBookRepository guestBookRepository, DiaryRepository diaryRepository) {
         this.folderRepository = folderRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.attachmentRepository = attachmentRepository;
         this.commentRepository = commentRepository;
+        this.guestBookRepository = guestBookRepository;
+        this.diaryRepository = diaryRepository;
     }
 
     private Attachment upload(MultipartFile multipartFile) {
@@ -161,6 +168,7 @@ public class PostService {
         if (file.exists()) {
             if (file.delete()) {
                 System.out.println("삭제성공");
+
             } else {
                 System.out.println("삭제 실패");
             }
@@ -267,7 +275,7 @@ public class PostService {
             List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
             setImageAndVideo(fileList);
             post.setFileList(fileList);
-        post.setUpdateViews(false);
+            post.setUpdateViews(false);
         }
 
         return post;
@@ -291,10 +299,14 @@ public class PostService {
 
             if (delFile != null) {
                 for (Long fileId : delFile) {
+                    System.out.println("찾기 시작");
                     Attachment file = attachmentRepository.findById(fileId).orElse(null);
                     if (file != null) {
+                        System.out.println(file.getId() + "????");
                         deleteFile(file);
+                        oringPost.getFileList().remove(file);
                         attachmentRepository.delete(file);
+                        System.out.println(file.getId() + "삭제완료");
                     }
                 }
             }
@@ -342,7 +354,7 @@ public class PostService {
 
         Post originPost = postRepository.findById(post.getId()).orElse(null);
         Post copyPost = Post.builder()
-                .subject("[스크랩]"+originPost.getSubject())
+                .subject("[스크랩]" + originPost.getSubject())
                 .content(originPost.getContent())
                 .folder(scrapFolder)
                 .updateViews(true)
@@ -378,6 +390,70 @@ public class PostService {
         commentRepository.save(comment);
 
         return copyPost;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Post> hompyNewList(Hompy hompy, String action) {
+        Pageable pageable = PageRequest.of(0, 5);
+
+        if (action.equals("OWNER") || action.equals("FRIEND")) {
+
+            return postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, pageable, List.of("전체공개", "일촌공개"));
+        } else {
+
+            return postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, pageable, List.of("전체공개"));
+        }
+
+    }
+
+    @Transactional(readOnly = true)
+    public MiniHompyInfoCountDTO hompyInfoPostCount(Hompy hompy, String action) {
+        MiniHompyInfoCountDTO miniHompyInfoCountDTO = new MiniHompyInfoCountDTO();
+
+        List<Post> postList = new ArrayList<>();
+
+        if (action.equals("OWNER") || action.equals("FRIEND")) {
+
+            postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개", "일촌공개"));
+        } else {
+
+            postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개" ));
+        }
+
+        long today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("게시판")).count();
+        long total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("게시판")).count();
+
+        miniHompyInfoCountDTO.setTodayBoard(today);
+        miniHompyInfoCountDTO.setTotalBoard(total);
+
+        today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("사진첩")).count();
+        total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("사진첩")).count();
+        miniHompyInfoCountDTO.setTodayPhoto(today);
+        miniHompyInfoCountDTO.setTotalPhoto(total);
+
+        today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("동영상")).count();
+        total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("동영상")).count();
+
+        miniHompyInfoCountDTO.setTodayVideo(today);
+        miniHompyInfoCountDTO.setTotalVideo(total);
+
+        List<GuestBook> guestBookList = guestBookRepository.findByHompyId(hompy.getId());
+
+        today = guestBookList.stream().filter(guestBook -> guestBook.getCreateAt().toLocalDate().equals(LocalDate.now())).count();
+        total = guestBookList.stream().count();
+
+        miniHompyInfoCountDTO.setTodayGuestBook(today);
+        miniHompyInfoCountDTO.setTotalGuestBook(total);
+
+        List<Diary> diaryList = diaryRepository.findByHompyId(hompy.getId());
+
+        today = diaryList.stream().filter(diary -> diary.getCreateAt().toLocalDate().equals(LocalDate.now())).count();
+        total = diaryList.stream().count();
+
+        miniHompyInfoCountDTO.setTodayDiary(today);
+        miniHompyInfoCountDTO.setTotalDiary(total);
+
+        return miniHompyInfoCountDTO;
     }
 
 

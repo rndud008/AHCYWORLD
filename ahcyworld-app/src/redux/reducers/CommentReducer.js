@@ -3,7 +3,8 @@ const initialState ={
   comment:{},
   photoAndVideoCommentList:[],
   show:false,
-  content:""
+  content:{},
+  error:{}
 }
 
 function CommentReducer(state=initialState,action){
@@ -25,7 +26,15 @@ function CommentReducer(state=initialState,action){
     case "COMMENT_SHOW_STATE":
       return{...state, show:payload.data}
     case "CONTENT_STATE":
-      return{...state, content:payload.data}
+      return{...state, content:{...state.content,
+        id:payload.postId,
+        content:payload.data
+      }}
+    case "CONTENT_ERROR_STATE":
+      return{...state, error:{
+        postId:payload.postId,
+        content:payload.value
+      }}
     default:
       return{...state}
   }

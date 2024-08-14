@@ -96,9 +96,15 @@ function showState(data){
   }
 }
 
-function contentState(data){
+function contentState(data,postId){
   return (dispatch,getState) =>{
-    dispatch({type:"CONTENT_STATE", payload:{data}})
+    dispatch({type:"CONTENT_STATE", payload:{data,postId}})
+  }
+}
+
+function contentErrorState(postId,value){
+  return (dispatch, getState) =>{
+    dispatch({type:"CONTENT_ERROR_STATE",payload:{postId,value}})
   }
 }
 
@@ -110,4 +116,5 @@ export const CommentAction = {
   photoAndVideoUpdate,
   showState,
   contentState,
+  contentErrorState,
 };

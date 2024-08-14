@@ -21,6 +21,9 @@ const Comment = () => {
   const show = useSelector((state) => state.comment.show);
   const content = useSelector((state) => state.comment.content);
   const post = useSelector((state) => state.post.post);
+  const error = useSelector(state => state.comment.error)
+  
+  console.log(post,'?????????')
 
   return (
     <>
@@ -32,7 +35,8 @@ const Comment = () => {
         </div>
         <div className="commentInputSection">
           <input
-            onChange={(e) => contentState(dispatch, e.target.value)}
+            value={content.content ? content.content :""}
+            onChange={(e) => contentState(e.target.value, dispatch, post.id )}
             placeholder="댓글입력"
           />
           <Button
@@ -44,6 +48,8 @@ const Comment = () => {
           </Button>
         </div>
       </div>
+      
+      {( error.postId=== post.id) && error.content && <div className="post-error-message">{error.content}</div>}
       {show && (
         <div className="postDetailCommentList">
           {commentList.count === 0

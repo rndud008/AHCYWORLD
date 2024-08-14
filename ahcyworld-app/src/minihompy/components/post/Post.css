@@ -34,7 +34,6 @@
 
 .postContainer{
   overflow: hidden;
-  outline: 1px solid blue;
   overflow-y: auto;
   scrollbar-width: thin;
   overflow-x: hidden;

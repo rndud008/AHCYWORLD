@@ -1,0 +1,5 @@
+.textLineThrough{
+  text-decoration: line-through;
+  background-color: cornflowerblue;
+  color: white;
+}

@@ -7,6 +7,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Swal from 'sweetalert2';
 import './css/Profile.css';
 import { LoginContext } from "../../webpage/components/login/context/LoginContextProvider";
+import { hompyInfo } from "../../apis/auth";
 
 const Profile = () => {
     console.log('Profile 실행')
@@ -15,7 +16,7 @@ const Profile = () => {
     const [profile, setProfile] = useState(""); 
     const [isReadOnly, setIsReadOnly] = useState(true); // CKEditor의 읽기 전용 상태 관리
     const [buttonLabel, setButtonLabel] = useState("프로필 수정"); // 버튼 라벨 관리
-    const {userInfo} = useContext(LoginContext);
+    const {userInfo,hompyInfo} = useContext(LoginContext);
 
 
     useEffect(() => {
@@ -74,9 +75,14 @@ const Profile = () => {
                         setProfile(data);
                     }}
                 />
+                {console.log('hompyinfo ',hompyInfo.id)}
+                {console.log('hompyId ',hompyId)}
+                {parseInt(hompyInfo.id) === parseInt(hompyId) &&
+                
                 <div className="button-container">
                     <button className="profile-btn" onClick={handleProfileUpdate}>{buttonLabel}</button>
                 </div>
+                }
             </div>
         </Layout>
     );
