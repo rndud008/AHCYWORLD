@@ -28,3 +28,7 @@
   border-radius: 5px; /* 모서리 둥글게 */
   background-color: #fff; /* 인풋 배경색 */
 }
+
+.basic-email-input {
+  width: 280px !important;
+}

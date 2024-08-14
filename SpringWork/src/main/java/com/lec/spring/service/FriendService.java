@@ -4,9 +4,12 @@ import com.lec.spring.domain.Friend;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.FriendRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FriendService {
@@ -106,4 +109,41 @@ public class FriendService {
 
         return friendRepository.saveAndFlush(friend);
     }
+
+    // 일촌명 변경
+    public void changeFriendName(Long friendId, String newFriendName) {
+        Friend friend = friendRepository.findById(friendId)
+                .orElseThrow(() -> new IllegalArgumentException("Friend not found"));
+        friend.setFriendName(newFriendName);
+        friendRepository.saveAndFlush(friend);
+    }
+
+    // 일촌끊기
+    public void removeFriend(Long friendUserId, Long userId) {
+        // 첫 번째 친구 관계를 찾음
+        Friend friendship1 = friendRepository.findByUserIdAndFriendUserId(userId, friendUserId);
+
+        // 두 번째 친구 관계를 찾음 (반대 방향)
+        Friend friendship2 = friendRepository.findByUserIdAndFriendUserId(friendUserId, userId);
+
+        // 첫 번째 관계가 존재하면 삭제
+        if (friendship1 != null) {
+            friendRepository.delete(friendship1);
+        }
+
+        // 두 번째 관계가 존재하면 삭제
+        if (friendship2 != null) {
+            friendRepository.delete(friendship2);
+        }
+
+        // 두 관계 모두 없는 경우 예외 발생
+        if (friendship1 == null && friendship2 == null) {
+            throw new IllegalArgumentException("Friend relationship not found");
+        }
+    }
 }
+
+
+
+
+

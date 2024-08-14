@@ -1,22 +1,28 @@
 .menu-nav {
-  /* z-index: 1;
-  position: fixed;
-  top: 112px;
-  right: 515px; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 85px; /* 원하는 고정된 너비 */
+  height: 391px; /* 원하는 고정된 높이 */
+  box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
 }
 
 .menu-nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
+}
+
+.menu-nav ul li {
+  margin-bottom: 5px;
 }
 
 .menu-nav ul li a {
   text-decoration: none;
-  display: inline-block;
-  width: 85px;
-  margin-bottom: 5px;
-  padding: 10px 10px 10px 10px;
+  display: block;
+  width: 100%; /* 메뉴 항목이 컨테이너의 전체 너비를 차지하도록 */
+  padding: 10px;
   background: #147DAF;
   border-radius: 5px;
   color: #fff;
@@ -24,9 +30,4 @@
   text-align: center;
   font-weight: bold;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.menu-nav ul li a.selected  {
-  background: #fff;
-  color: #333;
 }
