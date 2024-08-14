@@ -217,10 +217,10 @@ const MyBox = () => {
                 </button>
             </div>
 
-            <UpdateUser
+            {/* <UpdateUser
                 isEditModalOpen={isEditModalOpen}
                 closeEditModal={closeEditModal}
-            />
+            /> */}
         </div>
     );
 };

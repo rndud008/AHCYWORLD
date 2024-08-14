@@ -6,11 +6,9 @@ import com.lec.spring.domain.User;
 import com.lec.spring.repository.EmailAuthenticationRepository;
 import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,13 +46,13 @@ public class UserService {
         String gender = user.getGender();
         LocalDate birthDay = user.getBirthDay();
 
-        if(provider == null){
+        if (provider == null) {
             EmailAuthentication emailAuthentication = emailAuthenticationRepository.findByEmail(email).orElse(null);
-            boolean authCheck = emailAuthentication !=null && emailAuthentication.getStatus().equals("인증완료");
+            boolean authCheck = emailAuthentication != null && emailAuthentication.getStatus().equals("인증완료");
 
-            if(authCheck){
+            if (authCheck) {
                 emailAuthenticationRepository.delete(emailAuthentication);
-            }else{
+            } else {
                 return null;
             }
         }
@@ -101,7 +99,7 @@ public class UserService {
         return !userRepository.existsByEmail(email.toUpperCase());
     }
 
-    public List<User> list(){
+    public List<User> list() {
         return userRepository.findAll();
     }
 

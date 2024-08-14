@@ -9,19 +9,18 @@ import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import LoginContextProvider from "./webpage/components/login/context/LoginContextProvider";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
-    {/* 라우트 구조  */}
-    <BrowserRouter>
-      <Provider store={store}>
-        <LoginContextProvider>
-          <App />
-        </LoginContextProvider>
-      </Provider>
-    </BrowserRouter>
-  </>
+    <>
+        {/* 라우트 구조  */}
+        <BrowserRouter>
+            <Provider store={store}>
+                <LoginContextProvider>
+                    <App />
+                </LoginContextProvider>
+            </Provider>
+        </BrowserRouter>
+    </>
 );
 
 // If you want to start measuring performance in your app, pass a function

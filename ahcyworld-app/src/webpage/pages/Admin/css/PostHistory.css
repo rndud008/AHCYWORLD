@@ -61,6 +61,7 @@
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    white-space: nowrap;
 }
 
 .post-tbody td {
@@ -70,7 +71,8 @@
 }
 
 .post-type,
-.subject {
+.subject,
+.history-name {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     white-space: nowrap;
@@ -78,4 +80,11 @@
 
 .minihompy {
     padding: 5px 10px; /* 버튼 패딩 조정 */
+}
+
+.write-history-pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
 }

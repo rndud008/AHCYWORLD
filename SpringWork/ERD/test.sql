@@ -138,6 +138,9 @@ from board_type;
 alter table board_type
     AUTO_INCREMENT = 1;
 
+
+select * from payment_history;
+
 delete from payment_history;
 alter table payment_history
     AUTO_INCREMENT = 1;
