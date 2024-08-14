@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import "./css/Left.css";
 import { PiGenderFemaleFill, PiGenderMaleFill } from "react-icons/pi";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import FriendRequestModal from "../friendShip/FriendRequestModal";
-import { hompyInfo, userInfo } from "../../../apis/auth";
+import { hompyInfo, myFriendRequests, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import AddFriendModal from "../friendShip/AddFriendModal";
+import { useSelector } from "react-redux";
 
 const Left = ({ user, hompy }) => {
   const {hompyId} = useParams();
@@ -18,14 +20,22 @@ const Left = ({ user, hompy }) => {
   const [friends, setFriends] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState("option1");
-
-  const { hompyInfo,userInfo } = useContext(LoginContext);
+  const [friendWaitingList, setFriendWaitingList] = useState();
+  const { hompyInfo, userInfo } = useContext(LoginContext);
 
   const friendIdList = friends.map((item) => {
     return item.friendUser.id;
   });
+  const FriendCheck =
+    hompyInfo.id !== parseInt(hompyId) &&
+    !friendIdList.some((item) => item !== userInfo.id) &&
+    friendWaitingList?.some((item) => item.user.id === parseInt(userInfo.id));
 
-  console.log("check", friendIdList);
+  const FriendWaitingCheck =
+    hompyInfo.id !== parseInt(hompyId) &&
+    friendWaitingList
+      ?.find((item) => item.user.id === parseInt(userInfo.id))
+      ?.friendStatus.includes("waiting");
 
   const userId = user?.id;
 
@@ -50,6 +60,7 @@ const Left = ({ user, hompy }) => {
               /\\/g,
               "//"
             );
+
             const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath
               .split("/")
               .pop()}`;
@@ -108,6 +119,7 @@ const Left = ({ user, hompy }) => {
     };
 
     fetchFriendList();
+    friendWaiting();
   }, [user?.username]);
 
   // 일촌 신청 목록 업데이트 처리
@@ -204,6 +216,13 @@ const Left = ({ user, hompy }) => {
     }
   };
 
+  const friendWaiting = async () => {
+    const response = await myFriendRequests(userInfo.username);
+    const { data, status } = response;
+
+    setFriendWaitingList(data);
+  };
+
   return (
     <div className="left-container">
       <img
@@ -239,8 +258,6 @@ const Left = ({ user, hompy }) => {
       <div className="profile-msg">
         <textarea
           className="no-resize"
-          rows="7"
-          cols="33"
           placeholder="자기소개가 없습니다."
           value={statusMessage}
           readOnly={!textEdit}
@@ -279,6 +296,7 @@ const Left = ({ user, hompy }) => {
         ) : (
           <p>Loading...</p>
         )}
+
         {hompyInfo.id === parseInt(hompyId) && (
           <>
             <button className="friend-btn" onClick={handleOpenModal}>
@@ -291,6 +309,24 @@ const Left = ({ user, hompy }) => {
             />
           </>
         )}
+
+        {(FriendCheck && (
+          <>
+            <button className="friend-btn" onClick={handleOpenModal}>
+              일촌신청하기
+            </button>
+            <AddFriendModal
+              isOpen={isModalOpen}
+              onClose={handleCloseModal}
+              selectedFriend={hompy.user}
+            />
+          </>
+        )) ||
+          (FriendWaitingCheck && (
+            <>
+              <button className="friend-btn">일촌 신청 완료</button>
+            </>
+          ))}
 
         {/* 일촌 목록을 select 요소에 표시 */}
         {(hompyInfo.id === parseInt(hompyId) ||

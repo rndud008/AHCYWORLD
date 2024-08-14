@@ -66,21 +66,21 @@ public class FriendService {
 
     public List<Friend> friendRequests(String username) {
         User user = userService.findByUsername(username);
-        List<Friend> friendList = friendRepository.findAll();
+        List<Friend> friendList = friendRepository.findByUserIdAndFriendStatus(user.getId(),"waiting");
 
+//        List<Friend> friendRequests = new ArrayList<>();
+//
+//        for (Friend friend : friendList) {
+//            System.out.println("친구신청 아이디: " + friend.getFriendUser().getId());
+//            System.out.println("유저 아이디: " + user.getId());
+//            if (friend.getFriendUser().getId() == user.getId() && friend.getFriendStatus().equals("waiting")) {
+//                friendRequests.add(friend);
+//            }
+//        }
 
-        List<Friend> friendRequests = new ArrayList<>();
+        System.out.println("friendRequests: " + friendList);
 
-        for (Friend friend : friendList) {
-            System.out.println("친구신청 아이디: " + friend.getFriendUser().getId());
-            System.out.println("유저 아이디: " + user.getId());
-            if (friend.getFriendUser().getId() == user.getId() && friend.getFriendStatus().equals("waiting")) {
-                friendRequests.add(friend);
-            }
-        }
-        System.out.println("friendRequests: " + friendRequests);
-
-        return friendRequests;
+        return friendList;
     }
 
     public Friend friendShipResponse(Long id, String reply) {

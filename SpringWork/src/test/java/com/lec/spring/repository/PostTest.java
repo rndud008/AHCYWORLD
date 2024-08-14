@@ -193,4 +193,11 @@ class PostTest {
 
     }
 
+    @Test
+    void test3(){
+        User user = userRepository.findByUsername("k6");
+        user.setPassword(passwordEncoder.encode("1234"));
+        userRepository.save(user);
+    }
+
 }

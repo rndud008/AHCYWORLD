@@ -63,11 +63,12 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       axios
         .get(`http://localhost:8070/hompy/${hompyId}`)
         .then((response) => {
-          const hompyData = response.data;
 
+          const hompyData = response.data;
+          console.log('??????',hompyData)
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
           const hompySkinImagePath = `${process.env.PUBLIC_URL}/image/${hompyData.miniHompySkin}`;
-          console.log(response); // 경로 확인용
+          console.log(hompySkinImagePath); // 경로 확인용
           setMiniHompySkin(hompySkinImagePath);
         })
         .catch((error) => {
