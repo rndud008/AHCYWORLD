@@ -26,7 +26,7 @@ import DiaryWritePage from "./minihompy/components/diary/DiaryWritePage";
 import Home from "./webpage/pages/Home";
 import Item from "./webpage/pages/Item";
 import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
-import AdminLoginForm from "./webpage/pages/Admin/components/login/AdminLoginForm";
+// import AdminLoginForm from "./webpage/pages/Admin/components/login/AdminLoginForm";
 import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
 // import OAuth2AddInfo from "./webpage/components/login/Login/OAuth2AddInfo";
 
@@ -83,7 +83,7 @@ function App() {
                 )}
                 {/* 3. 어드민 페이지 */}
                 <Route>
-                    <Route path='admin/login' element={<AdminLoginForm />} />
+                    {/* <Route path='admin/login' element={<AdminLoginForm />} /> */}
                     <Route path='/admin' element={<Admin />} />
                 </Route>
             </Routes>
