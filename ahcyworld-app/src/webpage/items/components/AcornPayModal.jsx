@@ -9,7 +9,7 @@ import { userInfo } from '../../../apis/auth';
 import PaymentModal from '../../payment/PaymentModal';
 import acorn from "../../../upload/acorn.png";
 
-const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, userInfo }) => {
+const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, userInfo }) => {
     const [payItems, setPayItems] = useState([])
     const navigate = useNavigate();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -26,7 +26,7 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
             console.log(userInfo)
             const params = new URLSearchParams();
             let updateAcorn = 0;
-            console.log("배열의 길이 : "+selectItem.length);
+            console.log("배열의 길이 : " + selectItem.length);
             selectItem.forEach(item => params.append('itemList', item));
             axios({
                 method: 'GET',
@@ -38,7 +38,7 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
             }).then((response) => {
                 const { data, status } = response;
                 if (status === 200) {
-                    setPayItems(data); 
+                    setPayItems(data);
                 }
             });
         }
@@ -50,10 +50,10 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
 
     const payedItem = () => {
 
-        if(selectItem.length === 0){
-            alert("주의","구매할 아이템이 없습니다.","warning",()=>onClose)
-        }else{
-            if(userInfo.acorn >= totalAcorn){
+        if (selectItem.length === 0) {
+            alert("주의", "구매할 아이템이 없습니다.", "warning", () => onClose)
+        } else {
+            if (userInfo.acorn >= totalAcorn) {
                 axios({
                     method: 'POST',
                     url: `${SERVER_HOST}/cart/payed/item`,
@@ -68,20 +68,20 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
                 }).then((response) => {
                     const { data, status } = response;
                     if (status === 200) {
-                        itemconfirm("구매 성공","미니홈피로 이동하시겠습니까?","success",()=>navigate(`/hompy/${hompyInfo.id}`),onClose)
+                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => navigate(`/hompy/${hompyInfo.id}`), onClose)
                     }
                 });
-            }else{
-                itemconfirm("구매 실패","도토리가 부족합니다 충전하시겠습니까?","warning",()=> {
+            } else {
+                itemconfirm("구매 실패", "도토리가 부족합니다 충전하시겠습니까?", "warning", () => {
                     paymentopenModal();
-                },onClose)
+                }, onClose)
             }
 
-        } 
+        }
     }
 
     const alertPayed = () => {
-        itemconfirm("상품 구매","구매하시겠습니까?","question",()=> payedItem(),onClose)
+        itemconfirm("상품 구매", "구매하시겠습니까?", "question", () => payedItem(), onClose)
     }
 
     return (
@@ -123,24 +123,24 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn,hompyInfo, user
                                         <div>{payitem.item.itemName}</div>
                                         <div style={{ color: '#888' }}>{payitem.item.itemType}</div>
                                     </div>
-                                    <div style={{ width: '100px', textAlign: 'right' }}>{payitem.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
+                                    <div style={{ width: '100px', textAlign: 'right' }}>{payitem.item.price} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
                                 </div>
 
                             ))}
                         </div>
                         <div style={{ textAlign: 'right', marginTop: '10px' }}><hr />
-                            <div style={{}}>내 보유도토리: {userInfo.acorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
-                            <div>총 상품도토리: {totalAcorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
-                            <hr/>
-                            <div>잔여 도토리: {(userInfo.acorn-totalAcorn)} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
+                            <div style={{}}>내 보유도토리: {userInfo.acorn} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
+                            <div>총 상품도토리: {totalAcorn} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
+                            <hr />
+                            <div>잔여 도토리: {(userInfo.acorn - totalAcorn)} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
                             <div></div>
                         </div>
                     </div>
                     <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                        <button onClick={onClose}>결제취소</button>
-                        <button onClick={()=>alertPayed()}>결제</button>
+                        <button onClick={onClose}>취소</button>
+                        <button onClick={() => alertPayed()}>결제</button>
                     </div>
-                    <PaymentModal isOpen={isPaymentModalOpen} onClose={paymentcloseModal}/>
+                    <PaymentModal isOpen={isPaymentModalOpen} onClose={paymentcloseModal} />
                 </div>
             </div>
         </div>

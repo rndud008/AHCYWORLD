@@ -55,13 +55,13 @@ const Music1 = () => {
                 sourceName: music.track.artists[0].name,
                 fileName: music.track.preview_url,
                 price: 100,
-                status: "show",
+                status: "visible",
                 bgmImg: music.track.album.images[1].url,
             };
 
             axios({
                 method: "POST",
-                url: `${SERVER_HOST}/item/save`,
+                url: `${SERVER_HOST}/item/musicsave`,
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify(musicData),
             }).then((response) => {

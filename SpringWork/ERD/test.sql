@@ -30,6 +30,10 @@ insert into post (create_at,folder_id,content,subject)
 select create_at,folder_id,content,subject
 from friend;
 
+update item
+set status = 'visible'
+where id between 66 and 106;
+
 
 # 페이먼트 커럼추가
 alter table payment_history
