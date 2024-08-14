@@ -1,0 +1,71 @@
+.sort-controls {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-controls label {
+    margin-right: 15px;
+
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.items-thead th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.items-thead th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.items-tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.state-btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: '90px';
+}
+
+.state-visible {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+}
+
+.state-visible:hover {
+    background-color: #0d6efd;
+    transform: scale(1.05);
+}
+
+.state-invisible {
+    border: 0;
+    height: 30px;
+    width: 60px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.state-invisible:hover {
+    background-color: #dc3545;
+    transform: scale(1.05);
+}

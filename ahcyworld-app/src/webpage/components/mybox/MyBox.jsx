@@ -241,7 +241,7 @@ const MyBox = () => {
             </div>
             <PaymentHistory isOpen={isPaymentHistoryOpen} onClose={closePaymentHistoryModal}/>
             </div>
-        
+
     );
 };
 

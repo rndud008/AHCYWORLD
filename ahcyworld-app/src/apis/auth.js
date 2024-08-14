@@ -55,7 +55,7 @@ export const myFriendRequests = (username) => {
 
 export const getPaymentList = () => api.get(`${SERVER_HOST}/payment/list`);
 
-export const getUserWriteHistory=()=>api.get(`${SERVER_HOST}/userwritehistory/list`)
+export const getUserWriteHistory = () => api.get(`${SERVER_HOST}/userwritehistory/list`);
 
 export const addFriend = (friendType1, friendType2, message, username, friendUsername) => {
     return api.post(

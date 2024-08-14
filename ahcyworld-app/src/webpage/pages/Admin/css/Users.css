@@ -7,11 +7,9 @@
 
 .sort-controls label {
     margin-right: 15px;
-
 }
 
 .sort-controls input {
-
 }
 
 .users-table {
@@ -53,6 +51,9 @@
 }
 
 .minihompy-go {
+    outline-style: 2px solid red;
+    background-color: #0d6efd;
+    color: #fff;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -69,6 +70,8 @@
 }
 
 .reset-btn {
+    background-color: #dc3545;
+    color: #fff;
     border: 0;
     height: 30px;
     border-radius: 5px;
@@ -79,4 +82,12 @@
 .reset-btn:hover {
     background-color: #dc3545;
     transform: scale(1.05);
+}
+
+.user-pagination-box{
+    /* outline: 2px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
 }

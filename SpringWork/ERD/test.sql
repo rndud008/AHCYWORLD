@@ -33,6 +33,10 @@ insert into post (create_at,folder_id,content,subject)
 select create_at,folder_id,content,subject
 from friend;
 
+update item
+set status = 'visible'
+where id between 66 and 106;
+
 
 # 페이먼트 커럼추가
 alter table payment_history
@@ -133,6 +137,9 @@ delete
 from board_type;
 alter table board_type
     AUTO_INCREMENT = 1;
+
+
+select * from payment_history;
 
 delete from payment_history;
 alter table payment_history
