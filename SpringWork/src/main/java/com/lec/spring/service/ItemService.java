@@ -32,17 +32,17 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public Pagenation list(Integer page, String url, String type){
+    public Pagenation list(Integer page, String url, String type) {
         Pagenation pagenation = new Pagenation();
         Page<Item> itemPage;
 
         //현재 페이지
-        if(page == null || page < -1) page = 1;
+        if (page == null || page < -1) page = 1;
 
-        if(type.equals("all")){
+        if (type.equals("all")) {
             itemPage = itemRepository.findAll(PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
 
-        }else{
+        } else {
             itemPage = itemRepository.findByItemType(type, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
         }
 
@@ -54,15 +54,15 @@ public class ItemService {
 
         List<Item> list = null;
 
-        if(cnt > 0){
-            if(page > totalPage) page = totalPage;
-            startPage = (((page -1) / WRITE_PAGE) * WRITE_PAGE)+1;
-            endPage = startPage + WRITE_PAGE -1;
-            if( endPage >= totalPage) endPage = totalPage;
+        if (cnt > 0) {
+            if (page > totalPage) page = totalPage;
+            startPage = (((page - 1) / WRITE_PAGE) * WRITE_PAGE) + 1;
+            endPage = startPage + WRITE_PAGE - 1;
+            if (endPage >= totalPage) endPage = totalPage;
 
             list = itemPage.getContent();
 
-        }else{
+        } else {
             page = 0;
         }
 

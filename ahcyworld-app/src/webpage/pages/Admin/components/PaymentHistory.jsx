@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { getPaymentList } from "../../../../apis/auth";
 import "../css/PaymentHistory.css";
+import { Pagination } from "react-bootstrap";
 
 const PaymentHistory = () => {
     const [paymentList, setPaymentList] = useState([]);
+    const [sortedPaymentList, setSortedPaymentList] = useState([]);
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortBy, setSortBy] = useState("id");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [paymentPerPage] = useState(20);
+    const [pageRange] = useState(10);
 
     useEffect(() => {
         // paymentHistory 전체 리스트 불러오기
@@ -23,10 +28,10 @@ const PaymentHistory = () => {
 
     useEffect(() => {
         sortPaymentList(sortOrder, sortBy);
-    }, [sortBy, sortOrder]);
+    }, [sortBy, sortOrder, paymentList]);
 
     const sortPaymentList = (order, by) => {
-        const sortedPayments = [...paymentList].sort((a, b) => {
+        const paymentSort = [...paymentList].sort((a, b) => {
             const valueA = by === "payment" ? a.payment : a.id;
             const valueB = by === "payment" ? b.payment : b.id;
 
@@ -36,7 +41,7 @@ const PaymentHistory = () => {
                 return valueB - valueA;
             }
         });
-        setPaymentList(sortedPayments);
+        setSortedPaymentList(paymentSort);
     };
 
     const handleSortOrderChange = (e) => {
@@ -50,6 +55,24 @@ const PaymentHistory = () => {
         setSortBy(newSortBy);
         sortPaymentList(sortOrder, newSortBy);
     };
+
+        // 페이지네이션 로직
+        const indexOfLastUser = currentPage * paymentPerPage;
+        const indexOfFirstUser = indexOfLastUser - paymentPerPage;
+        const currentPayments = sortedPaymentList.slice(indexOfFirstUser, indexOfLastUser);
+    
+        // 전체 페이지 수 계산
+        const totalPages = Math.ceil(sortedPaymentList.length / paymentPerPage);
+    
+        // 현재 페이지를 기준으로 페이지 범위 계산
+        const startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
+        const endPage = Math.min(totalPages, startPage + pageRange - 1);
+    
+        // 페이지 번호 배열 생성
+        const pageNumbers = [];
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(i);
+        }
 
     return (
         <>
@@ -115,7 +138,7 @@ const PaymentHistory = () => {
                         </tr>
                     </thead>
                     <tbody className='payment-tbody'>
-                        {paymentList.map((payment) => (
+                        {currentPayments.map((payment) => (
                             <tr key={payment.id}>
                                 <td>{payment.id}</td>
                                 <td>{payment.acornCnt}</td>
@@ -129,6 +152,27 @@ const PaymentHistory = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div className='user-pagination-box'>
+                <Pagination className="user-pagination">
+                    <Pagination.Prev
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    />
+                    {pageNumbers.map((number) => (
+                        <Pagination.Item
+                            key={number}
+                            active={number === currentPage}
+                            onClick={() => setCurrentPage(number)}
+                        >
+                            {number}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    />
+                </Pagination>
             </div>
         </>
     );

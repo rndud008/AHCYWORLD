@@ -1,32 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../../../components/login/context/LoginContextProvider";
-import { Link, useNavigate } from "react-router-dom";
 import { hompyList, resetHompy, userList } from "../../../../apis/auth";
 import "../css/Users.css";
-import Button from "react-bootstrap/esm/Button";
 import { RiHomeHeartLine } from "react-icons/ri";
+import { Pagination } from "react-bootstrap";
 
 const Users = () => {
     const { isLogin, roles } = useContext(LoginContext);
-    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
+    const [sortedUsers, setSortedUsers] = useState([]);
     const [sortUserOrder, setSortUserOrder] = useState("asc");
     const [sortUserBy, setSortUserBy] = useState("id");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [userPerPage] = useState(20);
+    const [pageRange] = useState(10);
 
     useEffect(() => {
         const getUserList = async () => {
             try {
                 const response = await userList();
-                // console.log("유저목록: ",response.data);
                 setUsers(response.data);
             } catch (error) {
                 console.error("userList Error: ", error);
             }
         };
+
         const getHompyList = async () => {
             try {
                 const response = await hompyList();
-                // console.log("홈피목록: ", response.data);
                 const hompyData = response.data;
 
                 setUsers((prevUsers) => {
@@ -42,23 +43,24 @@ const Users = () => {
                 console.error("hompyList Error: ", error);
             }
         };
+
         getUserList();
         getHompyList();
     }, []);
 
     useEffect(() => {
         sortUsers(sortUserOrder, sortUserBy);
-    }, [sortUserOrder, sortUserBy]);
+    }, [sortUserOrder, sortUserBy, users]); // users 배열도 의존성 배열에 추가
 
     const sortUsers = (order, by) => {
-        const sortedUsers = [...users].sort((a, b) => {
+        const sorted = [...users].sort((a, b) => {
             if (order === "asc") {
-                return a.id - b.id;
+                return a[by] > b[by] ? 1 : -1;
             } else {
-                return b.id - a.id;
+                return a[by] < b[by] ? 1 : -1;
             }
         });
-        setUsers(sortedUsers);
+        setSortedUsers(sorted); // 정렬된 목록을 상태에 저장
     };
 
     const handleSortOrderChange = (e) => {
@@ -70,24 +72,39 @@ const Users = () => {
     };
 
     const resetMiniHompy = async (id) => {
-        console.log("홈피아이디: ", id);
         try {
             if (!id) return;
-            const response = await resetHompy(id);
+            await resetHompy(id);
         } catch (error) {
             console.error("resetHompy Error: ", error);
         }
     };
 
     const goMinihompy = (hompyId) => {
-        // console.log("hompyID: ", hompyId);
-        // 새로운 창을 고정된 사이즈로 엽니다.
         window.open(
-            "http://localhost:3000/hompy/${hompyId}", // 열고 싶은 URL
-            "_blank", // 새로운 창을 엽니다.
-            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+            `http://localhost:3000/hompy/${hompyId}`,
+            "_blank",
+            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no"
         );
     };
+
+    // 페이지네이션 로직
+    const indexOfLastUser = currentPage * userPerPage;
+    const indexOfFirstUser = indexOfLastUser - userPerPage;
+    const currentUsers = sortedUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+    // 전체 페이지 수 계산
+    const totalPages = Math.ceil(sortedUsers.length / userPerPage);
+
+    // 현재 페이지를 기준으로 페이지 범위 계산
+    const startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
+    const endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+    // 페이지 번호 배열 생성
+    const pageNumbers = [];
+    for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+    }
 
     return (
         <>
@@ -139,36 +156,63 @@ const Users = () => {
                     </tr>
                 </thead>
                 <tbody className='users-tbody'>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.username}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.birthDay}</td>
-                            <td>{user.gender}</td>
-                            <td>{user.acorn}</td>
-                            <td>{user.createAt}</td>
-                            <td className='hompy-btn-box'>
-                                <Button
-                                    variant='primary'
-                                    className='minihompy-go'
-                                    onClick={() => goMinihompy(user.hompyId)}
-                                >
-                                    <RiHomeHeartLine />
-                                </Button>
-                                <Button
-                                    variant='danger'
-                                    className='reset-btn'
-                                    onClick={() => resetMiniHompy(user.hompyId)}
-                                >
-                                    reset
-                                </Button>
-                            </td>
+                    {currentUsers.length > 0 ? (
+                        currentUsers.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.username}</td>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.birthDay}</td>
+                                <td>{user.gender}</td>
+                                <td>{user.acorn}</td>
+                                <td>{user.createAt}</td>
+                                <td className='hompy-btn-box'>
+                                    <button
+                                        variant='primary'
+                                        className='minihompy-go'
+                                        onClick={() => goMinihompy(user.hompyId)}
+                                    >
+                                        <RiHomeHeartLine />
+                                    </button>
+                                    <button
+                                        variant='danger'
+                                        className='reset-btn'
+                                        onClick={() => resetMiniHompy(user.hompyId)}
+                                    >
+                                        reset
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan='9'>No users found</td> {/* 사용자 목록이 없을 때 표시 */}
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
+            <div className='user-pagination-box'>
+                <Pagination className="user-pagination">
+                    <Pagination.Prev
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    />
+                    {pageNumbers.map((number) => (
+                        <Pagination.Item
+                            key={number}
+                            active={number === currentPage}
+                            onClick={() => setCurrentPage(number)}
+                        >
+                            {number}
+                        </Pagination.Item>
+                    ))}
+                    <Pagination.Next
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    />
+                </Pagination>
+            </div>
         </>
     );
 };

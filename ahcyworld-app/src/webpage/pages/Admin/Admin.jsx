@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import * as Swal from "../../../apis/alert";
 import Header from "../../components/Header/Header";
-import { LoginContext } from "../../components/login/context/LoginContextProvider";
 import "./css/Admin.css";
 import logo from "../../../upload/LOGO2.png";
 import Users from "./components/Users";
@@ -16,12 +15,17 @@ import { RiGameLine } from "react-icons/ri";
 import { BsPostcard } from "react-icons/bs";
 import { GrHomeRounded } from "react-icons/gr";
 import ItemUpload from "./components/ItemUpload";
+import { LoginContext } from "../../components/login/context/LoginContextProvider";
 
 const Admin = () => {
-    const { isLogin, roles } = useContext(LoginContext);
+    const { isLogin, roles, adminLogout } = useContext(LoginContext);
     const navigate = useNavigate();
-    const [openMenu, setOpenMenu] = useState(null);
-    const [subMenu, setSubMenu] = useState(null);
+    const [openMenu, setOpenMenu] = useState(() => {
+        return localStorage.getItem("openMenu" || null);
+    });
+    const [subMenu, setSubMenu] = useState(() => {
+        return localStorage.getItem("subMenu" || null);
+    });
 
     const toggleMenu = (menu) => {
         // console.log(menu);
@@ -29,9 +33,14 @@ const Admin = () => {
     };
 
     useEffect(() => {
+        localStorage.setItem("openMenu", openMenu);
+        localStorage.setItem("subMenu", subMenu);
+    });
+
+    useEffect(() => {
         // if (!isLogin) {
         //     Swal.alert("로그인이 필요합니다.", "로그인 화면으로 이동합니다.", "warning", () => {
-        //         navigate("/");
+        //         navigate("/admin/login");
         //     });
         //     return;
         // }
@@ -64,12 +73,10 @@ const Admin = () => {
                         />
                     </div>
                     <div className='menu-box'>
+                    <button onClick={() => adminLogout()} className="admin-logout">
+                        로그아웃
+                    </button>
                         <ul>
-                            <li onClick={() => navigate("/admin")}>
-                                <GrHomeRounded />
-                                &nbsp;메인
-                            </li>
-                            <br />
                             <li>
                                 <div onClick={() => toggleMenu("userManagement")}>
                                     <FaUser />

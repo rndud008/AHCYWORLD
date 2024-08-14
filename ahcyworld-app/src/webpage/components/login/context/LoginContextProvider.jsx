@@ -31,7 +31,7 @@ const LoginContextProvider = ({ children }) => {
 
         // JWT이 없으면
         if (!accessToken) {
-            console.log("쿠키에 JWT(accessToken)이 없습니다.");
+            // console.log("쿠키에 JWT(accessToken)이 없습니다.");
             logoutSetting();
             return;
         }
@@ -79,12 +79,11 @@ const LoginContextProvider = ({ children }) => {
         } catch (error) {
             console.error("HompyInfo Error: ", error);
         }
-
     };
 
     useEffect(() => {
         loginCheck();
-    }, []);
+    }, [userInfo]);
 
     const login = async (username, password, rememberId) => {
         // console.log(`
@@ -127,6 +126,47 @@ const LoginContextProvider = ({ children }) => {
         }
     };
 
+    const adminLogin = async (username, password, rememberId) => {
+        // console.log(`
+        //     로그인 요청
+        //     login(username:${username}, password:${password}, rememberId:${rememberId});
+        //     `);
+
+        // username 저장
+        if (rememberId) Cookies.set("rememberId", username);
+        else Cookies.remove("rememberId");
+
+        try {
+            const response = await auth.login(username, password);
+
+            const { data, status, headers } = response;
+            const authorization = headers.authorization;
+            const accessToken = authorization.replace("Bearer ", "");
+
+            // console.log(`
+            //     -- login 요청응답 --
+            //       data : ${data}
+            //       status : ${status}
+            //       headers : ${headers}
+            //       jwt : ${accessToken}
+            //     `);
+
+            if (status === 200) {
+                Cookies.set("accessToken", accessToken);
+
+                loginCheck();
+
+                Swal.alert("로그인 성공", "관리자페이지로 이동합니다.", "success", () => {
+                    navigate("/admin");
+                });
+            }
+        } catch (error) {
+            // console.log(`로그인 error: ${error}`);
+            Swal.alert("로그인 실패", "아이디 또는 비밀번호가 일치하지 않습니다.", "error");
+            logoutSetting();
+        }
+    };
+
     const logout = (force = false) => {
         // confirm 없이 강제 로그아웃
         if (force) {
@@ -140,6 +180,23 @@ const LoginContextProvider = ({ children }) => {
             if (result.isConfirmed) {
                 logoutSetting(); // 로그아웃 세팅
                 navigate("/");
+            }
+        });
+    };
+
+    const adminLogout = (force = false) => {
+        // confirm 없이 강제 로그아웃
+        if (force) {
+            logoutSetting();
+
+            navigate("/admin/login");
+            return;
+        }
+
+        Swal.confirm("로그아웃 하시겠습니까?", "로그아웃을 진행합니다.", "warning", (result) => {
+            if (result.isConfirmed) {
+                logoutSetting(); // 로그아웃 세팅
+                navigate("/admin/login");
             }
         });
     };
@@ -201,6 +258,8 @@ const LoginContextProvider = ({ children }) => {
                 hompyInfo,
                 loginCheck,
                 login,
+                adminLogin,
+                adminLogout,
                 logout,
             }}
         >

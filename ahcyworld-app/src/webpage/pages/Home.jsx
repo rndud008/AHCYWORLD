@@ -32,7 +32,7 @@ const StyledMyBox = styled.div`
     margin-top: 20px;
 `;
 
-const Home = ({itemKind}) => {
+const Home = ({ itemKind }) => {
     const { isLogin, logout, userInfo } = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
@@ -113,12 +113,15 @@ const Home = ({itemKind}) => {
         if (userInfo) {
             fetchUsers();
         } else return;
+
+        localStorage.removeItem("openMenu");
+        localStorage.removeItem("subMenu");
     }, [isAddFriendModalOpen, isLogin]);
 
     return (
-        <div className="home-container">
-            <div className="content-container">
-                <div className="top-row">
+        <div className='home-container'>
+            <div className='content-container'>
+                <div className='top-row'>
                     {isLogin ? (
                         <StyledMyBox>
                             <MyBox />
@@ -130,19 +133,18 @@ const Home = ({itemKind}) => {
                             <LoginForm />
                         </StyledLoginBox>
                     )}
-                    <SlideImg className="slideImg" />
+                    <SlideImg className='slideImg' />
                 </div>
 
-                <div className="bottom-row">
-                    <div className="new-container">
+                <div className='bottom-row'>
+                    <div className='new-container'>
                         <News />
                     </div>
-                    <div className="bestItem-container">
+                    <div className='bestItem-container'>
                         <BestItem />
                     </div>
                 </div>
             </div>
-
 
             <br />
             <br />

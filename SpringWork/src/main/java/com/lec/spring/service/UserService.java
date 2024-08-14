@@ -2,11 +2,16 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.EmailAuthentication;
 import com.lec.spring.domain.Hompy;
+import com.lec.spring.domain.Pagenation;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.EmailAuthenticationRepository;
 import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,12 @@ import java.time.LocalDate;
 
 @Service
 public class UserService {
+
+    @Value("10")
+    private int WRITE_PAGE;
+    @Value("20")
+    private int PAGE_ROWS;
+
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -48,13 +59,13 @@ public class UserService {
         String gender = user.getGender();
         LocalDate birthDay = user.getBirthDay();
 
-        if(provider == null){
+        if (provider == null) {
             EmailAuthentication emailAuthentication = emailAuthenticationRepository.findByEmail(email).orElse(null);
-            boolean authCheck = emailAuthentication !=null && emailAuthentication.getStatus().equals("인증완료");
+            boolean authCheck = emailAuthentication != null && emailAuthentication.getStatus().equals("인증완료");
 
-            if(authCheck){
+            if (authCheck) {
                 emailAuthenticationRepository.delete(emailAuthentication);
-            }else{
+            } else {
                 return null;
             }
         }
@@ -101,7 +112,7 @@ public class UserService {
         return !userRepository.existsByEmail(email.toUpperCase());
     }
 
-    public List<User> list(){
+    public List<User> list() {
         return userRepository.findAll();
     }
 
@@ -133,9 +144,28 @@ public class UserService {
     public void update(User user) {
         try {
             userRepository.save(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("유저 정보 업데이트 오류", e);
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
