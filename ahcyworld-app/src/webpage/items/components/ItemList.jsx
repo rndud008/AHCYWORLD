@@ -10,7 +10,7 @@ import acorn from "../../../upload/acorn.png"
 
 const ItemList = (props) => {
     const [items, setItems] = useState([]);
-    const [userItems,setUserItems] = useState([]);
+    const [userItems, setUserItems] = useState([]);
     const [pageData, setPageData] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const { userInfo } = useContext(LoginContext)
@@ -39,7 +39,7 @@ const ItemList = (props) => {
                     url: `${SERVER_HOST}/cart/${userInfo.id}/items`,
                 });
                 const cartsItems = [];
-                (cartResponse.data).forEach(item => {cartsItems.push(item.id)});
+                (cartResponse.data).forEach(item => { cartsItems.push(item.item.id) });
                 setUserItems(cartsItems);
 
                 const { status } = itemResponse;
@@ -54,7 +54,7 @@ const ItemList = (props) => {
                     setPageData({ ...itemResponse.data });
                 }
             } catch (error) {
-                console.error("error data", error);
+                console.error("error data");
             }
 
         }
@@ -84,7 +84,7 @@ const ItemList = (props) => {
 
     return (
         <>
-            <table className="itemTable">
+            <table className="itemTable-user">
                 <tbody className='itemListFram'>
                     {items.map((threeItem, rowIndex) => (
                         <tr className='itemRow' key={rowIndex}>
@@ -99,7 +99,7 @@ const ItemList = (props) => {
                                             readOnly
                                         />
                                     ) : item.itemType === '배경음악' ? (
-                                        <img className="itemImg" src={item.bgmImg} alt=""/>
+                                        <img className="itemImg" src={item.bgmImg} alt="" />
                                     ) : (
                                         <img
                                             className="itemImg"
@@ -110,7 +110,7 @@ const ItemList = (props) => {
                                     <br />
                                     {item.itemType === '배경음악' ? (
                                         <div style={{ fontSize: 30 }}>
-                                            {item.sourceName}-{item.itemName} <br /> {item.price}도토리 
+                                            {item.sourceName}-{item.itemName} <br /> {item.price}도토리
                                             <br />
                                         </div>
                                     ) : (
@@ -119,7 +119,7 @@ const ItemList = (props) => {
                                             <br />
                                         </div>
                                     )}
-                                    {userItems.includes(item.id) ? <div>보유중</div> :  <button className='pushItem' onClick={() => addCart(item)}>장바구니추가</button>}
+                                    {userItems.includes(item.id) ? <div>보유중</div> : <button className='pushItem' onClick={() => addCart(item)}>장바구니추가</button>}
                                 </td>
                             ))}
                         </tr>

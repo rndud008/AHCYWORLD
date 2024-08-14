@@ -8,9 +8,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item,Long> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
+    Page<Item> findByItemTypeAndStatus(String type, String status, PageRequest pageRequest);
+
     Page<Item> findByItemType(String type, PageRequest pageRequest);
 
+    Page<Item> findByStatus(String status, PageRequest pageRequest);
+
+
     Item findByItemName(String itemname);
+
+    Page<Item> findByItemNameContaining(String itemname, PageRequest pageRequest);
+    Page<Item> findByItemNameContainingAndStatus(String itemname,String status, PageRequest pageRequest);
 
 }

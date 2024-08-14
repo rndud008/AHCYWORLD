@@ -31,20 +31,49 @@ public class ItemService {
         return itemRepository.saveAndFlush(item);
     }
 
+    @Transactional
+    public Item update(Item item) {
+        Item updateItem = itemRepository.findById(item.getId()).orElse(null);
+        if (updateItem == null) {
+            return null;
+        } else {
+            return itemRepository.saveAndFlush(item);
+        }
+    }
+
     @Transactional(readOnly = true)
-    public Pagenation list(Integer page, String url, String type){
+    public Pagenation list(Integer page, String url, String type, String searchItem) {
         Pagenation pagenation = new Pagenation();
         Page<Item> itemPage;
+        String[] urlarr = url.split("/");
 
         //현재 페이지
-        if(page == null || page < -1) page = 1;
+        if (page == null || page < -1) page = 1;
 
-        if(type.equals("all")){
-            itemPage = itemRepository.findAll(PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+        if (searchItem.equals("")) {
+            if (urlarr[2].equals("admin")) {
+                if (type.equals("all")) {
+                    itemPage = itemRepository.findAll(PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
 
-        }else{
-            itemPage = itemRepository.findByItemType(type, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+                } else {
+                    itemPage = itemRepository.findByItemType(type, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+                }
+            } else {
+                if (type.equals("all")) {
+                    itemPage = itemRepository.findByStatus("visible", PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+
+                } else {
+                    itemPage = itemRepository.findByItemTypeAndStatus(type, "visible", PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+                }
+            }
+        } else {
+            if (urlarr[2].equals("admin")) {
+                itemPage = itemRepository.findByItemNameContaining(searchItem, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+            } else {
+                itemPage = itemRepository.findByItemNameContainingAndStatus(searchItem, "visible", PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+            }
         }
+
 
         long cnt = itemPage.getTotalElements();
         int totalPage = itemPage.getTotalPages();
@@ -54,15 +83,15 @@ public class ItemService {
 
         List<Item> list = null;
 
-        if(cnt > 0){
-            if(page > totalPage) page = totalPage;
-            startPage = (((page -1) / WRITE_PAGE) * WRITE_PAGE)+1;
-            endPage = startPage + WRITE_PAGE -1;
-            if( endPage >= totalPage) endPage = totalPage;
+        if (cnt > 0) {
+            if (page > totalPage) page = totalPage;
+            startPage = (((page - 1) / WRITE_PAGE) * WRITE_PAGE) + 1;
+            endPage = startPage + WRITE_PAGE - 1;
+            if (endPage >= totalPage) endPage = totalPage;
 
             list = itemPage.getContent();
 
-        }else{
+        } else {
             page = 0;
         }
 
@@ -78,5 +107,4 @@ public class ItemService {
                 .url(url)
                 .build();
     }
-
 }
