@@ -9,4 +9,5 @@ import java.util.List;
 public interface GuestBookRepository extends JpaRepository<GuestBook, Long> {
     List<GuestBook> findByHompy(Hompy hompy);
     List<GuestBook> findByHompyId(Long hompyId);
+    List<GuestBook> findByHompyIdAndGuestBookNameOrderByIdDesc(Long hompyId,String status);
 }

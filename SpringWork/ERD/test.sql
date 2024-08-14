@@ -9,6 +9,8 @@ from folder;
 select * from post;
 select * from user_write_histroy;
 
+select * from guest_book;
+
 select * from friend;
 select * from ah_user;
 select* from friend;

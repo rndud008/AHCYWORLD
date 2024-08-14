@@ -37,10 +37,10 @@ public class GuestBookController {
     }
 
     @GetMapping("/list/{hompyId}")
-    public ResponseEntity<?> list(@PathVariable Long hompyId, @RequestParam String username){
+    public ResponseEntity<?> list(@PathVariable Long hompyId, @RequestParam String username,@RequestParam(required = false ,defaultValue = "null") String action){
         System.out.println("hompyId:" + hompyId);
         try {
-            List<GuestBook> guestBooks = guestBookService.findByHompyAndVisibility(hompyId, username);
+            List<GuestBook> guestBooks = guestBookService.findByHompyAndVisibility(hompyId, username, action);
             System.out.println("guestBooks:" + guestBooks);
             return new ResponseEntity<>(guestBooks, HttpStatus.OK);
         }catch (IllegalArgumentException e) {

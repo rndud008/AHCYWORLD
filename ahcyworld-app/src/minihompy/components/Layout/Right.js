@@ -1,17 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./css/Right.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import api from "../../../apis/api";
+import api, { SERVER_HOST } from "../../../apis/api";
 import { boardNameCheck } from "../post/utils/postUtils";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { HompyAction } from "../../../redux/actions/HompyAction";
+import { hompyInfo, userInfo } from "../../../apis/auth";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FriendAction } from "../../../redux/actions/FriendAction";
+import * as Swal from "../../../apis/alert"
 
-const Right = ({ user }) => {
+const Right = ({ user,hompy }) => {
   const { hompyId } = useParams();
+  const { userInfo } = useContext(LoginContext);
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
   const [recentlyPost, setRecentlyPost] = useState();
   const [infoTable, setInfoTable] = useState();
+  const [friendReivew, setFriendReview] = useState();
+  const [friendReivewList, setFriendReviewList] = useState();
+  const friendList = useSelector(state => state.friend.hompyFriendList)
+
+  console.log('friendList',friendList)
+
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userId = user?.id;
@@ -49,19 +66,32 @@ const Right = ({ user }) => {
   }, [userId]);
 
   useEffect(() => {
-    miniHomePyRecentlyPost();
-    miniHomePyInfoTable();
-  }, [hompyId]);
+    if (hompyId) {
+      miniHomePyRecentlyPost();
+      miniHomePyInfoTable();
+      dispatch(HompyAction.findByHompyIdAxios(hompyId));
+    }
+
+    if (user) {
+      friendReviewList();
+      dispatch(FriendAction.findByHompyFriendListAixos(user.username))
+      setFriendReview({
+        guestBookName: "friendReview",
+        hompy: hompy,
+        user: userInfo,
+      })
+    }
+
+
+  }, [hompyId, user]);
 
   const miniHomePyRecentlyPost = async () => {
     if (hompyId) {
-      const response = await api.get(
-        `http://localhost:8070/${hompyId}/recentlypost`, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("accessToken")}`,
-          },
-        }
-      );
+      const response = await api.get(`${SERVER_HOST}/${hompyId}/recentlypost`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("accessToken")}`,
+        },
+      });
 
       const { data, status } = response;
 
@@ -73,24 +103,69 @@ const Right = ({ user }) => {
 
   const miniHomePyInfoTable = async () => {
     if (hompyId) {
-      const response = await api.get(
-        `http://localhost:8070/${hompyId}/infotable`, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("accessToken")}`,
-          },
-        }
-      );
+      const response = await api.get(`${SERVER_HOST}/${hompyId}/infotable`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("accessToken")}`,
+        },
+      });
       console.log("miniHomePyInfoTable", response);
       const { data, status } = response;
-      
+
       if (status === 200) {
         setInfoTable(data);
       }
     }
   };
 
-  const subjectClick = (postName,folderId) =>{
-    navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}`)
+  const subjectClick = (postName, folderId) => {
+    navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}`);
+  };
+
+  const friendReviewValue = (e) => {
+    const { value, name } = e.target;
+
+    setFriendReview({ ...friendReivew, [name]: value });
+  };
+
+  const friendReviewCreate = async () => {
+
+    try{
+      const response = await api.post(
+        `${SERVER_HOST}/cyworld/cy/guestbook/save`,
+        friendReivew
+      );
+      
+    }catch (e){
+      return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
+    }
+
+    friendReviewList()
+  };
+
+  const friendReviewList = async () => {
+    const action = "friendReview";
+    if (user) {
+      const username = user.username;
+
+      const response = await api.get(
+        `${SERVER_HOST}/cyworld/cy/guestbook/list/${hompyId}`,
+        {
+          params: { action, username },
+        }
+      );
+      console.log("friendReviewList", response);
+      const { data, status } = response;
+
+      if (status === 200) {
+        setFriendReviewList(data);
+      }
+    }
+  };
+
+  const activeEnter = (e) =>{
+    if(e.key === "Enter"){
+      friendReviewCreate();
+    }
   }
 
   return (
@@ -104,9 +179,14 @@ const Right = ({ user }) => {
             {recentlyPost &&
               recentlyPost.map((item) => (
                 <>
-                  <li className="newListItem" onClick={() => subjectClick(item.folder.boardType.name,item.folder.id)}>
+                  <li
+                    className="newListItem"
+                    onClick={() =>
+                      subjectClick(item.folder.boardType.name, item.folder.id)
+                    }
+                  >
                     <span>{item.folder.boardType.name}</span>
-                    <span >{item.subject}</span>
+                    <span>{item.subject}</span>
                   </li>
                 </>
               ))}
@@ -193,10 +273,36 @@ const Right = ({ user }) => {
       <div className="friend-msg">
         <span className="friends-msg">일촌평</span>
         <div className="input-container">
-          <input className="text-box" type="text" placeholder="일촌평 작성.." />
-          <button type="submit" className="friend-board-btn">
+          <input
+            name="content"
+            className="text-box"
+            onChange={friendReviewValue}
+            onKeyDown={(e) => activeEnter(e)}
+            type="text"
+            placeholder="일촌평 작성.."
+            onenter
+          />
+          <button
+            type="button"
+            onClick={friendReviewCreate}
+            className="friend-board-btn"
+          >
             등록
           </button>
+        </div>
+        <div className="friend-review-container">
+          {(friendList && friendReivewList) && friendReivewList.map((item) => (
+            <div>
+              <span>내용 : {item.content} </span>
+              <span>유저이름 : {item.user.name} </span>
+              <span>친구유저 별명 : { friendList.find(item2 => item.user.id === item2.friendUser.id)?.friendName} </span>
+              {userInfo.id === item.user.id && (
+                <span>
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </span>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

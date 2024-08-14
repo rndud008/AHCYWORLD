@@ -8,7 +8,7 @@ import { LoginContext } from "../../../webpage/components/login/context/LoginCon
 const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
     const navigate = useNavigate();
 
-    const { userInfo } = useContext(LoginContext);
+    const { userInfo,hompyInfo } = useContext(LoginContext);
 
     const [friendType1, setFriendType1] = useState("");
     const [friendType2, setFriendType2] = useState("");
@@ -36,7 +36,7 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
             if (response) {
                 Swal.alert("일촌신청을 보냈습니다.", "상대방이 수락하면 일존이 맺어집니다~!", "success", () => {
                     onClose();
-                    navigate("/");
+                    navigate(`/hompy/${hompyInfo.id}`)
                 });
             }
         } catch (error) {
