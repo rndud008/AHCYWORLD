@@ -1,0 +1,16 @@
+/* PaymentHistory.css */
+
+.paymentHistoryAcorn {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.remaining-acorns {
+    margin: 20px auto 0 auto;
+}
+
+.main-paymentHistory-container {
+    margin-bottom: 13px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

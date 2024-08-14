@@ -35,7 +35,8 @@ const Left = ({ user, hompy }) => {
           const hompyData = response.data;
           setStatusMessage(hompyData.statusMessage || "");
           if (hompyData.profilePicture) {
-            const imageUrl = `http://localhost:8070/hompy/profileImg/${hompyData.profilePicture.split("/").pop()}`;
+            const profilePicturePath = hompyData.profilePicture.replaceAll(/\\/g, '//');
+            const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
             setProfilePicture(imageUrl);
           }
         })
@@ -145,7 +146,8 @@ const Left = ({ user, hompy }) => {
         })
         .then((response) => {
           console.log("프로필 사진 업로드 성공", response.data);
-          const imageUrl = `http://localhost:8070/hompy/profileImg/${response.data.profilePicture.split("/").pop()}`;
+          const profilePicturePath = response.data.profilePicture.replaceAll(/\\/g, '//');
+          const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
           setProfilePicture(imageUrl);
           setProfileEdit(false);
         })

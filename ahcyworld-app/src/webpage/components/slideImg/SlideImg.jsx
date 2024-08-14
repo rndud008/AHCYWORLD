@@ -17,37 +17,37 @@ const SlideImg = () => {
                     <Carousel.Item>
                         <ExampleImg
                             text="First slide"
-                            imageUrl="/image/라이언.png"
+                            imageUrl="/image/메인이미지1.jpg"
                         />
                         <Carousel.Caption>
-                            <h3>First slide label</h3>
+                            {/* <h3>First slide label</h3>
                             <p>
                                 첫번째 이미지
-                            </p>
+                            </p> */}
                         </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <ExampleImg
                             text="Second slide"
-                            imageUrl="/image/렌고쿠.png"
+                            imageUrl="/image/메인이미지2.png"
                         />
                         <Carousel.Caption>
-                            <h3>Second slide label</h3>
+                            {/* <h3>Second slide label</h3>
                             <p>
                                 두번째 이미지
-                            </p>
+                            </p> */}
                         </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <ExampleImg
                             text="Third slide"
-                            imageUrl="/image/마루.png"
+                            imageUrl="/image/메인이미지3.png"
                         />
                         <Carousel.Caption>
-                            <h3>Third slide label</h3>
+                            {/* <h3>Third slide label</h3>
                             <p>
                                 세번째 이미지
-                            </p>
+                            </p> */}
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>

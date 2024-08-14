@@ -152,11 +152,11 @@ const MyBox = () => {
                     <img
                         src={minimiPicture}
                         alt="미니홈피 이미지"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                        }}
+                        // style={{
+                        //     width: "100%",
+                        //     height: "100%",
+                        //     objectFit: "cover",
+                        // }}
                     />
                 </div>
                 <div className="info-box">

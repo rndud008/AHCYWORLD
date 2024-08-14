@@ -4,21 +4,34 @@ import { Button, Form, Modal } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
     const { userInfo, hompyInfo, setUserInfo } = useContext(LoginContext);
 
     const [updatedUserInfo, setUpdatedUserInfo] = useState({
-        name: hompyInfo.user.name,
-        email: hompyInfo.user.email,
-        gender: hompyInfo.user.gender,
-        birthDay: hompyInfo.user.birthDay,
+        name: "",
+        email: "",
+        gender: "",
+        birthDay: "",
         password: "",
     });
 
+    const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState("");
-
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*\d).{8,16}$/;
+
+    useEffect(() => {
+        if(hompyInfo){
+            setUpdatedUserInfo({
+                name: hompyInfo.user.name || "",
+                email: hompyInfo.user.email || "",
+                gender: hompyInfo.user.gender || "",
+                birthDay: hompyInfo.user.birthDay || "",
+                password: "",
+            });
+        }
+    }, [hompyInfo])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -93,6 +106,11 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
         }
         form.classList.add("was-validated");
     };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    }
+
     return (
         <>
             <Modal show={isEditModalOpen} onHide={closeEditModal}>
@@ -128,15 +146,24 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
 
                         <Form.Group controlId="formPassword">
                             <Form.Label>비밀번호</Form.Label>
-                            <Form.Control
-                                type="password"
-                                name="password"
-                                value={updatedUserInfo.password}
-                                onChange={handleInputChange}
-                                placeholder="비밀번호를 입력하세요"
-                                required
-                                isInvalid={!!passwordError}
-                            />
+                            <div className="input-group">
+                                <Form.Control
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    value={updatedUserInfo.password}
+                                    onChange={handleInputChange}
+                                    placeholder="비밀번호를 입력하세요"
+                                    required
+                                    isInvalid={!!passwordError}
+                                />
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={togglePasswordVisibility}
+                                    className="input-group-text"
+                                >
+                                    <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
+                                </Button>
+                            </div>
                             <Form.Control.Feedback type="invalid">
                                 {passwordError || "비밀번호를 입력해주세요."}
                             </Form.Control.Feedback>

@@ -41,14 +41,11 @@ const DiaryHome = () => {
                     console.log("diaries:", diaries);
                     const formattedDates = diaries.map((diary) => {
                         // console.log("diaryEvenDate : ", diary.eventDate);
-                        const localDate = moment(new Date(diary.eventDate)).format(
-                            "YYYY-MM-DD"
-                        );
+                        const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");
                         // console.log("localDate : ", localDate);
                         return localDate;
                     });
                     setHompy(diaries);
-                    
                     setDayList(formattedDates);
                     // console.log("formattedDates: ", formattedDates);
                 })
@@ -57,7 +54,7 @@ const DiaryHome = () => {
                 });
                 console.log("hompyId : ", hompyId);
         }
-    }, [hompyId]);
+    }, [hompyId, userInfo.id, hompyInfo.user.id]);
 
     // 현재시간의 월
     const monthOfActiveDate = moment(value).format("YYYY-MM");
@@ -81,8 +78,6 @@ const DiaryHome = () => {
         if (dayList.includes(formattedDate)) {
             // console.log(Adding content for date: ${formattedDate});
             return <div key={formattedDate}>⭐️</div>;
-        } else {
-            // console.log(Date ${formattedDate} not in dayList);
         }
         return null;
     };
@@ -91,7 +86,7 @@ const DiaryHome = () => {
     const handleDateClick = (date) => {
         const formattedDate = moment(date).format("YYYY-MM-DD");
         setSelectedDate(formattedDate);
-        console.log("formattedDate: ", formattedDate);
+        // console.log("formattedDate: ", formattedDate);
 
         if(userInfo.id === hompyInfo.user.id){
             axios
@@ -102,15 +97,10 @@ const DiaryHome = () => {
                     const diaries = response.data;
 
                     const filteredDiaries = diaries.filter(diary => diary.hompy.user.id === userInfo.id);
-
-                    if(filteredDiaries.length > 0){
-                        console.log("다이어리 정보: ", filteredDiaries);
-                        setDiaryContent(filteredDiaries);
-                        setShowModal(true);
-                    }else{
-                        setDiaryContent(null);
-                        setShowModal(true);
-                    }
+                    
+                    console.log("다이어리 정보: ", filteredDiaries);
+                    setDiaryContent(filteredDiaries.length > 0 ? filteredDiaries : null);
+                    setShowModal(true);
                 })
                 .catch((error) => {
                     setDiaryContent(null);

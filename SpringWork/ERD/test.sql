@@ -89,8 +89,8 @@ where id = 1;
 
 
 update item
-set item_name='풍물놀이_꾕과리'
-where id = 31;
+set item_name='폰트4'
+where id = 80;
 
 update item
 set item_name='글꼴4'

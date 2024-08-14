@@ -109,7 +109,7 @@ public class CartsService {
     // Top3 출력
     public Map<String, List<Item>> getTopSellingItems(){
         Map<String, List<Item>> topSellingItems = new HashMap<>();
-        List<String> itemTypes = List.of("배경음악", "글꼴", "스킨", "미니미", "미니룸");
+        List<String> itemTypes = List.of("배경음악", "글꼴", "스킨", "미니미", "스토리룸");
 
         for (String itemType : itemTypes) {
             Pageable topThree = PageRequest.of(0, 3);
@@ -117,6 +117,14 @@ public class CartsService {
             topSellingItems.put(itemType, items);
         }
         return topSellingItems;
+    }
+
+    // 결제 내역 출력
+    @Transactional(readOnly = true)
+    public List<Carts> getPaymentHistory(Long id){
+        User user = new User();
+        user.setId(id);
+        return cartsRepository.findByUserAndCartsStatus(user, "Y");
     }
 
 }

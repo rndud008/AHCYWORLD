@@ -1,6 +1,8 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Carts;
 import com.lec.spring.service.CartsService;
+import com.lec.spring.service.PaymentHistoryService;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,11 @@ import java.util.List;
 public class CartsController {
 
     public final CartsService cartsService;
+    private final PaymentHistoryService paymentHistoryService;
 
-    public CartsController(CartsService cartsService) {
+    public CartsController(CartsService cartsService, PaymentHistoryService paymentHistoryService) {
         this.cartsService = cartsService;
+        this.paymentHistoryService = paymentHistoryService;
     }
 
     @PostMapping("/additem")
@@ -68,5 +72,10 @@ public class CartsController {
     @GetMapping("/top-selling-items")
     public ResponseEntity<?> getTopSellingItems(){
         return ResponseEntity.ok(cartsService.getTopSellingItems());
+    }
+
+    @GetMapping("/history")
+    public List<Carts> getHistory(@RequestParam Long id){
+        return cartsService.getPaymentHistory(id);
     }
 }

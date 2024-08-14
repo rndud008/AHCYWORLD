@@ -4,7 +4,7 @@ import "./SlideImg.css";
 const ExampleImg = ({ text, imageUrl }) => {
     return (
         <>
-            <div>
+            <div className="exaple-img-container">
                 <img
                     className="example-img"
                     src={process.env.PUBLIC_URL + imageUrl}
