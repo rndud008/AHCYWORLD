@@ -12,6 +12,7 @@ import { Modal } from "react-bootstrap";
 import UpdateUser from "./UpdateUser";
 import * as Swal from "../../../apis/alert";
 import MessageModal from "../Message/MessageModal"
+import PaymentHistory from "../paymentHistory/PaymentHistory";
 const MyBox = () => {
     const { isLogin, logout, userInfo, setUserInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,8 @@ const MyBox = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     // 알림 모달창
     const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+
+    const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
 
     // 메시지 모달
     const openMessageModal = () => {
@@ -69,6 +72,19 @@ const MyBox = () => {
     const closeEditModal = () => {
         setIsEditModalOpen(false);
     };
+
+
+    const openPaymentHistoryModal = () => {
+        setIsPaymentHistoryOpen(true);
+    };
+
+    const closePaymentHistoryModal = () => {
+        setIsPaymentHistoryOpen(false);
+    }
+
+    const handleCarts = () => {
+        navigate(`/cart/${userInfo.id}`);
+    }
 
     // const handleUserInfoUpdate = (updateUser) => {
     //     if (typeof setUserInfo === 'function') {
@@ -138,6 +154,10 @@ const MyBox = () => {
                         내 정보 수정
                     </button>
                 </div>
+                <UpdateUser
+                isEditModalOpen={isEditModalOpen}
+                closeEditModal={closeEditModal}
+                />
                 <div className="topbtn-box">
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
                     <button onClick={() => logout()} className="logout-btn">
@@ -206,22 +226,22 @@ const MyBox = () => {
                 </div>
             </div>
 
-            <div className="bottom">
-                <button className="hompy-btn" onClick={openMessageModal}>알림 {messageCnt}</button>
-                <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} />
-                <button
-                    className="hompy-btn"
-                    onClick={() => openMinihompy(hompyInfo.id)}
-                >
-                    내 미니홈피
-                </button>
+            <div className="box-container">
+                <div className="top-buttons-container">
+                    <button className="hompy-btn" onClick={openMessageModal}>알림 {messageCnt}</button>
+                    <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} />
+                    <button className="hompy-btn" onClick={() => openMinihompy(hompyInfo.id)}>
+                        내 미니홈피
+                    </button>
+                </div>
+                <div className="bottom-buttons-container">
+                    <button className='payCart-button' onClick={openPaymentHistoryModal}>결제내역</button>
+                    <button className='payCart-button' onClick={() => handleCarts()}>장바구니</button>
+                </div>
             </div>
-
-            <UpdateUser
-                isEditModalOpen={isEditModalOpen}
-                closeEditModal={closeEditModal}
-            />
-        </div>
+            <PaymentHistory isOpen={isPaymentHistoryOpen} onClose={closePaymentHistoryModal}/>
+            </div>
+        
     );
 };
 

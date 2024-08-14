@@ -106,13 +106,13 @@ public class CartsService {
         }
     }
 
-    // Top3 출력
+    // Top5 출력
     public Map<String, List<Item>> getTopSellingItems(){
         Map<String, List<Item>> topSellingItems = new HashMap<>();
         List<String> itemTypes = List.of("배경음악", "글꼴", "스킨", "미니미", "스토리룸");
 
         for (String itemType : itemTypes) {
-            Pageable topThree = PageRequest.of(0, 3);
+            Pageable topThree = PageRequest.of(0, 5);
             List<Item> items = cartsRepository.findTopSellingItemsByType(itemType, topThree);
             topSellingItems.put(itemType, items);
         }

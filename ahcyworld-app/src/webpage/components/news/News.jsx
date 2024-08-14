@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_HOST } from "../../../apis/api";
-import { Pagination } from "react-bootstrap";
+import { Card, Pagination, Tab, Tabs } from "react-bootstrap";
 import "./News.css";
 
 const News = () => {
@@ -10,14 +10,28 @@ const News = () => {
     const [currentPage, setCurrentPage] = useState(1);
     // 한 페이지당 뉴스의 항목 수
     const [newsPerPage] = useState(10);
+    const [activeCategory, setActiveCategory] = useState("entertainment");
+
+    const categories = [
+        {key: "entertainment", label: "연예"},
+        {key: "stock", label: "주식"},
+        {key: "technology", label: "과학"},
+        {key: "economy", label: "경제"},
+        {key: "politics", label: "정치"},
+        {key: "society", label: "사회"},
+        {key: "world", label: "세계"},
+        {key: "sports", label: "스포츠"},
+        {key: "weather", label: "날씨"},
+    ]
 
     useEffect(() => {
 
         const fetchNews = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get(`${SERVER_HOST}/news/api`);
-                const { data } = response;
-                // console.log("API data:", data);
+                const url = `${SERVER_HOST}/news/api?category=${activeCategory}`;
+                const respone = await axios.get(url);
+                const { data } = respone;
 
                 const cleanNews = data.items.map(item => ({
                     ...item,
@@ -34,7 +48,7 @@ const News = () => {
         };
 
         fetchNews();
-    }, []);
+    }, [activeCategory]);
 
     const cleanHTML = (html) => {
         // HTML 엔티티 변환
@@ -68,27 +82,40 @@ const News = () => {
                 <div className='noNews'>Loading...</div>
             ) : news.length > 0 ? (
                 <>
-                <h2 className="news-title">연예 뉴스</h2>
-                <table className='news-table'>
-                    <thead>
-                        <tr>
-                            <th>제목</th>
-                            <th>내용</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentNews.map((item, index) => (
-                            <tr
-                                key={index}
-                                className='news-item'
-                                onClick={() => moveNews(item.link)}
-                            >
-                                <td>{item.title}</td>
-                                <td>{item.description}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <h1 className="news-title">News</h1>
+                <Tabs
+                    id="news-category-tabs"
+                    activeKey={activeCategory}
+                    onSelect={(k) => {
+                        setActiveCategory(k);
+                        setCurrentPage(1)
+                    }}
+                >
+                    {categories.map((category) => (
+                        <Tab
+                            eventKey={category.key}
+                            title={category.label}
+                            key={category.key}
+                        >
+                            <div className="news-cards">
+                                {currentNews.map((item, index) => (
+                                    <Card
+                                        key={index}
+                                        className="news-cards"
+                                        onClick={() => moveNews(item.link)}
+                                    >
+                                        <Card.Body>
+                                            <Card.Title>{item.title}</Card.Title>
+                                            <Card.Text>{item.description}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                ))}
+
+                            </div>
+                        </Tab>
+                    ))}
+
+                </Tabs>
                 
                 <div className="pagination-container">
                     <Pagination>

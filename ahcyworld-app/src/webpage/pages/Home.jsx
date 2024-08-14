@@ -14,7 +14,6 @@ import MyBox from "../components/mybox/MyBox";
 import SlideImg from "../components/slideImg/SlideImg";
 import News from "../components/news/News";
 import BestItem from "../components/bestItem/BestItem";
-import Box from "../components/mybox/Box";
 
 
 const StyledLoginBox = styled.div`
@@ -115,7 +114,6 @@ const Home = ({itemKind}) => {
                     {isLogin ? (
                         <StyledMyBox>
                             <MyBox />
-                            <Box />
                         </StyledMyBox>
                     ) : (
                         <StyledLoginBox>
@@ -126,13 +124,15 @@ const Home = ({itemKind}) => {
                     <SlideImg className="slideImg" />
                 </div>
 
-                <div className="bottom-row">
-                    <div className="new-container">
+
+                    <div className="new-section">
                         <News />
                     </div>
-                    <div className="bestItem-container">
+
+                {/* <div className="bottom-row"> */}
+                    <div className="bestItem-section">
                         <BestItem />
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
 

@@ -1,26 +1,61 @@
 /* BestItem.css */
+
 .bestItems-container {
+    display: flex;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 30px;
-    background-color: #f7f7f7; /* 부드러운 배경색 */
+    background-color: #f7f7f7;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 더 부드러운 그림자 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 20px;
+}
+
+.category-button {
+    padding: 15px 20px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: left;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.category-button:hover,
+.category-button.active {
+    background-color: var(--main-color);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.item-display {
+    flex: 3;
 }
 
 .best-item-title {
     margin-bottom: 20px;
     font-weight: bold;
+    font-size: 2em;
+    color: var(--main-color);
 }
 
 .item-type-section {
-    margin-bottom: 40px;
-    padding: 25px;
-    background-color: #ffffff; /* 화이트 카드 스타일 */
+    background-color: #ffffff;
     border-radius: 12px;
+    padding: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 부드러운 호버 효과 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .item-type-section:hover {
@@ -28,17 +63,10 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-.item-type-section h2 {
-    font-size: 2em; /* 큰 제목 */
-    color: var(--main-color);
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
 .item-card {
-    display: flex; /* 가로 정렬 */
-    justify-content: space-between; /* 양 끝으로 배치 */
-    align-items: center; /* 세로 가운데 정렬 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 15px 20px;
     border-bottom: 1px solid #eee;
     transition: background-color 0.3s ease;
@@ -62,4 +90,10 @@
     color: var(--main-color);
     font-weight: 700;
     font-size: 1.3em;
+}
+
+.bestItem-acorn {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
 }

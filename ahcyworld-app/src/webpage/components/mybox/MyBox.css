@@ -6,21 +6,21 @@
 .mybox-container {
     /* outline: 2px solid black; */
     width: 100%;
-    height: 330px;
+    height: 400px;
     max-width: 500px;
-    margin: 0 auto 15px auto;
-    padding: 5px;
+    margin: 15px auto;
+    padding: 10px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 }
 
 /* 박스 상단 */
 .top {
     /* outline: 2px solid blue; */
-
     width: 100%;
-    height: 50px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,27 +30,31 @@
 
 .name-box{
     /* outline: 2px solid red; */
-    position: relative;
-    left: 48px;
+    /* position: relative;
+    left: 48px; */
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
 }
 .btn-box{
     /* outline: 2px solid blue; */
-    margin-left: 70px;
+    margin-left: 20px;
 }
 
 .topbtn-box {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .user-btn {
-    width: 120px;
+    width: 140px;
+    height: 40px;
     background-color: var(--main-color);
     color: #fff;
     font-size: 18px;
     font-weight: 600;
-    padding: 3px 5px;
+    padding: 5px 10px;
     border: 0;
     border-radius: 10px;
     transition: all 0.3s ease;
@@ -63,6 +67,8 @@
 .logout-btn {
     background: none;
     border: 0;
+    padding: 8px 16px;
+    font-size: 16px;
     transition: all 0.3s ease;
 }
 .logout-btn:hover {
@@ -73,14 +79,15 @@
 .middle {
     /* outline: 2px solid red; */
     width: 100%;
-    height: 150px;
+    height: 160px;
     display: flex;
+    margin-top: 10px;
 }
 
 .minimi-box {
-    outline: 2px solid rgb(255, 0, 179);
+    /* outline: 2px solid rgb(255, 0, 179); */
     position: relative;
-    width: 45%;
+    width: 50%;
     height: 100%;
     overflow: hidden;
 }
@@ -124,9 +131,8 @@
 .info-box ul li img {
     width: 15px;
     height: 15px;
-
-    position: relative;
-    right: 15px;
+    /* position: relative;
+    right: 15px; */
 }
 
 .friend-request, .acorn-status {
@@ -140,30 +146,47 @@
     transform: scale(1.05);
 }
 
-
-
 /* 박스 하단 */
-.bottom {
-    /* outline: 2px solid lime; */
+.box-container {
+    /* outline: 1px solid saddlebrown; */
     width: 100%;
-    height: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.top-buttons-container, .bottom-buttons-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
 }
 
-.hompy-btn {
+.top-buttons-container .hompy-btn,
+.bottom-buttons-container .payCart-button {
     width: 45%;
-    height: 28%;
+    height: 40px;
+    font-size: 18px;
     border: 0;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: var(--main-color);
     color: #fff;
-    font-size: 20px;
-    font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.hompy-btn:hover {
+.top-buttons-container .hompy-btn:hover, .bottom-buttons-container .payCart-button:hover {
     transform: scale(1.05);
+}
+
+.bottom-buttons-container .payCart-button {
+    font-size: 16px; /* 하단 버튼의 폰트 사이즈 조정 */
+    background-color: var(--main-color);
+    color: #fff;
 }

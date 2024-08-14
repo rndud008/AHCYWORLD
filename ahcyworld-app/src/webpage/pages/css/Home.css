@@ -6,6 +6,7 @@
     align-items: center; 
     width: 100vw;
     height: 100vh;
+    box-sizing: border-box;
 }
 
 .content-container {
@@ -24,19 +25,19 @@
     margin-bottom: 20px;
 }
 
-.bottom-row {
+/* .bottom-row {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     width: 100%;
     max-width: 1400px;
     margin-top: 50px;
-}
+} */
 
-.new-container {
-    width: 50%;
-}
-
+.new-container,
 .bestItem-container {
-    width: 50%;
+    width: 100%;
+    max-width: 1400px;
+    margin-top: 50px;
+    box-sizing: border-box;
 }

@@ -7,11 +7,12 @@ import moment from "moment-timezone";
 import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryModal from "./DiaryModal";
-import { SERVER_HOST } from "../../../apis/api";
+import api, { SERVER_HOST } from "../../../apis/api";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import Layout from "../Layout/Layout";
 import { Button } from "react-bootstrap";
 import * as Swal from "../../../apis/alert";
+import Cookies from "js-cookie";
 
 const DiaryHome = () => {
     const curDate = new Date();
@@ -29,32 +30,61 @@ const DiaryHome = () => {
     const { hompyId } = useParams();
     const [hompy, setHompy] = useState("");
 
+    const cookie = Cookies.get("accessToken"); 
+
+    const fetchDiaries = () => {
+        axios({
+            method: "get",
+            url: `${SERVER_HOST}/cyworld/cy/diaries/list/${hompyId}/${hompy.user.id}`,
+        })
+            .then((response) => {
+                const diaries = response.data;
+                console.log("diaries:", diaries);
+                const formattedDates = diaries.map((diary) => {
+                    // console.log("diaryEvenDate : ", diary.eventDate);
+                    const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");
+                    // console.log("localDate : ", localDate);
+                    return localDate;
+                });
+                // setHompy(diaries);
+                setDayList(formattedDates);
+                console.log("formattedDates: ", formattedDates);
+            })
+            .catch((error) => {
+                console.error("diary 없음...", error);
+            });
+            console.log("hompyId : ", hompyId);
+    };
+
+    const fetchHompy = async () => {
+        try{
+            const respone = await api.get(`${SERVER_HOST}/hompy/${hompyId}`,{
+                headers: {
+                    "Authorization": `Bearer ${cookie}`,
+                }
+            });
+            setHompy(respone.data);
+            console.log("홈피 : ", respone);
+        }catch(error){
+            console.error("홈피 정보 불러오기 실패", error)
+        }
+    };
+
     // 로딩시 초기
     useEffect(() => {
-        if(userInfo.id === hompyInfo.user.id){
-            axios({
-                method: "get",
-                url: `${SERVER_HOST}/cyworld/cy/diaries/list/${hompyId}/${userInfo.id}`,
-            })
-                .then((response) => {
-                    const diaries = response.data;
-                    console.log("diaries:", diaries);
-                    const formattedDates = diaries.map((diary) => {
-                        // console.log("diaryEvenDate : ", diary.eventDate);
-                        const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");
-                        // console.log("localDate : ", localDate);
-                        return localDate;
-                    });
-                    setHompy(diaries);
-                    setDayList(formattedDates);
-                    // console.log("formattedDates: ", formattedDates);
-                })
-                .catch((error) => {
-                    console.error("diary 없음...", error);
-                });
-                console.log("hompyId : ", hompyId);
+        // if(userInfo.id === hompyInfo.user.id){
+        if(hompyId){
+            fetchHompy();
         }
-    }, [hompyId, userInfo.id, hompyInfo.user.id]);
+        // }
+    }, [hompyId]);
+
+    useEffect(()=>{
+        if(hompy){
+            console.log("hompyId : ", hompyId);
+            fetchDiaries();   
+        }
+    },[hompy])
 
     // 현재시간의 월
     const monthOfActiveDate = moment(value).format("YYYY-MM");
@@ -87,8 +117,6 @@ const DiaryHome = () => {
         const formattedDate = moment(date).format("YYYY-MM-DD");
         setSelectedDate(formattedDate);
         // console.log("formattedDate: ", formattedDate);
-
-        if(userInfo.id === hompyInfo.user.id){
             axios
                 .get(
                     `${SERVER_HOST}/cyworld/cy/diaries/detail-by-date/${formattedDate}`
@@ -96,7 +124,7 @@ const DiaryHome = () => {
                 .then((response) => {
                     const diaries = response.data;
 
-                    const filteredDiaries = diaries.filter(diary => diary.hompy.user.id === userInfo.id);
+                    const filteredDiaries = diaries.filter(diary => diary.hompy.id === parseInt(hompyId));
                     
                     console.log("다이어리 정보: ", filteredDiaries);
                     setDiaryContent(filteredDiaries.length > 0 ? filteredDiaries : null);
@@ -109,9 +137,7 @@ const DiaryHome = () => {
                         "다이어리 내용을 가져오는데 실패 했습니다.",
                         error
                     );
-                });
-        }
-        
+                });        
     };
 
     const handleCloseModal = () => {

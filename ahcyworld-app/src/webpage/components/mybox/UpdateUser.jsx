@@ -22,16 +22,20 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*\d).{8,16}$/;
 
     useEffect(() => {
-        if(hompyInfo){
+        if(isEditModalOpen){
             setUpdatedUserInfo({
-                name: hompyInfo.user.name || "",
-                email: hompyInfo.user.email || "",
-                gender: hompyInfo.user.gender || "",
-                birthDay: hompyInfo.user.birthDay || "",
+                name: hompyInfo?.user?.name || "",
+                email: hompyInfo?.user?.email || "",
+                gender: hompyInfo?.user?.gender || "",
+                birthDay: hompyInfo?.user?.birthDay || "",
                 password: "",
             });
         }
-    }, [hompyInfo])
+    }, [isEditModalOpen])
+
+    if(!isEditModalOpen){
+        return;
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

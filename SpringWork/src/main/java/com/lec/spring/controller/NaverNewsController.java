@@ -24,10 +24,44 @@ public class NaverNewsController {
     private String clientSecret; //애플리케이션 클라이언트 시크릿
 
     @GetMapping("/api")
-    public ResponseEntity<String> apiTest(@RequestParam(value = "query", defaultValue = "연예") String query,
+    public ResponseEntity<String> apiTest(@RequestParam(value = "query", required = false) String query,
+                                          @RequestParam(value = "category", required= false) String category,
                                           @RequestParam(value = "display", defaultValue = "100") int display,
                                           @RequestParam(value = "start", defaultValue = "1") int start,
-                                          @RequestParam(value = "sort", defaultValue = "sim") String sort) {
+                                          @RequestParam(value = "sort", defaultValue = "date") String sort) {
+
+        if (query == null || category != null){
+            switch (category.toLowerCase()){
+                case "entertainment":
+                    query = "연예";
+                    break;
+                case "stock":
+                    query = "주식";
+                    break;
+                case "technology":
+                    query = "과학";
+                    break;
+                case "economy":
+                    query = "경제";
+                    break;
+                case "politics":
+                    query = "정치";
+                    break;
+                case "society":
+                    query = "사회";
+                    break;
+                case "world":
+                    query = "세계";
+                    break;
+                case "sports":
+                    query = "스포츠";
+                    break;
+                case "weather":
+                    query = "날씨";
+                    break;
+            }
+        }
+
         String text = query;
 
         try {
