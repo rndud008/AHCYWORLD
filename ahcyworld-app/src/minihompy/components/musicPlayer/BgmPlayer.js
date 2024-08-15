@@ -117,11 +117,11 @@ const BgmPlayer = () => {
         )} 
       </div> */}
       <div className="track-info">
-        {bgmList.length > 0 && (
+        {bgmList&& bgmList.length > 0 && (
           <strong>{bgmList[currentTrackIndex].itemName} - {bgmList[currentTrackIndex].sourceName}</strong>
         )}
       </div>
-      <audio ref={audioRef} src={bgmList.length > 0 ? bgmList[0].fileName : ""} onEnded={handleNextTrack}></audio>
+      <audio ref={audioRef} src={ bgmList && bgmList.length > 0 ? bgmList[0].fileName : ""} onEnded={handleNextTrack}></audio>
       <div className="controls">
         <div className="controls-box">
           <button onClick={togglePlayPause}>
