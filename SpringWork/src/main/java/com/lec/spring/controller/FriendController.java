@@ -4,6 +4,8 @@ import com.lec.spring.domain.Friend;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.FriendService;
 import com.lec.spring.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -89,7 +91,35 @@ public class FriendController {
     }
 
     @PostMapping("/friend-response")
-    public Friend friendShipResponse(Long id, String reply){
+    public Friend friendShipResponse(Long id, String reply) {
         return friendService.friendShipResponse(id, reply);
     }
+
+    // 일촌명 변경
+    @PostMapping("/change-friend-name")
+    public ResponseEntity<?> changeFriendName(@RequestParam Long friendId, @RequestParam String newFriendName) {
+        try {
+            friendService.changeFriendName(friendId, newFriendName);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // 일촌 끊기
+    @DeleteMapping("/remove-friend/{userId}/{friendUserId}")
+    public ResponseEntity<?> removeFriend(@PathVariable("friendUserId") Long friendUserId, @PathVariable("userId") Long userId) {
+        try {
+            friendService.removeFriend(friendUserId, userId);
+            return ResponseEntity.ok().build(); // 상태 코드 200 OK
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Friend relationship not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
+    }
+
+
+
 }
+
