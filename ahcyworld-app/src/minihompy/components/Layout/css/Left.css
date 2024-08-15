@@ -78,6 +78,8 @@
 .no-resize{
   resize: none;
   overflow: auto;
+  width: 300px;
+  height: 175px;
 }
 
 .user-info {

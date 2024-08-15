@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.EmailAuthentication;
 import com.lec.spring.domain.Hompy;
+import com.lec.spring.domain.SearchListDTO;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.EmailAuthenticationRepository;
 import com.lec.spring.repository.HompyRepository;
@@ -139,4 +140,6 @@ public class UserService {
 
         return userRepository.save(existingUser);
     }
+
+
 }

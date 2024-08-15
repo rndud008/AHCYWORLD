@@ -47,9 +47,9 @@ export const checkFriendShip = (username, friendUsername) => {
     });
 };
 
-export const myFriendRequests = (username) => {
+export const myFriendRequests = (username,action="") => {
     return api.get(`${SERVER_HOST}/friend/friend-requests`, {
-        params: { username },
+        params: { username,action },
     });
 };
 

@@ -291,18 +291,18 @@ const Right = ({ user,hompy }) => {
           </button>
         </div>
         <div className="friend-review-container">
-          {(friendList && friendReivewList) && friendReivewList.map((item) => (
+          {(friendList && friendReivewList?.length > 0) && friendReivewList.map((item) => (
             <div>
-              <span>내용 : {item.content} </span>
-              <span>유저이름 : {item.user.name} </span>
-              <span>친구유저 별명 : { friendList.find(item2 => item.user.id === item2.friendUser.id)?.friendName} </span>
+              <span>{item.content} </span>
+              <span>{item.user.name} </span>
+              <span>({friendList.find(item2 => item.user.id === item2.friendUser.id)?.friendName}) </span>
               {userInfo.id === item.user.id && (
                 <span>
                   <FontAwesomeIcon icon={faTrashCan} />
                 </span>
               )}
             </div>
-          ))}
+          )) || <div className="friend-review-container-not">작성된 방명록이 없습니다.</div>}
         </div>
       </div>
     </div>

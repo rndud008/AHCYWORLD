@@ -27,15 +27,14 @@ const Left = ({ user, hompy }) => {
     return item.friendUser.id;
   });
   const FriendCheck =
-    hompyInfo.id !== parseInt(hompyId) &&
-    !friendIdList.some((item) => item !== userInfo.id) &&
-    friendWaitingList?.some((item) => item.user.id === parseInt(userInfo.id));
+    hompyInfo?.id !== parseInt(hompyId) &&
+    !friendIdList.some((item) => item === userInfo.id)&&
+    !friendWaitingList?.some((item) => item.friendUser.id === parseInt(hompy.user.id))
 
-  const FriendWaitingCheck =
+    const FriendWaitingCheck =
     hompyInfo.id !== parseInt(hompyId) &&
-    friendWaitingList
-      ?.find((item) => item.user.id === parseInt(userInfo.id))
-      ?.friendStatus.includes("waiting");
+    friendWaitingList?.find((item) => item.friendUser?.id === parseInt(hompy.user.id))?.friendStatus.includes("waiting");
+
 
   const userId = user?.id;
 
@@ -217,7 +216,7 @@ const Left = ({ user, hompy }) => {
   };
 
   const friendWaiting = async () => {
-    const response = await myFriendRequests(userInfo.username);
+    const response = await myFriendRequests(userInfo.username,"all");
     const { data, status } = response;
 
     setFriendWaitingList(data);
@@ -309,7 +308,7 @@ const Left = ({ user, hompy }) => {
             />
           </>
         )}
-
+        {console.log('FriendCheck',FriendCheck)}
         {(FriendCheck && (
           <>
             <button className="friend-btn" onClick={handleOpenModal}>

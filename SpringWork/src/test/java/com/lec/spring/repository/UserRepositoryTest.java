@@ -152,4 +152,12 @@ class UserRepositoryTest {
     }
 
 
+    @Test
+    void test3(){
+        List<User> users = userRepository.findByNameContainingIgnoreCase("a").orElse(null);
+
+        users.forEach(System.out::println);
+
+        System.out.println(users.size());
+    }
 }

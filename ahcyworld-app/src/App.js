@@ -29,7 +29,7 @@ import { LoginContext } from "./webpage/components/login/context/LoginContextPro
 // import AdminLoginForm from "./webpage/pages/Admin/components/login/AdminLoginForm";
 import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
 // import OAuth2AddInfo from "./webpage/components/login/Login/OAuth2AddInfo";
-
+import '@fontsource/jua';
 
 
 function App() {

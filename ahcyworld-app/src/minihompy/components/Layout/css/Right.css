@@ -201,20 +201,26 @@ li span {
 }
 
 .friend-review-container{
-  outline: 1px solid blue;
+  border: 1px solid lightgrey;
+  max-height: 300px;
+  overflow-y: auto;
   border-radius: 10px;
   margin-top: 10px;
   padding:10px;
 }
 
-.friend-review-container div{
-  outline: 1px solid red;
+.friend-review-container div span{
+  /* outline: 1px solid blue; */
+  font-family: 'Jua', sans-serif;
+  font-size: 20px;
 }
 
-.friend-review-container div span{
-  outline: 1px solid blue;
-  font-size: 15px;
-}
+
 .friend-review-container div:not(:last-child){
   margin-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.friend-review-container-not{
+  text-align: center;
 }

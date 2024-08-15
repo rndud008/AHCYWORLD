@@ -76,6 +76,8 @@ public class UserController {
         return user;
     }
 
+
+
     @GetMapping("/check-friendship")
     public Map<String, Boolean> checkFriendship(@RequestParam(value = "username") String username, @RequestParam(value = "friendUsername") String friendUsername) {
         Map<String, Boolean> response = new HashMap<>();

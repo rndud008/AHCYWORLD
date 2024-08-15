@@ -81,8 +81,8 @@ public class FriendController {
     }
 
     @GetMapping("/friend-requests")
-    public List<Friend> friendRequests(String username) {
-        List<Friend> response = friendService.friendRequests(username);
+    public List<Friend> friendRequests(String username,@RequestParam(defaultValue = "waiting") String action) {
+        List<Friend> response = friendService.friendRequests(username, action);
 
         System.out.println(response);
         return response;

@@ -64,9 +64,17 @@ public class FriendService {
         return "ok";
     }
 
-    public List<Friend> friendRequests(String username) {
+    public List<Friend> friendRequests(String username, String action) {
         User user = userService.findByUsername(username);
-        List<Friend> friendList = friendRepository.findByUserIdAndFriendStatus(user.getId(),"waiting");
+        List<Friend> friendList = new ArrayList<>();
+
+        if (action.equals("all")) {
+            friendList = friendRepository.findByUserId(user.getId());
+        } else {
+
+            friendList = friendRepository.findByUserIdAndFriendStatus(user.getId(), "waiting");
+        }
+
 
 //        List<Friend> friendRequests = new ArrayList<>();
 //

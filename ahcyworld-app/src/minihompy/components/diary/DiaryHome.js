@@ -165,7 +165,7 @@ const DiaryHome = () => {
         onChange(today);
         setActiveMonth(moment(today).format("YYYY-MM-DD"));
     }
-
+    {console.log('diary check', hompy)}
     return (
         <>
             <Layout hompy={hompy} user={hompy.user}>
