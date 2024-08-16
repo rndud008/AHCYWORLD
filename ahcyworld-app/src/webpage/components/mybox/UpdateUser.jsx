@@ -4,6 +4,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
+import "./UpdateUser.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
@@ -183,6 +184,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 value="MALE"
                                 checked={updatedUserInfo.gender === "MALE"}
                                 onChange={handleInputChange}
+                                inline
                             />
                             <Form.Check
                                 type="radio"
@@ -192,6 +194,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 value="FEMALE"
                                 checked={updatedUserInfo.gender === "FEMALE"}
                                 onChange={handleInputChange}
+                                inline
                             />
                         </Form.Group>
 
