@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../css/FriendShip.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import FriendNameModal from '../HompySettings/FriendNameModal';
+import FriendNameModal from './FriendNameModal';
 
 
 const FriendShip = ({user}) => {
