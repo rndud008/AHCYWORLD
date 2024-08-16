@@ -16,17 +16,15 @@ import * as Swal from "../../../apis/alert"
 
 const Right = ({ user,hompy }) => {
   const { hompyId } = useParams();
-  const { userInfo } = useContext(LoginContext);
+  const { userInfo,hompyInfo } = useContext(LoginContext);
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
   const [recentlyPost, setRecentlyPost] = useState();
   const [infoTable, setInfoTable] = useState();
-  const [friendReivew, setFriendReview] = useState();
-  const [friendReivewList, setFriendReviewList] = useState();
+  const [friendReview, setFriendReview] = useState();
+  const [friendReviewList, setFriendReviewList] = useState();
   const friendList = useSelector(state => state.friend.hompyFriendList)
-
-  console.log('friendList',friendList)
-
+  const friendIdList = friendList.map(item => item.friendUser.id);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -73,7 +71,7 @@ const Right = ({ user,hompy }) => {
     }
 
     if (user) {
-      friendReviewList();
+      friendReviewListAxios();
       dispatch(FriendAction.findByHompyFriendListAixos(user.username))
       setFriendReview({
         guestBookName: "friendReview",
@@ -81,7 +79,6 @@ const Right = ({ user,hompy }) => {
         user: userInfo,
       })
     }
-
 
   }, [hompyId, user]);
 
@@ -124,25 +121,33 @@ const Right = ({ user,hompy }) => {
   const friendReviewValue = (e) => {
     const { value, name } = e.target;
 
-    setFriendReview({ ...friendReivew, [name]: value });
+    setFriendReview({ ...friendReview, [name]: value });
   };
 
   const friendReviewCreate = async () => {
 
+    if(!friendIdList.some(item => item === userInfo.id)) return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
+
     try{
       const response = await api.post(
         `${SERVER_HOST}/cyworld/cy/guestbook/save`,
-        friendReivew
+        friendReview
       );
+
+      const {data,status} = response;
+      if(status === 200){
+        setFriendReviewList([...friendReviewList,data])
+      }
       
     }catch (e){
       return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
     }
 
-    friendReviewList()
-  };
 
-  const friendReviewList = async () => {
+  };
+  console.log(friendReviewList,'?????????????????')
+
+  const friendReviewListAxios = async () => {
     const action = "friendReview";
     if (user) {
       const username = user.username;
@@ -165,6 +170,23 @@ const Right = ({ user,hompy }) => {
   const activeEnter = (e) =>{
     if(e.key === "Enter"){
       friendReviewCreate();
+    }
+  }
+
+  const friendReviewDelete = async(id)=>{
+
+    if(!window.confirm('삭제하시겠습니까?')) return;
+
+    const username = userInfo.username;
+    const response = await api.delete(`${SERVER_HOST}/cyworld/cy/guestbook/delete/${id}`,{
+      params:{username}
+    })
+
+    const {data,status} = response;
+
+    if(status === 200){
+      setFriendReviewList(friendReviewList.filter(item => item.id !== id));
+      alert('삭제완료.');
     }
   }
 
@@ -291,13 +313,13 @@ const Right = ({ user,hompy }) => {
           </button>
         </div>
         <div className="friend-review-container">
-          {(friendList && friendReivewList?.length > 0) && friendReivewList.map((item) => (
+          {(friendList && friendReviewList?.length > 0) && friendReviewList.map((item) => (
             <div>
               <span>{item.content} </span>
               <span>{item.user.name} </span>
               <span>({friendList.find(item2 => item.user.id === item2.friendUser.id)?.friendName}) </span>
-              {userInfo.id === item.user.id && (
-                <span>
+              {(userInfo.id === item.user.id || hompyInfo.id === parseInt(hompyId)) && (
+                <span className="friendReviewDelete" onClick={() =>friendReviewDelete(item.id)}>
                   <FontAwesomeIcon icon={faTrashCan} />
                 </span>
               )}

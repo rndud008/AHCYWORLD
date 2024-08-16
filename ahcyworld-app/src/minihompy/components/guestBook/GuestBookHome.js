@@ -335,7 +335,7 @@ const GuestBookHome = () => {
                                   </span>
                                 )}
                               {(guest.user.username === userName ||
-                                hompyInfo.user.id === guest.user.id) && (
+                                hompyInfo.user.id === guest.user.id || hompyInfo.id === parseInt(hompyId)) && (
                                 <span
                                   className="delete"
                                   onClick={() => handleDelete(guest.id)}

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./Menu.css";
 import axios from "axios";
 import { HompyAction } from "../../../redux/actions/HompyAction";
 import { useDispatch, useSelector } from "react-redux";
+import {LoginContext} from "../../../webpage/components/login/context/LoginContextProvider"
 
 const Menu = () => {
   const { hompyId } = useParams();
+  const {hompyInfo} = useContext(LoginContext);
   const [menuColor, setMenuColor] = useState("#147DAF");
   const [textColor, setTextColor] = useState("#fff");
   const [borderColor, setBorderColor] = useState("#000000");
@@ -19,6 +21,10 @@ const Menu = () => {
 
   const dispatch = useDispatch();
   const hompy = useSelector((state) => state.hompy.hompy);
+
+  console.log('hompy?',hompy)
+  console.log('hompyid',hompyId)
+  console.log('hompinfo',hompyInfo)
 
   // 메뉴 설정 가져오기
   useEffect(() => {
@@ -153,6 +159,8 @@ const Menu = () => {
               </NavLink>
             </li>
           )}
+          {hompyInfo.id === parseInt(hompyId) &&
+          
           <li>
             <NavLink
               to={`/hompy/${hompyId}/setting`}
@@ -166,6 +174,7 @@ const Menu = () => {
               관리
             </NavLink>
           </li>
+          }
         </ul>
       </nav>
       {/* <BgmPlayer /> */}

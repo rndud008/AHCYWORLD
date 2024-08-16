@@ -224,3 +224,7 @@ li span {
 .friend-review-container-not{
   text-align: center;
 }
+
+.friend-review-container div span:nth-child(4){
+  cursor: pointer;
+}
