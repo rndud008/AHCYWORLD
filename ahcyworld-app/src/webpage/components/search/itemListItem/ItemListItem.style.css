@@ -28,7 +28,7 @@ div.searchItem div:first-child input{
   border-radius: 10px;
 }
 
-div.searchItem div:first-child img{
+div.searchItem div:first-child img.skinAndStoryRoom{
   width: inherit;
   border-radius: 10px;
   height: 200px;

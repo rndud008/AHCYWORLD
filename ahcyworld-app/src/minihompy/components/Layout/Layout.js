@@ -15,6 +15,8 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
     totalVisitor: 0,
   });
   const [miniHompySkin, setMiniHompySkin] = useState();
+
+  const [hompyTitle, setHompyTitle] =useState(false);
   const userId = user?.id;
   const hompyId = hompy?.id;
 
@@ -109,7 +111,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
                     TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo?.totalVisitor}
                   </div>
                 {/* 미니홈피 타이틀 */}
-                <div className="homepage-title">{hompy.title}</div>
+                <div className="homepage-title"><input value={hompy.title} readOnly={hompyTitle ? true : undefined }/> {hompy.title}</div>
               </div>
             </div>
             <div className="maincontent">

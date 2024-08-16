@@ -63,7 +63,7 @@ const ItemListItem = () => {
             ) && (
               <div>
                 <img
-
+                  className="skinAndStoryRoom"
                   src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
                 />
               </div>
