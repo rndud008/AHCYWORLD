@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Left from "../../../minihompy/components/Layout/Left";
 import Right from "../../../minihompy/components/Layout/Right";
@@ -8,6 +8,11 @@ import { Outlet, useLocation, useParams } from "react-router-dom";
 import Menu from "../menu/Menu";
 import BgmPlayer from "../musicPlayer/BgmPlayer";
 import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
+import { hompyInfo } from "../../../apis/auth";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import { Button } from "react-bootstrap";
+import api, { SERVER_HOST } from "../../../apis/api";
+import Cookies from "js-cookie";
 
 const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   const [visitorInfo, setVisitorInfo] = useState({
@@ -15,14 +20,17 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
     totalVisitor: 0,
   });
   const [miniHompySkin, setMiniHompySkin] = useState();
+  const [hompyTitle, setHompyTitle] = useState();
+  const [show,setShow] = useState(false);
 
-  const [hompyTitle, setHompyTitle] =useState(false);
-  const userId = user?.id;
-  const hompyId = hompy?.id;
-
+  const { hompyInfo, setHompyInfo } = useContext(LoginContext);
   const { postName } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
+
+  const hompyId = hompy?.id;
+  const userId = user?.id;
+  const userCheck = parseInt(hompyId) === hompyInfo.id;
 
   // console.log(postName, "Layout");
 
@@ -33,6 +41,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         todayVisitor: hompy.todayVisitor || 0,
         totalVisitor: hompy.totalVisitor || 0,
       });
+      setHompyTitle(hompy.title);
     }
   }, [hompy]);
 
@@ -44,7 +53,9 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
 
       if (userId && !hasVisited) {
         try {
-          const response = await axios.post(`http://localhost:8070/hompy/${hompyId}/visit`);
+          const response = await axios.post(
+            `http://localhost:8070/hompy/${hompyId}/visit`
+          );
           setVisitorInfo({
             todayVisitor: response.data.todayVisitor || 0,
             totalVisitor: response.data.totalVisitor || 0,
@@ -65,30 +76,70 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       axios
         .get(`http://localhost:8070/hompy/${hompyId}`)
         .then((response) => {
-
           const hompyData = response.data;
-          console.log('??????',hompyData)
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
           const hompySkinImagePath = `${process.env.PUBLIC_URL}/image/${hompyData.miniHompySkin}`;
           console.log(hompySkinImagePath); // 경로 확인용
           setMiniHompySkin(hompySkinImagePath);
         })
         .catch((error) => {
-          console.error("데이터를 불러오지 못했습니다. 관리자에게 문의하세요.", error);
+          console.error(
+            "데이터를 불러오지 못했습니다. 관리자에게 문의하세요.",
+            error
+          );
         });
     }
   }, [userId]);
 
-  const handleClick = (e) => {
-    e.preventDefault(); // a 태그의 기본 동작을 막습니다.
-
-    // 새로운 창을 고정된 사이즈로 엽니다.
-    window.open(
-      "http://localhost:3000/", // 열고 싶은 URL
-      "_blank", // 새로운 창을 엽니다.
-      "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
-    );
+  const hompyTitleChangeValue = (e) => {
+    const { value } = e.target;
+    console.log("value", value);
+    setHompyTitle(value)
   };
+
+  const buttonShow =()=>{
+    if(userCheck){
+      setShow(true);
+    }
+  }
+  const outFocus = ()=>{
+
+    setTimeout(()=>{
+      setShow(false);
+    },100)
+  }
+
+  const hompyTitleUpdate = async() =>{
+    console.log('hompyTitleUpdate 실행')
+
+    const valid = hompyTitleValidation(hompyTitle);
+
+    if(!valid) return alert('제목은 공란일수 없습니다.');
+
+    const response = await api.put(`${SERVER_HOST}/hompy/${hompyId}/hompytitle`,hompyTitle,{
+      headers:{
+        Authorization: `Bearer ${Cookies.get("accessToken")}`,
+      }
+    })
+
+    const {data, status} = response;
+
+    if(status ===  200){
+      setHompyInfo(data);
+      setShow(false);
+    }
+  
+  }
+
+  function hompyTitleValidation(hompyTitle){
+    let valid =true;
+
+    if(!hompyTitle || hompyTitle.trim()===""){
+      valid = false;
+    }
+
+    return valid;
+  }
 
   return (
     <>
@@ -99,19 +150,33 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
           backgroundImage: `url(${miniHompySkin})`,
         }}
       >
-          {/* 컨테이너 아웃라인 */}
+        {/* 컨테이너 아웃라인 */}
         <div className="container-fluid p-0 position-relative outline-container">
-          <img src="/image/outerbox.png" className="outline-image"/>
+          <img src="/image/outerbox.png" className="outline-image" />
           <div className="inline-container">
             {/* 컨테이너 내부라인 */}
             <div>
               <div className="visitAndtitle">
                 {/* 방문자 */}
-                  <div className="visitor-info">
-                    TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL {visitorInfo?.totalVisitor}
-                  </div>
+                <div className="visitor-info">
+                  TODAY {visitorInfo?.todayVisitor} &nbsp; | &nbsp; TOTAL{" "}
+                  {visitorInfo?.totalVisitor}
+                </div>
                 {/* 미니홈피 타이틀 */}
-                <div className="homepage-title"><input value={hompy.title} readOnly={hompyTitle ? true : undefined }/> {hompy.title}</div>
+                <div className={`homepage-title `}>
+                  <input
+                    value={hompyTitle}
+                    onChange={hompyTitleChangeValue}
+                    onClick={buttonShow}
+                    onBlur={outFocus}
+                    className={
+                      (!userCheck && "homepage-title-outline") ||
+                      (userCheck && "homepage-title-cursor")
+                    }
+                    readOnly={!userCheck ? true : undefined}
+                  />
+                  {show && <Button type="button" onClick={hompyTitleUpdate}>수정</Button>}
+                </div>
               </div>
             </div>
             <div className="maincontent">
@@ -124,22 +189,17 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
                 ) : (
                   <>
                     {postName === undefined && (
-                      <Left
-                        user={user}
-                        hompy={hompy}
-                      />
+                      <Left user={user} hompy={hompy} />
                     )}
                     {postName && <BoardTypeList />}
                   </>
                 )}
               </div>
 
-            {/* <우측> 게시물 들  */}
-            {/* children을 통해 오른쪽 컴포넌트를 대체 */}
+              {/* <우측> 게시물 들  */}
+              {/* children을 통해 오른쪽 컴포넌트를 대체 */}
               <div className="right-content">
-                {children || (
-                  <Right hompy={hompy} user={user} />
-                )}
+                {children || <Right hompy={hompy} user={user} />}
               </div>
             </div>
           </div>
@@ -149,13 +209,13 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
             <Menu />
           </div>
         </div>
-        
+
         <div className="bgmbox">
           {/* Bgm 자리 */}
           <BgmPlayer />
         </div>
       </div>
-    </> 
+    </>
   );
 };
 

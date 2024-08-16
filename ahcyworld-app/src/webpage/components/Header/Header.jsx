@@ -50,17 +50,19 @@ const Header = ({ setItemKind }) => {
           SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
         );
       } catch (e) {
+        // return alert(e);
         return alert(e.response.data);
       }
     }
   };
-
+  
   const searchListAxios = async () => {
     try {
       await dispatch(
         SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
       );
     } catch (e) {
+      // return alert(e);
       return alert(e.response.data);
     }
   };
