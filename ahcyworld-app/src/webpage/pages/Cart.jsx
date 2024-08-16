@@ -6,6 +6,7 @@ import * as Swal from "../../apis/alert";
 import AcornPayModal from '../items/components/AcornPayModal';
 import { LoginContext } from '../../webpage/components/login/context/LoginContextProvider';
 import acorn from "../../upload/acorn.png"
+import '../pages/css/Cart.css';
 
 const Cart = () => {
     const { userId } = useParams();
@@ -165,17 +166,17 @@ const Cart = () => {
                             />
                             {cart.item.itemType === "글꼴" ? (
                                 <input
-                                    className='fontStyle'
+                                    className='cartfontStyle'
                                     type='text'
                                     style={{ fontFamily: `${cart.item.sourceName}, cursive`, fontSize: 50, width: 100, height: 100 }}
                                     defaultValue='AhCyWorld'
                                     readOnly
                                 />
                             ) : cart.item.itemType === "배경음악" ? (
-                                <img className="itemImg" src={cart.item.bgmImg} style={{ width: 100, height: 100 }} alt='' />
+                                <img className="cartitemImg" src={cart.item.bgmImg} style={{ width: 100, height: 100 }} alt='' />
                             ) : (
                                 <img
-                                    className="itemImg"
+                                    className="cartitemImg"
                                     src={`${process.env.PUBLIC_URL}/image/${cart.item.fileName}`}
                                     style={{ width: 100, height: 100 }} alt=''
                                 />

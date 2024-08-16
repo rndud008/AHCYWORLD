@@ -8,7 +8,6 @@ const News = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    // 한 페이지당 뉴스의 항목 수
     const [newsPerPage] = useState(10);
     const [activeCategory, setActiveCategory] = useState("entertainment");
 
@@ -25,13 +24,12 @@ const News = () => {
     ]
 
     useEffect(() => {
-
         const fetchNews = async () => {
             setLoading(true);
             try {
                 const url = `${SERVER_HOST}/news/api?category=${activeCategory}`;
-                const respone = await axios.get(url);
-                const { data } = respone;
+                const response = await axios.get(url);
+                const { data } = response;
 
                 const cleanNews = data.items.map(item => ({
                     ...item,
@@ -42,8 +40,9 @@ const News = () => {
                 setNews(cleanNews || []);
             } catch (error) {
                 console.error("뉴스를 못 찾음", error);
+                setNews([]); // 오류가 발생했을 때도 빈 배열로 초기화
             } finally {
-                setLoading(false); // 로딩 완료
+                setLoading(false); // 로딩 상태 해제
             }
         };
 
@@ -51,14 +50,11 @@ const News = () => {
     }, [activeCategory]);
 
     const cleanHTML = (html) => {
-        // HTML 엔티티 변환
         const textArea = document.createElement('textarea');
         textArea.innerHTML = html;
         let decoded = textArea.value;
 
-        // HTML 태그 제거
         decoded = decoded.replace(/<\/?[^>]+(>|$)/g, "");
-
         return decoded;
     }
 
@@ -70,9 +66,8 @@ const News = () => {
 
     const totalPages = Math.ceil(news.length / newsPerPage);
 
-    // 뉴스를 클릭 시 해당 뉴스 링크로 이동
     const moveNews = (link) => {
-        window.open(link, "_blank"); // 새탭으로 링크 열기
+        window.open(link, "_blank");
     };
 
     return (
@@ -110,11 +105,9 @@ const News = () => {
                                         </Card.Body>
                                     </Card>
                                 ))}
-
                             </div>
                         </Tab>
                     ))}
-
                 </Tabs>
                 
                 <div className="pagination-container">
@@ -130,7 +123,6 @@ const News = () => {
                         ))}
                     </Pagination>
                 </div>
-                
                 </>
             ) : (
                 <div className='noNews'>No News Available</div>

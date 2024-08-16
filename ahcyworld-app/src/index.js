@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import LoginContextProvider from "./webpage/components/login/context/LoginContextProvider";
+import MusicApi from "./webpage/items/api/MusicApi";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,6 +21,7 @@ root.render(
                 </LoginContextProvider>
             </Provider>
         </BrowserRouter>
+        {/* <MusicApi/> */}
     </>
 );
 

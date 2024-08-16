@@ -23,7 +23,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*\d).{8,16}$/;
 
     useEffect(() => {
-        if(isEditModalOpen){
+        if (hompyInfo && hompyInfo.user) {
             setUpdatedUserInfo({
                 name: hompyInfo?.user?.name || "",
                 email: hompyInfo?.user?.email || "",
@@ -32,19 +32,17 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                 password: "",
             });
         }
-    }, [isEditModalOpen])
-
-    if(!isEditModalOpen){
-        return;
-    }
+    }, [hompyInfo.user]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        if(name === 'password'){
-            if(!passwordRegex.test(value)){
-                setPasswordError("비밀번호는 8-16자의 길이로 영문자, 숫자 및 특수문자를 포함해야 합니다.");
-            }else{
+        if (name === "password") {
+            if (!passwordRegex.test(value)) {
+                setPasswordError(
+                    "비밀번호는 8-16자의 길이로 영문자, 숫자 및 특수문자를 포함해야 합니다."
+                );
+            } else {
                 setPasswordError("");
             }
         }
@@ -78,7 +76,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                 role: newUser.role,
                 name: newUser.name,
             });
-            
+
             Swal.alert(
                 "유저 정보 수정에 성공했습니다.",
                 "업데이트 성공",
@@ -114,7 +112,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
 
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
-    }
+    };
 
     return (
         <>
@@ -215,10 +213,10 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={closeEditModal}>
-                            닫기
+                        <Button className="updateUser-close-btn" onClick={closeEditModal}>
+                            취소
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="updateUser-save-btn" type="submit">
                             저장
                         </Button>
                     </Modal.Footer>

@@ -14,6 +14,7 @@ import MyBox from "../components/mybox/MyBox";
 import SlideImg from "../components/slideImg/SlideImg";
 import News from "../components/news/News";
 import BestItem from "../components/bestItem/BestItem";
+import Footer from "../components/Footer/Footer";
 
 
 const StyledLoginBox = styled.div`
@@ -137,6 +138,8 @@ const Home = ({ itemKind }) => {
                         <BestItem />
                     {/* </div> */}
                 </div>
+
+                <Footer />
             </div>
 
             <br />
