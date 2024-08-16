@@ -21,6 +21,7 @@ select * from item;
 select * from carts;
 select *
 from diary;
+select * from message;
 
 select * from attachment where post_id='7285';
 select * from email_authentication;
@@ -42,6 +43,10 @@ where id = 116;
 delete
     from item
 where id = 51;
+
+update payment_history
+set status = 'waiting'
+where friend_user_id=5;
 
 
 # 페이먼트 커럼추가

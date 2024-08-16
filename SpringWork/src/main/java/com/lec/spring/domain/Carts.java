@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @Builder
 @ToString(callSuper = false)
 @Table(
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","item_id"})}
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "item_id"})}
 )
 @Entity
-public class Carts{
+public class Carts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,19 +30,21 @@ public class Carts{
     @Column(nullable = false)
     private String cartsStatus;
 
+
+
     // 결제날짜는 BaseEntity에 있음
     @LastModifiedDate
-    private LocalDateTime createdAt;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @Column(updatable = true)
     private LocalDateTime createAt;
 
     @PrePersist
-    public void prePersistAndUpdate(){
+    public void prePersistAndUpdate() {
         this.createAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    public void preUpdate() {this.createAt = LocalDateTime.now();}
+    public void preUpdate() {
+        this.createAt = LocalDateTime.now();
+    }
 }

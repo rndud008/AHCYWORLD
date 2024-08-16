@@ -98,7 +98,7 @@
 }
 
 .showbox {
-    /* outline: 2px solid rgb(94, 255, 0); */
+    outline: 2px solid rgb(94, 255, 0);
     padding: 20px;
     display: flex;
     justify-content: center;
