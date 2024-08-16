@@ -12,7 +12,7 @@ import SlideImg from "../slideImg/SlideImg";
 import News from "../news/News";
 
 
-const Header = ({setItemKind}) => {
+const Header = ({ setItemKind }) => {
     const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
     const navigate = useNavigate();
 
@@ -36,18 +36,18 @@ const Header = ({setItemKind}) => {
                             <option>사람검색</option>
                             <option>아이템검색</option>
                         </select>
-                        <input type="text"/>
+                        <input type="text" />
                         <button className='search-btn'>검색</button>
                     </div>
                 </div>
 
                 <Nav className='navbar'>
-                    <button onClick={()=>{navigate("/item"); setItemKind("all");}}>전체</button>
-                    <button onClick={()=>{navigate("/item"); setItemKind("배경음악");}}>배경음악</button>
-                    <button onClick={()=>{navigate("/item"); setItemKind("글꼴");}}>글꼴</button>
-                    <button onClick={()=>{navigate("/item"); setItemKind("스킨");}}>스킨</button>
-                    <button onClick={()=>{navigate("/item"); setItemKind("미니미");}}>미니미</button>
-                    <button onClick={()=>{navigate("/item"); setItemKind("스토리룸");}}>미니룸</button>
+                    <button onClick={() => { navigate("/item"); setItemKind("all"); window.scroll(0, 0); }}>전체</button>
+                    <button onClick={() => { navigate("/item"); setItemKind("배경음악"); window.scroll(0, 0); }}>배경음악</button>
+                    <button onClick={() => { navigate("/item"); setItemKind("글꼴"); window.scroll(0, 0); }}>글꼴</button>
+                    <button onClick={() => { navigate("/item"); setItemKind("스킨"); window.scroll(0, 0); }}>스킨</button>
+                    <button onClick={() => { navigate("/item"); setItemKind("미니미"); window.scroll(0, 0); }}>미니미</button>
+                    <button onClick={() => { navigate("/item"); setItemKind("스토리룸"); window.scroll(0, 0); }}>미니룸</button>
 
                     {/* 로그인 여부에 따라 조건부 렌더링 */}
                     {/* {!isLogin ? (

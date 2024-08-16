@@ -93,21 +93,21 @@ const MyBox = () => {
         };
 
         fetchFriendRequests();
-    }, [isLogin, userInfo, isFriendRequstModalOpen, isMessageModalOpen]);
+    }, [isLogin, userInfo, isFriendRequstModalOpen]);
 
 
     useEffect(() => {
         const fetchMessage = async () => {
-            try{
+            try {
                 const response = await axios({
                     method: "GET",
                     url: `${SERVER_HOST}/payment/acorn/gift/${userInfo.id}`,
                 })
                 setMessageCnt(response.data.length);
-            }catch(error){
-                console.log("에러!!",error)
+            } catch (error) {
+                console.log("에러!!", error)
             }
-            
+
         }
 
         fetchMessage();
@@ -138,6 +138,10 @@ const MyBox = () => {
                         내 정보 수정
                     </button>
                 </div>
+                <UpdateUser
+                    isEditModalOpen={isEditModalOpen}
+                    closeEditModal={closeEditModal}
+                />
                 <div className="topbtn-box">
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
                     <button onClick={() => logout()} className="logout-btn">
@@ -151,11 +155,11 @@ const MyBox = () => {
                     <img
                         src={minimiPicture}
                         alt="미니홈피 이미지"
-                        // style={{
-                        //     width: "100%",
-                        //     height: "100%",
-                        //     objectFit: "cover",
-                        // }}
+                    // style={{
+                    //     width: "100%",
+                    //     height: "100%",
+                    //     objectFit: "cover",
+                    // }}
                     />
                 </div>
                 <div className="info-box">
@@ -217,10 +221,6 @@ const MyBox = () => {
                 </button>
             </div>
 
-            <UpdateUser
-                isEditModalOpen={isEditModalOpen}
-                closeEditModal={closeEditModal}
-            />
         </div>
     );
 };

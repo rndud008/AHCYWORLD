@@ -191,7 +191,7 @@ class ItemRepositoryTest {
 
 
     @Test
-    void path(){
+    void path() {
         Path uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();
         if (Files.isDirectory(uploadDir)) {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(uploadDir)) {

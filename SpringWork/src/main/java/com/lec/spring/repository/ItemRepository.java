@@ -19,6 +19,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findByItemName(String itemname);
 
     Page<Item> findByItemNameContaining(String itemname, PageRequest pageRequest);
-    Page<Item> findByItemNameContainingAndStatus(String itemname,String status, PageRequest pageRequest);
+
+    Page<Item> findByItemNameContainingAndStatus(String itemname, String status, PageRequest pageRequest);
+
+    boolean existsItemByItemName(String itemName);
 
 }
