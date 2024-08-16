@@ -71,9 +71,9 @@ where id = 8;
 
 update hompy set total_visitor = 0 where id = 1;
 
-update ah_user
-set acorn = 9999999
-where id = 8;
+update hompy
+set mini_hompy_skin = '22.png'
+where id = 5;
 
 
 
