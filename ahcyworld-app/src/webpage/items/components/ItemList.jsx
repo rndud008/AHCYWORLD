@@ -137,11 +137,10 @@ const ItemList = (props) => {
                                             <br />
                                         </div>
                                     )}
-                                </div>
                                     {userItems.includes(item.id) ? <button className='pushItem'>보유중</button>
                                         : (usetCartItems.includes(item.id) ? <button className='pushItem'> 담긴 아이템</button> :
                                             <button className='pushItem' onClick={() => addCart(item)}>장바구니추가</button>)}
-                                </td>
+                                </div>
                             ))}
                         </tr>
                     ))}
