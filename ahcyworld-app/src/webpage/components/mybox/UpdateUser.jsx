@@ -4,7 +4,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import "./UpdateUser.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
     const { userInfo, hompyInfo, setUserInfo } = useContext(LoginContext);
@@ -50,7 +51,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
             ...prev,
             [name]: value,
         }));
-        // console.log(${name} updated to ${value});
+        // console.log(`${name} updated to ${value}`);
     };
 
     const handleSaveUserInfo = async () => {
@@ -163,13 +164,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                     onClick={togglePasswordVisibility}
                                     className="input-group-text"
                                 >
-                                    <i
-                                        className={`bi ${
-                                            showPassword
-                                                ? "bi-eye-slash"
-                                                : "bi-eye"
-                                        }`}
-                                    ></i>
+                                    <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
                                 </Button>
                             </div>
                             <Form.Control.Feedback type="invalid">
@@ -187,6 +182,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 value="MALE"
                                 checked={updatedUserInfo.gender === "MALE"}
                                 onChange={handleInputChange}
+                                inline
                             />
                             <Form.Check
                                 type="radio"
@@ -196,6 +192,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 value="FEMALE"
                                 checked={updatedUserInfo.gender === "FEMALE"}
                                 onChange={handleInputChange}
+                                inline
                             />
                         </Form.Group>
 

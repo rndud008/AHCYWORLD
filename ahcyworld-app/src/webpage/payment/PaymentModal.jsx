@@ -73,8 +73,8 @@ const PaymentModal = ({ isOpen, onClose }) => {
         setFriendData("");
     }
     return (
-        <div className='modal-overlay'>
-            <div className='modal-content'>
+        <div className='payment-modal-overlay'>
+            <div className='payment-modal-content'>
                 <h2>도토리 충전</h2>
                 <hr />
                 <div>

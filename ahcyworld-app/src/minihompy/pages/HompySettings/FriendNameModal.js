@@ -20,7 +20,7 @@ const FriendNameModal = ({ isOpen, onClose, onSave, currentFriendName }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="friendName-modal-content">
         <input
           type="text"
           value={newFriendName || ""}
