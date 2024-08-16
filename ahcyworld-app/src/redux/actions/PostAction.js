@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import api, { SERVER_HOST } from "../../apis/api";
 import Cookies from "js-cookie";
 import { FolderAction } from "./FolderAction";
