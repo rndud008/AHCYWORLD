@@ -47,8 +47,7 @@ const PaymentHistory = ({ isOpen, onClose }) => {
                     {paymentHistory.length > 0 ? (
                         <ListGroup>
                             {paymentHistory.map((payment) => (
-                                <div className="main-paymentHistory-container">
-                                <ListGroup.Item key={payment.id}>
+                                <ListGroup.Item key={payment.id} className="custom-list-group-item">
                                     <p>
                                         <strong>결제일 : </strong>{" "}
                                         {new Date(
@@ -68,8 +67,6 @@ const PaymentHistory = ({ isOpen, onClose }) => {
                                         <img src={acorn} alt="도토리" className="paymentHistoryAcorn"/>
                                     </p>
                                 </ListGroup.Item>
-                                </div>
-                                
                             ))}
                             <p className="remaining-acorns">
                                 <strong>남은 도토리 개수 : </strong>{" "}

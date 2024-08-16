@@ -114,16 +114,16 @@ const MyBox = () => {
 
     useEffect(() => {
         const fetchMessage = async () => {
-            try {
+            try{
                 const response = await axios({
                     method: "GET",
                     url: `${SERVER_HOST}/payment/acorn/gift/${userInfo.id}`,
                 })
                 setMessageCnt(response.data.length);
-            } catch (error) {
-                console.log("에러!!", error)
+            }catch(error){
+                console.log("에러!!",error)
             }
-
+            
         }
 
         fetchMessage();

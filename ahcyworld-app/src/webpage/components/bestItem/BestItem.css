@@ -1,18 +1,18 @@
-/* BestItem.css */
-
 .bestItems-container {
     display: flex;
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 30px;
     background-color: #f7f7f7;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .category-menu {
-    flex: 1;
+    flex: 0 0 250px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -40,14 +40,21 @@
 }
 
 .item-display {
-    flex: 3;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .best-item-title {
+    margin-top: 0;
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 2em;
     color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .item-type-section {
@@ -56,6 +63,8 @@
     padding: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+    margin-top: 90px;
 }
 
 .item-type-section:hover {

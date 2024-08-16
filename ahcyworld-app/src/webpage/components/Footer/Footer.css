@@ -1,0 +1,84 @@
+/* Footer.css */
+.footer-container {
+    background-color: #e4e4e4; /* 배경색 조정 */
+    padding: 20px 0;
+    border-top: 1px solid #e9ecef; /* 상단 경계선 추가 */
+    margin-top: 30px;
+    border-radius: 12px;
+}
+
+.footer-content {
+    /* outline: 1px solid blue; */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.footer-logo {
+    /* outline: 1px solid black; */
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.footer-logo img {
+    max-height: 60px; /* 로고 크기 조정 */
+    margin-right: 40px;
+}
+
+.footer-links {
+    /* outline: 1px solid red; */
+}
+
+.footer-links,
+.footer-social {
+    flex: 1;
+}
+
+.footer-links h3,
+.footer-social h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #343a40; /* 제목 색상 조정 */
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin: 5px 0;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #007bff; /* 링크 색상 조정 */
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-social .social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #6c757d; /* 바닥글 색상 조정 */
+}
