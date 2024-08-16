@@ -192,19 +192,21 @@ class ItemRepositoryTest {
 
     @Test
     void path(){
-        Path uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();
-        if (Files.isDirectory(uploadDir)) {
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(uploadDir)) {
-                System.out.println("Contents of directory " + uploadDir + ":");
-                for (Path path : directoryStream) {
-                    System.out.println(path.getFileName());
-                }
-            } catch (IOException e) {
-                System.err.println("Error reading directory: " + e.getMessage());
-            }
-        } else {
-            System.out.println(uploadDir + " is not a directory.");
-        }
+//        Path uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();
+        String uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath().toString();
+        System.out.println(uploadDir);
+//        if (Files.isDirectory(uploadDir)) {
+//            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(uploadDir)) {
+//                System.out.println("Contents of directory " + uploadDir + ":");
+//                for (Path path : directoryStream) {
+//                    System.out.println(path.getFileName());
+//                }
+//            } catch (IOException e) {
+//                System.err.println("Error reading directory: " + e.getMessage());
+//            }
+//        } else {
+//            System.out.println(uploadDir + " is not a directory.");
+//        }
     }
 
 }

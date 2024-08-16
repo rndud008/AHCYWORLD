@@ -83,7 +83,7 @@ const LoginContextProvider = ({ children }) => {
 
     useEffect(() => {
         loginCheck();
-    }, [userInfo]);
+    }, []);
 
     const login = async (username, password, rememberId) => {
         // console.log(`

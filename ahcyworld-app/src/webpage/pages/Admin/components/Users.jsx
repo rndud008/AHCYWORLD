@@ -4,6 +4,8 @@ import { hompyList, resetHompy, userList } from "../../../../apis/auth";
 import "../css/Users.css";
 import { RiHomeHeartLine } from "react-icons/ri";
 import { Pagination } from "react-bootstrap";
+import SendMessageModal from "./SendMessageModal";
+import { IoIosSend } from "react-icons/io";
 
 const Users = () => {
     const { isLogin, roles } = useContext(LoginContext);
@@ -14,6 +16,8 @@ const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [userPerPage] = useState(20);
     const [pageRange] = useState(10);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [isSendMessageModalOpen, setIsSendMessageModalOpen] = useState(false);
 
     useEffect(() => {
         const getUserList = async () => {
@@ -88,6 +92,16 @@ const Users = () => {
         );
     };
 
+    const openSendMessageModal = (user) => {
+        setSelectedUser(user);
+        setIsSendMessageModalOpen(true);
+    };
+
+    const closeSendMessageModal = () => {
+        setSelectedUser(null);
+        setIsSendMessageModalOpen(false);
+    };
+
     // 페이지네이션 로직
     const indexOfLastUser = currentPage * userPerPage;
     const indexOfFirstUser = indexOfLastUser - userPerPage;
@@ -153,6 +167,7 @@ const Users = () => {
                         <th>도토리</th>
                         <th>가입날짜</th>
                         <th>미니홈피</th>
+                        <th>메세지</th>
                     </tr>
                 </thead>
                 <tbody className='users-tbody'>
@@ -168,32 +183,29 @@ const Users = () => {
                                 <td>{user.acorn}</td>
                                 <td>{user.createAt}</td>
                                 <td className='hompy-btn-box'>
-                                    <button
-                                        variant='primary'
-                                        className='minihompy-go'
-                                        onClick={() => goMinihompy(user.hompyId)}
-                                    >
+                                    <button className='minihompy-go' onClick={() => goMinihompy(user.hompyId)}>
                                         <RiHomeHeartLine />
                                     </button>
-                                    <button
-                                        variant='danger'
-                                        className='reset-btn'
-                                        onClick={() => resetMiniHompy(user.hompyId)}
-                                    >
+                                    <button className='reset-btn' onClick={() => resetMiniHompy(user.hompyId)}>
                                         reset
+                                    </button>
+                                </td>
+                                <td className='message-btn-box'>
+                                    <button className='message-btn' onClick={() => openSendMessageModal(user)}>
+                                        <IoIosSend />
                                     </button>
                                 </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan='9'>No users found</td> {/* 사용자 목록이 없을 때 표시 */}
+                            <td colSpan='9'>No users found</td>
                         </tr>
                     )}
                 </tbody>
             </table>
             <div className='user-pagination-box'>
-                <Pagination className="user-pagination">
+                <Pagination className='user-pagination'>
                     <Pagination.Prev
                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
@@ -213,6 +225,13 @@ const Users = () => {
                     />
                 </Pagination>
             </div>
+            {isSendMessageModalOpen && selectedUser && (
+                <SendMessageModal
+                    isOpen={isSendMessageModalOpen}
+                    onClose={closeSendMessageModal}
+                    selectedUser={selectedUser}
+                />
+            )}
         </>
     );
 };

@@ -57,6 +57,14 @@ export const getPaymentList = () => api.get(`${SERVER_HOST}/payment/list`);
 
 export const getUserWriteHistory = () => api.get(`${SERVER_HOST}/userwritehistory/list`);
 
+export const soldItemList = () => api.get(`${SERVER_HOST}/cart/sold-list`);
+
+export const getMessageFromAdmin = (userId) => {
+    return api.get(`${SERVER_HOST}/message/mymessage`, {
+        params: { userId },
+    });
+};
+
 export const addFriend = (friendType1, friendType2, message, username, friendUsername) => {
     return api.post(
         `${SERVER_HOST}/friend/addfriend`,
@@ -93,6 +101,26 @@ export const resetHompy = (hompyId) => {
     return api.post(
         `${SERVER_HOST}/hompy/reset`,
         { hompyId },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+};
+
+export const sendMessageToUser = (title, message, senderId, receiverId) => {
+    const params = new URLSearchParams();
+    params.append("title", title);
+    params.append("message", message);
+    params.append("senderId", senderId);
+    params.append("receiverId", receiverId);
+
+    return api.post(`${SERVER_HOST}/message/save`, params.toString(), {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+};
+
+export const readMessage = (id) => {
+    return api.post(
+        `${SERVER_HOST}/message/read`,
+        { messageId: id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 };

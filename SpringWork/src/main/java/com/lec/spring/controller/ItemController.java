@@ -22,7 +22,7 @@ public class ItemController {
     @PostMapping("/musicsave")
     @CrossOrigin
     public ResponseEntity<?> musicsave(@RequestBody Item item) {
-        return new ResponseEntity<>(itemService.update(item), HttpStatus.CREATED);
+        return new ResponseEntity<>(itemService.save(item), HttpStatus.CREATED);
     }
 
     @GetMapping("/{type}")

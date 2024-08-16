@@ -16,6 +16,7 @@ import { BsPostcard } from "react-icons/bs";
 import { GrHomeRounded } from "react-icons/gr";
 import ItemUpload from "./components/ItemUpload";
 import { LoginContext } from "../../components/login/context/LoginContextProvider";
+import AdminMain from "./components/AdminMain";
 
 const Admin = () => {
     const { isLogin, roles, adminLogout } = useContext(LoginContext);
@@ -52,9 +53,13 @@ const Admin = () => {
         //     return;
         // }
         // console.log(roles);
+        // setSubMenu("main");
     }, []);
 
     const handleSubMenuClick = (menu) => {
+        if (menu === "main") {
+            setOpenMenu(null);
+        }
         setSubMenu(menu);
     };
 
@@ -73,14 +78,18 @@ const Admin = () => {
                         />
                     </div>
                     <div className='menu-box'>
-                    <button onClick={() => adminLogout()} className="admin-logout">
-                        로그아웃
-                    </button>
+                        <button onClick={() => adminLogout()} className='admin-logout'>
+                            로그아웃
+                        </button>
                         <ul>
+                            <li onClick={() => handleSubMenuClick("main")}>
+                                <GrHomeRounded />
+                                &nbsp; 메인
+                            </li>
                             <li>
                                 <div onClick={() => toggleMenu("userManagement")}>
                                     <FaUser />
-                                    &nbsp;사용자관리
+                                    &nbsp; 사용자관리
                                 </div>
                                 {openMenu === "userManagement" && (
                                     <ul>
@@ -93,7 +102,7 @@ const Admin = () => {
                             <li>
                                 <div onClick={() => toggleMenu("itemManagement")}>
                                     <RiGameLine />
-                                    &nbsp;아이템관리
+                                    &nbsp; 아이템관리
                                 </div>
                                 {openMenu === "itemManagement" && (
                                     <ul>
@@ -105,7 +114,7 @@ const Admin = () => {
                             <li>
                                 <div onClick={() => toggleMenu("postManagement")}>
                                     <BsPostcard />
-                                    &nbsp;게시물관리
+                                    &nbsp; 게시물관리
                                 </div>
                                 {openMenu === "postManagement" && (
                                     <ul>
@@ -119,6 +128,7 @@ const Admin = () => {
                 <div className='main-container'>
                     <div className='headline'>헤드라인</div>
                     <div className='showbox'>
+                        {subMenu === "main" && <AdminMain />}
                         {subMenu === "userList" && <Users />}
                         {subMenu === "paymentHistory" && <PaymentHistory />}
                         {subMenu === "statistics" && (

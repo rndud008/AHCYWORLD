@@ -1,0 +1,30 @@
+.message-btn-box {
+    /* outline: 2px solid red; */
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.msg-btn{
+    margin: 0 10px;
+}
+
+.acorn-message, .msg-from-admin {
+    /* outline: 2px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.msg-header{
+    border-bottom: 2px solid rgb(175, 175, 175);
+    margin-bottom: 10px;
+}
+
+.msg-body{
+    border: 2px solid rgb(175, 175, 175);
+    border-radius: 10px;
+    width: 350px;
+    height: 100px;
+}

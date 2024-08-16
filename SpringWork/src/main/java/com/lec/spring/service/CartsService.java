@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -58,6 +57,12 @@ public class CartsService {
         Sort sort = Sort.by(Sort.Order.desc("id"));
 
         return cartsRepository.findByUserAndCartsStatus(user,"Y", sort);
+    }
+
+    @Transactional
+    public List<Carts> soldItemList(){
+
+        return cartsRepository.findByCartsStatus("Y");
     }
 
     @Transactional

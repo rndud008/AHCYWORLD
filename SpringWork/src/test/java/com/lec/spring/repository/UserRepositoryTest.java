@@ -126,7 +126,7 @@ class UserRepositoryTest {
 //        hompy.setMinimiPicture(newPic);
 //        hompyRepository.save(hompy);
 //        System.out.println("저장 후 홈피: " + hompy);
-        User user = userRepository.findByUsername("ADMIN1");
+//        User user = userRepository.findByUsername("ADMIN1");
 
 //        Hompy hompy = Hompy.builder()
 //                .user(user)
@@ -140,15 +140,57 @@ class UserRepositoryTest {
 
 //        hompyRepository.saveAndFlush(hompy);
 
-        Hompy hompy1 = hompyRepository.findById(8L).orElse(null);
+//        Hompy hompy1 = hompyRepository.findById(8L).orElse(null);
+//
+//        hompy1.setMenuColor("#147DAF,#FFF,#147DAF");
+//        hompy1.setMenuStatus("visible,visible,visible,visible");
+//        hompy1.setTodayVisitor(20L);
+//        hompy1.setTotalVisitor(20000L);
+//
+//
+//        hompyRepository.saveAndFlush(hompy1);
 
-        hompy1.setMenuColor("#147DAF,#FFF,#147DAF");
-        hompy1.setMenuStatus("visible,visible,visible,visible");
-        hompy1.setTodayVisitor(20L);
-        hompy1.setTotalVisitor(20000L);
+        List<User> users = userRepository.findAll();
 
+        Random random = new Random();
 
-        hompyRepository.saveAndFlush(hompy1);
+        // 생년월일을 랜덤하게 생성하여 각 사용자에게 설정
+        for (User user : users) {
+            LocalDate birthDate = generateRandomBirthDate(random);
+            user.setBirthDay(birthDate);
+            userRepository.save(user); // 사용자 업데이트 저장
+        }
+    }
+
+    // 랜덤 생년월일 생성 메서드
+    private LocalDate generateRandomBirthDate(Random random) {
+        int ageGroup = random.nextInt(5); // 0 ~ 4
+        int year;
+        switch (ageGroup) {
+            case 0: // 10대
+                year = 2004 + random.nextInt(10); // 2004 ~ 2014
+                break;
+            case 1: // 20대
+                year = 1994 + random.nextInt(10); // 1994 ~ 2003
+                break;
+            case 2: // 30대
+                year = 1984 + random.nextInt(10); // 1984 ~ 1993
+                break;
+            case 3: // 40대
+                year = 1974 + random.nextInt(10); // 1974 ~ 1983
+                break;
+            case 4: // 50대
+                year = 1964 + random.nextInt(10); // 1964 ~ 1973
+                break;
+            default:
+                year = 2000; // 기본값 (실제로는 도달하지 않음)
+        }
+
+        // 월과 일 랜덤 생성
+        int month = random.nextInt(12) + 1; // 1 ~ 12
+        int day = random.nextInt(28) + 1; // 1 ~ 28 (간단화를 위해 28일로 설정)
+
+        return LocalDate.of(year, month, day);
     }
 
 

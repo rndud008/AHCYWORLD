@@ -24,4 +24,6 @@ public interface CartsRepository extends JpaRepository<Carts, Long> {
     List<Item> findTopSellingItemsByType(@Param("itemType") String itemType, Pageable pageable);
 
     List<Carts> findByUserAndCartsStatus(User user, String cartsStatus);
+
+    List<Carts> findByCartsStatus(String cartsStatus);
 }

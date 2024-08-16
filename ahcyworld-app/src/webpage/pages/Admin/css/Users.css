@@ -25,6 +25,7 @@
 .users-tbody td {
     border: 1px solid #ddd;
     padding: 8px;
+    flex-direction: row;
 }
 
 .users-table {
@@ -51,7 +52,6 @@
 }
 
 .minihompy-go {
-    outline-style: 2px solid red;
     background-color: #0d6efd;
     color: #fff;
     text-decoration: none;
@@ -84,10 +84,21 @@
     transform: scale(1.05);
 }
 
-.user-pagination-box{
+.user-pagination-box {
     /* outline: 2px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 5px;
+}
+
+.message-btn-box {
+    text-align: center;
+}
+
+.message-btn {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0 10px;
 }

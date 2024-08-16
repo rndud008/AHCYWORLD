@@ -19,6 +19,7 @@ select * from item;
 select * from carts;
 select *
 from diary;
+select * from message;
 
 select * from attachment where post_id='7285';
 select * from email_authentication;
@@ -36,6 +37,10 @@ from friend;
 update item
 set status = 'visible'
 where id between 66 and 106;
+
+update payment_history
+set status = 'waiting'
+where friend_user_id=5;
 
 
 # 페이먼트 커럼추가
