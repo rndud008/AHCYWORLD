@@ -128,7 +128,7 @@ const Admin = () => {
                             </>
                         )}
                         {subMenu === "itemList" && <Items />}
-                        {subMenu === "itemUpload" && <ItemUpload />}
+                        {subMenu === "itemUpload" && <ItemUpload setSubMenu={setSubMenu}/>}
                         {subMenu === "post" && <PostHistory />}
                     </div>
                 </div>

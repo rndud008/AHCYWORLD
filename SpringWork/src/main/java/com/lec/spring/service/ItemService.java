@@ -107,4 +107,9 @@ public class ItemService {
                 .url(url)
                 .build();
     }
+
+
+    public boolean duplication(String itemName) {
+        return itemRepository.existsItemByItemName(itemName);
+    }
 }

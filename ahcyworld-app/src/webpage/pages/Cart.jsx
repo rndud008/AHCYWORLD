@@ -10,7 +10,7 @@ import acorn from "../../upload/acorn.png"
 const Cart = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
-    const {hompyInfo, userInfo} = useContext(LoginContext);
+    const { hompyInfo, userInfo } = useContext(LoginContext);
     const [myCart, setMyCart] = useState([]);
     const [isDelete, setIsDelete] = useState(false);
     const [selectItem, setSelectItem] = useState([]);
@@ -40,25 +40,26 @@ const Cart = () => {
         })
     }, [isDelete])
 
-    
-
-
-
-    const deleteItem = (id) => {
+    const deleteItem = (cart) => {
+        let acorn = cart.item.price;
         axios({
             method: "DELETE",
-            url: `${SERVER_HOST}/cart/delete/${id}`
+            url: `${SERVER_HOST}/cart/delete/${cart.id}`
         }).then(response => {
             const { data, status } = response;
             if (status === 200) {
                 setIsDelete(true);
+                if (selectItem.includes(cart.id)) {
+                    setSelectItem(selectItem.filter(x => x !== parseInt(cart.id)));
+                    setTotalAcorn(totalAcorn - acorn);
+                }
             }
         });
     }
 
 
-    const handelDeleteItem = (id) => {
-        Swal.itemconfirm("아이템 삭제", "정말 삭제하시겠습니까?", "warning", () => deleteItem(id), () => navigate(`/cart/${userId}`))
+    const handelDeleteItem = (cart) => {
+        Swal.itemconfirm("아이템 삭제", "정말 삭제하시겠습니까?", "warning", () => deleteItem(cart), () => navigate(`/cart/${userId}`))
     }
 
     const handleCheckboxChange = (e) => {
@@ -67,16 +68,16 @@ const Cart = () => {
             setAllCheckBox(false)
         }
 
-        const { value,checked } = e.target;
+        const { value, checked } = e.target;
         const oneChangbox = myCart.map(cart => {
             if (cart.id === parseInt(value)) {
-                if(checked){
+                if (checked) {
                     console.log(cart.item.price);
                     setTotalAcorn(totalAcorn + cart.item.price);
-                }else{
+                } else {
                     setTotalAcorn(totalAcorn - cart.item.price);
                 }
-                
+
                 return { ...cart, checked: checked };
             } else {
                 return { ...cart }
@@ -100,8 +101,8 @@ const Cart = () => {
         let allCheckItemNum = [];
         let allItemAcorn = 0;
         e.target.checked ? myCart.forEach(x => allCheckItemNum.push(parseInt(x.id))) : setSelectItem([]);
-        e.target.checked ? myCart.forEach(x => {allItemAcorn = allItemAcorn + x.item.price}) : setTotalAcorn(0);
-        console.log("모든 가격: "+allItemAcorn);
+        e.target.checked ? myCart.forEach(x => { allItemAcorn = allItemAcorn + x.item.price }) : setTotalAcorn(0);
+        console.log("모든 가격: " + allItemAcorn);
         setSelectItem(allCheckItemNum);
         setMyCart(allCheckItem);
         setTotalAcorn(allItemAcorn);
@@ -116,11 +117,12 @@ const Cart = () => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(response => {
+        }).then( response => {
             const { data, status } = response;
 
             if (status === 200) {
                 console.log("체크된 아이템 삭제 성공!!!");
+                setTotalAcorn(0);
                 setSelectItem([]);
                 setIsDelete(true);
                 setAllCheckBox(false);
@@ -130,6 +132,7 @@ const Cart = () => {
     }
 
     const handleAllDelete = () => {
+        console.log(myCart);
         Swal.itemconfirm("체크된 아이템 삭제", "정말 삭제하시겠습니까?", "warning", () => AllDelete(), () => navigate(`/cart/${userId}`))
     }
 
@@ -139,7 +142,7 @@ const Cart = () => {
             <h2>장바구니</h2>
 
             <div style={{ marginTop: '10px', border: '1px solid #ddd', padding: '10px' }}>
-                <button onClick={()=>handleAllDelete()} style={{ textAlign: 'right' }}>선택삭제</button>
+                <button onClick={() => handleAllDelete()} style={{ textAlign: 'right' }}>선택삭제</button>
                 <div>
                     <input
                         type="checkbox"
@@ -180,21 +183,21 @@ const Cart = () => {
                                 <div>{cart.item.itemName}</div>
                                 <div style={{ color: '#888' }}>{cart.item.itemType}</div>
                             </div>
-                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
-                            <button onClick={() => handelDeleteItem(cart.id)} style={{ marginLeft: '10px' }}>❌</button>
+                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
+                            <button onClick={() => handelDeleteItem(cart)} style={{ marginLeft: '10px' }}>❌</button>
 
                         </div>
 
                     ))}
                 </div>
                 <div style={{ textAlign: 'right', marginTop: '10px' }}><hr />
-                    <div>총 주문금액: {totalAcorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
+                    <div>총 주문금액: {totalAcorn} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                <button onClick={()=>navigate(-1)}>쇼핑계속하기</button>
-                <button onClick={()=>acornPayOpenModal()}>상품 구매</button>
-                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo}/>
+                <button onClick={() => navigate(-1)}>쇼핑계속하기</button>
+                <button onClick={() => acornPayOpenModal()}>상품 구매</button>
+                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo} />
             </div>
         </div>
     );

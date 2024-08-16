@@ -30,7 +30,7 @@ public class CartsService {
     }
 
     @Transactional
-    public Carts addItem(String username, String itemname){
+    public Carts addItem(String username, String itemname) {
         User user = userRepository.findByUsername(username);
         Item item = itemRepository.findByItemName(itemname);
 
@@ -44,58 +44,66 @@ public class CartsService {
     }
 
     @Transactional
-    public List<Carts> cartsList(Long id){
+    public List<Carts> cartsList(Long id) {
 
         User user = userRepository.findById(id).orElse(null);
         Sort sort = Sort.by(Sort.Order.desc("id"));
 
-        return cartsRepository.findByUserAndCartsStatus(user,"N", sort);
+        return cartsRepository.findByUserAndCartsStatus(user, "N", sort);
     }
 
     @Transactional
-    public List<Carts> userItemList(Long id){
+    public List<Carts> userItemList(Long id) {
         User user = userRepository.findById(id).orElse(null);
         Sort sort = Sort.by(Sort.Order.desc("id"));
 
-        return cartsRepository.findByUserAndCartsStatus(user,"Y", sort);
+        return cartsRepository.findByUserAndCartsStatus(user, "Y", sort);
     }
 
     @Transactional
-    public int deleteCartsItem(Long id){
+    public List<Carts> userCartItems(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+
+        return cartsRepository.findByUserAndCartsStatus(user, "N", sort);
+    }
+
+    @Transactional
+    public int deleteCartsItem(Long id) {
         Carts carts = cartsRepository.findById(id).orElse(null);
-        if(carts == null){
+        if (carts == null) {
             return 0;
-        }else{
+        } else {
             cartsRepository.delete(carts);
             return 1;
         }
     }
 
     @Transactional
-    public int deleteAll(List<Long> deleteList){
+    public int deleteAll(List<Long> deleteList) {
 
         List<Carts> deleteItems = cartsRepository.findAllById(deleteList);
-        if(deleteItems == null){
+        if (deleteItems == null) {
             return 0;
-        }else{
+        } else {
             cartsRepository.deleteAll(deleteItems);
             return 1;
         }
     }
 
     @Transactional
-    public List<Carts> checkItemList(List<Long> itemList){
+    public List<Carts> checkItemList(List<Long> itemList) {
         return cartsRepository.findAllById(itemList);
     }
 
     @Transactional
-    public List<Carts> updateCarts(List<Long> itemList, Long id,Long totalAcorn){
+    public List<Carts> updateCarts(List<Long> itemList, Long id, Long totalAcorn) {
         List<Carts> updateItems = cartsRepository.findAllById(itemList);
         User user = userRepository.findById(id).orElse(null);
-        if(updateItems == null){
+        if (updateItems == null) {
             return null;
-        }else{
-            user.setAcorn(user.getAcorn()-totalAcorn);
+        } else {
+            user.setAcorn(user.getAcorn() - totalAcorn);
 
             userRepository.saveAndFlush(user);
 
@@ -121,7 +129,7 @@ public class CartsService {
 
     // 결제 내역 출력
     @Transactional(readOnly = true)
-    public List<Carts> getPaymentHistory(Long id){
+    public List<Carts> getPaymentHistory(Long id) {
         User user = new User();
         user.setId(id);
         return cartsRepository.findByUserAndCartsStatus(user, "Y");
