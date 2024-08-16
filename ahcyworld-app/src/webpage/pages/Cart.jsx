@@ -135,24 +135,25 @@ const Cart = () => {
 
 
     return (
-        <div style={{ padding: '20px', maxWidth: '600px', margin: 'auto' }}>
+        <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
             <h2>장바구니</h2>
 
-            <div style={{ marginTop: '10px', border: '1px solid #ddd', padding: '10px' }}>
-                <button onClick={()=>handleAllDelete()} style={{ textAlign: 'right' }}>선택삭제</button>
-                <div>
-                    <input
+            <div className='select-container'>
+                <button className='select-del-btn select-del-btn2' onClick={()=>handleAllDelete()}>선택삭제</button>
+            <div>
+                <div className='all-select-container'>
+                    <input className='all-select'
                         type="checkbox"
                         checked={allCheckBox}
                         onChange={handleSelectAll}
-                    />전체선택
+                    />
+                    <span className='all-select-text'>전체선택</span>
                 </div>
-                <div>
                     <hr />
                     {myCart.map((cart) => (
 
-                        <div key={cart.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
-                            <input
+                        <div key={cart.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0', fontSize: '18px', fontWeight: 'bold' }}>
+                            <input className='item-check-box'
                                 type="checkbox"
                                 checked={cart.checked}
                                 onChange={(e) => handleCheckboxChange(e)}
@@ -177,23 +178,23 @@ const Cart = () => {
                                 />
                             )}
                             <div style={{ flex: 1, marginLeft: '10px' }}>
-                                <div>{cart.item.itemName}</div>
+                                <div>{cart.item.sourceName} - {cart.item.itemName}</div>
                                 <div style={{ color: '#888' }}>{cart.item.itemType}</div>
                             </div>
                             <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
-                            <button onClick={() => handelDeleteItem(cart.id)} style={{ marginLeft: '10px' }}>❌</button>
+                            <button onClick={() => handelDeleteItem(cart.id)} className='item-del-btn'>❌</button>
 
                         </div>
 
                     ))}
                 </div>
-                <div style={{ textAlign: 'right', marginTop: '10px' }}><hr />
+                <div style={{ textAlign: 'right', marginTop: '10px', fontWeight: 'bold' }}><hr />
                     <div>총 주문금액: {totalAcorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                <button onClick={()=>navigate(-1)}>쇼핑계속하기</button>
-                <button onClick={()=>acornPayOpenModal()}>상품 구매</button>
+                <button className='continue-shopping-btn' onClick={()=>navigate(-1)}>쇼핑계속하기</button>
+                <button className='goods-buy-btn' onClick={()=>acornPayOpenModal()}>상품 구매</button>
                 <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo}/>
             </div>
         </div>

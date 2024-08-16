@@ -65,8 +65,6 @@
 .search-btn {
     width: 120px;
     height: 60px;
-    background-color: var(--main-color);
-    color: white;
     border: 0;
     border-radius: 30px;
     font-size: 25px;
@@ -76,12 +74,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(145deg, #f39c6b, #e66e28); /* 그라데이션 배경 */
+    border: 0;
+    color: #fff; /* 텍스트 색상 */
+    cursor: pointer; /* 포인터 커서 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감 있는 그림자 */
+    transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.search-btn:hover {
+    background: linear-gradient(145deg, #f1b07a, #e66e28); /* 마우스 오버 시 배경 색상 변경 */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+    transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.search-btn:active {
+    background: linear-gradient(145deg, #f7a76b, #e66e28); /* 클릭 시 배경 색상 변경 */
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+    transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
 }
 
 .search-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.4);
+    outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(230, 110, 40, 0.5); /* 포커스 시 약간의 하이라이트 추가 */
 }
+
 
 
 .navbar {
