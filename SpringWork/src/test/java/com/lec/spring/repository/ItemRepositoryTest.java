@@ -90,9 +90,11 @@ class ItemRepositoryTest {
         }
 
         String[] skinarr = {"새초롬마루스킨", "망그라진곰스킨", "마루스킨", "라이언스킨",
-                "짱구스킨", "가을라이언스킨", "렌고쿠스킨", "토토로스킨", "블리치스킨",
+                "짱구스킨", "모험을떠나요스킨", "렌고쿠스킨", "토토로스킨", "블리치스킨",
                 "포뇨스킨", "쿠로미스킨", "헬로키티스킨", "탄지로스킨", "당근포차코스킨"
-                , "따봉포차코스킨", "기류스킨"};
+                , "따봉포차코스킨", "기류스킨","꽃구경스킨","떡잎마을방범대스킨","원피스스킨"};
+
+
 
         for (int i = 0; i < skinarr.length; i++) {
             Item itme5 = Item.builder()
@@ -106,6 +108,26 @@ class ItemRepositoryTest {
             itemRepository.saveAndFlush(itme5);
         }
     }
+
+    @Test
+    void updateSkin(){
+        String[] skinarr = {"모험을떠나요스킨","꽃구경스킨","떡잎마을방범대스킨","원피스스킨"};
+
+
+
+        for (int i = 0; i < skinarr.length; i++) {
+            Item itme5 = Item.builder()
+                    .itemName(skinarr[i])
+                    .itemType("스킨")
+                    .sourceName(skinarr[i] + ".png")
+                    .fileName(skinarr[i] + ".png")
+                    .price(300L)
+                    .status("visible")
+                    .build();
+            itemRepository.saveAndFlush(itme5);
+        }
+    }
+
 
     @Test
     void font() {

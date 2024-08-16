@@ -37,7 +37,11 @@ from friend;
 
 update item
 set status = 'visible'
-where id between 66 and 106;
+where id = 116;
+
+delete
+    from item
+where id = 51;
 
 
 # 페이먼트 커럼추가
@@ -49,7 +53,7 @@ set status = 'accept'
 where id = 9;
 # 아이템 이름 변경
 update item
-set item_name = '폰트4'
+set item_name = ''
 where id =  65;
 
 select *
@@ -98,8 +102,8 @@ where id = 1;
 
 
 update item
-set item_name='폰트4'
-where id = 80;
+set source_name='모험을떠나요스킨.png'
+where id = 118;
 
 update item
 set item_name='글꼴4'
