@@ -1,5 +1,5 @@
 /* Modal.css */
-.modal-overlay {
+.payment-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.payment-modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
