@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import acorn from "../../../../upload/acorn.png";
 import axios from "axios";
 import * as Swal from "../../../../apis/alert";
-import { SERVER_HOST } from "../../../../apis/api";
+import api, { SERVER_HOST } from "../../../../apis/api";
 import { LoginContext } from "../../login/context/LoginContextProvider";
 import { useNavigate } from "react-router-dom";
 import "./ItemListItem.style.css";
@@ -12,44 +12,73 @@ const ItemListItem = () => {
   const searchList = useSelector((state) => state.search.searchList);
   const { userInfo } = useContext(LoginContext);
   const navigate = useNavigate();
-
-  console.log("ItemListItem", searchList);
+  const [userItemList, setUserItemList] = useState();
+  const [userCartList, setUserCartList] = useState();
 
   const skinAndSotryRoom = ["스킨", "스토리룸"];
 
-  const addCart = (item) => {
-    axios({
-      method: "POST",
-      url: `${SERVER_HOST}/cart/additem`,
-      params: {
-        username: userInfo.username,
-        itemname: item.itemName,
-      },
-    }).then((response) => {
-      const { data, status, error } = response;
-      if (status === 201) {
-        Swal.itemconfirm(
-          "장바구니에 추가",
-          "장바구니화면으로 이동하시겠습니까?",
-          "success",
-          () => {
-            navigate(`/cart/${userInfo.id}`);
-          },
-          () => {
-            return;
-          }
-        );
-      } else {
-        window.alert("실패! : " + error);
+  const addCart = async (item) => {
+    
+    if (!userInfo) {
+      Swal.alert("로그인이 필요합니다", "로그인을 해주세요.", "warning");
+      return navigate("/");
+    }
+
+    const username = userInfo.username;
+    const itemname = item.itemName;
+
+    const response = await api.post(
+      `${SERVER_HOST}/cart/additem`,
+      {},
+      {
+        params: { username, itemname },
       }
-    });
+    );
+
+    const { status } = response;
+    (status === 201 &&
+      Swal.itemconfirm(
+        "장바구니에 추가",
+        "장바구니화면으로 이동하시겠습니까?",
+        "success",
+        () => {
+          navigate(`/cart/${userInfo.id}`);
+        },
+        () => {
+          return;
+        }
+      )) ||
+      Swal.alert("Error", "저장에 실패했습니다.", "warning");
   };
+
+  const userListItemAxios = async () => {
+    const response = await api.get(`${SERVER_HOST}/cart/${userInfo.id}/items`);
+    const { data, status } = response;
+
+    status === 200 && setUserItemList(data);
+  };
+
+  const userCartListItemAxios = async () => {
+    const response = await api.get(
+      `${SERVER_HOST}/cart/${userInfo.id}/cartitems`
+    );
+    const { data, status } = response;
+
+    status === 200 && setUserCartList(data);
+  };
+
+  useEffect(() => {
+    if (userInfo) {
+      userCartListItemAxios();
+      userListItemAxios();
+    }
+  }, []);
 
   return (
     <div className="searchItemList">
       {searchList.itemList &&
         searchList.itemList.map((item) => (
-          <div  className="searchItem">
+          <div className="searchItem">
             {item.itemType.includes("미니미") && (
               <div>
                 <img
@@ -107,9 +136,19 @@ const ItemListItem = () => {
                   </sapn>{" "}
                 </div>
               ))}
-            <button className="pushItem" onClick={() => addCart(item)}>
-              장바구니추가
-            </button>
+
+            {(userItemList &&
+              userItemList.some((item2) => item2.item.id === item.id) && (
+                <button className="pushItem">보유중</button>
+              )) ||
+              (userCartList &&
+                userCartList.some((item2) => item2.item.id === item.id) && (
+                  <button className="pushItem">담긴 아이템</button>
+                )) || (
+                <button className="pushItem" onClick={() => addCart(item)}>
+                  장바구니추가
+                </button>
+              )}
           </div>
         ))}
     </div>

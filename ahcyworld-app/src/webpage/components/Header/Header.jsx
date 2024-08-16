@@ -85,17 +85,21 @@ const Header = ({ setItemKind }) => {
             <img src={logo} alt="Acyworld LOGO" />
           </div>
           <div className="search-select">
-            <select name="action" onChange={(e) => searchChangeValue(e)}>
-              <option value={"all"} selected={searchValue.action === "all"}>
+            <select name="action" value={searchValue.action} onChange={(e) => searchChangeValue(e)}>
+              <option value={"all"} 
+              selected={searchValue.action.includes("all")}
+              >
                 전체검색
               </option>
               <option
                 value={"people"}
-                selected={searchValue.action === "people"}
+                selected={searchValue.action.includes("people")}
               >
                 사람검색
               </option>
-              <option value={"item"} selected={searchValue.action === "item"}>
+              <option value={"item"} 
+              selected={searchValue.action.includes("item")}
+              >
                 아이템검색
               </option>
             </select>

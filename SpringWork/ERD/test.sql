@@ -69,7 +69,7 @@ update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 9999999
-where id = 8;
+where id = 1;
 
 
 
