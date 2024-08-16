@@ -29,11 +29,11 @@ const Left = ({ user, hompy }) => {
   const FriendCheck =
     hompyInfo?.id !== parseInt(hompyId) &&
     !friendIdList.some((item) => item === userInfo.id)&&
-    !friendWaitingList?.some((item) => item.friendUser.id === parseInt(hompy.user.id))
+    !friendWaitingList?.some((item) => item?.friendUser.id === parseInt(hompy.user.id))
 
     const FriendWaitingCheck =
     hompyInfo.id !== parseInt(hompyId) &&
-    friendWaitingList?.find((item) => item.friendUser?.id === parseInt(hompy.user.id))?.friendStatus.includes("waiting");
+    friendWaitingList?.find((item) => item?.friendUser.id === parseInt(hompy.user.id))?.friendStatus.includes("waiting");
 
 
   const userId = user?.id;
@@ -218,8 +218,11 @@ const Left = ({ user, hompy }) => {
   const friendWaiting = async () => {
     const response = await myFriendRequests(userInfo.username,"all");
     const { data, status } = response;
+    if(status === 200){
 
-    setFriendWaitingList(data);
+      setFriendWaitingList(data);
+    }
+
   };
 
   return (
