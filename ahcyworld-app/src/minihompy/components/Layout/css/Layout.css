@@ -21,6 +21,20 @@
   flex: 8;
 }
 
+.homepage-title input {
+  border: none;
+  background: none;
+  width: 500px;
+}
+
+.homepage-title-outline{
+  outline: none;
+}
+
+.homepage-title-cursor{
+  cursor: pointer;
+}
+
 .background-image {
   height: 934px;
   background-size: cover;

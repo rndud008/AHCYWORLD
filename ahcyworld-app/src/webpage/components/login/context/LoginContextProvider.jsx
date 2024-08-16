@@ -257,6 +257,7 @@ const LoginContextProvider = ({ children }) => {
                 setUserInfo,
                 roles,
                 hompyInfo,
+                setHompyInfo,
                 loginCheck,
                 login,
                 adminLogin,

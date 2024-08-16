@@ -2,9 +2,11 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
+import com.lec.spring.jwt.JWTUtil;
 import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.service.HompyService;
 import com.lec.spring.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -34,11 +36,38 @@ public class HompyController {
     private String UPLOADDIR;
     private final HompyService hompyService;
     private final UserService userService;
+    private final JWTUtil jwtUtil;
 
     @Autowired
-    public HompyController(HompyService hompyService, UserService userService) {
+    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil) {
         this.hompyService = hompyService;
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
+    }
+
+    public Hompy check(HttpServletRequest request) {
+
+        String authorization = request.getHeader("Authorization");
+
+        if (authorization == null || !authorization.startsWith("Bearer")) {
+            return null;
+        }
+
+        String token = authorization.split(" ")[1];
+
+        if (jwtUtil.isExpired(token)) {
+            return null;
+        }
+
+        Long id = jwtUtil.getId(token);
+
+        User user = userService.findByUserId(id).orElse(null);
+
+        if (user == null) {
+            return null;
+        }
+
+        return hompyService.findHompyByuser(user);
     }
 
     // 특정 User의 Hompy 조회
@@ -55,7 +84,6 @@ public class HompyController {
     @GetMapping("/list")
     public List<Hompy> hompyList() {
         return hompyService.hompyList();
-
     }
 
     // userId 를 입력받아 해당 유저의 HompyId를 반환함.
@@ -93,6 +121,24 @@ public class HompyController {
         hompyService.updateStatusMessage(hompy.getUser(), statusMessage);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{hompyId}/hompytitle")
+    public ResponseEntity<?> updateHompyTitle(@PathVariable Long hompyId, @RequestBody String hompyTitle, HttpServletRequest request) {
+
+        if(hompyTitle.trim().isEmpty()){
+            return new ResponseEntity<>("제목은 공란일수 없습니다,",HttpStatus.BAD_REQUEST);
+        }
+
+        Hompy requestHompyUser = check(request);
+        Hompy miniHompy = hompyService.findById(hompyId);
+
+        if(requestHompyUser.getId().equals(miniHompy.getId())){
+            return new ResponseEntity<>(hompyService.updateHompyTitle(miniHompy,hompyTitle),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     // 파일 저장 메서드

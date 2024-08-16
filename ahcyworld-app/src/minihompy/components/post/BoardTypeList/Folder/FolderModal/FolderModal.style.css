@@ -23,9 +23,9 @@
   align-items: center;
 }
 
-.folder-status label{
+/* .folder-status label{
   flex :3;
-}
+} */
 
 .folder-status-value{
   display: flex;
