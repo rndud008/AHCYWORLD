@@ -1,0 +1,50 @@
+.updateUser-close-btn{
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold; /* 글자 굵기 */
+  background: linear-gradient(145deg, #ff4c4c, #cc3838); /* 그라데이션 배경 */
+  border: 2px solid #cc3838;
+  color: #fff; /* 텍스트 색상 */
+  cursor: pointer; /* 포인터 커서 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감 있는 그림자 */
+  transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.updateUser-close-btn:hover {
+  background: linear-gradient(145deg, #ff6b6b, #ff4c4c); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.5); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+  border: 2px solid #cc3838;
+}
+
+.updateUser-close-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(255, 82, 82, 0.7); /* 포커스 시 약간의 하이라이트 추가 */
+}
+
+.updateUser-save-btn {
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold; /* 글자 굵기 */
+  background: linear-gradient(145deg, #4c80ff, #3366cc); /* 그라데이션 배경 */
+  border: 2px solid #3366cc; /* 회색 테두리 */
+  color: #fff; /* 텍스트 색상 */
+  cursor: pointer; /* 포인터 커서 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감 있는 그림자 */
+  transition: all 0.2s ease; /* 전환 효과 */ 
+}
+
+.updateUser-save-btn:hover{
+  background: linear-gradient(145deg, #6ba3ff, #4c8aff); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.5); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.updateUser-save-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.7); /* 포커스 시 약간의 하이라이트 추가 */
+}
