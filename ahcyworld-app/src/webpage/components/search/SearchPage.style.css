@@ -1,0 +1,25 @@
+.searchPage-div{
+  outline: auto;
+  width: 1400px;
+  min-height: 1000px;
+  margin: 10px auto;
+  padding: 10px 10px 0 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchPageButtonGroup{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.searchPageButtonGroup button{
+  margin-left: 10px
+}
+
+.searchPageNotFound{
+  width: 700px;
+  margin: 0 auto 10px auto; 
+}

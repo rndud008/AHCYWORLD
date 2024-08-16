@@ -30,6 +30,7 @@ import { LoginContext } from "./webpage/components/login/context/LoginContextPro
 import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
 // import OAuth2AddInfo from "./webpage/components/login/Login/OAuth2AddInfo";
 import '@fontsource/jua';
+import SearchPage from "./webpage/components/search/SearchPage";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                     <Route path='member' element={<Member />} />
                     <Route path='cart/:userId' element={<Cart />} />
                     <Route path='item' element={<Item itemkind={itemkind} />} />
+                    <Route path="search" element={<SearchPage/>} />
                 </Route>
 
                 {/* 2. 미니홈피 페이지 */}

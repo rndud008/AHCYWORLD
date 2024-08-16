@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
@@ -11,90 +11,157 @@ import { LoginContext } from "../login/context/LoginContextProvider";
 import SlideImg from "../slideImg/SlideImg";
 import News from "../news/News";
 import { BsSearch } from "react-icons/bs";
+import api, { SERVER_HOST } from "../../../apis/api";
+import { useDispatch } from "react-redux";
+import { SearchAction } from "../../../redux/actions/SearchAction";
 
 const Header = ({ setItemKind }) => {
-    const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
-    const navigate = useNavigate();
+  const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    // console.log("isLogin: ", isLogin);
-    // console.log("logout: ", logout);
-    // console.log("userInfo: ", userInfo);
+  const [searchValue, setSearchValue] = useState({
+    action: "all",
+    search: "",
+  });
 
-    // console.log("hompyInfo", hompyInfo);
-    // console.log("userInfo", userInfo);
+  const searchChangeValue = (e) => {
+    const { name, value } = e.target;
 
-    return (
-        <>
-            <div className='header-container'>
-                <div className='header-box'>
-                    <div className='logo-container' onClick={() => navigate("/")}>
-                        <img src={logo} alt='Acyworld LOGO' />
-                    </div>
-                    <div className='search-select'>
-                        <select>
-                            <option>전체검색</option>
-                            <option>사람검색</option>
-                            <option>아이템검색</option>
-                        </select>
-                        <input type='text' />
-                        <button className='search-btn'>
-                            검색
-                        </button>
-                    </div>
-                </div>
+    if (name.includes("search")) {
+      setSearchValue({ ...searchValue, search: value });
+    }
 
-                <Nav className='navbar'>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("all");
-                        }}
-                    >
-                        전체
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("배경음악");
-                        }}
-                    >
-                        배경음악
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("글꼴");
-                        }}
-                    >
-                        글꼴
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("스킨");
-                        }}
-                    >
-                        스킨
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("미니미");
-                        }}
-                    >
-                        미니미
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("스토리룸");
-                        }}
-                    >
-                        미니룸
-                    </button>
+    if (name.includes("action")) {
+      setSearchValue({ ...searchValue, action: value });
+    }
+  };
 
-                    {/* 로그인 여부에 따라 조건부 렌더링 */}
-                    {/* {!isLogin ? (
+  const searchEnter = async (e) => {
+    if (e.key === "Enter") {
+      const valid = searchValidation();
+
+      if (!valid) return;
+      console.log("엔터 쳤지롱");
+      console.log("엔터 check", searchValue);
+
+      try {
+        await dispatch(
+          SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
+        );
+      } catch (e) {
+        return alert(e.response.data);
+      }
+    }
+  };
+
+  const searchListAxios = async () => {
+    try {
+      await dispatch(
+        SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
+      );
+    } catch (e) {
+      return alert(e.response.data);
+    }
+  };
+
+  const searchValidation = () => {
+    if (!searchValue.search && searchValue.search.trim() === "") {
+      console.log("searchValidation");
+      return false;
+    }
+    return true;
+  };
+
+  console.log("check", searchValue);
+
+  return (
+    <>
+      <div className="header-container">
+        <div className="header-box">
+          <div className="logo-container" onClick={() => navigate("/")}>
+            <img src={logo} alt="Acyworld LOGO" />
+          </div>
+          <div className="search-select">
+            <select name="action" onChange={(e) => searchChangeValue(e)}>
+              <option value={"all"} selected={searchValue.action === "all"}>
+                전체검색
+              </option>
+              <option
+                value={"people"}
+                selected={searchValue.action === "people"}
+              >
+                사람검색
+              </option>
+              <option value={"item"} selected={searchValue.action === "item"}>
+                아이템검색
+              </option>
+            </select>
+            <input
+              onKeyDown={searchEnter}
+              name="search"
+              value={searchValue.search}
+              onChange={(e) => searchChangeValue(e)}
+              type="text"
+            />
+            <button onClick={searchListAxios} className="search-btn">
+              검색
+            </button>
+          </div>
+        </div>
+
+        <Nav className="navbar">
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("all");
+            }}
+          >
+            전체
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("배경음악");
+            }}
+          >
+            배경음악
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("글꼴");
+            }}
+          >
+            글꼴
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("스킨");
+            }}
+          >
+            스킨
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("미니미");
+            }}
+          >
+            미니미
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("스토리룸");
+            }}
+          >
+            미니룸
+          </button>
+
+          {/* 로그인 여부에 따라 조건부 렌더링 */}
+          {/* {!isLogin ? (
                         <>
                             <Link className='nav-link' to='/login'>
                                 로그인
@@ -114,12 +181,12 @@ const Header = ({ setItemKind }) => {
                             </Link>
                         </>
                     )} */}
-                </Nav>
-            </div>
+        </Nav>
+      </div>
 
-            <Outlet />
-        </>
-    );
+      <Outlet />
+    </>
+  );
 };
 
 export default Header;

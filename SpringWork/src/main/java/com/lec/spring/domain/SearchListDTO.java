@@ -12,6 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class SearchListDTO {
-    private List<User> userList;
+    private List<Hompy> hompyList;
     private List<Item> itemList;
 }

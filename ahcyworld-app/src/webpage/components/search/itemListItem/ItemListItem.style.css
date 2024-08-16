@@ -1,0 +1,43 @@
+.searchItemList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.searchItem {
+  width: 300px;
+  /* outline: auto; */
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+}
+
+div.searchItem div:first-child{
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 0 auto;
+}
+
+div.searchItem div:first-child input{
+  border: none;
+  border-radius: 10px;
+}
+
+div.searchItem div:first-child img{
+  width: inherit;
+  border-radius: 10px;
+  height: 200px;
+  padding: 1px;
+}
+
+.searchItem div:nth-child(2){
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}

@@ -5,6 +5,7 @@ import EmailAuthReducer from "./EmailAuthReducer";
 import CommentReducer from "./CommentReducer";
 import HompyReducer from "./HompyReducer";
 import FriendReducer from "./FriendReducer";
+import SearchReducer from "./SearchReducer";
 
 export default combineReducers({
   post: PostReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   comment: CommentReducer,
   hompy: HompyReducer,
   friend: FriendReducer,
+  search: SearchReducer
 })

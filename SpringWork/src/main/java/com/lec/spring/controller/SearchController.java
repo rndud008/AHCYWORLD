@@ -7,10 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping
 public class SearchController {
 
     private final UserService userService;
@@ -24,19 +25,24 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    @GetMapping("/peoplelist")
-    public ResponseEntity<?> searchList(String search){
+    @GetMapping("/search")
+    public ResponseEntity<?> searchList(@RequestParam String search,@RequestParam String action) {
 
-        try{
-            return new ResponseEntity<>(searchService.searchUserList(search), HttpStatus.OK);
-
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        try {
+            if (action.equals("all")) {
+                return new ResponseEntity<>(searchService.searchAllList(search), HttpStatus.OK);
+            } else if (action.equals("people")) {
+                return new ResponseEntity<>(searchService.searchUserList(search), HttpStatus.OK);
+            } else if (action.equals("item")) {
+                return new ResponseEntity<>(searchService.searchItemList(search), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("잘못된 요청 입니다.", HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
     }
-
-
 
 
 }
