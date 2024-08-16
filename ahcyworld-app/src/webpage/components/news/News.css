@@ -19,12 +19,17 @@
     justify-content: center;
 }
 
-#news-category-tabs {
-    outline: 1px solid blue;
+ /* 뉴스 헤더 */
+.nav-tabs .nav-link {
     position: relative;
     left: 17px;
     font-size: 1.2em;
-}
+    color: #000000;
+  }
+
+  .nav-tabs .nav-link:hover {
+    color: #ff6347; /* 마우스 오버 시의 글씨 색상 (연한 오렌지) */
+  }
 
 /* 뉴스 카드 스타일 */
 .news-cards {
@@ -34,6 +39,7 @@
     justify-content: center;
     gap: 20px;
     margin-bottom: 40px;
+    margin-top: 10px;
 }
 
 /* 개별 카드 스타일 */

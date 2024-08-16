@@ -15,3 +15,111 @@
     height: 100%;
     box-sizing: border-box; 
 }
+
+/* 아이템 체크 박스 */
+.item-check-box {
+  transform: scale(2); /* 체크박스를 1.5배 확대 */
+  margin-left: 5px;
+}
+
+/* 전체선택 */
+.all-select {
+    margin-left: 5px;
+    transform: scale(2); /* 체크박스를 1.5배 확대 */
+    margin-top: 20px;
+}
+
+.all-select-text {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.select-container {
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid #E66E27;
+}
+
+.all-select-container {
+  /* outline: 2px solid blue; */
+  position: relative;
+  /* top: 5px; */
+  text-align: left;
+}
+
+.select-del-btn2 {
+  position: absolute;
+  margin-top: 10px;
+  z-index: 1;
+  margin-left: 850px;
+}
+
+/* 쇼핑계속하기 버튼, 상품 구매 버튼, 선택삭제 버튼 */
+.select-del-btn, .continue-shopping-btn, .goods-buy-btn {
+  border-radius: 5px; /* 모서리를 둥글게 */
+  font-size: 18px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0); /* 그라데이션 배경 */
+  border: 2px solid #ccc; /* 회색 테두리 */
+  color: #333; /* 텍스트 색상 */
+  cursor: pointer; /* 포인터 커서 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감 있는 그림자 */
+  transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.select-del-btn:hover, .continue-shopping-btn:hover, .goods-buy-btn:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.select-del-btn:active, .continue-shopping-btn:active, .goods-buy-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */  
+}
+
+.select-del-btn:focus, .continue-shopping-btn:focus, .goods-buy-btn:focus {
+    outline: none; /* 포커스 시 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 약간의 하이라이트 추가 */
+}
+
+.item-del-btn {
+  display: flex;
+  justify-content: center; /* 텍스트 중앙 정렬 */
+  align-items: center; /* 텍스트 수직 중앙 정렬 */
+  border-radius: 5px; /* 모서리를 둥글게 */
+  margin-left: 20px;
+  font-size: 18px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0); /* 그라데이션 배경 */
+  border: 2px solid #ccc; /* 회색 테두리 */
+  color: #333; /* 텍스트 색상 */
+  cursor: pointer; /* 포인터 커서 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감 있는 그림자 */
+  transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.item-del-btn:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.item-del-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */  
+}
+
+.item-del-btn {
+  outline: none; /* 포커스 시 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 약간의 하이라이트 추가 */
+}
