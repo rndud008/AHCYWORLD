@@ -213,10 +213,10 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={closeEditModal}>
-                            닫기
+                        <Button className="updateUser-close-btn" onClick={closeEditModal}>
+                            취소
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="updateUser-save-btn" type="submit">
                             저장
                         </Button>
                     </Modal.Footer>

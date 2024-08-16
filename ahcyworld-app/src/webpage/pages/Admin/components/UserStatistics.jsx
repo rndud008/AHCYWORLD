@@ -11,7 +11,6 @@ import {
     Legend,
     PointElement,
 } from "chart.js";
-import DataLabelsPlugin from "chartjs-plugin-datalabels";
 import { userList } from "../../../../apis/auth";
 
 // Chart.js 모듈 등록

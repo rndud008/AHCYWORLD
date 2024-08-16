@@ -1,0 +1,39 @@
+.first-container {
+    display: flex;
+    flex-direction: row;
+    /* align-items: top; */
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.user-graph-box {
+    /* outline: 2px solid red; */
+    /* margin: 40px 0; */
+    width: 400px;
+    height: 400px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.user-graph-box h3 {
+    margin-bottom: 10px;
+}
+
+.soldItem-chart-box {
+    /* outline: 2px solid blue; */
+    /* margin: 40px 0; */
+    width: 700px;
+    height: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.soldItem-chart-box h3{
+    margin-bottom: 50px;
+}

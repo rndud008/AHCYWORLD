@@ -3,7 +3,6 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.Carts;
 import com.lec.spring.service.CartsService;
 import com.lec.spring.service.PaymentHistoryService;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +31,11 @@ public class CartsController {
     @CrossOrigin
     public ResponseEntity<?> cartsItemList(@RequestParam Long id) {
         return new ResponseEntity<>(cartsService.cartsList(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/sold-list")
+    public List<Carts> cartsSoldList(){
+        return cartsService.soldItemList();
     }
 
     @GetMapping("/{id}/items")

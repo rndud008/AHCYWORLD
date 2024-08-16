@@ -1,0 +1,93 @@
+:root {
+    --main-color: #e66e28;
+}
+
+.admin-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f9f7f2;
+    padding: 20px;
+}
+
+.admin-login-form {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 360px;
+    position: relative;
+}
+
+.form-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--main-color); 
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.input-box {
+    margin-bottom: 24px;
+}
+
+.input-box label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #6c757d; 
+}
+
+.admin-login-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #495057;
+    background: #f8f9fa;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.admin-login-input:focus {
+    border-color: var(--main-color); 
+    box-shadow: 0 0 8px rgba(255, 87, 34, 0.3);
+    outline: none;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.check-label {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #6c757d; 
+}
+
+.admin-login-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--main-color); 
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.admin-login-btn:hover {
+    background-color: var(--main-color);
+    transform: translateY(-2px);
+}
+
+.admin-login-btn:active {
+    background-color: var(--main-color); 
+    transform: translateY(0);
+}

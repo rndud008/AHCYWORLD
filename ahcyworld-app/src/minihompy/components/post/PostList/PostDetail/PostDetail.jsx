@@ -112,9 +112,6 @@ const PostDetail = () => {
         )}
       </Container>
     }
-    <div style={{width:"200px"}}>
-    <ColorPicker hideInput={['hsv']} height={100} color={color} onChange={setColor} />
-    </div>
     </>
   );
 };

@@ -75,7 +75,9 @@ public class UserService {
         Hompy hompy = Hompy.builder()
                 .user(savedUser)
                 .title(name + "님의 미니홈피")
-                .menuColor("#147DAF,#FFF,#147DAF")
+                .menuColor("#147DAF")
+                .menuText("#FFF")
+                .menuBorder("#000000")
                 .menuStatus("visible,visible,visible,visible")
                 .build();
 

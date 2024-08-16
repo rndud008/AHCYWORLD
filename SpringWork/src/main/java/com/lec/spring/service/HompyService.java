@@ -8,6 +8,7 @@ import com.lec.spring.repository.FolderRepository;
 import com.lec.spring.repository.HompyRepository;
 import com.lec.spring.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -166,5 +167,12 @@ public class HompyService {
         } else {
             throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
         }
+    }
+
+    // 홈피 타이틀 변경.
+    @Transactional
+    public Hompy updateHompyTitle(Hompy hompy, String hompyTitle){
+        hompy.setTitle(hompyTitle);
+        return hompy;
     }
 }
