@@ -108,23 +108,49 @@ const ItemList = (props) => {
                         <tr className='itemRow' key={rowIndex}>
                             {threeItem.map((item, colIndex) => (
                                 <div className='item' key={colIndex}>
-                                    {item.itemType === '글꼴' ? (
-                                        <input
-                                            className='fontStyle'
-                                            type='text'
-                                            style={{ fontFamily: `${item.sourceName}, cursive`, fontSize: 50 }}
-                                            value='AhCyWorld'
-                                            readOnly
-                                        />
-                                    ) : item.itemType === '배경음악' ? (
-                                        <img className="itemImg" src={item.bgmImg} alt="" />
-                                    ) : (
-                                        <img
-                                            className="itemImg"
-                                            src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
-                                            alt=""
-                                        />
-                                    )}
+                                    {item.itemType === '글꼴' &&
+                                        <div className="itemImg">
+                                            <input
+                                                className='fontStyle'
+                                                type='text'
+                                                style={{ fontFamily: `${item.sourceName}, cursive`, fontSize: 50, border: 'none', width: '300px', height: '300px', textAlign: 'center' }}
+                                                value='AhCyWorld'
+                                                readOnly
+                                            />
+                                        </div>
+                                    }
+                                    {item.itemType === '배경음악' && <img className="itemImg" src={item.bgmImg} alt="" />}
+                                    {item.itemType === '미니미' &&
+                                        <div className="itemImg">
+                                            <img
+                                                className="itemImg"
+                                                style={{ maxHeight: '100%', objectFit: 'contain' }}
+                                                src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    }
+
+
+
+                                    {item.itemType === '스토리룸' &&
+                                        <div className="itemImg">
+                                            <img
+                                                className="skinandstoryitemImg"
+                                                src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    }
+                                    {item.itemType === '스킨' &&
+                                        <div className="itemImg">
+                                            <img
+                                                className="skinandstoryitemImg"
+                                                src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    }
                                     <br />
                                     {item.itemType === '배경음악' ? (
                                         <div className="item-music-title">
