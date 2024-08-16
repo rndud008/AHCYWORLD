@@ -68,8 +68,8 @@ where id = 8;
 update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
-set acorn = 100000
-where id = 6;
+set acorn = 9999999
+where id = 8;
 
 
 
@@ -106,8 +106,8 @@ set item_name='글꼴4'
 where id = 80;
 
 update hompy
-set minimi_picture = '망곰2.png'
-where id = 2;
+set mini_hompy_skin = 'background.png'
+where id = 5;
 
 
 

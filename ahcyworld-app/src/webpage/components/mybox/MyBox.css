@@ -50,19 +50,54 @@
 .user-btn {
     width: 140px;
     height: 40px;
-    background-color: var(--main-color);
     color: #fff;
     font-size: 18px;
     font-weight: 600;
     padding: 5px 10px;
     border: 0;
     border-radius: 10px;
-    transition: all 0.3s ease;
+}
+
+.acorn-btn {
+    display: flex;
+    justify-content: center; /* 텍스트 중앙 정렬 */
+    align-items: center; /* 텍스트 수직 중앙 정렬 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    padding: 5px 7px;
+    font-size: 16px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    background: linear-gradient(145deg, #f39c6b, #e66e28); /* 그라데이션 배경 */
+    border: 0;
+    color: #fff; /* 텍스트 색상 */
+    cursor: pointer; /* 포인터 커서 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감 있는 그림자 */
+    transition: all 0.2s ease; /* 전환 효과 */
 }
 
 .acorn-btn:hover {
-    transform: scale(1.05);
+    background: linear-gradient(145deg, #f1b07a, #e66e28); /* 마우스 오버 시 배경 색상 변경 */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+    transform: translateY(-1px); /* 살짝 위로 이동 */
 }
+
+.acorn-btn:active {
+    background: linear-gradient(145deg, #f7a76b, #e66e28); /* 클릭 시 배경 색상 변경 */
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+    transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.acorn-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(230, 110, 40, 0.5); /* 포커스 시 약간의 하이라이트 추가 */
+}
+
+.my-acorn {
+    font-size: 16px;
+}
+
 
 .logout-btn {
     background: none;
@@ -157,7 +192,6 @@
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
 }
@@ -176,17 +210,42 @@
     font-size: 18px;
     border: 0;
     border-radius: 10px;
-    background-color: var(--main-color);
-    color: #fff;
-    transition: all 0.3s ease;
 }
 
-.top-buttons-container .hompy-btn:hover, .bottom-buttons-container .payCart-button:hover {
-    transform: scale(1.05);
+/* 버튼들 */
+.user-btn,
+.hompy-btn,
+.payCart-button {
+    font-weight: bold; /* 글자 굵기 */
+    background: linear-gradient(145deg, #f39c6b, #e66e28); /* 오렌지 계열 그라데이션 배경 */
+    color: #fff; /* 텍스트 색상 (흰색) */
+    cursor: pointer; /* 포인터 커서 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 192, 128, 0.7); /* 오렌지 계열의 입체감 있는 그림자 */
+    transition: all 0.2s ease; /* 전환 효과 */
 }
 
-.bottom-buttons-container .payCart-button {
-    font-size: 16px; /* 하단 버튼의 폰트 사이즈 조정 */
-    background-color: var(--main-color);
-    color: #fff;
+.user-btn:hover,
+.hompy-btn:hover,
+.payCart-button:hover {
+    background: linear-gradient(145deg, #f1b07a, #e66e28); /* 마우스 오버 시 오렌지 계열 배경 색상 변경 */
+    box-shadow: 1px 1px 4px rgba(230, 110, 40, 0.2), 
+                -1px -1px 4px rgba(255, 192, 128, 0.7); /* 오렌지 계열의 그림자 크기 조정 */
+    transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.user-btn:active,
+.hompy-btn:active,
+.payCart-button:active {
+    background: linear-gradient(145deg, #f7a76b, #e66e28); /* 클릭 시 오렌지 계열 배경 색상 변경 */
+    box-shadow: inset 1px 1px 4px rgba(230, 110, 40, 0.2), 
+                inset -1px -1px 4px rgba(255, 192, 128, 0.7); /* 눌린 듯한 오렌지 계열 효과 */
+    transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.user-btn:focus,
+.hompy-btn:focus,
+.payCart-button:focus {
+    outline: none; /* 포커스 시 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(230, 110, 40, 0.5); /* 포커스 시 오렌지 계열 하이라이트 추가 */
 }

@@ -107,42 +107,40 @@ const ItemList = (props) => {
                     {items.map((threeItem, rowIndex) => (
                         <tr className='itemRow' key={rowIndex}>
                             {threeItem.map((item, colIndex) => (
-                                <td className='item' key={colIndex}>
-                                    <div>
-                                        {item.itemType === '글꼴' ? (
-                                            <input
-                                                className='fontStyle'
-                                                type='text'
-                                                style={{ fontFamily: `${item.sourceName}, cursive`, fontSize: 50 }}
-                                                value='AhCyWorld'
-                                                readOnly
-                                            />
-                                        ) : item.itemType === '배경음악' ? (
-                                            <img className="itemImg" src={item.bgmImg} alt="" />
-                                        ) : (
-                                            <img
-                                                className="itemImg"
-                                                src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
-                                                alt=""
-                                            />
-                                        )}
-                                        <br />
-                                        {item.itemType === '배경음악' ? (
-                                            <div className="itemName" style={{ fontSize: 30 }}>
-                                                {item.sourceName}-{item.itemName} <br /> {item.price} <img className="acorn-img" src={acorn}></img>
-                                                <br />
-                                            </div>
-                                        ) : (
-                                            <div className="itemName" style={{ fontSize: 30 }}>
-                                                {item.itemName} <br /> {item.price} <img className="acorn-img" src={acorn}></img>
-                                                <br />
-                                            </div>
-                                        )}
-                                    </div>
+                                <div className='item' key={colIndex}>
+                                    {item.itemType === '글꼴' ? (
+                                        <input
+                                            className='fontStyle'
+                                            type='text'
+                                            style={{ fontFamily: `${item.sourceName}, cursive`, fontSize: 50 }}
+                                            value='AhCyWorld'
+                                            readOnly
+                                        />
+                                    ) : item.itemType === '배경음악' ? (
+                                        <img className="itemImg" src={item.bgmImg} alt="" />
+                                    ) : (
+                                        <img
+                                            className="itemImg"
+                                            src={`${process.env.PUBLIC_URL}/image/${item.fileName}`}
+                                            alt=""
+                                        />
+                                    )}
+                                    <br />
+                                    {item.itemType === '배경음악' ? (
+                                        <div className="item-music-title">
+                                            {item.sourceName}-{item.itemName} <br /> {item.price}도토리
+                                            <br />
+                                        </div>
+                                    ) : (
+                                        <div style={{ fontSize: 30 }}>
+                                            {item.itemName} <br /> {item.price} <img className="acorn-img" src={acorn}></img>
+                                            <br />
+                                        </div>
+                                    )}
                                     {userItems.includes(item.id) ? <button className='pushItem'>보유중</button>
                                         : (usetCartItems.includes(item.id) ? <button className='pushItem'> 담긴 아이템</button> :
                                             <button className='pushItem' onClick={() => addCart(item)}>장바구니추가</button>)}
-                                </td>
+                                </div>
                             ))}
                         </tr>
                     ))}
