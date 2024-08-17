@@ -110,13 +110,14 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   }
 
   const hompyTitleUpdate = async() =>{
-    console.log('hompyTitleUpdate 실행')
 
     const valid = hompyTitleValidation(hompyTitle);
+    let hompy = hompyInfo;
+    hompy.title = hompyTitle
 
     if(!valid) return alert('제목은 공란일수 없습니다.');
 
-    const response = await api.put(`${SERVER_HOST}/hompy/${hompyId}/hompytitle`,hompyTitle,{
+    const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`,hompy,{
       headers:{
         Authorization: `Bearer ${Cookies.get("accessToken")}`,
       }

@@ -19,12 +19,20 @@
   font-weight: bold;
   margin-left: 30px;
   flex: 8;
+  display: flex;
 }
 
 .homepage-title input {
   border: none;
   background: none;
   width: 500px;
+}
+.homepage-title button {
+  margin-left: 10px;
+  background: none;
+  border-radius: 30px;
+  color: #0d6efd;
+  border: none;
 }
 
 .homepage-title-outline{

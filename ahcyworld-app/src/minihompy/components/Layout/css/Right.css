@@ -8,6 +8,8 @@
   padding: 20px;
   box-sizing: border-box;
   margin-top: 5px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }
 
 .content-section {

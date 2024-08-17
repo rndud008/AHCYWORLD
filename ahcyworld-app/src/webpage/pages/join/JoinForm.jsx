@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import "./JoinForm.css";
 import styled from "styled-components";
@@ -52,6 +52,7 @@ const JoinForm = ({ join }) => {
     });
 
     const [authValue, setAuthValue] = useState();
+    const buttonDisabled = useRef(null);
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -232,6 +233,9 @@ const JoinForm = ({ join }) => {
 
     const emailAuth = async () => {
         try {
+            
+            buttonDisabled.current.disabled =true;
+            
             await dispatch(EmailAuthAction.emailAuthAxios(formData.email));
 
             setShow({
@@ -242,6 +246,9 @@ const JoinForm = ({ join }) => {
                 emailRe: true,
                 timer: true,
             });
+
+            buttonDisabled.current.disabled =false;
+
         } catch (error) {
             alert(error.message);
         }
@@ -396,7 +403,7 @@ const JoinForm = ({ join }) => {
                             />
                         )}
                         {show.authSend && (
-                            <Button type='button' id='authSend' onClick={emailAuth}>
+                            <Button ref={buttonDisabled} type='button' id='authSend' onClick={emailAuth}>
                                 인증
                             </Button>
                         )}
@@ -406,13 +413,12 @@ const JoinForm = ({ join }) => {
                             </Button>
                         )}
                         {show.emailRe && (
-                            <Button type='button' id='emailRe' onClick={emailAuthRe}>
+                            <Button  type='button' id='emailRe' onClick={emailAuthRe}>
                                 재입력
                             </Button>
                         )}
                         {show.timer && <p id='timer-display'></p>}
                     </StyledBox>
-                    {/* email, emailAuthValue, authSend, authCheck, emailRe  */}
                 </div>
                 <div className='text-success'>{successMessages.email}</div>
                 <div className='text-danger'>{errors.email}</div>

@@ -105,7 +105,7 @@ const Right = ({ user,hompy }) => {
           Authorization: `Bearer ${Cookies.get("accessToken")}`,
         },
       });
-      console.log("miniHomePyInfoTable", response);
+
       const { data, status } = response;
 
       if (status === 200) {
@@ -143,9 +143,7 @@ const Right = ({ user,hompy }) => {
       return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
     }
 
-
   };
-  console.log(friendReviewList,'?????????????????')
 
   const friendReviewListAxios = async () => {
     const action = "friendReview";
@@ -158,7 +156,6 @@ const Right = ({ user,hompy }) => {
           params: { action, username },
         }
       );
-      console.log("friendReviewList", response);
       const { data, status } = response;
 
       if (status === 200) {
