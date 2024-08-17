@@ -3,6 +3,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  back,
   fileAdd,
   fileDelete,
   fileReCreate,
@@ -97,7 +98,7 @@ const PostUpdate = () => {
             </div>
             <div>
               <Button type="submit">수정완료</Button>
-              <Button type="button" onClick={() => navigate(-1)}>
+              <Button type="button" onClick={() => back(navigate,dispatch)}>
                 이전으로
               </Button>
             </div>
@@ -157,7 +158,7 @@ const PostUpdate = () => {
                   type="file"
                   name={`fileList${item.id}`}
                   onChange={(e) =>
-                    writeAndUpdateChangeValue(e, item.id, post, setPost)
+                    writeAndUpdateChangeValue(e, item.id, post, setPost,dispatch,postName)
                   }
                 />
                 <Button

@@ -189,22 +189,38 @@ export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,d
   }
 };
 
-export const writeAndUpdateChangeValue = (e, fileId = "", post, setPost,dispatch) => {
+export const writeAndUpdateChangeValue = (e, fileId = "", post, setPost,dispatch,postName) => {
   const { value, name } = e.target;
 
   if (fileId !== "") {
     const selectedFile = e.target.files[0];
-    const updateFileList = post.fileList.map((item) => {
-      if (item.id === fileId) {
-        return { ...item, sourceName: selectedFile };
+   const check = ( postName.includes('photo') && selectedFile.type.startsWith('image') )|| 
+   (postName.includes('video') && selectedFile.type.startsWith('video')) || postName.includes('board')
+
+    if(check){
+      const updateFileList = post.fileList.map((item) => {
+        if (item.id === fileId) {
+          return { ...item, sourceName: selectedFile };
+        }
+        return item;
+      });
+      setPost({ ...post, fileList: updateFileList });
+      console.log('update update',updateFileList)
+    }else{
+      if(postName.includes('photo')){
+        alert('이미지 파일만 업로드 가능합니다.')
+        return e.target.value ='';
       }
-      return item;
-    });
-    setPost({ ...post, fileList: updateFileList });
-    console.log('update update',updateFileList)
+      if(postName.includes('video')){
+        alert('비디오 파일만 업로드 가능합니다.')
+        return e.target.value ='';
+      }
+
+    }
+
   } else {
     setPost({ ...post, [name]: value });
-    postValidation(post,dispatch)
+    postValidation(post,dispatch,name,value)
   }
 };
 
@@ -261,7 +277,7 @@ export const fileDelete = (id, post, setPost, e, action, originFileList, setOrig
 export const writeSubmit = async (e,post,dispatch,hompyId,postName,folderId,navigate) => {
   e.preventDefault();
 
-  const valid = postValidation(post,dispatch);
+  const valid = postValidation(post,dispatch,"","");
 
   if(!valid) return Swal.alert('작성실패','다시한번 확인해주세요','warning')
 
@@ -291,24 +307,33 @@ export const writeSubmit = async (e,post,dispatch,hompyId,postName,folderId,navi
   );
 };
 
-function postValidation(post,dispatch){
+function postValidation(post,dispatch,name,value){
 
-  console.log(post,'?')
   let valid =true;
 
-  if(post.subject.trim()==="" || !post?.subject){
-    dispatch(PostAction.postErrorState("subject","제목은 필수 입력 입니다."))
-    valid = false;
+  if(name !== ""){
+    name.includes('subject') && (value.trim() === "" || !value) && dispatch(PostAction.postErrorState("subject","제목은 필수 입력 입니다."))||
+    name.includes('subject') && (value.trim() !== "" ) && dispatch(PostAction.postErrorState("subject",false))||
+    name.includes('content') && (value.trim() === "" || !value) && dispatch(PostAction.postErrorState("content","내용은 필수 입력 입니다.")) ||
+    name.includes('content') && (value.trim() !== "" ) && dispatch(PostAction.postErrorState("content",false))
   }else{
-    dispatch(PostAction.postErrorState("subject",false))
+
+    if(post.subject.trim()==="" || !post?.subject){
+      dispatch(PostAction.postErrorState("subject","제목은 필수 입력 입니다."))
+      valid = false;
+    }else{
+      dispatch(PostAction.postErrorState("subject",false))
+    }
+  
+    if(post.content.trim()==="" || !post?.content){
+      dispatch(PostAction.postErrorState("content","내용은 필수 입력 입니다."))
+      valid = false;
+    }else{
+      dispatch(PostAction.postErrorState("content",false))
+    }
+
   }
 
-  if(post.content.trim()==="" || !post?.content){
-    dispatch(PostAction.postErrorState("content","내용은 필수 입력 입니다."))
-    valid = false;
-  }else{
-    dispatch(PostAction.postErrorState("content",false))
-  }
 
   return valid;
 
@@ -324,7 +349,7 @@ export const fileReCreate = (id,originFileList,setOriginFileList) => {
 export const updateSubmit = async (e, post, originFileList, hompyId, postName, folderId, navigate, postId, dispatch) => {
   e.preventDefault();
 
-  const valid = postValidation(post, dispatch);
+  const valid = postValidation(post, dispatch,"","");
 
   if(!valid) return Swal.alert('수정실패','다시한번 확인해주세요','warning')
 
@@ -359,3 +384,9 @@ export const updateSubmit = async (e, post, originFileList, hompyId, postName, f
 export const findPost = async (dispatch,hompyId,postName,folderId,postId) => {
   dispatch(PostAction.findPostAxios(hompyId, postName, folderId, postId));
 };
+
+export const back = (navigate,dispatch) =>{
+  dispatch(PostAction.postErrorState("subject",false))
+  dispatch(PostAction.postErrorState("content",false))
+  navigate(-1)
+}
