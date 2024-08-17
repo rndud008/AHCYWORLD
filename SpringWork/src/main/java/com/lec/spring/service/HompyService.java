@@ -38,7 +38,15 @@ public class HompyService {
     }
 
     // 기존 미니홈피 업데이트
+    @Transactional
     public Hompy updateHompy(Hompy hompy) {
+        Hompy originHompy = hompyRepository.findById(hompy.getId()).orElse(null);
+
+        originHompy.setTitle(hompy.getTitle());
+        originHompy.setMiniRoom(hompy.getMiniRoom());
+        originHompy.setMinimiPicture(hompy.getMinimiPicture());
+        originHompy.setMiniHompySkin(hompy.getMiniHompySkin());
+
         return hompyRepository.save(hompy);
     }
 
@@ -175,4 +183,6 @@ public class HompyService {
         hompy.setTitle(hompyTitle);
         return hompy;
     }
+
+
 }

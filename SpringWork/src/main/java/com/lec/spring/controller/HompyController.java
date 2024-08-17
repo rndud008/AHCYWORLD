@@ -138,6 +138,17 @@ public class HompyController {
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @PostMapping("/{hompyId}")
+    public ResponseEntity<?> updateHompy(@PathVariable Long hompyId, @RequestBody Hompy hompy, HttpServletRequest request){
+
+        Hompy requestHompyUser = check(request);
+
+        if(requestHompyUser.getId().equals(hompyId)){
+            return new ResponseEntity<>(hompyService.updateHompy(hompy),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 
@@ -205,6 +216,8 @@ public class HompyController {
         return ResponseEntity.ok(Map.of("profile", profileData));
     }
 
+
+
     // 미니미
     @PostMapping("/{hompyId}/minimi")
     public ResponseEntity<?> minimi(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
@@ -219,8 +232,8 @@ public class HompyController {
 
     // 미니룸
     @PostMapping("/{hompyId}/miniroom")
-    public ResponseEntity<?> miniroom(@PathVariable Long userId, @RequestPart("file") MultipartFile file) {
-        User user = hompyService.findById(userId).getUser();
+    public ResponseEntity<?> miniroom(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
+        User user = hompyService.findById(hompyId).getUser();
 
         String miniroomPicturePath = saveFile(file);
 
@@ -240,6 +253,8 @@ public class HompyController {
 
         return ResponseEntity.ok().body(Map.of("minihomeyskinPicture", minihomeyskinPicturePath));
     }
+
+
 
     @PostMapping("/reset")
     public String reset(@RequestParam Long hompyId) {

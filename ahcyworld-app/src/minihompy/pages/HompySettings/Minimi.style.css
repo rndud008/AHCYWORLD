@@ -1,0 +1,67 @@
+.aaa{
+  display: flex;
+  margin-top: 10px;
+}
+
+.afterSelectMinimi{
+  width: 350px;
+  height: 400px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  /* outline: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.afterSelectMinimi img{
+ height: 350px;
+}
+
+.selectMinimiList{
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  max-height: 500px;
+}
+
+.selectMinimiList button{
+  margin: 10px 0;
+  height: 30px;
+  border: none;
+  background: none;
+}
+
+.selectMinimiList button:hover{
+  animation: bounce 0.8s infinite;
+  background-color:#0d6efd;
+  opacity: 0.7;
+  border-radius: 10px;
+  color: white;
+}
+
+.beforeSelectMinimi{
+  width: 500px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+div.beforeSelectMinimi div{
+  margin: 0 auto;
+  text-align: center;
+  /* outline: 1px solid green; */
+}
+
+.beforeSelectMinimi img{
+  height: 200px;
+}
+
+.beforeSelectMinimi div:not(:first-child){
+  margin-top: 10px;
+}
