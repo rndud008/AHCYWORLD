@@ -6,7 +6,7 @@ import * as Swal from "../../apis/alert";
 import AcornPayModal from '../items/components/AcornPayModal';
 import { LoginContext } from '../../webpage/components/login/context/LoginContextProvider';
 import acorn from "../../upload/acorn.png"
-import '../pages/css/Cart.css';
+import './css/Cart.css';
 
 const Cart = () => {
     const { userId } = useParams();
