@@ -32,6 +32,7 @@ import java.util.Map;
 @RequestMapping("/hompy")
 public class HompyController {
 
+    private final HompyRepository hompyRepository;
     @Value("${app.upload.path}")
     private String UPLOADDIR;
     private final HompyService hompyService;
@@ -39,10 +40,11 @@ public class HompyController {
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil) {
+    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil, HompyRepository hompyRepository) {
         this.hompyService = hompyService;
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.hompyRepository = hompyRepository;
     }
 
     public Hompy check(HttpServletRequest request) {
@@ -139,6 +141,7 @@ public class HompyController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @PostMapping("/{hompyId}")
     public ResponseEntity<?> updateHompy(@PathVariable Long hompyId, @RequestBody Hompy hompy, HttpServletRequest request){
 
@@ -149,7 +152,6 @@ public class HompyController {
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     // 파일 저장 메서드
@@ -219,40 +221,35 @@ public class HompyController {
 
 
     // 미니미
-    @PostMapping("/{hompyId}/minimi")
-    public ResponseEntity<?> minimi(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
-        User user = hompyService.findById(hompyId).getUser();
-
-        String minimiPicturePath = saveFile(file);
-
-        hompyService.minimi(user, minimiPicturePath);
-
-        return ResponseEntity.ok().body(Map.of("minimiPicture", minimiPicturePath));
-    }
-
-    // 미니룸
-    @PostMapping("/{hompyId}/miniroom")
-    public ResponseEntity<?> miniroom(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
-        User user = hompyService.findById(hompyId).getUser();
-
-        String miniroomPicturePath = saveFile(file);
-
-        hompyService.miniRoom(user, miniroomPicturePath);
-
-        return ResponseEntity.ok().body(Map.of("miniroomPicture", miniroomPicturePath));
-    }
-
-    // 미니홈피 스킨
-    @PostMapping("/{hompyId}/hompyskin")
-    public ResponseEntity<?> homyskin(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
-        User user = hompyService.findById(hompyId).getUser();
-
-        String minihomeyskinPicturePath = saveFile(file);
-
-        hompyService.miniHompySkin(user, minihomeyskinPicturePath);
-
-        return ResponseEntity.ok().body(Map.of("minihomeyskinPicture", minihomeyskinPicturePath));
-    }
+//    @PostMapping("/{hompyId}/minimi")
+//    public ResponseEntity<?> minimi(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
+//        User user = hompyService.findById(hompyId).getUser();
+//
+//        String minimiPicturePath = saveFile(file);
+//
+//        hompyService.minimi(user, minimiPicturePath);
+//
+//        return ResponseEntity.ok().body(Map.of("minimiPicture", minimiPicturePath));
+//    }
+//
+//    // 미니룸
+//    @PostMapping("/{hompyId}/miniroom")
+//    public ResponseEntity<?> miniroom(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
+//        User user = hompyService.findById(hompyId).getUser();
+//
+//        String miniroomPicturePath = saveFile(file);
+//
+//        hompyService.miniRoom(user, miniroomPicturePath);
+//
+//        return ResponseEntity.ok().body(Map.of("miniroomPicture", miniroomPicturePath));
+//    }
+//
+//    // 미니홈피 스킨
+//    @PostMapping("/{hompyId}/hompyskin")
+//    public ResponseEntity<Hompy> homyskin(@PathVariable Long hompyId, @RequestParam String skinName) {
+//        Hompy updatedHompy = hompyService.miniHompySkin(hompyId, skinName);
+//        return new ResponseEntity<>(updatedHompy, HttpStatus.OK);
+//    }
 
 
 

@@ -6,6 +6,7 @@
   height: 640px;
   display: flex;
   align-items: center;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
 }
 
 .friend-list {

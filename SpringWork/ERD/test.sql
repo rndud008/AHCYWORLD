@@ -21,7 +21,6 @@ select * from item;
 select * from carts;
 select *
 from diary;
-select * from message;
 
 
 select * from attachment where post_id='7285';
@@ -44,11 +43,9 @@ where id = 116;
 delete
     from item
 where id = 51;
-
-update payment_history
-set status = 'waiting'
-where friend_user_id=5;
-
+delete
+    from item
+where item_type = '폰트';
 
 # 페이먼트 커럼추가
 alter table payment_history
@@ -77,12 +74,9 @@ where id = 8;
 
 update hompy set total_visitor = 0 where id = 1;
 
-update hompy
-set mini_hompy_skin = '22.png'
-where id = 5;
 update ah_user
 set acorn = 9999999
-where id = 1;
+where id = 8;
 
 
 
