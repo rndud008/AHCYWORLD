@@ -32,6 +32,7 @@ import java.util.Map;
 @RequestMapping("/hompy")
 public class HompyController {
 
+    private final HompyRepository hompyRepository;
     @Value("${app.upload.path}")
     private String UPLOADDIR;
     private final HompyService hompyService;
@@ -39,10 +40,11 @@ public class HompyController {
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil) {
+    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil, HompyRepository hompyRepository) {
         this.hompyService = hompyService;
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.hompyRepository = hompyRepository;
     }
 
     public Hompy check(HttpServletRequest request) {
@@ -231,14 +233,9 @@ public class HompyController {
 
     // 미니홈피 스킨
     @PostMapping("/{hompyId}/hompyskin")
-    public ResponseEntity<?> homyskin(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
-        User user = hompyService.findById(hompyId).getUser();
-
-        String minihomeyskinPicturePath = saveFile(file);
-
-        hompyService.miniHompySkin(user, minihomeyskinPicturePath);
-
-        return ResponseEntity.ok().body(Map.of("minihomeyskinPicture", minihomeyskinPicturePath));
+    public ResponseEntity<Hompy> homyskin(@PathVariable Long hompyId, @RequestParam String skinName) {
+        Hompy updatedHompy = hompyService.miniHompySkin(hompyId, skinName);
+        return new ResponseEntity<>(updatedHompy, HttpStatus.OK);
     }
 
     @PostMapping("/reset")

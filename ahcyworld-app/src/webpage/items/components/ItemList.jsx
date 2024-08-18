@@ -154,7 +154,7 @@ const ItemList = (props) => {
                                     <br />
                                     {item.itemType === '배경음악' ? (
                                         <div className="item-music-title">
-                                            {item.sourceName}-{item.itemName} <br /> {item.price}도토리
+                                            {item.sourceName} - {item.itemName} <br /> {item.price}도토리
                                             <br />
                                         </div>
                                     ) : (
