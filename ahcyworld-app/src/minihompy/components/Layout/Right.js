@@ -126,7 +126,10 @@ const Right = ({ user,hompy }) => {
 
   const friendReviewCreate = async () => {
 
+    
     if(!friendIdList.some(item => item === userInfo.id)) return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
+
+    if(!friendReview.content || friendReview.content.trim() === "") return Swal.alert("작성실패","글을 작성해주세요.","warning")
 
     try{
       const response = await api.post(
@@ -136,7 +139,13 @@ const Right = ({ user,hompy }) => {
 
       const {data,status} = response;
       if(status === 200){
-        setFriendReviewList([...friendReviewList,data])
+        setFriendReviewList([data,...friendReviewList])
+        setFriendReview({
+          content:"",
+          guestBookName: "friendReview",
+          hompy: hompy,
+          user: userInfo,
+        })
       }
       
     }catch (e){
@@ -165,7 +174,10 @@ const Right = ({ user,hompy }) => {
   };
 
   const activeEnter = (e) =>{
+    e.preventDefault();
+
     if(e.key === "Enter"){
+
       friendReviewCreate();
     }
   }
@@ -295,6 +307,7 @@ const Right = ({ user,hompy }) => {
           <input
             name="content"
             className="text-box"
+            value={friendReview?.content ? friendReview.content : "" }
             onChange={friendReviewValue}
             onKeyDown={(e) => activeEnter(e)}
             type="text"
