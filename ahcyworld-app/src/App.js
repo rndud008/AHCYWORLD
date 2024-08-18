@@ -85,7 +85,7 @@ function App() {
                 )}
                 {/* 3. 어드민 페이지 */}
                 <Route>
-                    {/* <Route path='admin/login' element={<AdminLoginForm />} /> */}
+                    <Route path='admin/login' element={<AdminLoginForm />} />
                     <Route path='/admin' element={<Admin />} />
                 </Route>
             </Routes>

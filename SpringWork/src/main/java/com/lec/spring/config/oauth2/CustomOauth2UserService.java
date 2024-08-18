@@ -46,9 +46,9 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         String provider = oAuth2UserInfo.getProvider();
         String providerId = oAuth2UserInfo.getProviderId();
-        String username = provider + "_" + providerId;
         String password = oauth2Password;
         String email = oAuth2UserInfo.getEmail();
+        String username = provider + "_" + providerId;
         String name = oAuth2UserInfo.getName();
         String gender = oAuth2UserInfo.getGender();
         LocalDate birthDay = oAuth2UserInfo.getBirthDay();

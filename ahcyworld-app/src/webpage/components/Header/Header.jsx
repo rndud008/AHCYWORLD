@@ -16,179 +16,150 @@ import { useDispatch } from "react-redux";
 import { SearchAction } from "../../../redux/actions/SearchAction";
 
 const Header = ({ setItemKind }) => {
-  const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+    const { isLogin, userInfo, hompyInfo } = useContext(LoginContext);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-  const [searchValue, setSearchValue] = useState({
-    action: "all",
-    search: "",
-  });
+    const [searchValue, setSearchValue] = useState({
+        action: "all",
+        search: "",
+    });
 
-  const searchChangeValue = (e) => {
-    const { name, value } = e.target;
+    const searchChangeValue = (e) => {
+        const { name, value } = e.target;
 
-    if (name.includes("search")) {
-      setSearchValue({ ...searchValue, search: value });
-    }
+        if (name.includes("search")) {
+            setSearchValue({ ...searchValue, search: value });
+        }
 
-    if (name.includes("action")) {
-      setSearchValue({ ...searchValue, action: value });
-    }
-  };
+        if (name.includes("action")) {
+            setSearchValue({ ...searchValue, action: value });
+        }
+    };
 
-  const searchEnter = async (e) => {
-    if (e.key === "Enter") {
-      const valid = searchValidation();
+    const searchEnter = async (e) => {
+        if (e.key === "Enter") {
+            const valid = searchValidation();
 
-      if (!valid) return;
-      console.log("엔터 쳤지롱");
-      console.log("엔터 check", searchValue);
+            if (!valid) return;
+            console.log("엔터 쳤지롱");
+            console.log("엔터 check", searchValue);
 
-      try {
-        await dispatch(
-          SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
-        );
-      } catch (e) {
-        // return alert(e);
-        return alert(e.response.data);
-      }
-    }
-  };
-  
-  const searchListAxios = async () => {
-    try {
-      await dispatch(
-        SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
-      );
-    } catch (e) {
-      // return alert(e);
-      return alert(e.response.data);
-    }
-  };
+            try {
+                await dispatch(SearchAction.searchListAxios(searchValue.search, searchValue.action, navigate));
+            } catch (e) {
+                // return alert(e);
+                return alert(e.response.data);
+            }
+        }
+    };
 
-  const searchValidation = () => {
-    if (!searchValue.search && searchValue.search.trim() === "") {
-      console.log("searchValidation");
-      return false;
-    }
-    return true;
-  };
+    const searchListAxios = async () => {
+        try {
+            await dispatch(SearchAction.searchListAxios(searchValue.search, searchValue.action, navigate));
+        } catch (e) {
+            // return alert(e);
+            return alert(e.response.data);
+        }
+    };
 
-  console.log("check", searchValue);
+    const searchValidation = () => {
+        if (!searchValue.search && searchValue.search.trim() === "") {
+            console.log("searchValidation");
+            return false;
+        }
+        return true;
+    };
 
-  return (
-    <>
-      <div className="header-container">
-        <div className="header-box">
-          <div className="logo-container" onClick={() => navigate("/")}>
-            <img src={logo} alt="Acyworld LOGO" />
-          </div>
-          <div className="search-select">
-            <select name="action" onChange={(e) => searchChangeValue(e)}>
-              <option value={"all"} selected={searchValue.action === "all"}>
-                전체검색
-              </option>
-              <option
-                value={"people"}
-                selected={searchValue.action === "people"}
-              >
-                사람검색
-              </option>
-              <option value={"item"} selected={searchValue.action === "item"}>
-                아이템검색
-              </option>
-            </select>
-            <input
-              onKeyDown={searchEnter}
-              name="search"
-              value={searchValue.search}
-              onChange={(e) => searchChangeValue(e)}
-              type="text"
-            />
-            <button onClick={searchListAxios} className="search-btn">
-              검색
-            </button>
-          </div>
-        </div>
+    console.log("check", searchValue);
 
-        <Nav className="navbar">
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("all");
-            }}
-          >
-            전체
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("배경음악");
-            }}
-          >
-            배경음악
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("글꼴");
-            }}
-          >
-            글꼴
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("스킨");
-            }}
-          >
-            스킨
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("미니미");
-            }}
-          >
-            미니미
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("스토리룸");
-            }}
-          >
-            미니룸
-          </button>
+    return (
+        <>
+            <div className='header-container'>
+                <div className='header-box'>
+                    <div className='logo-container' onClick={() => navigate("/")}>
+                        <img src={logo} alt='Acyworld LOGO' />
+                    </div>
+                    <div className='search-select'>
+                        <select name='action' onChange={(e) => searchChangeValue(e)}>
+                            <option value={"all"} selected={searchValue.action === "all"}>
+                                전체검색
+                            </option>
+                            <option value={"people"} selected={searchValue.action === "people"}>
+                                사람검색
+                            </option>
+                            <option value={"item"} selected={searchValue.action === "item"}>
+                                아이템검색
+                            </option>
+                        </select>
+                        <input
+                            onKeyDown={searchEnter}
+                            name='search'
+                            value={searchValue.search}
+                            onChange={(e) => searchChangeValue(e)}
+                            type='text'
+                        />
+                        <button onClick={searchListAxios} className='search-btn'>
+                            검색
+                        </button>
+                    </div>
+                </div>
 
-          {/* 로그인 여부에 따라 조건부 렌더링 */}
-          {/* {!isLogin ? (
-                        <>
-                            <Link className='nav-link' to='/login'>
-                                로그인
-                            </Link>
-                            <Link className='nav-link' to='/join'>
-                                회원가입
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <Link to='/member'>Member</Link>
-                            <Link to='/admin'>Admin</Link>
-                            <Link to={`/post/${hompyInfo?.id}/board`}>Post</Link>
-                            <Link to={`/hompy/${hompyInfo?.id}`}>미니홈피</Link>
-                            <Link variant='primary' onClick={() => logout()}>
-                                로그아웃
-                            </Link>
-                        </>
-                    )} */}
-        </Nav>
-      </div>
+                <Nav className='navbar'>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("all");
+                        }}
+                    >
+                        전체
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("배경음악");
+                        }}
+                    >
+                        배경음악
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("글꼴");
+                        }}
+                    >
+                        글꼴
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("스킨");
+                        }}
+                    >
+                        스킨
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("미니미");
+                        }}
+                    >
+                        미니미
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("스토리룸");
+                        }}
+                    >
+                        미니룸
+                    </button>
+                </Nav>
+            </div>
 
-      <Outlet />
-    </>
-  );
+            <Outlet />
+        </>
+    );
 };
 
 export default Header;

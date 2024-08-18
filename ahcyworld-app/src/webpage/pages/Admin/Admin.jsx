@@ -6,8 +6,6 @@ import "./css/Admin.css";
 import logo from "../../../upload/LOGO2.png";
 import Users from "./components/Users";
 import PaymentHistory from "./components/PaymentHistory";
-import UserStatistics from "./components/UserStatistics";
-import PaymentStatistics from "./components/PaymentStatistics";
 import PostHistory from "./components/PostHistory";
 import Items from "./components/Items";
 import { FaUser } from "react-icons/fa";
@@ -27,34 +25,61 @@ const Admin = () => {
     const [subMenu, setSubMenu] = useState(() => {
         return localStorage.getItem("subMenu" || null);
     });
+    const [loading, setLoading] = useState(true); // 관리자 권한이 없는경우 로딩 상태체크를 위함
 
     const toggleMenu = (menu) => {
         // console.log(menu);
         setOpenMenu(openMenu === menu ? null : menu);
     };
 
+    const setHeadLine = () => {
+        switch (subMenu) {
+            case "main":
+                return "메인";
+            case "userList":
+                return "사용자 목록";
+            case "paymentHistory":
+                return "구매 내역";
+            case "itemList":
+                return "아이템 목록";
+            case "itemUpload":
+                return "아이템 추가";
+            case "post":
+                return "게시글 목록";
+            default:
+                return "관리자페이지";
+        }
+    };
+
+    useEffect(() => {
+        const checkAccess = async () => {
+            if (!isLogin) {
+                Swal.alert("로그인이 필요합니다.", "로그인 화면으로 이동합니다.", "warning", () => {
+                    navigate("/admin/login");
+                });
+                return;
+            }
+            // console.log(roles);
+            if (!roles.isAdmin) {
+                Swal.alert("접근권한이 없습니다.", "메인 화면으로 이동합니다.", "warning", () => {
+                    navigate("/");
+                });
+                return;
+            }
+            setLoading(false); // 권한이 없으면 로딩 상태 해제
+        };
+        checkAccess();
+        setSubMenu("main");
+    }, [roles, navigate]);
+
     useEffect(() => {
         localStorage.setItem("openMenu", openMenu);
         localStorage.setItem("subMenu", subMenu);
-    });
+    }, [openMenu, subMenu]);
 
-    useEffect(() => {
-        // if (!isLogin) {
-        //     Swal.alert("로그인이 필요합니다.", "로그인 화면으로 이동합니다.", "warning", () => {
-        //         navigate("/admin/login");
-        //     });
-        //     return;
-        // }
-        // // console.log(roles);
-        // if (!roles.isAdmin) {
-        //     Swal.alert("권한이 없습니다.", "이전 화면으로 이동합니다.", "warning", () => {
-        //         navigate(-1);
-        //     });
-        //     return;
-        // }
-        // console.log(roles);
-        // setSubMenu("main");
-    }, []);
+    if (loading) {
+        return <div>Loading...</div>; // 로딩 중 표시
+    }
 
     const handleSubMenuClick = (menu) => {
         if (menu === "main") {
@@ -93,9 +118,10 @@ const Admin = () => {
                                 </div>
                                 {openMenu === "userManagement" && (
                                     <ul>
-                                        <li onClick={() => handleSubMenuClick("userList")}>사용자목록</li>
-                                        <li onClick={() => handleSubMenuClick("paymentHistory")}>구매내역</li>
-                                        <li onClick={() => handleSubMenuClick("statistics")}>통계</li>
+                                        <li onClick={() => handleSubMenuClick("userList")}>&nbsp;&nbsp; 사용자목록</li>
+                                        <li onClick={() => handleSubMenuClick("paymentHistory")}>
+                                            &nbsp;&nbsp; 구매내역
+                                        </li>
                                     </ul>
                                 )}
                             </li>
@@ -106,8 +132,12 @@ const Admin = () => {
                                 </div>
                                 {openMenu === "itemManagement" && (
                                     <ul>
-                                        <li onClick={() => handleSubMenuClick("itemList")}>아이템리스트</li>
-                                        <li onClick={() => handleSubMenuClick("itemUpload")}>아이템추가</li>
+                                        <li onClick={() => handleSubMenuClick("itemList")}>
+                                            &nbsp;&nbsp; 아이템목록
+                                        </li>
+                                        <li onClick={() => handleSubMenuClick("itemUpload")}>
+                                            &nbsp;&nbsp; 아이템추가
+                                        </li>
                                     </ul>
                                 )}
                             </li>
@@ -118,7 +148,7 @@ const Admin = () => {
                                 </div>
                                 {openMenu === "postManagement" && (
                                     <ul>
-                                        <li onClick={() => handleSubMenuClick("post")}>게시글목록</li>
+                                        <li onClick={() => handleSubMenuClick("post")}>&nbsp;&nbsp; 게시글목록</li>
                                     </ul>
                                 )}
                             </li>
@@ -126,19 +156,13 @@ const Admin = () => {
                     </div>
                 </div>
                 <div className='main-container'>
-                    <div className='headline'>헤드라인</div>
+                    <div className='headline'>{setHeadLine()}</div>
                     <div className='showbox'>
                         {subMenu === "main" && <AdminMain />}
                         {subMenu === "userList" && <Users />}
                         {subMenu === "paymentHistory" && <PaymentHistory />}
-                        {subMenu === "statistics" && (
-                            <>
-                                <UserStatistics />
-                                <PaymentStatistics />
-                            </>
-                        )}
                         {subMenu === "itemList" && <Items />}
-                        {subMenu === "itemUpload" && <ItemUpload setSubMenu={setSubMenu}/>}
+                        {subMenu === "itemUpload" && <ItemUpload setSubMenu={setSubMenu} />}
                         {subMenu === "post" && <PostHistory />}
                     </div>
                 </div>

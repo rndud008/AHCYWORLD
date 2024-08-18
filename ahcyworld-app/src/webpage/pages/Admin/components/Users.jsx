@@ -6,6 +6,8 @@ import { RiHomeHeartLine } from "react-icons/ri";
 import { Pagination } from "react-bootstrap";
 import SendMessageModal from "./SendMessageModal";
 import { IoIosSend } from "react-icons/io";
+import * as Swal from "../../../../apis/alert";
+import { BsSearch } from "react-icons/bs";
 
 const Users = () => {
     const { isLogin, roles } = useContext(LoginContext);
@@ -18,46 +20,41 @@ const Users = () => {
     const [pageRange] = useState(10);
     const [selectedUser, setSelectedUser] = useState(null);
     const [isSendMessageModalOpen, setIsSendMessageModalOpen] = useState(false);
+    const [searchName, setSearchName] = useState("");
+    const [filteredUsers, setFilteredUsers] = useState([]);
 
     useEffect(() => {
-        const getUserList = async () => {
+        const getUserAndHompList = async () => {
             try {
-                const response = await userList();
-                setUsers(response.data);
-            } catch (error) {
-                console.error("userList Error: ", error);
-            }
-        };
+                const userResponse = await userList();
+                const userData = userResponse.data;
 
-        const getHompyList = async () => {
-            try {
-                const response = await hompyList();
-                const hompyData = response.data;
+                const hompyResponse = await hompyList();
+                const hompyData = hompyResponse.data;
 
-                setUsers((prevUsers) => {
-                    return prevUsers.map((user) => {
-                        const userHompy = hompyData.find((hompy) => hompy.user.id === user.id);
-                        return {
-                            ...user,
-                            hompyId: userHompy ? userHompy.id : "",
-                        };
-                    });
+                const updatedUsers = userData.map((user) => {
+                    const userHompy = hompyData.find((hompy) => hompy.user.id === user.id);
+                    return {
+                        ...user,
+                        hompyId: userHompy ? userHompy.id : "",
+                    };
                 });
+                setUsers(updatedUsers);
+                setFilteredUsers(updatedUsers);
             } catch (error) {
                 console.error("hompyList Error: ", error);
             }
         };
 
-        getUserList();
-        getHompyList();
+        getUserAndHompList();
     }, []);
 
     useEffect(() => {
         sortUsers(sortUserOrder, sortUserBy);
-    }, [sortUserOrder, sortUserBy, users]); // users 배열도 의존성 배열에 추가
+    }, [sortUserOrder, sortUserBy, filteredUsers]);
 
     const sortUsers = (order, by) => {
-        const sorted = [...users].sort((a, b) => {
+        const sorted = [...filteredUsers].sort((a, b) => {
             if (order === "asc") {
                 return a[by] > b[by] ? 1 : -1;
             } else {
@@ -77,8 +74,16 @@ const Users = () => {
 
     const resetMiniHompy = async (id) => {
         try {
+            console.log(id);
             if (!id) return;
-            await resetHompy(id);
+
+            Swal.confirm("홈페이지를 초기화 하시겠습니까?", "홈페이지를 초기화 합니다.", "warning", (result) => {
+                if (result.isConfirmed) {
+                    resetHompy(id);
+
+                    Swal.alert("홈페이지 초기화 완료", "사용자목록으로 이동합니다.", "success");
+                }
+            });
         } catch (error) {
             console.error("resetHompy Error: ", error);
         }
@@ -102,6 +107,25 @@ const Users = () => {
         setIsSendMessageModalOpen(false);
     };
 
+    // 검색어 입력 핸들러
+    const handleSearchChange = (e) => {
+        setSearchName(e.target.value);
+    };
+
+    // 검색 버튼 클릭 시 필터링 적용
+    const handleSearchClick = () => {
+        const filteredData = users.filter((user) => user.username.includes(searchName.toUpperCase()));
+
+        setFilteredUsers(filteredData);
+        setCurrentPage(1);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearchClick();
+        }
+    };
+
     // 페이지네이션 로직
     const indexOfLastUser = currentPage * userPerPage;
     const indexOfFirstUser = indexOfLastUser - userPerPage;
@@ -122,38 +146,52 @@ const Users = () => {
 
     return (
         <>
-            <div className='sort-controls'>
-                <label>
+            <div className='sort-search-box'>
+                <div className='user-sort-controls'>
+                    <label>
+                        <input
+                            type='radio'
+                            name='sortUserBy'
+                            value='id'
+                            checked={sortUserBy === "id"}
+                            onChange={handleSortBy}
+                        />
+                        &nbsp;최신순
+                    </label>
+                    <label style={{ fontWeight: "bold" }}>|</label>
+                    <label>
+                        <input
+                            type='radio'
+                            name='sortUserOrder'
+                            value='desc'
+                            checked={sortUserOrder === "desc"}
+                            onChange={handleSortOrderChange}
+                        />
+                        &nbsp;내림차순
+                    </label>
+                    <label>
+                        <input
+                            type='radio'
+                            name='sortUserOrder'
+                            value='asc'
+                            checked={sortUserOrder === "asc"}
+                            onChange={handleSortOrderChange}
+                        />
+                        &nbsp;오름차순
+                    </label>
+                </div>
+                <div className='users-search-box'>
                     <input
-                        type='radio'
-                        name='sortUserBy'
-                        value='id'
-                        checked={sortUserBy === "id"}
-                        onChange={handleSortBy}
+                        type='text'
+                        placeholder='Search by username'
+                        value={searchName}
+                        onChange={handleSearchChange}
+                        onKeyDown={handleKeyDown}
                     />
-                    &nbsp;최신순
-                </label>
-                <label style={{ fontWeight: "bold" }}>|</label>
-                <label>
-                    <input
-                        type='radio'
-                        name='sortUserOrder'
-                        value='desc'
-                        checked={sortUserOrder === "desc"}
-                        onChange={handleSortOrderChange}
-                    />
-                    &nbsp;내림차순
-                </label>
-                <label>
-                    <input
-                        type='radio'
-                        name='sortUserOrder'
-                        value='asc'
-                        checked={sortUserOrder === "asc"}
-                        onChange={handleSortOrderChange}
-                    />
-                    &nbsp;오름차순
-                </label>
+                    <button type='button' onClick={handleSearchClick}>
+                        <BsSearch />
+                    </button>
+                </div>
             </div>
             <table className='users-table'>
                 <thead className='users-thead'>
@@ -190,7 +228,7 @@ const Users = () => {
                                         reset
                                     </button>
                                 </td>
-                                <td className='message-btn-box'>
+                                <td className='message-btn-td'>
                                     <button className='message-btn' onClick={() => openSendMessageModal(user)}>
                                         <IoIosSend />
                                     </button>

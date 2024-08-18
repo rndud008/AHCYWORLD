@@ -12,7 +12,6 @@ import { Modal } from "react-bootstrap";
 import UpdateUser from "./UpdateUser";
 import * as Swal from "../../../apis/alert";
 import MessageModal from "../Message/MessageModal";
-import MessageModal from "../Message/MessageModal"
 import PaymentHistory from "../paymentHistory/PaymentHistory";
 const MyBox = () => {
     const { isLogin, logout, userInfo, setUserInfo, hompyInfo } = useContext(LoginContext);
@@ -125,11 +124,15 @@ const MyBox = () => {
                 const messageResponse = await getMessageFromAdmin(userInfo.id);
                 msgCount += messageResponse.data.length;
 
+                console.log(msgCount);
                 setMessageCnt(msgCount);
             } catch (error) {
                 console.log("에러!!", error);
             }
         };
+
+        console.log(userInfo.username);
+        
         fetchMessage();
     }, [isMessageModalOpen]);
 

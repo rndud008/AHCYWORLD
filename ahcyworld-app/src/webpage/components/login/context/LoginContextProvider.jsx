@@ -33,12 +33,11 @@ const LoginContextProvider = ({ children }) => {
         if (!accessToken) {
             // console.log("쿠키에 JWT(accessToken)이 없습니다.");
             logoutSetting();
+            if (!accessToken && isAuthPage) {
+                // JWT이 없는데, 인증이 필요한 페이지라면? -> 로그인 페이지로 이동
+                navigate("/login");
+            }
             return;
-        }
-
-        // JWT이 없는데, 인증이 필요한 페이지라면? -> 로그인 페이지로 이동
-        if (!accessToken && isAuthPage) {
-            navigate("/login");
         }
 
         // JWT이 있으면
@@ -47,38 +46,57 @@ const LoginContextProvider = ({ children }) => {
 
         try {
             response = await auth.userInfo();
-        } catch (error) {
-            // console.log(`error: ${error}`);
-            // console.log(`status: ${response.status}`);
-            return;
-        }
 
-        // 응답 실패시
-        if (!response) return;
+            // JWT 만료 또는 인증 실패 처리
+            if (response.status === 401 || response.data === "UNAUTHORIZED") {
+                console.log("JWT(accessToken)이 만료되었거나 인증에 실패했습니다.");
+                logoutSetting();
+                if (isAuthPage) navigate("/login");
+                return;
+            }
 
-        // console.log("JWT (accessToken)으로 사용자 인증 정보 요청 성공");
-
-        data = response.data;
-        // console.log(`data: ${data}`);
-
-        // 인증 실패
-        if (data === "UNAUTHORIZED" || response.status === 401) {
-            // console.log("JWT(accessToken)이 만료되었거나 인증에 실패했습니다.");
-            return;
-        }
-
-        // 인증성공
-        loginSetting(data, accessToken);
-
-        try {
-            response = await auth.hompyInfo();
             data = response.data;
+            loginSetting(data, accessToken);
 
-            setHompyInfo(data);
-            localStorage.setItem("hompyInfo", JSON.stringify(data));
+            try {
+                response = await auth.hompyInfo();
+                data = response.data;
+                setHompyInfo(data);
+                localStorage.setItem("hompyInfo", JSON.stringify(data));
+            } catch (error) {
+                console.error("HompyInfo Error: ", error);
+            }
         } catch (error) {
-            console.error("HompyInfo Error: ", error);
+            console.error(`Error during login check: ${error}`);
+            logoutSetting();
+            if (isAuthPage) navigate("/login");
         }
+        // 응답 실패시
+        // if (!response) return;
+
+        // // console.log("JWT (accessToken)으로 사용자 인증 정보 요청 성공");
+
+        // data = response.data;
+        // // console.log(`data: ${data}`);
+
+        // // 인증 실패
+        // if (data === "UNAUTHORIZED" || response.status === 401) {
+        //     console.log("JWT(accessToken)이 만료되었거나 인증에 실패했습니다.");
+        //     return;
+        // }
+
+        // // 인증성공
+        // loginSetting(data, accessToken);
+
+        // try {
+        //     response = await auth.hompyInfo();
+        //     data = response.data;
+
+        //     setHompyInfo(data);
+        //     localStorage.setItem("hompyInfo", JSON.stringify(data));
+        // } catch (error) {
+        //     console.error("HompyInfo Error: ", error);
+        // }
     };
 
     useEffect(() => {
