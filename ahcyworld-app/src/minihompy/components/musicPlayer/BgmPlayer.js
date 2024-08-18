@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, useContext } from "react";
 import {
   FaPlay,
   FaPause,
@@ -12,37 +12,41 @@ import {
 import "./BgmPlayer.css";
 import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api"; // SERVER_HOST 가져오기
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+
 
 const BgmPlayer = () => {
+  const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
   const volumeRef = useRef(0.5);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bgmList, setBgmList] = useState([]);
+  const [bgmList, setBgmList] = useState();
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   useEffect(() => {
-    // 배경음악 리스트 가져오기
-    const fetchBgmList = async () => {
-      try {
-        const type = '배경음악';
-        const response = await axios.get(`${SERVER_HOST}/item/${type}`, {
-          params: {
-            page: 1, // 첫 페이지
-          },
-        });
-        setBgmList(response.data.items);
-        if (response.data.items.length > 0) {
-          audioRef.current.src = response.data.items[0].fileName;
+    const playList =
+    (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) || (hompyInfo.miniHompyBgm == null && []);
+    let type = "배경음악";
+    let musics = [];
+    const userItemLits = async () => {
+      const response = await axios({
+        method: "GET",
+        url: `${SERVER_HOST}/cart/${userInfo.id}/items`,
+      });
+      response.data.forEach((cart) => {
+        if (cart.item.itemType === type) {
+          musics.push(cart.item);
         }
-      } catch (error) {
-        console.error("음악 목록을 가져오기 실패: ", error);
-      }
+      });
+   
+      setBgmList(musics.filter((item) => (
+        playList.includes(`${item.sourceName}-${item.itemName}`)
+      )));
     };
-
-    fetchBgmList();
-  }, []);
+    userItemLits();
+  }, [hompyInfo]);
 
   const togglePlayPause = useCallback(() => {
     if (isPlaying) {

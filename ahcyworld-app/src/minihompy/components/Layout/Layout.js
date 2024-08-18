@@ -13,6 +13,7 @@ import { LoginContext } from "../../../webpage/components/login/context/LoginCon
 import { Button } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 
 const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   const [visitorInfo, setVisitorInfo] = useState({
@@ -31,6 +32,8 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   const hompyId = hompy?.id;
   const userId = user?.id;
   const userCheck = parseInt(hompyId) === hompyInfo.id;
+
+  const dispatch = useDispatch();
 
   // console.log(postName, "Layout");
 
@@ -70,7 +73,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
     };
     increaseVisitCount();
   }, [user]);
-
+  
   useEffect(() => {
     if (hompyId) {
       axios
@@ -89,7 +92,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
           );
         });
     }
-  }, [userId]);
+  }, [userId, hompyInfo]);
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
@@ -149,6 +152,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
+          fontFamily: `${hompyInfo.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}
