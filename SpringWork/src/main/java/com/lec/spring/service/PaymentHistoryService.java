@@ -41,7 +41,11 @@ public class PaymentHistoryService {
     }
 
     public List<PaymentHistory> findAll() {
-        return paymentHistoryRepository.findAll();
+
+        List<PaymentHistory> paymentHistories = paymentHistoryRepository.findAll();
+//        System.out.println("paymentHistories: " + paymentHistories);
+
+        return paymentHistories;
     }
 
     public List<PaymentHistory> waitingList(Long id){

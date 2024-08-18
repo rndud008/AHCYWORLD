@@ -9,8 +9,6 @@ from folder;
 select * from post;
 select * from user_write_histroy;
 
-select * from guest_book;
-
 select * from friend;
 select * from ah_user;
 select* from friend;
@@ -21,6 +19,9 @@ select * from item;
 select * from carts;
 select *
 from diary;
+select * from message;
+select * from comment;
+select * from guest_book;
 
 
 select * from attachment where post_id='7285';
@@ -70,13 +71,20 @@ from carts;
 
 delete
 from ah_user
-where id = 8;
+where id = 9;
+
+delete from friend
+where user_id=9 or friend_user_id=9;
+
+delete from hompy
+where user_id=9;
 
 update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 9999999
 where id = 8;
+
 
 
 

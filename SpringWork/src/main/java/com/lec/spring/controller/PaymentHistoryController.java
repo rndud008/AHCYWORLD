@@ -31,6 +31,7 @@ public class PaymentHistoryController {
 
     @GetMapping("/list")
     public List<PaymentHistory> list() {
+
         return paymentHistoryService.findAll();
     }
 

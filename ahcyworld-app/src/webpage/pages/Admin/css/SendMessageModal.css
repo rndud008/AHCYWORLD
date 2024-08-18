@@ -1,0 +1,41 @@
+.custom-modal .modal-dialog {
+    max-width: 600px; /* 모달의 최대 너비 조정 */
+}
+
+.custom-modal-header {
+    background-color: #f1f1f1; /* 헤더 배경색 */
+    border-bottom: 1px solid #ddd; /* 헤더 하단 테두리 */
+}
+
+.custom-modal-body {
+    padding: 20px; /* 바디 패딩 */
+}
+
+.custom-modal-field {
+    margin-bottom: 15px; /* 필드 간격 */
+}
+
+.custom-modal-field p {
+    font-weight: bold; /* 텍스트 굵기 */
+    margin-bottom: 5px; /* 텍스트와 입력 필드 간격 */
+}
+
+.custom-input {
+    border-radius: 4px; /* 입력 필드 모서리 둥글기 */
+    border: 1px solid #ddd; /* 입력 필드 테두리 색상 */
+    padding: 10px; /* 입력 필드 패딩 */
+}
+
+.message-content {
+    height: 100px; /* 텍스트 영역의 높이 설정 */
+}
+
+.custom-modal-footer {
+    background-color: #f1f1f1; /* 푸터 배경색 */
+    border-top: 1px solid #ddd; /* 푸터 상단 테두리 */
+    justify-content: flex-end; /* 버튼 정렬 */
+}
+
+.custom-btn {
+    margin-left: 10px; /* 버튼 간격 */
+}

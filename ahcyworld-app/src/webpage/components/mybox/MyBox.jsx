@@ -124,11 +124,15 @@ const MyBox = () => {
                 const messageResponse = await getMessageFromAdmin(userInfo.id);
                 msgCount += messageResponse.data.length;
 
+                console.log(msgCount);
                 setMessageCnt(msgCount);
             } catch (error) {
                 console.log("에러!!", error);
             }
         };
+
+        console.log(userInfo.username);
+        
         fetchMessage();
     }, [isMessageModalOpen]);
 

@@ -95,12 +95,10 @@ export const addInfo = (username, gender, birthDay) => {
 };
 
 export const resetHompy = (hompyId) => {
-    const params = new URLSearchParams();
-    params.append("hompyId", hompyId);
 
     return api.post(
         `${SERVER_HOST}/hompy/reset`,
-        { hompyId },
+        { hompyId: hompyId },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 };

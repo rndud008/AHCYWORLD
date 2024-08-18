@@ -256,7 +256,7 @@ public class HompyController {
     @PostMapping("/reset")
     public String reset(@RequestParam Long hompyId) {
         Hompy hompy = hompyService.findById(hompyId);
-        System.out.println(hompy);
+        System.out.println("리셋할 홈피: "+hompy);
         if (hompy == null) {
             return "FAIL";
         }

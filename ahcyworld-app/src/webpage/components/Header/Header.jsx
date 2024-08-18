@@ -86,7 +86,7 @@ const Header = ({ setItemKind }) => {
           </div>
           <div className="search-select">
             <select name="action" value={searchValue.action} onChange={(e) => searchChangeValue(e)}>
-              <option value={"all"} 
+              <option value={"all"}
               selected={searchValue.action.includes("all")}
               >
                 전체검색
@@ -97,7 +97,7 @@ const Header = ({ setItemKind }) => {
               >
                 사람검색
               </option>
-              <option value={"item"} 
+              <option value={"item"}
               selected={searchValue.action.includes("item")}
               >
                 아이템검색
@@ -116,83 +116,61 @@ const Header = ({ setItemKind }) => {
           </div>
         </div>
 
-        <Nav className="navbar">
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("all");
-            }}
-          >
-            전체
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("배경음악");
-            }}
-          >
-            배경음악
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("글꼴");
-            }}
-          >
-            글꼴
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("스킨");
-            }}
-          >
-            스킨
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("미니미");
-            }}
-          >
-            미니미
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("스토리룸");
-            }}
-          >
-            미니룸
-          </button>
+                <Nav className='navbar'>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("all");
+                        }}
+                    >
+                        전체
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("배경음악");
+                        }}
+                    >
+                        배경음악
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("글꼴");
+                        }}
+                    >
+                        글꼴
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("스킨");
+                        }}
+                    >
+                        스킨
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("미니미");
+                        }}
+                    >
+                        미니미
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("스토리룸");
+                        }}
+                    >
+                        미니룸
+                    </button>
+                </Nav>
+            </div>
 
-          {/* 로그인 여부에 따라 조건부 렌더링 */}
-          {/* {!isLogin ? (
-                        <>
-                            <Link className='nav-link' to='/login'>
-                                로그인
-                            </Link>
-                            <Link className='nav-link' to='/join'>
-                                회원가입
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <Link to='/member'>Member</Link>
-                            <Link to='/admin'>Admin</Link>
-                            <Link to={`/post/${hompyInfo?.id}/board`}>Post</Link>
-                            <Link to={`/hompy/${hompyInfo?.id}`}>미니홈피</Link>
-                            <Link variant='primary' onClick={() => logout()}>
-                                로그아웃
-                            </Link>
-                        </>
-                    )} */}
-        </Nav>
-      </div>
-
-      <Outlet />
-    </>
-  );
+            <Outlet />
+        </>
+    );
 };
 
 export default Header;

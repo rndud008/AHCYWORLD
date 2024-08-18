@@ -134,4 +134,10 @@ public class CartsService {
         return cartsRepository.findByUserAndCartsStatus(user, "Y");
     }
 
+    public List<Carts> soldItemList() {
+        List<Carts> soldItems = cartsRepository.findByCartsStatus("Y");
+
+        return soldItems;
+    }
+
 }
