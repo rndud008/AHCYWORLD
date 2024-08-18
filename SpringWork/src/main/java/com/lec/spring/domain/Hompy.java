@@ -38,6 +38,8 @@ public class Hompy {
     private String minimiPicture; // 미니미
     private String miniRoom; // 미니룸
     private String miniHompySkin; // 미니홈피 스킨
+    private String miniHompyFont; // 미니홈피 폰트
+    private String miniHompyBgm; // 미니홈피 bgm
 
     private String profile;
 
@@ -62,6 +64,11 @@ public class Hompy {
             } else {
                 this.minimiPicture = "female.png"; // 성별이 여자일때 미니미
             }
+        }
+
+        // 미니홈피 기본글꼴
+        if (this.miniHompyFont == null) {
+            this.miniHompyFont = "Arial";
         }
 
         // 미니룸 기본이미지

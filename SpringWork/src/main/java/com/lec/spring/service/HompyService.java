@@ -46,6 +46,8 @@ public class HompyService {
         originHompy.setMiniRoom(hompy.getMiniRoom());
         originHompy.setMinimiPicture(hompy.getMinimiPicture());
         originHompy.setMiniHompySkin(hompy.getMiniHompySkin());
+        originHompy.setMiniHompyFont(hompy.getMiniHompyFont());
+        originHompy.setMiniHompyBgm(hompy.getMiniHompyBgm());
 
         return hompyRepository.save(hompy);
     }
