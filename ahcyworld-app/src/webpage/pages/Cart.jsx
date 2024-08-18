@@ -28,6 +28,7 @@ const Cart = () => {
     };
 
     useEffect(() => {
+        const updateCart = [];
         setIsAcornPayModalOpen(false);
         axios({
             method: "GET",
@@ -35,7 +36,19 @@ const Cart = () => {
             params: { id: userId }
         }).then(response => {
             const { data, status } = response;
-            const updateCart = data.map(x => ({ ...x, checked: false }));
+            if(selectItem.length == 0){
+                data.forEach(x => {
+                    updateCart.push({ ...x, checked: false })
+                })
+            }else{
+                data.forEach(x =>{
+                    if(selectItem.includes(x.id)){
+                        updateCart.push({...x, checked: true});
+                    }else{
+                        updateCart.push({ ...x, checked: false })
+                    }
+                })  
+            }
             setMyCart(updateCart);
             setIsDelete(false);
         })
@@ -49,11 +62,11 @@ const Cart = () => {
         }).then(response => {
             const { data, status } = response;
             if (status === 200) {
-                setIsDelete(true);
                 if (selectItem.includes(cart.id)) {
                     setSelectItem(selectItem.filter(x => x !== parseInt(cart.id)));
                     setTotalAcorn(totalAcorn - acorn);
                 }
+                setIsDelete(true);
             }
         });
     }
@@ -182,12 +195,11 @@ const Cart = () => {
                                 />
                             )}
                             <div style={{ flex: 1, marginLeft: '10px' }}>
-                                <div>{cart.item.sourceName} - {cart.item.itemName}</div>
+                                {cart.item.itemType === "배경음악" ? (<div>{cart.item.sourceName} - {cart.item.itemName}</div>) :<div>{cart.item.itemName}</div> }
                                 <div style={{ color: '#888' }}>{cart.item.itemType}</div>
                             </div>
                             <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
                             <button onClick={() => handelDeleteItem(cart)} className='item-del-btn'>❌</button>
-
                         </div>
 
                     ))}
@@ -199,7 +211,7 @@ const Cart = () => {
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
                 <button className='continue-shopping-btn' onClick={()=>navigate(-1)}>쇼핑계속하기</button>
                 <button className='goods-buy-btn' onClick={()=>acornPayOpenModal()}>상품 구매</button>
-                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo}/>
+                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo} setIsDelete={setIsDelete} setTotalAcorn={setTotalAcorn}/>
             </div>
         </div>
     );

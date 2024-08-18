@@ -9,7 +9,7 @@ import { userInfo } from '../../../apis/auth';
 import PaymentModal from '../../payment/PaymentModal';
 import acorn from "../../../upload/acorn.png";
 
-const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, userInfo }) => {
+const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, userInfo, setIsDelete, setTotalAcorn }) => {
     const [payItems, setPayItems] = useState([])
     const navigate = useNavigate();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -68,7 +68,7 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
                 }).then((response) => {
                     const { data, status } = response;
                     if (status === 200) {
-                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => navigate(`/hompy/${hompyInfo.id}`), onClose)
+                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => navigate(`/hompy/${hompyInfo.id}`), ()=>{setIsDelete(true); setTotalAcorn(0); onClose();})
                     }
                 });
             } else {

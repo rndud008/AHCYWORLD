@@ -42,7 +42,9 @@ where id = 116;
 delete
     from item
 where id = 51;
-
+delete
+    from item
+where item_type = '폰트';
 
 # 페이먼트 커럼추가
 alter table payment_history
