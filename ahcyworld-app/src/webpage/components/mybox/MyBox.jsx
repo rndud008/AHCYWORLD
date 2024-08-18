@@ -17,6 +17,7 @@ const MyBox = () => {
     const { isLogin, logout, userInfo, setUserInfo, hompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
+    const [friendRequestCnt, setFriendRequestCnt] = useState(0);
     const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
@@ -72,18 +73,17 @@ const MyBox = () => {
         setIsEditModalOpen(false);
     };
 
-
     const openPaymentHistoryModal = () => {
         setIsPaymentHistoryOpen(true);
     };
 
     const closePaymentHistoryModal = () => {
         setIsPaymentHistoryOpen(false);
-    }
+    };
 
     const handleCarts = () => {
         navigate(`/cart/${userInfo.id}`);
-    }
+    };
 
     // const handleUserInfoUpdate = (updateUser) => {
     //     if (typeof setUserInfo === 'function') {
@@ -98,10 +98,22 @@ const MyBox = () => {
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);
-                // console.log(userInfo);
-                // console.log(response.data);
-                // console.log(response.data.length);
-                setFriendRequest(response.data);
+                let requestCnt = 0;
+
+                response.data.forEach((request) => {
+                    console.log("보낸사람 이름: ", request.senderName);
+                    if (request.senderName !== userInfo.username) {
+                        setFriendRequest(request);
+                        requestCnt++;
+                    }
+                });
+
+                setFriendRequestCnt(requestCnt);
+                // console.log("내 이름: ",userInfo.username);
+                // console.log("요청응답: ", response.data);
+                // console.log("보낸사람 이름: ", myResponse.senderName);
+                // console.log("친구요청 개수: ", myResponse.length);
+                // console.log("내가 보낸거아냐?? : ", response.data.senderName === userInfo.username);
             } catch (error) {
                 console.error("myFriendRequests Error: ", error);
             }
@@ -109,7 +121,6 @@ const MyBox = () => {
 
         fetchFriendRequests();
     }, [isLogin, userInfo, isFriendRequstModalOpen, isMessageModalOpen]);
-
 
     useEffect(() => {
         const fetchMessage = async () => {
@@ -131,8 +142,8 @@ const MyBox = () => {
             }
         };
 
-        console.log(userInfo.username);
-        
+        // console.log(userInfo.username);
+
         fetchMessage();
     }, [isMessageModalOpen]);
 
@@ -156,13 +167,10 @@ const MyBox = () => {
                         내 정보 수정
                     </button>
                 </div>
-                <UpdateUser
-                isEditModalOpen={isEditModalOpen}
-                closeEditModal={closeEditModal}
-                />
-                <div className="topbtn-box">
+                <UpdateUser isEditModalOpen={isEditModalOpen} closeEditModal={closeEditModal} />
+                <div className='topbtn-box'>
                     <PaymentModal isOpen={isModalOpen} onClose={closeModal} />
-                    <button onClick={() => logout()} className="logout-btn">
+                    <button onClick={() => logout()} className='logout-btn'>
                         로그아웃
                     </button>
                 </div>
@@ -190,12 +198,9 @@ const MyBox = () => {
                             <span>총방문자</span>
                             <span>{hompyInfo.totalVisitor}</span>
                         </li>
-                        <li
-                            className="friend-request"
-                            onClick={openFriendRequestModal}
-                        >
+                        <li className='friend-request' onClick={openFriendRequestModal}>
                             <span>일촌신청</span>
-                            <span>{friendRequest.length}</span>
+                            <span>{friendRequestCnt}</span>
                         </li>
                         <FriendRequestModal
                             isOpen={isFriendRequstModalOpen}
@@ -225,22 +230,27 @@ const MyBox = () => {
                 </div>
             </div>
 
-            <div className="box-container">
-                <div className="top-buttons-container">
-                    <button className="hompy-btn" onClick={openMessageModal}>알림 {messageCnt}</button>
+            <div className='box-container'>
+                <div className='top-buttons-container'>
+                    <button className='hompy-btn' onClick={openMessageModal}>
+                        알림 {messageCnt}
+                    </button>
                     <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} />
-                    <button className="hompy-btn" onClick={() => openMinihompy(hompyInfo.id)}>
+                    <button className='hompy-btn' onClick={() => openMinihompy(hompyInfo.id)}>
                         내 미니홈피
                     </button>
                 </div>
-                <div className="bottom-buttons-container">
-                    <button className='payCart-button' onClick={openPaymentHistoryModal}>결제내역</button>
-                    <button className='payCart-button' onClick={() => handleCarts()}>장바구니</button>
+                <div className='bottom-buttons-container'>
+                    <button className='payCart-button' onClick={openPaymentHistoryModal}>
+                        결제내역
+                    </button>
+                    <button className='payCart-button' onClick={() => handleCarts()}>
+                        장바구니
+                    </button>
                 </div>
             </div>
-            <PaymentHistory isOpen={isPaymentHistoryOpen} onClose={closePaymentHistoryModal}/>
-            </div>
-
+            <PaymentHistory isOpen={isPaymentHistoryOpen} onClose={closePaymentHistoryModal} />
+        </div>
     );
 };
 

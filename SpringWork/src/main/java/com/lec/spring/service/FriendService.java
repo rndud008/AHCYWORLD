@@ -49,6 +49,7 @@ public class FriendService {
                 .friendUser(friendUser)
                 .friendName(friendType1)
                 .userName(friendType2)
+                .senderName(user.getUsername())
                 .message(message)
                 .friendStatus("waiting")
                 .build();
@@ -58,6 +59,7 @@ public class FriendService {
                 .friendUser(user)
                 .friendName(friendType2)
                 .userName(friendType1)
+                .senderName(user.getUsername())
                 .message(message)
                 .friendStatus("waiting")
                 .build();
@@ -74,7 +76,6 @@ public class FriendService {
         if (action.equals("all")) {
             friendList = friendRepository.findByUserId(user.getId());
         } else {
-
             friendList = friendRepository.findByUserIdAndFriendStatus(user.getId(), "waiting");
         }
 
@@ -94,7 +95,7 @@ public class FriendService {
         return friendList;
     }
 
-    public Friend friendShipResponse(Long id, String reply) {
+    public void friendShipResponse(Long id, String reply) {
         Friend friend = friendRepository.findById(id).orElse(null);
         List<Friend> friendList = friendRepository.findAll();
         Friend friendUser = new Friend();
@@ -111,11 +112,12 @@ public class FriendService {
             friend.setFriendStatus("accept");
             friendUser.setFriendStatus("accept");
         } else if (reply.equals("false")) {
-            friend.setFriendStatus("reject");
-            friendUser.setFriendStatus("reject");
+            System.out.println("친구요청보낸사람" + friend);
+            friendRepository.delete(friend);
+            System.out.println("친구요청 받는사람~" + friendUser);
+            friendRepository.delete(friendUser);
         }
 
-        return friendRepository.saveAndFlush(friend);
     }
 
     // 일촌명 변경

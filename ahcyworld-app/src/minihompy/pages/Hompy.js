@@ -24,7 +24,7 @@ const Hompy = ({ setUserId }) => {
             .catch((error) => {
                 console.log("에러: 데이터없음");
             });
-    }, []);
+    }, [hompyId]);
 
     return (
         // props 로 hompy 데이터 전달

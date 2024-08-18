@@ -27,6 +27,7 @@ public class Friend {
     private String friendName;      // 일촌 친구 별명
     private String userName;      // 일촌 user 별명.
     private String message;
+    private String senderName;
 
     private String friendStatus;    // accept, reject, waiting
 }

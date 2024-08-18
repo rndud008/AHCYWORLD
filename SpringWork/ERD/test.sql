@@ -23,6 +23,9 @@ select * from message;
 select * from comment;
 select * from guest_book;
 
+delete from friend
+where id = 61;
+
 
 select * from attachment where post_id='7285';
 select * from email_authentication;
@@ -73,8 +76,6 @@ delete
 from ah_user
 where id = 9;
 
-delete from friend
-where user_id=9 or friend_user_id=9;
 
 delete from hompy
 where user_id=9;

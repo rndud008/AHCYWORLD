@@ -91,8 +91,8 @@ public class FriendController {
     }
 
     @PostMapping("/friend-response")
-    public Friend friendShipResponse(Long id, String reply) {
-        return friendService.friendShipResponse(id, reply);
+    public void friendShipResponse(Long id, String reply) {
+        friendService.friendShipResponse(id, reply);
     }
 
     // 일촌명 변경

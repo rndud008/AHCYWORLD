@@ -21,10 +21,10 @@ const Test = () => {
             IMP.request_pay(data,(response) => {
                 // 결제 완료 후 콜백 함수
                 if (response.success) {
-                    console.log("결제 성공:", response);
+                    // console.log("결제 성공:", response);
                     // 성공 시 처리 로직
                 } else {
-                    console.log("결제 실패:", response.error_msg);
+                    // console.log("결제 실패:", response.error_msg);
                     // 실패 시 처리 로직
                 }
             });

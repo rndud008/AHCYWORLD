@@ -39,7 +39,7 @@ const DiaryHome = () => {
         })
             .then((response) => {
                 const diaries = response.data;
-                console.log("diaries:", diaries);
+                // console.log("diaries:", diaries);
                 const formattedDates = diaries.map((diary) => {
                     // console.log("diaryEvenDate : ", diary.eventDate);
                     const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");

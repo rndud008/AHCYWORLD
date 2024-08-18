@@ -42,8 +42,8 @@ const Header = ({ setItemKind }) => {
       const valid = searchValidation();
 
       if (!valid) return;
-      console.log("엔터 쳤지롱");
-      console.log("엔터 check", searchValue);
+      // console.log("엔터 쳤지롱");
+      // console.log("엔터 check", searchValue);
 
       try {
         await dispatch(
@@ -69,13 +69,13 @@ const Header = ({ setItemKind }) => {
 
   const searchValidation = () => {
     if (!searchValue.search && searchValue.search.trim() === "") {
-      console.log("searchValidation");
+      // console.log("searchValidation");
       return false;
     }
     return true;
   };
 
-  console.log("check", searchValue);
+  // console.log("check", searchValue);
 
   return (
     <>
