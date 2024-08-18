@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Admin from "./webpage/pages/Admin/Admin";
 import Header from "./webpage/components/Header/Header";
 import Hompy from "./minihompy/pages/Hompy";
@@ -31,6 +31,7 @@ import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
 // import OAuth2AddInfo from "./webpage/components/login/Login/OAuth2AddInfo";
 import '@fontsource/jua';
 import SearchPage from "./webpage/components/search/SearchPage";
+import * as Swal from "./apis/alert"
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const { userInfo, hompyInfo } = useContext(LoginContext);
   const folder = useSelector((state) => state.folder.folder);
+  const navigate = useNavigate()
 
     return (
         <div>
@@ -54,9 +56,7 @@ function App() {
                 </Route>
 
                 {/* 2. 미니홈피 페이지 */}
-                {hompyInfo && (
-                    <Route path="/hompy/:hompyId" >
-                        <Route index element={<Hompy />} />
+                    <Route path="/hompy/:hompyId" element={<Hompy />} >
                         <Route path="profile" element={<Profile />} />
                         <Route
                             path="guestbook"
@@ -81,8 +81,10 @@ function App() {
                         <Route path="diary/write" element={<DiaryWritePage setUserId={setUserId} />}/>
                         <Route path="diary/update/:id" element={<DiaryUpdatePage setUserId={setUserId} />}/>
                         <Route path="setting" element={<HompySetting setUserId={setUserId}/>}/>
-                    </Route>
-                )}
+                    </Route> 
+
+
+           
                 {/* 3. 어드민 페이지 */}
                 <Route>
                     {/* <Route path='admin/login' element={<AdminLoginForm />} /> */}

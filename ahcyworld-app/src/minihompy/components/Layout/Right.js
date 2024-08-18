@@ -29,6 +29,8 @@ const Right = ({ user,hompy }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log('????friendReview',friendReview)
+
   const userId = user?.id;
 
   useEffect(() => {
@@ -74,6 +76,7 @@ const Right = ({ user,hompy }) => {
       friendReviewListAxios();
       dispatch(FriendAction.findByHompyFriendListAixos(user.username))
       setFriendReview({
+        content:'',
         guestBookName: "friendReview",
         hompy: hompy,
         user: userInfo,
@@ -120,6 +123,7 @@ const Right = ({ user,hompy }) => {
 
   const friendReviewValue = (e) => {
     const { value, name } = e.target;
+    console.log(value)
 
     setFriendReview({ ...friendReview, [name]: value });
   };
@@ -174,10 +178,10 @@ const Right = ({ user,hompy }) => {
   };
 
   const activeEnter = (e) =>{
-    e.preventDefault();
-
+    
     if(e.key === "Enter"){
-
+      
+      e.preventDefault();
       friendReviewCreate();
     }
   }
@@ -307,7 +311,7 @@ const Right = ({ user,hompy }) => {
           <input
             name="content"
             className="text-box"
-            value={friendReview?.content ? friendReview.content : "" }
+            value={friendReview?.content}
             onChange={friendReviewValue}
             onKeyDown={(e) => activeEnter(e)}
             type="text"
