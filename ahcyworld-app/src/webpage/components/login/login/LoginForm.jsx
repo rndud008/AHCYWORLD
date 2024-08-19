@@ -16,10 +16,6 @@ const LoginForm = () => {
         const password = e.target.password.value;
         const rememberId = e.target.rememberId.checked;
 
-        // console.log(e.target.username.value);
-        // console.log(e.target.password.value);
-        // console.log(e.target.rememberId.checked);
-
         Cookies.set("rememberId", rememberId ? "true" : "false");
 
         login(username, password, rememberId); // 로그인 진행!
@@ -28,7 +24,6 @@ const LoginForm = () => {
     useEffect(() => {
         // 쿠키에 저장된 username(아이디) 가져오기
         const rememberId = Cookies.get("rememberId");
-        // console.log(`쿠키 rememberId : ${rememberId}`);
 
         if (rememberId) {
             document.getElementById("username").value = rememberId;

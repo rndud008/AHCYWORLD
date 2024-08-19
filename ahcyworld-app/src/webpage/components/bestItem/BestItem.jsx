@@ -23,7 +23,6 @@ const BestItem = () => {
                 if (response.status === 200) {
                     setTopItems(response.data);
                     setSelectedCategory(Object.keys(response.data)[0]);
-                    console.log("top5 아이템 불러오기 성공", response.data);
                 }
             } catch (error) {
                 console.error("top5 아이템 불러오기 실패", error);

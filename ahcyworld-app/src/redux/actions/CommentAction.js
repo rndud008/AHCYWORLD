@@ -91,7 +91,6 @@ function photoAndVideoUpdate(postId) {
 
 function showState(data){
   return (dispatch,getState) =>{
-    console.log(data)
     dispatch({type:"COMMENT_SHOW_STATE", payload : {data}})
   }
 }

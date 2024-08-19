@@ -160,7 +160,6 @@ const Left = ({ user, hompy }) => {
           }
         )
         .then((response) => {
-          console.log("상태 메시지 업데이트 성공", response.data);
           setTextEdit(false);
         })
         .catch((error) => {
@@ -181,7 +180,6 @@ const Left = ({ user, hompy }) => {
           },
         })
         .then((response) => {
-          console.log("프로필 사진 업로드 성공", response.data);
           const profilePicturePath = response.data.profilePicture.replaceAll(
             /\\/g,
             "//"
@@ -311,7 +309,7 @@ const Left = ({ user, hompy }) => {
             />
           </>
         )}
-        {console.log('FriendCheck',FriendCheck)}
+
         {(FriendCheck && (
           <>
             <button className="friend-btn" onClick={handleOpenModal}>

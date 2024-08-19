@@ -16,6 +16,7 @@
 .basicinfo h3 {
   margin: 0;
   width: 130px; /* 라벨의 고정 너비 */
+  font-size: 25px;
 }
 
 .basicinfo input {

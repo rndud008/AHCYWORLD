@@ -13,7 +13,6 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
             try {
                 const response = await myFriendRequests(userInfo.username);
 
-                console.log('friend wating.',response)
                 setFriendRequests(response.data);
                 setUpdatedRequests(response.data);
                 onRequestUpdate(response.data); // 미니홈피와 myBox 일촌신청 연동

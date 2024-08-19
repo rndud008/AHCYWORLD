@@ -78,7 +78,7 @@ const FriendShip = ({user}) => {
       // 성공 시 알림
       Swal.fire({
         title: '성공!',
-        text: '일촌명이 성공적으로 변경되었습니다.',
+        text: '일촌명이 변경되었습니다.',
         icon: 'success',
         confirmButtonColor: '#3085d6',
         confirmButtonText: '확인'

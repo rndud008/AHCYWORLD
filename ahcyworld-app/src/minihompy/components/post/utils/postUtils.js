@@ -135,7 +135,7 @@ export const handleClose = (dispatch) => {
 
 export const detailListHandleOpen = async (e,setShow,show,dispatch,hompyId,postName) => {
   const { name } = e.target;
-  console.log(name)
+ 
   if (name === "folderMove") {
     setShow({ ...show, folderMove: true });
   }
@@ -177,7 +177,7 @@ export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,d
   );
 
   const { data, status, statusText } = response;
-  console.log(data);
+
 
   if (status === 200) {
     Swal.alert("스크랩 완료", "스크랩 게시물로 이동합니다.",'success')
@@ -205,7 +205,7 @@ export const writeAndUpdateChangeValue = (e, fileId = "", post, setPost,dispatch
         return item;
       });
       setPost({ ...post, fileList: updateFileList });
-      console.log('update update',updateFileList)
+ 
     }else{
       if(postName.includes('photo')){
         alert('이미지 파일만 업로드 가능합니다.')
@@ -361,7 +361,7 @@ export const updateSubmit = async (e, post, originFileList, hompyId, postName, f
     content: post.content,
   });
 
-  console.log(post,'update')
+
 
   formData.append("post", new Blob([json], { type: "application/json" }));
 

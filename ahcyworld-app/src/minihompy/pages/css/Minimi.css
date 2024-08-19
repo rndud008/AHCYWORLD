@@ -1,0 +1,92 @@
+.aaa{
+  display: flex;
+  margin-top: 70px;
+}
+
+.afterSelectMinimi{
+  width: 350px;
+  height: 500px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  /* outline: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.afterSelectMinimi img{
+ height: 350px;
+}
+
+.selectMinimiList{
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  max-height: 500px;
+}
+
+.minimi-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minimi-save-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+  border: 2px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  margin-top: 20px;
+}
+
+.minimi-save-btn:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.minimi-save-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(1px);
+}
+
+.minimi-save-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.beforeSelectMinimi{
+  width: 550px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+div.beforeSelectMinimi div{
+  margin: 0 auto;
+  text-align: center;
+  /* outline: 1px solid green; */
+}
+
+.beforeSelectMinimi img{
+  height: 200px;
+}
+
+.beforeSelectMinimi div:not(:first-child){
+  margin-top: 10px;
+}

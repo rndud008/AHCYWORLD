@@ -9,11 +9,11 @@ import { Button } from "react-bootstrap";
 
 const SearchPage = () => {
   const location = useLocation();
-  console.log("location:", location);
+
   const params = new URLSearchParams(location.search);
-  console.log("params:", params);
+
   const actionQuery = params.get("action");
-  console.log("actionQuery", actionQuery);
+
   const searchQuery = params.get("search");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const SearchPage = () => {
 
   const searchList = useSelector((state) => state.search.searchList);
 
-  console.log("searchList", searchList);
+
 
   useEffect(() => {
     if (actionQuery && searchQuery) {

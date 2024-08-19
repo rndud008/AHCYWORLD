@@ -20,9 +20,6 @@ const MyBox = () => {
     const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
-    // console.log("userInfo : ", userInfo)
-    // console.log("setUserInfo : ", setUserInfo)
-
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     // 알림 모달창
@@ -63,8 +60,6 @@ const MyBox = () => {
     };
 
     const openEditModal = () => {
-        // console.log("userInfo : ", userInfo);
-        // console.log("hompyInfo : ", hompyInfo);
         setIsEditModalOpen(true);
     };
 
@@ -85,22 +80,10 @@ const MyBox = () => {
         navigate(`/cart/${userInfo.id}`);
     }
 
-    // const handleUserInfoUpdate = (updateUser) => {
-    //     if (typeof setUserInfo === 'function') {
-    //         setUserInfo(updateUser);
-    //     } else {
-    //         console.error("setUserInfo은 함수가 아님");
-    //     }
-    // }
-
     useEffect(() => {
-        // console.log(hompyInfo);
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);
-                // console.log(userInfo);
-                // console.log(response.data);
-                // console.log(response.data.length);
                 setFriendRequest(response.data);
             } catch (error) {
                 console.error("myFriendRequests Error: ", error);
@@ -126,7 +109,7 @@ const MyBox = () => {
 
                 setMessageCnt(msgCount);
             } catch (error) {
-                console.log("에러!!", error);
+                console.error("에러!!", error);
             }
         };
         fetchMessage();
@@ -169,11 +152,6 @@ const MyBox = () => {
                     <img
                         src={minimiPicture}
                         alt='미니홈피 이미지'
-                        // style={{
-                        //     width: "100%",
-                        //     height: "100%",
-                        //     objectFit: "cover",
-                        // }}
                     />
                 </div>
                 <div className='info-box'>
@@ -198,15 +176,6 @@ const MyBox = () => {
                             onClose={closeFriendRequestModal}
                             onRequestUpdate={handleFriendRequestUpdate}
                         />
-
-                        {/* <li onClick={openModal} className="acorn-status">
-                            내 도토리
-                            <img src={acorn} />
-                            {isLogin ? (
-                                <span>{userInfo.acorn}</span>
-                            ) : (
-                                <span>0</span>
-                            )} */}
                         <li className='acorn-status'>
                             <span className='my-acorn'>
                                 <img src={acorn} alt='' />

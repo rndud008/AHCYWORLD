@@ -31,7 +31,6 @@ const LoginContextProvider = ({ children }) => {
 
         // JWT이 없으면
         if (!accessToken) {
-            // console.log("쿠키에 JWT(accessToken)이 없습니다.");
             logoutSetting();
             return;
         }
@@ -42,28 +41,21 @@ const LoginContextProvider = ({ children }) => {
         }
 
         // JWT이 있으면
-        // console.log("쿠키에 JWT(accessToken)이 저장되어 있습니다.");
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
         try {
             response = await auth.userInfo();
         } catch (error) {
-            // console.log(`error: ${error}`);
-            // console.log(`status: ${response.status}`);
             return;
         }
 
         // 응답 실패시
         if (!response) return;
 
-        // console.log("JWT (accessToken)으로 사용자 인증 정보 요청 성공");
-
         data = response.data;
-        // console.log(`data: ${data}`);
 
         // 인증 실패
         if (data === "UNAUTHORIZED" || response.status === 401) {
-            // console.log("JWT(accessToken)이 만료되었거나 인증에 실패했습니다.");
             return;
         }
 
@@ -86,10 +78,6 @@ const LoginContextProvider = ({ children }) => {
     }, []);
 
     const login = async (username, password, rememberId) => {
-        // console.log(`
-        //     로그인 요청
-        //     login(username:${username}, password:${password}, rememberId:${rememberId});
-        //     `);
 
         // username 저장
         if (rememberId) Cookies.set("rememberId", username);
@@ -101,14 +89,6 @@ const LoginContextProvider = ({ children }) => {
             const { data, status, headers } = response;
             const authorization = headers.authorization;
             const accessToken = authorization.replace("Bearer ", "");
-
-            // console.log(`
-            //     -- login 요청응답 --
-            //       data : ${data}
-            //       status : ${status}
-            //       headers : ${headers}
-            //       jwt : ${accessToken}
-            //     `);
 
             if (status === 200) {
                 Cookies.set("accessToken", accessToken);
@@ -120,17 +100,12 @@ const LoginContextProvider = ({ children }) => {
                 });
             }
         } catch (error) {
-            // console.log(`로그인 error: ${error}`);
             Swal.alert("로그인 실패", "아이디 또는 비밀번호가 일치하지 않습니다.", "error");
             logoutSetting();
         }
     };
 
     const adminLogin = async (username, password, rememberId) => {
-        // console.log(`
-        //     로그인 요청
-        //     login(username:${username}, password:${password}, rememberId:${rememberId});
-        //     `);
 
         // username 저장
         if (rememberId) Cookies.set("rememberId", username);
@@ -143,14 +118,6 @@ const LoginContextProvider = ({ children }) => {
             const authorization = headers.authorization;
             const accessToken = authorization.replace("Bearer ", "");
 
-            // console.log(`
-            //     -- login 요청응답 --
-            //       data : ${data}
-            //       status : ${status}
-            //       headers : ${headers}
-            //       jwt : ${accessToken}
-            //     `);
-
             if (status === 200) {
                 Cookies.set("accessToken", accessToken);
 
@@ -161,7 +128,6 @@ const LoginContextProvider = ({ children }) => {
                 });
             }
         } catch (error) {
-            // console.log(`로그인 error: ${error}`);
             Swal.alert("로그인 실패", "아이디 또는 비밀번호가 일치하지 않습니다.", "error");
             logoutSetting();
         }
@@ -209,7 +175,6 @@ const LoginContextProvider = ({ children }) => {
 
         // 로그인 여부
         setIsLogin(true);
-        // console.log("userdata: ", userData);
 
         // 유저 정보 세팅
         setUserInfo({ id, username, role, name, acorn });
@@ -223,10 +188,7 @@ const LoginContextProvider = ({ children }) => {
             role === "ROLE_MEMBER" && (updatedRoles.isMember = true);
             role === "ROLE_ADMIN" && (updatedRoles.isAdmin = true);
         });
-        // console.log("updatedRoles: ", updatedRoles);
         setRoles(updatedRoles);
-
-        // console.log("유저 정보: ", updatedUserInfo);
 
         localStorage.setItem("isLogin", "true");
         localStorage.setItem("userInfo", JSON.stringify(updatedUserInfo));
@@ -239,7 +201,6 @@ const LoginContextProvider = ({ children }) => {
         setRoles(null);
 
         Cookies.remove("accessToken");
-        // Cookies.remove("rememberId");
 
         api.defaults.headers.common.Authorization = undefined;
 

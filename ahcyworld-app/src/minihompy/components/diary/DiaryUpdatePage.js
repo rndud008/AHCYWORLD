@@ -17,7 +17,7 @@ const DiaryUpdatePage = ({hompy}) => {
         content: "",
         eventDate: ""
     });
-    console.log("diaryId : ", id);
+
     const { userInfo, hompyInfo } = useContext(LoginContext);
 
     // 다이어리 정보를 가져오는 useEffect
@@ -52,7 +52,7 @@ const DiaryUpdatePage = ({hompy}) => {
             }
         })
             .then(response => {
-                console.log("폼 제출 됐엉", response.data);
+
                 navigate(`/hompy/${hompyInfo.id}/diary`); // 수정 후 리스트 페이지로 이동
             })
             .catch(error => {
