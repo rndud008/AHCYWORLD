@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Left from "../../../minihompy/components/Layout/Left";
-import Right from "../../../minihompy/components/Layout/Right";
+import Left from "./Left";
+import Right from "./Right";
 import "./css/Layout.css";
 import axios from "axios";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";

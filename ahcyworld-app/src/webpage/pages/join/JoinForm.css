@@ -1,43 +1,143 @@
-.join_form {
-    width: 800px;
+.join-form-container {
+    background: linear-gradient(to right, #ffffff, #f0f0f0);
+    padding: 30px;
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.join-form-container label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.jogin-title {
+    font-size: 2.5rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
 }
 
 .join_input {
-    max-width: 500px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-.btn-join {
-    height: 50px;
-    width: 400px;
-
-    border: 1px;
-    border-radius: 15px;
-    background-color: #e66e28;
-    color: #fff;
-    font-size: 30px;
-}
-.btn-join:hover {
-    background-color: #fff;
-    color: #e66e28;
+.join_input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.login-btn-box {
-    display: flex;
-    justify-content: center;
-}
 
 .gender-box {
     display: flex;
-    justify-content: left;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-#gender-male,
-#gender-female {
-    margin: 0 20px;
-    display: flex;
+.gender-box .male-box,
+.gender-box .female-box {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    margin-right: 20px;
 }
 
-.male-box,
-.female-box {
+.gender-box label {
     display: flex;
+    align-items: center;
+    margin-left: 10px; /* 라디오 버튼과 텍스트 사이의 간격 */
+}
+
+.gender-box input[type="radio"] {
+    margin-top: 10px; 
+}
+
+.btn-join {
+    border-radius: 10px;
+    width: 440px;
+    height: 50px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    background: linear-gradient(145deg, #FFA500, #FF8C00);
+    border: 2px solid #FF8C00;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15),
+        -2px -2px 5px rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease;
+}
+
+btn-join:hover {
+    background: linear-gradient(145deg, #FFD580, #FFA500);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 4px rgba(255, 255, 255, 0.7);
+    transform: translateY(-1px);
+}
+
+btn-join:active {
+    background: linear-gradient(145deg, #FFA07A, #FF4500);
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 4px rgba(255, 255, 255, 0.7);
+    transform: translateY(1px);
+}
+
+btn-join:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+}
+
+.joincheck-btn {
+    width: 95px;
+    height: 45px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    background: linear-gradient(145deg, #0d6afd, #0d6efd); 
+    border: none;
+    color: #fff; 
+    cursor: pointer; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease;
+}
+
+.joinform-btn {
+    border-radius: 5px;
+    font-weight: bold;
+    background: linear-gradient(145deg, #0d6afd, #0d6efd); 
+    border: none;
+    color: #fff; 
+    cursor: pointer; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+                -2px -2px 5px rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease;
+}
+
+.joinform-btn:hover, .joincheck-btn:hover {
+    background: linear-gradient(145deg,#2a8ceb, #0b5ed7); 
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                -1px -1px 4px rgba(255, 255, 255, 0.7); 
+    transform: translateY(-1px);
+}
+
+.joinform-btn:active, .joincheck-btn:active {
+    background: linear-gradient(145deg, #0b5ed7, #094aba); 
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+                inset -1px -1px 4px rgba(255, 255, 255, 0.7); 
+    transform: translateY(1px);
+}
+
+.joinform-btn:focus, .joincheck-btn:focus {
+    outline: none; 
+    box-shadow: 0 0 5px rgba(13, 106, 253, 0.5);
 }
