@@ -58,7 +58,7 @@ public class GuestBookService {
                 .orElseThrow(() -> new IllegalArgumentException("방명록을 찾지 못 했습니다."));
         User user = userRepository.findByUsername(username);
 
-        if (guestBook.getUser().equals(user) || guestBook.getHompy().getUser().equals(user)) {
+        if (guestBook.getUser().equals(user) || guestBook.getHompy().getUser().equals(user) || user.getRole().contains("ROLE_ADMIN")) {
             guestBookRepository.delete(guestBook);
             return 1;
         } else {

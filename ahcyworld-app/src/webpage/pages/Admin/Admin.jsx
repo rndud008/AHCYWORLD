@@ -23,7 +23,7 @@ const Admin = () => {
         return localStorage.getItem("openMenu" || null);
     });
     const [subMenu, setSubMenu] = useState(() => {
-        return localStorage.getItem("subMenu" || null);
+        return localStorage.getItem("subMenu" || "main");
     });
     const [loading, setLoading] = useState(true); // 관리자 권한이 없는경우 로딩 상태체크를 위함
 
@@ -38,7 +38,7 @@ const Admin = () => {
             case "userList":
                 return "사용자 목록";
             case "paymentHistory":
-                return "구매 내역";
+                return "결제 현황";
             case "itemList":
                 return "아이템 목록";
             case "itemUpload":
@@ -68,7 +68,9 @@ const Admin = () => {
             setLoading(false); // 권한이 없으면 로딩 상태 해제
         };
         checkAccess();
-        setSubMenu("main");
+        if (subMenu === null) {
+            setSubMenu("main");
+        }
     }, [roles, navigate]);
 
     useEffect(() => {
@@ -119,7 +121,7 @@ const Admin = () => {
                                     <ul>
                                         <li onClick={() => handleSubMenuClick("userList")}>&nbsp;&nbsp; 사용자목록</li>
                                         <li onClick={() => handleSubMenuClick("paymentHistory")}>
-                                            &nbsp;&nbsp; 구매내역
+                                            &nbsp;&nbsp; 결제현황
                                         </li>
                                     </ul>
                                 )}
@@ -131,9 +133,7 @@ const Admin = () => {
                                 </div>
                                 {openMenu === "itemManagement" && (
                                     <ul>
-                                        <li onClick={() => handleSubMenuClick("itemList")}>
-                                            &nbsp;&nbsp; 아이템목록
-                                        </li>
+                                        <li onClick={() => handleSubMenuClick("itemList")}>&nbsp;&nbsp; 아이템목록</li>
                                         <li onClick={() => handleSubMenuClick("itemUpload")}>
                                             &nbsp;&nbsp; 아이템추가
                                         </li>

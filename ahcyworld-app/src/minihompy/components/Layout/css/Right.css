@@ -82,6 +82,19 @@ li span {
   font-size: 14px;
   color: orange;
   font-weight: bold;
+  display: inline-block; 
+  animation: sparkle 1.5s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1; /* 완전히 보임 */
+    text-shadow: 0 0 5px rgba(255, 165, 0, 0.7), 0 0 10px rgba(255, 165, 0, 0.5); /* 주황색 빛남 */
+  }
+  50% {
+    opacity: 0.5; /* 약간 투명해짐 */
+    text-shadow: none; /* 빛 효과 제거 */
+  }
 }
 
 /* 미니룸 스타일 */

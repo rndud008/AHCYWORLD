@@ -2,6 +2,7 @@ show tables;
 
 drop table if exists attachment_id;
 
+
 select *
 from hompy;
 select *
@@ -24,7 +25,7 @@ select * from comment;
 select * from guest_book;
 
 delete from friend
-where id = 61;
+where id = 16;
 
 
 select * from attachment where post_id='7285';

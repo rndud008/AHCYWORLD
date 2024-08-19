@@ -30,13 +30,12 @@ const GuestBookHome = () => {
 
     const fetchHompy = async () => {
       try {
-        const respone = await api.get(`${SERVER_HOST}/hompy/${hompyId}`, {
+        const response = await api.get(`${SERVER_HOST}/hompy/${hompyId}`, {
           headers: {
             Authorization: `Bearer ${cookie}`,
           },
         });
-        setHompy(respone.data);
-
+        setHompy(response.data);
       } catch (error) {
         console.error("홈피 정보 불러오기 실패", error);
       }
@@ -125,7 +124,7 @@ const GuestBookHome = () => {
 
 
   const handleDelete = async (id) => {
-    console.log("roles : ", roles);
+    // console.log("roles : ", roles);
     if (window.confirm("삭제하시겠습니까?")) {
       const cookie = Cookies.get("accessToken");
       try {
@@ -260,6 +259,10 @@ const GuestBookHome = () => {
     setIsSecret(e.target.checked);
   };
 
+  const getMinimiImgUrl = () => {
+    return `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}?v=${new Date().getTime()}`;
+  };
+
   return (
     <>
       <Layout hompy={hompy} user={hompy.user}>
@@ -349,10 +352,7 @@ const GuestBookHome = () => {
                       <tr>
                         <td className="minimi-cell">
                           <img
-                            src={`${process.env.PUBLIC_URL}/image/${
-                              guest.user.homepage?.minimiPicture ||
-                              "default_img.png"
-                            }`}
+                            src={getMinimiImgUrl()}
                             alt="Minimi"
                             className="minimi-img"
                           />

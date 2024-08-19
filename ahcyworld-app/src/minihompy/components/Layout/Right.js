@@ -219,7 +219,7 @@ const Right = ({ user,hompy }) => {
                       subjectClick(item.folder.boardType.name, item.folder.id)
                     }
                   >
-                    <span>{item.folder.boardType.name}</span>
+                    <span>[{item.folder.boardType.name}]&nbsp;&nbsp;</span>
                     <span>{item.subject}</span>
                   </li>
                 </>
