@@ -79,7 +79,7 @@ const DiaryModal = ({
                                         </td>
                                         {diary.hompy.id === hompyInfo.id && (
                                             <td>
-                                                <Button variant="danger" onClick={() => onDeleteClick(diary.id)}>
+                                                <Button className="diarywriteno-btn" variant="danger" onClick={() => onDeleteClick(diary.id)}>
                                                     X
                                                 </Button>
                                             </td>
@@ -88,7 +88,7 @@ const DiaryModal = ({
                                 ))}
                             </tbody>
                         </Table>
-                        <Button onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
+                        <Button className="diarywriteok-btn" onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
                             다이어리 작성하기
                         </Button>
                     </>
