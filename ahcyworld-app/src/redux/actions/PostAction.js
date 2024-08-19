@@ -11,8 +11,8 @@ function axiosPostList(hompyId, postName, folderId, page = 0) {
       const { data } = response;
 
       dispatch({ type: "GET_POST_LIST", payload: { data } });
-    } catch (error) {
-      throw error;
+    } catch (e) {
+      throw e;
     }
   };
 }

@@ -61,7 +61,7 @@ const BoardTypeList = () => {
 
             <Button  variant="none"
               onClick={() =>
-                folderDelete(dispatch, hompyId, postName, folder.id)
+                folderDelete(dispatch, hompyId, postName, folder?.id)
               }
             >
               삭제

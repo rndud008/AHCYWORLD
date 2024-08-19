@@ -17,7 +17,7 @@ import "./PostUpdate.style.css"
 
 const PostUpdate = () => {
   const { hompyId, postName, folderId, postId } = useParams();
-  const { hompyInfo } = useContext(LoginContext);
+  const { hompyInfo, roles } = useContext(LoginContext);
 
   const [post, setPost] = useState();
   const [originFileList, setOriginFileList] = useState();
@@ -41,7 +41,7 @@ const PostUpdate = () => {
   }, [originPost]);
 
   return (
-    parseInt(hompyId) === hompyInfo?.id && (
+    (parseInt(hompyId) === hompyInfo?.id ||roles.isAdmin) && (
       <Container>
         <div className="postName">
           {postName && nameCheck(postName) + "수정"}

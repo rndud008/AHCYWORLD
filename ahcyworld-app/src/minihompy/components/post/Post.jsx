@@ -25,7 +25,7 @@ const Post = () => {
 
   useEffect(() => {
     if(keyword.some(item => postName.includes(item)) && hompyInfo.id !== undefined){
-      list(postName, dispatch, hompyId);
+      list(postName, dispatch, hompyId,navigate);
       findByHompyIdAxios(dispatch, hompyId);
       dispatch(CommentAction.contentState(false,""));
       dispatch(CommentAction.contentErrorState("content",false))
@@ -33,18 +33,18 @@ const Post = () => {
 
   }, [postName, hompyId, dispatch]);
 
-  useEffect(() => {
+  useEffect( () => {
     if ((folder || folder?.length > 0 ) && hompyInfo.id !== undefined) {
       try{
-        axiosPostList(dispatch, folder?.id, hompyId, postName, page);
+        axiosPostList(dispatch, folder?.id, hompyId, postName, page, navigate);
         dispatch(CommentAction.contentState(false,""));
         dispatch(CommentAction.contentErrorState("content",false))
         dispatch(PostAction.postErrorState("subject",false))
         dispatch(PostAction.postErrorState("content",false))
+        navigate(`/hompy/${hompyId}/${postName}/${folder?.id}`);
       }catch(e){
         Swal.alert("게시글을 불러오는데 실패했습니다.",e,"error");
       }
-       navigate(`/hompy/${hompyId}/${postName}/${folder?.id}`);
     }
   }, [page, folder?.id,folderId]);
   
