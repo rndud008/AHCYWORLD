@@ -1,0 +1,64 @@
+.diarywriteok-btn {
+  border: none;
+  margin-right: 15px;
+  border-radius: 5px;
+  font-size: 18px; 
+  font-weight: bold;
+  background: linear-gradient(145deg, #c0d9ff, #a0c4ff); 
+  color: #003366; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 102, 0.15), 
+              -2px -2px 5px rgba(173, 216, 230, 0.7); 
+  transition: all 0.2s ease; 
+}
+
+.diarywriteok-btn:hover {
+  background: linear-gradient(145deg, #b0ccff, #90b8ff); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 102, 0.2), 
+              -1px -1px 4px rgba(173, 216, 230, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.diarywriteok-btn:active {
+  background: linear-gradient(145deg, #90b8ff, #7094ff); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 102, 0.2), 
+              inset -1px -1px 4px rgba(173, 216, 230, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.diarywriteok-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 파란색 하이라이트 추가 */
+}
+
+.diarywriteno-btn {
+  border: none;
+  border-radius: 5px; /* 모서리를 둥글게 */
+  font-size: 18px; /* 글자 크기 */
+  font-weight: bold; /* 글자 굵기 */
+  background: linear-gradient(145deg, #ffb3b3, #ff9999); /* 붉은 계열 그라데이션 배경 */
+  color: #660000; /* 텍스트 색상 */
+  cursor: pointer; /* 포인터 커서 */
+  box-shadow: 2px 2px 5px rgba(102, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 192, 192, 0.7); /* 붉은 계열 입체감 있는 그림자 */
+  transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.diarywriteno-btn:hover {
+  background: linear-gradient(145deg, #ff9999, #ff6666); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(102, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 192, 192, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.diarywriteno-btn:active {
+  background: linear-gradient(145deg, #ff6666, #ff4d4d); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(102, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 192, 192, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.diarywriteno-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* 포커스 시 붉은색 하이라이트 추가 */
+}

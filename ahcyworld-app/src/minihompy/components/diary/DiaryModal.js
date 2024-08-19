@@ -6,6 +6,7 @@ import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api";
 import * as Swal from "../../../apis/alert";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import './css/DiaryWritePage.css';
 
 const DiaryModal = ({
     show,
@@ -63,12 +64,12 @@ const DiaryModal = ({
                                     <tr key={index}>
                                         <td onClick={() => onUpdateClick(diary.id)}>{diary.keyWord}</td>
                                         <td onClick={() => onUpdateClick(diary.id)}>{diary.content}</td>
-                                        <td><Button variant="danger" onClick={() => onDeleteClick(diary.id)}>X</Button></td>
+                                        <td><Button className="diarywriteno-btn" onClick={() => onDeleteClick(diary.id)}>X</Button></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </Table>
-                        <Button onClick={onWriteClick}>
+                        <Button className="diarywriteok-btn" onClick={onWriteClick}>
                             다이어리 작성하기
                         </Button>
                     </>
@@ -76,7 +77,7 @@ const DiaryModal = ({
                     <>
                         <p>일정이 없습니다.</p>
                         <hr />
-                        <Button onClick={onWriteClick}>
+                        <Button className="diarywriteok-btn" onClick={onWriteClick}>
                             다이어리 작성하기
                         </Button>
                     </>

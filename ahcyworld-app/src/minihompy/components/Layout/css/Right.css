@@ -126,7 +126,7 @@ li span {
 }
 
 .miniroom-character {
-  width: 50px;
+  width: 130px;
   position: absolute;
   bottom: 50px; /* 미니룸 내에서의 위치 조정 */
   left: 380px;  /* 미니룸 내에서의 위치 조정 */
