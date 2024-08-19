@@ -37,7 +37,7 @@ public class SearchService {
     }
 
     public SearchListDTO searchItemList(String itemName){
-        List<Item> itemList = itemRepository.findByItemNameContainingIgnoreCase(itemName).orElse(null);
+        List<Item> itemList = itemRepository.findByItemNameContainingIgnoreCaseAndStatus(itemName,"visible").orElse(null);
 
         if( itemList.isEmpty()){
             throw new RuntimeException("검색기록이 없습니다.");
@@ -54,7 +54,7 @@ public class SearchService {
 
         List<Hompy> hompyList = hompyRepository.findByUserNameContainingIgnoreCase(allItemNameAndName).orElse(null);
 
-        List<Item> itemList = itemRepository.findByItemNameContainingIgnoreCase(allItemNameAndName).orElse(null);
+        List<Item> itemList = itemRepository.findByItemNameContainingIgnoreCaseAndStatus(allItemNameAndName,"visible").orElse(null);
 
         SearchListDTO searchListDTO = new SearchListDTO();
 

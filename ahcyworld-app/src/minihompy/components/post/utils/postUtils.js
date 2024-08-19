@@ -29,12 +29,14 @@ export const axiosPostList = async (
   folderId,
   hompyId,
   postName,
-  page
+  page,
+  navigate
 ) => {
   try {
     await dispatch(PostAction.axiosPostList(hompyId, postName, folderId, page));
   } catch (error) {
-    return list();
+    list(postName, dispatch, hompyId, navigate);
+    return navigate(`/hompy/${hompyId}/${postName}`)
   }
 };
 

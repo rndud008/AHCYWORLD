@@ -24,6 +24,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     boolean existsItemByItemName(String itemName);
 
-    Optional<List<Item>> findByItemNameContainingIgnoreCase(String itemName);
+    Optional<List<Item>> findByItemNameContainingIgnoreCaseAndStatus(String itemName,String status);
 
 }
