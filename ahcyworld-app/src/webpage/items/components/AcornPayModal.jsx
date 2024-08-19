@@ -136,8 +136,8 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
                         </div>
                     </div>
                     <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                        <button onClick={onClose}>취소</button>
-                        <button onClick={() => alertPayed()}>결제</button>
+                        <button className='paymodal-close-btn' onClick={onClose}>취소</button>
+                        <button className='paymodal-add-btn' onClick={() => alertPayed()}>결제</button>
                     </div>
                     <PaymentModal isOpen={isPaymentModalOpen} onClose={paymentcloseModal} />
                 </div>
