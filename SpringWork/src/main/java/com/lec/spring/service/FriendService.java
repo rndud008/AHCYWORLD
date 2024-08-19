@@ -95,27 +95,28 @@ public class FriendService {
         return friendList;
     }
 
+
     public void friendShipResponse(Long id, String reply) {
         Friend friend = friendRepository.findById(id).orElse(null);
-        List<Friend> friendList = friendRepository.findAll();
-        Friend friendUser = new Friend();
+        Friend FriendUser = friendRepository.findByFriendUserIdAndUserId(friend.getFriendUser().getId(),friend.getUser().getId());
 
-        for (Friend requestUser : friendList) {
-            if (requestUser.getUser().getId() == friend.getFriendUser().getId() && requestUser.getFriendUser().getId() == friend.getUser().getId()) {
-                friendUser = requestUser;
-                break;
-            }
-
-        }
+//        for (Friend requestUser : friendList) {
+//            if (requestUser.getUser().getId() == friend.getFriendUser().getId() && requestUser.getFriendUser().getId() == friend.getUser().getId()) {
+//                friendUser = requestUser;
+//                break;
+//            }
+//
+//        }
 
         if (reply.equals("true")) {
             friend.setFriendStatus("accept");
-            friendUser.setFriendStatus("accept");
+            FriendUser.setFriendStatus("accept");
+            friendRepository.saveAllAndFlush(List.of(friend,FriendUser));
         } else if (reply.equals("false")) {
             System.out.println("친구요청보낸사람" + friend);
             friendRepository.delete(friend);
-            System.out.println("친구요청 받는사람~" + friendUser);
-            friendRepository.delete(friendUser);
+            System.out.println("친구요청 받는사람~" + FriendUser);
+            friendRepository.delete(FriendUser);
         }
 
     }
