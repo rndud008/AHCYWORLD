@@ -73,6 +73,7 @@ const PostWrite = () => {
           <div className="post-button-group">
             <div>
               <Button
+                className="postwriteok-btn"
                 type="button"
                 onClick={() => fileAdd(post, setPost, "CREATE", "")}
               >
@@ -80,8 +81,8 @@ const PostWrite = () => {
               </Button>
             </div>
             <div>
-              <Button type="submit">작성완료</Button>
-              <Button type="button" onClick={() => back(navigate,dispatch)}>
+              <Button className="postwriteok-btn" type="submit">작성완료</Button>
+              <Button className="postwriteok-btn" type="button" onClick={() => back(navigate,dispatch)}>
                 이전으로
               </Button>
             </div>
@@ -98,6 +99,7 @@ const PostWrite = () => {
                 }
               />
               <Button
+                className="filedel-btn"
                 type="button"
                 variant="danger"
                 name="fileList"

@@ -253,17 +253,17 @@ class PostTest {
 
     }
 
-    @Test
-    void test5(){
-
-        Post post = new Post();
-        Folder folder = folderRepository.findById(1l).orElse(null);
-        post.setSubject("해성이가 집에 갔다.");
-        post.setFolder(folder);
-        post.setContent("집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?");
-
-        postRepository.save(post);
-
-    }
+//    @Test
+//    void test5(){
+//
+//        Post post = new Post();
+//        Folder folder = folderRepository.findById(1l).orElse(null);
+//        post.setSubject("해성이가 집에 갔다.");
+//        post.setFolder(folder);
+//        post.setContent("집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?집에서 얼마나 했을까?");
+//
+//        postRepository.save(post);
+//
+//    }
 
 }

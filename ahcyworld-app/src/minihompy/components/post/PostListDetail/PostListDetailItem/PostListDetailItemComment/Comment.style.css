@@ -1,6 +1,5 @@
 .photoAndVideoToggle{
   margin: 10px 10px 0 10px;
-
 }
 
 .postDetailListCommentList{
@@ -26,4 +25,69 @@
 .postDetailComment p:not(:first-child), .postDetailComment button{
   margin-bottom: 0;
   margin-left: 10px;
+}
+
+/* 댓글보기 / 닫기 버튼 */
+.commentToggle-btn {
+  border-radius: 5px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #0d6afd, #0d6efd); 
+  border: none;
+  color: #fff; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.commentToggle-btn:hover {
+  background: linear-gradient(145deg,#2a8ceb, #0b5ed7); 
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(-1px);
+}
+
+.commentToggle-btn:active {
+  background: linear-gradient(145deg, #0b5ed7, #094aba); 
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(1px);
+}
+
+.commentToggle-btn:focus {
+  outline: none; 
+  box-shadow: 0 0 5px rgba(13, 106, 253, 0.5);
+}
+
+/* 댓글등록버튼 */
+.commentwrite-btn {
+  border-radius: 5px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0); 
+  border: none;
+  color: #333; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.commentwrite-btn:hover {
+  background: linear-gradient(145deg,#e0e0e0, #c0c0c0); 
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(-1px);
+  color: #333;
+}
+
+.commentwrite-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0); 
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(1px);
+}
+
+.commentwrite-btn:focus {
+  outline: none; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
