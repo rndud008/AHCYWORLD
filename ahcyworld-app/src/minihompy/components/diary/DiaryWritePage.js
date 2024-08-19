@@ -7,7 +7,7 @@ import * as Swal from "../../../apis/alert";
 import Layout from "../Layout/Layout";
 import moment from "moment";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
-import '../css/DiaryWritePage.css';
+// import '../css/DiaryWritePage.css';
 
 const DiaryWritePage = () => {
     const location = useLocation();
