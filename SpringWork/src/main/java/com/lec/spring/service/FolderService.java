@@ -29,10 +29,6 @@ public class FolderService {
         this.hompyRepository = hompyRepository;
     }
 
-    public Folder findByHompy(Hompy hompy) {
-        return folderRepository.findByHompy(hompy).orElse(null);
-    }
-
     public Folder findById(Long id) {
         return folderRepository.findById(id).orElse(null);
     }

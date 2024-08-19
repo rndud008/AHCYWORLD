@@ -50,8 +50,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/userinfo")
+    public User getUserInfo(@RequestParam String username) {
+        return userService.findByUsername(username);
+    }
+
     @GetMapping("/check-username")
     public Map<String, Boolean> checkUsername(@RequestParam String username) {
+
         boolean available = userService.usernameAvailable(username);
 
         Map<String, Boolean> response = new HashMap<>();

@@ -6,6 +6,7 @@ import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api";
 import * as Swal from "../../../apis/alert";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import './css/DiaryWritePage.css';
 
 const DiaryModal = ({
     show,

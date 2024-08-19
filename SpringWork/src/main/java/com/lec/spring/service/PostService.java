@@ -186,7 +186,7 @@ public class PostService {
         post.setFolder(folder);
 
         // 글저장
-        post = postRepository.save(post);
+        post = postRepository.saveAndFlush(post);
 
         // 첨부파일 추가.
         addFiles(files, post);

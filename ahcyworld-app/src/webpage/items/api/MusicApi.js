@@ -8,7 +8,7 @@ const Music1 = () => {
     const clientId = "2092cfbbbbe74243a175d76aae0ac458";
     const clientSecret = "fc059ee140644f49b8ca85d9f5621fb2";
     const accessToken =
-        "BQD5wr2c04vybiT1ac8xLZlqHwqySgimth_uKHn82eCPM36h2-LM7eWpnoMu2ECNAY8wj6QQB-nXTA1niB19j8uvsTTy9jysBL8RjSZt5EcIKoAKHq0";
+        "BQCqod2HiADdXtYxRpNnln8EJBLSyk0xdUV0u8d0ODUr4cqOr8AF9v-VecRmwwV0pVDVnho4M4khbYTAx-vhIKjlu-P6bP8EkamlQE1YektDkLnT1bg";
 
     const [musics, setMusics] = useState([]);
 
