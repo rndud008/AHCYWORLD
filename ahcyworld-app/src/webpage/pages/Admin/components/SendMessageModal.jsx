@@ -23,6 +23,7 @@ const SendMessageModal = ({ isOpen, onClose, selectedUser }) => {
         const senderId = userInfo.id;
         const receiverId = selectedUser.id;
 
+
         try {
             const response = await sendMessageToUser(title, message, senderId, receiverId);
 

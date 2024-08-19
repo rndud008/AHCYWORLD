@@ -3,9 +3,10 @@ import "../css/Minimi.css";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import axios from "axios";
 import api, { SERVER_HOST } from "../../../apis/api";
-import "./Minimi.style.css";
+import "../css/Minimi.css";
 import Cookies from 'js-cookie'
 import { useParams } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Minimi = () => {
   const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
@@ -45,11 +46,12 @@ const Minimi = () => {
     userItemLits();
   }, []);
 
-  const updateMinimi = () => {
+  const updateMinimi = async () => {
     let hompy = hompyInfo;
     hompy.minimiPicture = minimi;
 
-    const response = api.post(`${SERVER_HOST}/hompy/${hompyId}`,hompy,{
+  try{
+    const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`,hompy,{
       headers:{
         'Authorization':'Bearer ' +Cookies.get('accessToken')
       }
@@ -57,16 +59,34 @@ const Minimi = () => {
     
     const {data , status} = response;
 
-    if(status === 200){
-      setHompyInfo(data)
+    if (status === 200) {
+      setHompyInfo(data);
+      Swal.fire({
+        icon: 'success',
+        title: '성공!',
+        text: '미니미가 변경되었습니다.',
+        confirmButtonText: '확인'
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '실패',
+        text: '업데이트 중 오류가 발생했습니다.',
+        confirmButtonText: '확인'
+      });
     }
-  };
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: '실패',
+      text: '업데이트 중 오류가 발생했습니다.',
+      confirmButtonText: '확인'
+    });
+  }
+};
 
   return (
     <div className="minimi-container">
-      <div>
-        <h1>미니미 설정</h1>
-      </div>
       <div className="aaa">
         <div className="afterSelectMinimi">
           <img src={`/image/${minimi}`} />
@@ -106,10 +126,12 @@ const Minimi = () => {
                 </div>
               ))}
           </div>
-          <button onClick={updateMinimi}>변경</button>
-        </div>
       </div>
     </div>
+        <div className="minimi-btn-container">
+          <button className="minimi-save-btn" onClick={updateMinimi}>변경</button>
+        </div>
+  </div>
   );
 };
 

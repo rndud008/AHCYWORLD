@@ -156,10 +156,13 @@ class UserRepositoryTest {
 
     @Test
     void test3() {
-        List<User> users = userRepository.findByNameContainingIgnoreCase("a").orElse(null);
-
-        users.forEach(System.out::println);
-
-        System.out.println(users.size());
+//        List<User> users = userRepository.findByNameContainingIgnoreCase("a").orElse(null);
+//
+//        users.forEach(System.out::println);
+//
+//        System.out.println(users.size());
+        User user = userRepository.findByUsername("ADMIN1");
+        user.setAcorn(9000000L);
+        userRepository.save(user);
     }
 }

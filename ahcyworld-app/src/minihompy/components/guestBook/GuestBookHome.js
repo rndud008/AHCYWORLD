@@ -19,13 +19,11 @@ const GuestBookHome = () => {
   const { hompyId } = useParams();
   const [hompy, setHompy] = useState(""); // hompy 상태 설정
 
-  const { hompyInfo, userInfo } = useContext(LoginContext);
+  const { hompyInfo, userInfo, roles } = useContext(LoginContext);
 
   useEffect(() => {
-    // console.log("hompyId:", hompyId);
-    console.log("userInfo : ", userInfo);
+
     const cookie = Cookies.get("accessToken");
-    // console.log("Cookie:", cookie);
 
     // 로그인된 사용자 이름 설정
     setUserName(userInfo.username);
@@ -38,7 +36,7 @@ const GuestBookHome = () => {
           },
         });
         setHompy(respone.data);
-        console.log("홈피 : ", respone);
+
       } catch (error) {
         console.error("홈피 정보 불러오기 실패", error);
       }
@@ -87,7 +85,7 @@ const GuestBookHome = () => {
           );
 
           setGuestBook(guestBookWithHompy);
-          console.log("방명록 정보", guestBookWithHompy);
+  
         } catch (error) {
           console.error("방명록 불러오기 실패", error);
         }
@@ -106,8 +104,7 @@ const GuestBookHome = () => {
               params: { username: userName },
             }
           );
-          console.log("checkFriendship");
-          console.log("response:", response);
+
           setIsFriend(response.data.isFriend);
         } catch (error) {
           console.error("일촌 관계 확인 실패", error);
@@ -121,13 +118,14 @@ const GuestBookHome = () => {
       checkFriendship();
       setBook(false);
     } else {
-      console.log("HompyId가 없습니다.");
+      console.error("HompyId가 없습니다.");
     }
 
   }, [hompyId, userName]);
 
 
   const handleDelete = async (id) => {
+    console.log("roles : ", roles);
     if (window.confirm("삭제하시겠습니까?")) {
       const cookie = Cookies.get("accessToken");
       try {
@@ -147,7 +145,6 @@ const GuestBookHome = () => {
             "success",
             () => {
               setGuestBook(guestBook.filter((e) => e.id !== id));
-              console.log("삭제 성공", response.data);
             }
           );
         }
@@ -200,6 +197,11 @@ const GuestBookHome = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(hompyInfo.id === parseInt(hompyId)){
+      Swal.alert("홈피 주인은 방명록에 글을 작성할 수 없습니다.", " 방명록 등록 실패", "warning", () => {return;});
+      return;
+    };
+
     if (!content.trim()) {
       window.alert("내용을 입력해주세요.");
       return;
@@ -225,7 +227,6 @@ const GuestBookHome = () => {
         }
       );
       if (response.status === 200) {
-        console.log("방명록 등록 시도");
         setContent("");
         setIsSecret(false);
         setGuestBook([response.data, ...guestBook]);
@@ -237,8 +238,6 @@ const GuestBookHome = () => {
             return;
           }
         );
-        console.log("guestUsername : ", guestBook);
-        console.log("userName : ", userName);
       }
     } catch (error) {
       Swal.alert(
@@ -335,7 +334,7 @@ const GuestBookHome = () => {
                                   </span>
                                 )}
                               {(guest.user.username === userName ||
-                                hompyInfo.user.id === guest.user.id || hompyInfo.id === parseInt(hompyId)) && (
+                                hompyInfo.user.id === guest.user.id || hompyInfo.id === parseInt(hompyId) || roles.isAdmin) && (
                                 <span
                                   className="delete"
                                   onClick={() => handleDelete(guest.id)}
@@ -363,7 +362,7 @@ const GuestBookHome = () => {
                             guest.user.username !== userName &&
                             hompy.user.username !== userName && (
                               <div className="secret-message">
-                                비밀글입니다. 작성자만 볼 수 있습니다.
+                                🔒 비밀글입니다. 작성자만 볼 수 있습니다.
                               </div>
                             )) || (
                             <div className="secret-message">

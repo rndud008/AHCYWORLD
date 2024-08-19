@@ -1,0 +1,91 @@
+.hompyFont-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
+
+.font-selection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start; 
+  gap: 20px;
+  width: 100%; 
+  max-width: 1200px;
+  max-height: 600px;
+  overflow-y: auto; /* 리스트가 넘칠 경우 세로 스크롤 생성 */
+}
+
+.font-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  width: 255px; /* 고정된 너비 */
+  height: 245px; /* 고정된 높이 */
+}
+
+.font-item label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.fontStyle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 150px;
+  border: none;
+  /* font-size: 16px; */
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+  text-align: center; 
+}
+
+.fontsetting-input {
+  margin-bottom: 10px;
+}
+
+.fontsetting-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+  border: 2px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+
+fontsetting-btn:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+fontsetting-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(1px);
+}
+
+fontsetting-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

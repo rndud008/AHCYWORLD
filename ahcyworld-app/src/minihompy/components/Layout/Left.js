@@ -136,44 +136,47 @@ const Left = ({ user, hompy }) => {
         }
     };
 
-    // 상태 메시지
-    const updateStatusMessage = () => {
-        if (userId) {
-            axios
-                .post(
-                    `http://localhost:8070/hompy/${hompyId}/statusMessage`,
-                    { statusMessage },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }
-                )
-                .then((response) => {
-                    console.log("상태 메시지 업데이트 성공", response.data);
-                    setTextEdit(false);
-                })
-                .catch((error) => {
-                    console.error("상태 메시지 업데이트 실패", error);
-                });
-        }
-    };
+  // 상태 메시지
+  const updateStatusMessage = () => {
+    if (userId) {
+      axios
+        .post(
+          `http://localhost:8070/hompy/${hompyId}/statusMessage`,
+          { statusMessage },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          setTextEdit(false);
+        })
+        .catch((error) => {
+          console.error("상태 메시지 업데이트 실패", error);
+        });
+    }
+  };
 
     const updateProfileImg = () => {
         if (userId && selectedFile) {
             const formData = new FormData();
             formData.append("file", selectedFile);
 
-            axios
-                .post(`http://localhost:8070/hompy/${hompyId}/profileImg`, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                })
-                .then((response) => {
-                    console.log("프로필 사진 업로드 성공", response.data);
-                    const profilePicturePath = response.data.profilePicture.replaceAll(/\\/g, "//");
-                    const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
+      axios
+        .post(`http://localhost:8070/hompy/${hompyId}/profileImg`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          const profilePicturePath = response.data.profilePicture.replaceAll(
+            /\\/g,
+            "//"
+          );
+          const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath
+            .split("/")
+            .pop()}`;
 
                     setProfilePicture(imageUrl);
                     setProfileEdit(false);
@@ -283,7 +286,6 @@ const Left = ({ user, hompy }) => {
                         />
                     </>
                 )}
-                {console.log("FriendCheck", FriendCheck)}
                 {(FriendCheck && (
                     <>
                         <button className='friend-btn' onClick={handleOpenModal}>

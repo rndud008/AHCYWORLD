@@ -135,7 +135,18 @@ class FriendRepositoryTest {
 
         friendRepository.saveAllAndFlush(List.of(friend, friend1, friend2, friend3, friend4, friend5,
                 friend6, friend7, friend8, friend9, friend10, friend11));
+    }
 
+    @Test
+    void upDateFriendStatus() {
+        List<Friend> friendList = friendRepository.findAll();
+
+        System.out.println(friendList);
+        for (Friend friend : friendList) {
+            friend.getFriendStatus();
+//            friend.setFriendStatus("waiting");
+//            friendRepository.saveAndFlush(friend);
+        }
     }
 
 }

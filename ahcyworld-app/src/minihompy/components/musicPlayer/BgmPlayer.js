@@ -97,9 +97,7 @@ const BgmPlayer = () => {
   const handleTrackSelect = (index) => {
     setCurrentTrackIndex(index);
     const selectedTrack = bgmList[index];
-
-    console.log("Current audio source:", selectedTrack.fileName);
-
+    
     if (selectedTrack.fileName) {
       audioRef.current.src = selectedTrack.fileName;
       audioRef.current.play().catch(error => {

@@ -16,7 +16,6 @@ import News from "../components/news/News";
 import BestItem from "../components/bestItem/BestItem";
 import Footer from "../components/Footer/Footer";
 
-
 const StyledLoginBox = styled.div`
     /* outline: 3px solid red; */
     width: 350px;
@@ -33,7 +32,7 @@ const StyledMyBox = styled.div`
 `;
 
 const Home = ({ itemKind }) => {
-    const { isLogin, logout, userInfo } = useContext(LoginContext);
+    const { isLogin, userInfo } = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
     const [friends, setFriends] = useState([]);
@@ -42,7 +41,7 @@ const Home = ({ itemKind }) => {
 
     /* 모달 상태와 변경 */
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
- 
+
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
 
@@ -57,8 +56,6 @@ const Home = ({ itemKind }) => {
         setSelectedFriend(null);
         setIsAddFriendModalOpen(false);
     };
-
-    
 
     /* 모달 상태와 변경 */
 
@@ -78,7 +75,6 @@ const Home = ({ itemKind }) => {
     useEffect(() => {
         const fetchUsers = async () => {
             if (isLogin && userInfo.username) {
-                // console.log(userInfo.username);
                 try {
                     const response = await userList();
                     setUsers(response.data);
@@ -109,7 +105,6 @@ const Home = ({ itemKind }) => {
         localStorage.removeItem("subMenu");
     }, [isAddFriendModalOpen, isLogin]);
 
-    
 
     return (
         <div className='home-container'>
@@ -128,63 +123,16 @@ const Home = ({ itemKind }) => {
                     <SlideImg className='slideImg' />
                 </div>
 
+                <div className='new-section'>
+                    <News />
+                </div>
 
-                    <div className="new-section">
-                        <News />
-                    </div>
-
-                {/* <div className="bottom-row"> */}
-                    <div className="bestItem-section">
-                        <BestItem />
-                    {/* </div> */}
+                <div className='bestItem-section'>
+                    <BestItem />
                 </div>
 
                 <Footer />
             </div>
-
-            <br />
-            <br />
-             {/* {isLogin ? (
-                    <>
-                        <Button onClick={toggleFriendList}>
-                            {isFriendListVisible ? "친구목록닫기" : "친구목록보기"}
-                        </Button>
-                        {isFriendListVisible && (
-                            <div style={{ marginTop: "20px" }}>
-                                {friends.length > 0 ? (
-                                    <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
-                                        {friends.map((friend) => (
-                                            <li key={friend.id} style={{ marginBottom: "10px" }}>
-                                                {friend.friendUser.name}
-                                                <small>({friend.friendName})</small>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p>친구 목록이 없습니다.</p>
-                                )}
-                            </div>
-                        )}
-                    </>
-                ) : (
-                    <></>
-                )}
-                <br />
-                <br />
-                <br />
-                {users.map((friend) => (
-                    <div key={friend.id}>
-                        <Button>{friend.name}</Button>
-                        {friendShipStatus[friend.name] === false && (
-                            <Button onClick={() => openAddFriendModal(friend)}>일촌신청</Button>
-                        )}
-                    </div>
-                ))}
-                <AddFriendModal
-                    isOpen={isAddFriendModalOpen}
-                    onClose={closeAddFriendModal}
-                    selectedFriend={selectedFriend}
-                />  */}
         </div>
     );
 };

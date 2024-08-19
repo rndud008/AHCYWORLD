@@ -22,8 +22,6 @@ const OAuth2AddInfo = () => {
     const onChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-
-        // console.log(name, " = ", value);
     };
 
     const onJoin = async (e) => {
@@ -31,8 +29,6 @@ const OAuth2AddInfo = () => {
 
         const { gender, birthDay } = formData;
         const username = userInfo.username;
-
-        console.log("입력값: ", gender, birthDay);
 
         const validate = () => {
             const newErrors = {};
@@ -64,10 +60,6 @@ const OAuth2AddInfo = () => {
             }
         }
     };
-
-    // useEffect(()=>{
-    //     console.log("유저정보: ", userInfo.username);
-    // })
 
     return (
         <Container className='form'>

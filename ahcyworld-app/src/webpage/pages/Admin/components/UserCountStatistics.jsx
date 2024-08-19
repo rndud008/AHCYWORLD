@@ -23,11 +23,7 @@ const UserCountStatistics = () => {
     const fetchUsers = async () => {
         try {
             const response = await userList();
-            // console.log("유저리스트: ", response.data);
-            // console.log(
-            //     "가입날짜: ",
-            //     response.data.map((user) => user.createAt)
-            // );
+
             setUsers(response.data);
         } catch (error) {
             console.error("userList Error: ", error);
@@ -89,7 +85,7 @@ const UserCountStatistics = () => {
                     return totalCount[key] || 0;
                 }),
                 backgroundColor: "#e66e28",
-            
+
                 borderWidth: 2,
                 pointBackgroundColor: "#e66e28",
                 pointBorderColor: "#e66e28",

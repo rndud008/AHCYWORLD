@@ -68,7 +68,6 @@ const MenuSetting = () => {
     };
     axios.post(`http://localhost:8070/hompy/${hompyId}/menu-settings`, settings)
       .then(response => {
-        console.log("설정성공:", response.data);
         Swal.fire({
           title: '저장완료!',
           text: '설정이 성공적으로 저장되었습니다!',
@@ -105,7 +104,7 @@ const MenuSetting = () => {
       [menu]: prevState[menu] === "visible" ? "invisible" : "visible"
     }));
   };
-  console.log("메뉴상태: ", menuStatus);
+
   
   return (
     <div className='MenuSetting-container'>

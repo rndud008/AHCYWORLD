@@ -25,7 +25,7 @@ const PaymentHistory = ({ isOpen, onClose }) => {
                         }
                     );
                     const history = response.data;
-                    // console.log("결제내역 : ", history);
+
                     setPaymentHistory(history);
                 } catch (error) {
                     console.error("결제내역 불러오기 실패", error);

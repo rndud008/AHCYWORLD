@@ -36,8 +36,6 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
 
   const dispatch = useDispatch();
 
-  // console.log(postName, "Layout");
-
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
     if (hompy) {
@@ -83,7 +81,6 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
           const hompyData = response.data;
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
           const hompySkinImagePath = `${process.env.PUBLIC_URL}/image/${hompyData.miniHompySkin}`;
-          console.log(hompySkinImagePath); // 경로 확인용
           setMiniHompySkin(hompySkinImagePath);
         })
         .catch((error) => {
@@ -103,7 +100,6 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
-    console.log("value", value);
     setHompyTitle(value)
   };
 
@@ -191,7 +187,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
                     }
                     readOnly={!userCheck ? true : undefined}
                   />
-                  {show && <Button type="button" onClick={hompyTitleUpdate}>수정</Button>}
+                  {show && <button className="hompy-title-btn" onClick={hompyTitleUpdate}>수정</button>}
                 </div>
               </div>
             </div>

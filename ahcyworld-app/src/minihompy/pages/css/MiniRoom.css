@@ -1,0 +1,89 @@
+.afterSelectSetting{
+  width: 700px;
+  margin: 10px auto 0 auto;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 2px 0;
+}
+
+div.afterSelectSetting img.storyRoomSetting{
+  width: 550px;
+  height: 275px;
+}
+
+/* .settingMinimi{
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* .settingMinimi img {
+  height: 250px;
+} */
+
+.selectSettingList{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.miniroom-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.miniroom-save-btn {
+  padding: 5px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+  border: 2px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.miniroom-save-btn:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.miniroom-save-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(1px);
+}
+
+.miniroom-save-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.beforeSelectSetting{
+  width: 500px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: 310px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+}
+
+div.beforeSelectSetting div{
+  margin-bottom: 10px;
+  margin-left: 40px;
+}
+
+.beforeSelectSetting img{
+  width: 300px;
+}
