@@ -16,7 +16,7 @@ import * as Swal from "../../../apis/alert"
 
 const Right = ({ user,hompy }) => {
   const { hompyId } = useParams();
-  const { userInfo,hompyInfo } = useContext(LoginContext);
+  const { userInfo,hompyInfo, roles } = useContext(LoginContext);
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
   const [recentlyPost, setRecentlyPost] = useState();
@@ -28,8 +28,6 @@ const Right = ({ user,hompy }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log('????friendReview',friendReview)
 
   const userId = user?.id;
 
@@ -130,7 +128,8 @@ const Right = ({ user,hompy }) => {
 
   const friendReviewCreate = async () => {
 
-    
+    if(parseInt(hompyId) === hompyInfo.id) return Swal.alert("작성실패","미니홈피주인은 작성할수 없습니다.","warning")
+
     if(!friendIdList.some(item => item === userInfo.id)) return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
 
     if(!friendReview.content || friendReview.content.trim() === "") return Swal.alert("작성실패","글을 작성해주세요.","warning")
@@ -332,13 +331,13 @@ const Right = ({ user,hompy }) => {
               <span>{item.content} </span>
               <span>{item.user.name} </span>
               <span>({friendList.find(item2 => item.user.id === item2.friendUser.id)?.friendName}) </span>
-              {(userInfo.id === item.user.id || hompyInfo.id === parseInt(hompyId)) && (
+              {(userInfo.id === item.user.id || hompyInfo.id === parseInt(hompyId) || roles.isAdmin) && (
                 <span className="friendReviewDelete" onClick={() =>friendReviewDelete(item.id)}>
                   <FontAwesomeIcon icon={faTrashCan} />
                 </span>
               )}
             </div>
-          )) || <div className="friend-review-container-not">작성된 방명록이 없습니다.</div>}
+          )) || <div className="friend-review-container-not">작성된 일촌평이 없습니다.</div>}
         </div>
       </div>
     </div>

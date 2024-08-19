@@ -11,7 +11,7 @@ import { hompyFriendListAxios } from "../utils/FriendUtils";
 
 const BoardTypeList = () => {
   const { postName, hompyId } = useParams();
-  const { hompyInfo, userInfo } = useContext(LoginContext);
+  const { hompyInfo, userInfo, roles } = useContext(LoginContext);
   const dispatch = useDispatch();
   const username = useSelector((state) => state.hompy.hompy.user?.username);
   const folderList = useSelector((state) => state.folder.folderList);
@@ -50,11 +50,15 @@ const BoardTypeList = () => {
               </>
             ))}
         </ListGroup>
-        {parseInt(hompyId) === hompyInfo?.id && (
+        {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin) && (
           <div className="board-type-folder">
+            {parseInt(hompyId) === hompyInfo?.id &&
+            
             <Button variant="none" onClick={(e) => handleShow(e, dispatch)} value="폴더 생성">
               추가
             </Button>
+            }
+
             <Button  variant="none"
               onClick={() =>
                 folderDelete(dispatch, hompyId, postName, folder.id)

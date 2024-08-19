@@ -13,7 +13,7 @@ import "./PostListDetailItem.style.css";
 import { photoAndVideoCommentListAxios } from "../../utils/commentUtils";
 
 const PostListDetailItem = ({ item }) => {
-  const { hompyInfo, userInfo } = useContext(LoginContext);
+  const { hompyInfo, userInfo , roles} = useContext(LoginContext);
   const { postName, hompyId, folderId } = useParams();
   const [show, setShow] = useState({
     folderMove: false,
@@ -54,7 +54,7 @@ const PostListDetailItem = ({ item }) => {
             </Button>
           </>
         )}
-        {parseInt(hompyId) === hompyInfo?.id && (
+        {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin) && (
           <>
             <Button
               onClick={() =>
@@ -150,7 +150,7 @@ const PostListDetailItem = ({ item }) => {
         setCommentShow={setCommentShow}
       />
 
-      {parseInt(hompyId) === hompyInfo?.id && (
+      {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin) && (
         <DetailModal show={show.folderMove} setShow={setShow} postId={postId} />
       )}
 

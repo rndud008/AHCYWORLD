@@ -91,8 +91,11 @@ public class FolderController {
 
         if (hompyId != null) {
             boolean hompyCheck = hompyId.equals(hompy.getId());
-            if (!hompyCheck) {
+            boolean adminCheck = hompy.getUser().getRole().contains("ROLE_ADMIN");
+            if (!hompyCheck && !adminCheck) {
+
                 return new ResponseEntity<>("Hompy ID 불일치", HttpStatus.BAD_REQUEST);
+
             } // status 400
         }
 

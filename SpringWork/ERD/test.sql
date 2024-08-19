@@ -44,6 +44,10 @@ update item
 set status = 'visible'
 where id = 116;
 
+update ah_user
+set role = 'ROLE_MEMBER,ROLE_ADMIN'
+where username = 'K3';
+
 delete
     from item
 where id = 51;

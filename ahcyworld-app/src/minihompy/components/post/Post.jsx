@@ -34,7 +34,7 @@ const Post = () => {
   }, [postName, hompyId, dispatch]);
 
   useEffect(() => {
-    if ((folder || folder?.length > 0 )&& hompyInfo.id !== undefined) {
+    if ((folder || folder?.length > 0 ) && hompyInfo.id !== undefined) {
       try{
         axiosPostList(dispatch, folder?.id, hompyId, postName, page);
         dispatch(CommentAction.contentState(false,""));
@@ -46,7 +46,7 @@ const Post = () => {
       }
        navigate(`/hompy/${hompyId}/${postName}/${folder?.id}`);
     }
-  }, [page, folder?.id]);
+  }, [page, folder?.id,folderId]);
   
 
   return (
