@@ -33,7 +33,7 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
         }
     };
 
-
+ 
     return (
         <Modal show={isOpen} onHide={onClose}>
             <Modal.Header closeButton>
