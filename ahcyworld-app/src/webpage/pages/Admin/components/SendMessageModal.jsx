@@ -11,12 +11,10 @@ const SendMessageModal = ({ isOpen, onClose, selectedUser }) => {
     const [title, setTitle] = useState("");
 
     const handleMessage = (e) => {
-        // console.log(e.target.value);
         setMessage(e.target.value);
     };
 
     const handleTitle = (e) => {
-        // console.log(e.target.value);
         setTitle(e.target.value);
     };
 
@@ -24,16 +22,12 @@ const SendMessageModal = ({ isOpen, onClose, selectedUser }) => {
         const senderId = userInfo.id;
         const receiverId = selectedUser.id;
         
-        // console.log(senderId);
-        // console.log(receiverId);
-
         try {
             const response = await sendMessageToUser(title, message, senderId, receiverId);
 
             if (response.status === 201) {
                 Swal.alert("메세지를 전송완료", "메세지 전송 완료, 사용자 목록으로 돌아갑니다.", "success", () => {
                     onClose();
-                    console.log("메시지 전송 성공");
                 });
             }
         } catch (error) {

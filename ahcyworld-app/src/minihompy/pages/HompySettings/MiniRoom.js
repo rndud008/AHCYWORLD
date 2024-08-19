@@ -3,11 +3,13 @@ import "../css/MiniRoom.css";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import axios from "axios";
 import api, { SERVER_HOST } from "../../../apis/api";
-import "./MiniRoom.style.css";
+import "../css/MiniRoom.css";
 import { Button } from "react-bootstrap";
 import { ServerStyleSheet } from "styled-components";
 import { useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+
 
 const MiniRoom = () => {
   const { userInfo, hompyInfo,setHompyInfo } = useContext(LoginContext);
@@ -19,7 +21,6 @@ const MiniRoom = () => {
     let type = "스토리룸";
     let miniRooms = [];
     const userItemLits = async () => {
-      console.log("호출시작");
       const response = await axios({
         method: "GET",
         url: `${SERVER_HOST}/cart/${userInfo.id}/items`,
@@ -29,39 +30,53 @@ const MiniRoom = () => {
           miniRooms.push(cart.item);
         }
       });
-      console.log(miniRooms);
       setMiniRoomItems(miniRooms);
     };
     userItemLits();
   }, []);
 
   const updateMiniRoom = async() =>{
-    
-
     let hompy = hompyInfo;
     hompy.miniRoom = miniRoom;
 
-    const response = api.post(`${SERVER_HOST}/hompy/${hompyId}`,hompy,{
+  try {
+    const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`,hompy,{
       headers:{
         'Authorization':'Bearer ' +Cookies.get('accessToken')
-      }
-    })
+      },
+    });
     
     const {data , status} = response;
 
-    if(status === 200){
-      setHompyInfo(data)
+    if (status === 200) {
+      setHompyInfo(data);
+      Swal.fire({
+        icon: 'success',
+        title: '성공!',
+        text: '미니룸이 변경되었습니다.',
+        confirmButtonText: '확인'
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '실패',
+        text: '업데이트 중 오류가 발생했습니다.',
+        confirmButtonText: '확인'
+      });
     }
-    
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: '실패',
+      text: '업데이트 중 오류가 발생했습니다.',
+      confirmButtonText: '확인'
+    });
   }
+};
 
 
   return (
     <div className="miniRoom-container">
-      <div>
-        <h1>미니룸 설정</h1>
-      </div>
-
       <div className="afterSelectSetting">
         <img 
         className="storyRoomSetting"
@@ -98,7 +113,9 @@ const MiniRoom = () => {
           ))}
          
         </div>
-        <button onClick={updateMiniRoom}>변경</button>
+    </div>
+      <div className="miniroom-btn-container">
+        <button className="miniroom-save-btn" onClick={updateMiniRoom}>저장</button>
       </div>
     </div>
   );

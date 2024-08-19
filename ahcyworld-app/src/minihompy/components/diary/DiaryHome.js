@@ -39,21 +39,21 @@ const DiaryHome = () => {
         })
             .then((response) => {
                 const diaries = response.data;
-                console.log("diaries:", diaries);
+
                 const formattedDates = diaries.map((diary) => {
-                    // console.log("diaryEvenDate : ", diary.eventDate);
+
                     const localDate = moment(new Date(diary.eventDate)).format("YYYY-MM-DD");
-                    // console.log("localDate : ", localDate);
+
                     return localDate;
                 });
                 // setHompy(diaries);
                 setDayList(formattedDates);
-                console.log("formattedDates: ", formattedDates);
+
             })
             .catch((error) => {
                 console.error("diary 없음...", error);
             });
-            console.log("hompyId : ", hompyId);
+
     };
 
     const fetchHompy = async () => {
@@ -64,7 +64,7 @@ const DiaryHome = () => {
                 }
             });
             setHompy(respone.data);
-            console.log("홈피 : ", respone);
+
         }catch(error){
             console.error("홈피 정보 불러오기 실패", error)
         }
@@ -81,7 +81,7 @@ const DiaryHome = () => {
 
     useEffect(()=>{
         if(hompy){
-            console.log("hompyId : ", hompyId);
+
             fetchDiaries();   
         }
     },[hompy])
@@ -102,11 +102,11 @@ const DiaryHome = () => {
             return null;
         }
         const formattedDate = moment(date).format("YYYY-MM-DD");
-        // console.log(Checking date: ${formattedDate});
+
 
         // date(각 날짜)가 리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘)을 추가
         if (dayList.includes(formattedDate)) {
-            // console.log(Adding content for date: ${formattedDate});
+
             return <div key={formattedDate}>⭐️</div>;
         }
         return null;
@@ -116,7 +116,7 @@ const DiaryHome = () => {
     const handleDateClick = (date) => {
         const formattedDate = moment(date).format("YYYY-MM-DD");
         setSelectedDate(formattedDate);
-        // console.log("formattedDate: ", formattedDate);
+
             axios
                 .get(
                     `${SERVER_HOST}/cyworld/cy/diaries/detail-by-date/${formattedDate}`
@@ -126,7 +126,7 @@ const DiaryHome = () => {
 
                     const filteredDiaries = diaries.filter(diary => diary.hompy.id === parseInt(hompyId));
                     
-                    console.log("다이어리 정보: ", filteredDiaries);
+
                     setDiaryContent(filteredDiaries.length > 0 ? filteredDiaries : null);
                     setShowModal(true);
                 })
@@ -146,10 +146,6 @@ const DiaryHome = () => {
     };
 
     const handleWriteClick = () => {
-        console.log("hompy : ", hompy);
-        console.log("hompyId : ", typeof(hompyId));
-        console.log("userInfo : ", userInfo); 
-        console.log("hompyInfo.id : ", typeof(hompyInfo.id));
         if(hompyInfo.id === parseInt(hompyId)){
             navigate(`/hompy/${hompyInfo.id}/diary/write`, {
                 state: {date: selectedDate},
@@ -165,7 +161,7 @@ const DiaryHome = () => {
         onChange(today);
         setActiveMonth(moment(today).format("YYYY-MM-DD"));
     }
-    {console.log('diary check', hompy)}
+
     return (
         <>
             <Layout hompy={hompy} user={hompy.user}>

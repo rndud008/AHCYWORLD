@@ -79,7 +79,6 @@ const ItemUpload = ({ setSubMenu }) => {
             }
 
             if (valid) {
-                console.log(item);
                 const handleSubmit = async () => {
                     const formData = new FormData();
                     let updateItem = item;
@@ -93,7 +92,6 @@ const ItemUpload = ({ setSubMenu }) => {
                         });
 
                         if (response.status === 200) {
-                            console.log(response.data);
                             updateItem.fileName = response.data;
                         } else {
                             console.error('파일 업로드 실패');
@@ -115,7 +113,7 @@ const ItemUpload = ({ setSubMenu }) => {
                         itemconfirm("추가 성공", "아이템리스트로 넘어가시겠습니까?", "success", () => handleClick(), () => reset())
 
                     } catch (error) {
-                        console.log("등록실패! : " + error)
+                        console.error("등록실패! : " + error)
                     }
                 };
                 handleSubmit();
@@ -160,7 +158,6 @@ const ItemUpload = ({ setSubMenu }) => {
 
     const handleDuplication = () => {
         const duplication = async () => {
-            console.log(item.itemName)
             try {
                 const response = await axios({
                     method: 'GET',
@@ -179,7 +176,7 @@ const ItemUpload = ({ setSubMenu }) => {
                 handleSuccessName(isDonclick1, isDuplication1, isitemname);
 
             } catch (error) {
-                console.log("요청 실패 : ", error)
+                console.error("요청 실패 : ", error)
             }
         }
 

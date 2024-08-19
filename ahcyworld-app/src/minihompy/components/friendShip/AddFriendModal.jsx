@@ -47,11 +47,6 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
         setFriendType2("");
         setMessage("");
 
-        // console.log("Friend Type 1:", friendType1);
-        // console.log("Friend Type 2:", friendType2);
-        // console.log("Message:", message);
-        // console.log("Username:", username);
-        // console.log("Friend Username:", friendUseraname);
     };
 
     return (

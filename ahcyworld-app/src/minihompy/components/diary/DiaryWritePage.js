@@ -34,8 +34,6 @@ const DiaryWritePage = () => {
         e.preventDefault();  // 기본 동작 차단
         e.stopPropagation(); // 이벤트 전파 차단
 
-        console.log("selectedDate :", selectedDate);
-        
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
             // 유효성 검사 실패
@@ -62,7 +60,7 @@ const DiaryWritePage = () => {
                 })
                 .then((response) => {
                     Swal.alert("다이어리 저장이 완료되었습니다.", "다이어리 저장 성공", "success", () =>{
-                        console.log("다이어리 저장 완료", response.data);
+
                         navigate(`/hompy/${hompyInfo.id}/diary`);
                     })
                 })

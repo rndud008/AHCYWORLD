@@ -26,9 +26,7 @@ const Music1 = () => {
                 Authorization: `Bearer ${accessToken}`,
             },
         }).then((response) => {
-            // console.log(items);
             setMusics([...response.data.items]);
-            console.log([...response.data.items]);
         });
     };
 
@@ -43,7 +41,7 @@ const Music1 = () => {
                 console.log(JSON.stringify(response.data));
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
     };
 

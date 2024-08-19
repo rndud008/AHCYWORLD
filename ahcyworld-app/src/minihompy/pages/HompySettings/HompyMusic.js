@@ -5,14 +5,14 @@ import axios from "axios";
 import api, { SERVER_HOST } from "../../../apis/api";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import '../css/HompyMusic.css';
+import Swal from "sweetalert2";
 
 const HompyMusic = () => {
   const { hompyId } = useParams();
   const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
   const [musicItems, setMusicItems] = useState([]);
   const [myplayList, setMyPlayList] = useState();
-
-  console.log("hompyinfo", hompyInfo);
 
   useEffect(() => {
     const playList =
@@ -51,7 +51,7 @@ const HompyMusic = () => {
 
     hompy.miniHompyBgm = playList;
     
-
+  try{
     const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`, hompy, {
       headers: {
         Authorization: "Bearer " + Cookies.get("accessToken"),
@@ -59,12 +59,32 @@ const HompyMusic = () => {
     });
 
     const { data, status } = response;
-    console.log("sta", status);
+
     if (status === 200) {
-      console.log("data", data);
       setHompyInfo(data);
+      Swal.fire({
+        icon: "success",
+        title: "성공!",
+        text: "음악이 추가되었습니다.",
+        confirmButtonText: "확인",
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "실패",
+        text: "업데이트 중 오류가 발생했습니다.",
+        confirmButtonText: "확인",
+      });
     }
-  };
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "실패",
+      text: "업데이트 중 오류가 발생했습니다.",
+      confirmButtonText: "확인",
+    });
+  }
+};
 
   const bgmChangeValue = (music) => {
     setMyPlayList([...myplayList, music]);
@@ -80,35 +100,50 @@ const HompyMusic = () => {
     )));
   }
 
-  // console.log("playList", myplayList);
 
   return (
+  <>  
     <div className="hompyMusic-container">
-      <div className="mybgmList">
-        <h1>bgm-List</h1>
-      {musicItems &&
-        musicItems.map((item) => (
-          <div onClick={() => bgmChangeValue(item)} style={{ fontSize: 30 }}>
-            <span>
-              {item.sourceName} - {item.itemName}
-            </span>
-          </div>
-        ))}
+      <div className="music-list">
+        <h1>My Bgm List</h1>
+        <div className="music-items">
+          {musicItems &&
+            musicItems.map((item) => (
+              <div
+                className="music-item"
+                onClick={() => bgmChangeValue(item)}
+              >
+                <span>
+                  {item.sourceName} - {item.itemName}
+                </span>
+              </div>
+            ))}
+        </div>
       </div>
-   
-      <div className="myplayList">
-        <h1>play-List</h1>
-      {myplayList &&
-        myplayList.map((item) => (
-          <div onClick={() => playChangeValue(item)} style={{ fontSize: 30 }}>
-            <span>
-              {item.sourceName} - {item.itemName}
-            </span>
-          </div>
-        ))}
+
+      <div className="music-list">
+        <h1>My Play List</h1>
+        <div className="music-items">
+          {myplayList &&
+            myplayList.map((item) => (
+              <div
+                className="music-item"
+                onClick={() => playChangeValue(item)}
+              >
+                <span>
+                  {item.sourceName} - {item.itemName}
+                </span>
+              </div>
+            ))}
+        </div>
       </div>
-      <button onClick={handleSaveBgm}>저장</button>
     </div>
+    <div className="bgmsetting-btn-box">
+      <button className="bgmsetting-btn" onClick={handleSaveBgm}>
+        저장
+      </button>
+    </div>
+  </>    
   );
 };
 

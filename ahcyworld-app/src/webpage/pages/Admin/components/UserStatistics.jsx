@@ -23,7 +23,7 @@ const UserStatistics = () => {
     const fetchUsers = async () => {
         try {
             const response = await userList();
-            // console.log("유저리스트: ", response.data);
+
             setUsers(response.data);
         } catch (error) {
             console.error("userList Error: ", error);

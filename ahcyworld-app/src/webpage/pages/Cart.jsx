@@ -86,7 +86,6 @@ const Cart = () => {
         const oneChangbox = myCart.map(cart => {
             if (cart.id === parseInt(value)) {
                 if (checked) {
-                    console.log(cart.item.price);
                     setTotalAcorn(totalAcorn + cart.item.price);
                 } else {
                     setTotalAcorn(totalAcorn - cart.item.price);
@@ -116,7 +115,7 @@ const Cart = () => {
         let allItemAcorn = 0;
         e.target.checked ? myCart.forEach(x => allCheckItemNum.push(parseInt(x.id))) : setSelectItem([]);
         e.target.checked ? myCart.forEach(x => { allItemAcorn = allItemAcorn + x.item.price }) : setTotalAcorn(0);
-        console.log("모든 가격: " + allItemAcorn);
+
         setSelectItem(allCheckItemNum);
         setMyCart(allCheckItem);
         setTotalAcorn(allItemAcorn);
@@ -135,7 +134,6 @@ const Cart = () => {
             const { data, status } = response;
 
             if (status === 200) {
-                console.log("체크된 아이템 삭제 성공!!!");
                 setTotalAcorn(0);
                 setSelectItem([]);
                 setIsDelete(true);
@@ -146,7 +144,6 @@ const Cart = () => {
     }
 
     const handleAllDelete = () => {
-        console.log(myCart);
         Swal.itemconfirm("체크된 아이템 삭제", "정말 삭제하시겠습니까?", "warning", () => AllDelete(), () => navigate(`/cart/${userId}`))
     }
 
