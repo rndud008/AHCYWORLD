@@ -38,7 +38,17 @@ public class HompyService {
     }
 
     // 기존 미니홈피 업데이트
+    @Transactional
     public Hompy updateHompy(Hompy hompy) {
+        Hompy originHompy = hompyRepository.findById(hompy.getId()).orElse(null);
+
+        originHompy.setTitle(hompy.getTitle());
+        originHompy.setMiniRoom(hompy.getMiniRoom());
+        originHompy.setMinimiPicture(hompy.getMinimiPicture());
+        originHompy.setMiniHompySkin(hompy.getMiniHompySkin());
+        originHompy.setMiniHompyFont(hompy.getMiniHompyFont());
+        originHompy.setMiniHompyBgm(hompy.getMiniHompyBgm());
+
         return hompyRepository.save(hompy);
     }
 
@@ -87,14 +97,11 @@ public class HompyService {
     }
 
     // 미니홈피 스킨
-    public Hompy miniHompySkin(User user, String miniHompySkinPicture) {
-        Hompy hompy = hompyRepository.findByUser(user);
-        if (hompy != null) {
-            hompy.setMiniHompySkin(miniHompySkinPicture);
-            return hompyRepository.save(hompy);
-        } else {
-            throw new RuntimeException("해당 유저의 홈피를 찾을 수 없습니다.");
-        }
+    public Hompy miniHompySkin(Long hompyId, String miniHompySkinPicture) {
+        Hompy hompy = hompyRepository.findById(hompyId)
+                .orElseThrow(() -> new RuntimeException("해당 ID의 홈피를 찾을 수 없습니다."));
+        hompy.setMiniHompySkin(miniHompySkinPicture);
+        return hompyRepository.save(hompy);
     }
 
     // 방문자 수
@@ -175,4 +182,6 @@ public class HompyService {
         hompy.setTitle(hompyTitle);
         return hompy;
     }
+
+
 }

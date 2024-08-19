@@ -22,18 +22,68 @@
     margin-bottom: 10px;
 }
 
-.soldItem-chart-box {
-    /* outline: 2px solid blue; */
-    /* margin: 40px 0; */
-    width: 700px;
-    height: 500px;
-
+.chart-container {
+    /* outline: 2px solid red; */
+    width: 800px;
+    max-width: 1000px;
+    height: 600px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
 }
 
-.soldItem-chart-box h3{
+.line-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.second-container {
+    /* outline: 2px solid blue; */
+    display: flex;
+    flex-direction: row;
+    /* align-items: top; */
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.payment-chart-container {
+    /* outline: 2px solid red; */
+    width: 900px;
+    max-width: 1000px;
+    height: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-line-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.soldItem-chart-box {
+    /* outline: 2px solid lime; */
+    width: 500px;
+    max-width: 1000px;
+    height: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.soldItem-chart-box h3 {
     margin-bottom: 50px;
+}
+
+.second-container {
+    /* outline: 2px solid red; */
+
+    width: 100%;
+    height: 100%;
 }

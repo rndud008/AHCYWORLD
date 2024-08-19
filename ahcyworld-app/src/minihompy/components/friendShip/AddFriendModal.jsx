@@ -36,7 +36,7 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
             if (response) {
                 Swal.alert("일촌신청을 보냈습니다.", "상대방이 수락하면 일존이 맺어집니다~!", "success", () => {
                     onClose();
-                    navigate(`/hompy/${hompyInfo.id}`)
+                    // navigate(`/hompy/${hompyInfo.id}`)
                 });
             }
         } catch (error) {
@@ -47,11 +47,6 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
         setFriendType2("");
         setMessage("");
 
-        // console.log("Friend Type 1:", friendType1);
-        // console.log("Friend Type 2:", friendType2);
-        // console.log("Message:", message);
-        // console.log("Username:", username);
-        // console.log("Friend Username:", friendUseraname);
     };
 
     return (

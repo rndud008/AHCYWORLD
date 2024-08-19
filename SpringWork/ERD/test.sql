@@ -9,8 +9,6 @@ from folder;
 select * from post;
 select * from user_write_histroy;
 
-select * from guest_book;
-
 select * from friend;
 select * from ah_user;
 select* from friend;
@@ -22,6 +20,12 @@ select * from carts;
 select *
 from diary;
 select * from message;
+select * from comment;
+select * from guest_book;
+
+delete from friend
+where id = 61;
+
 
 select * from attachment where post_id='7285';
 select * from email_authentication;
@@ -43,11 +47,9 @@ where id = 116;
 delete
     from item
 where id = 51;
-
-update payment_history
-set status = 'waiting'
-where friend_user_id=5;
-
+delete
+    from item
+where item_type = '폰트';
 
 # 페이먼트 커럼추가
 alter table payment_history
@@ -72,13 +74,18 @@ from carts;
 
 delete
 from ah_user
-where id = 8;
+where id = 9;
+
+
+delete from hompy
+where user_id=9;
 
 update hompy set total_visitor = 0 where id = 1;
 
-update hompy
-set mini_hompy_skin = '22.png'
-where id = 5;
+update ah_user
+set acorn = 9999999
+where id = 8;
+
 
 
 

@@ -6,7 +6,7 @@ import * as Swal from "../../apis/alert";
 import AcornPayModal from '../items/components/AcornPayModal';
 import { LoginContext } from '../../webpage/components/login/context/LoginContextProvider';
 import acorn from "../../upload/acorn.png"
-import '../pages/css/Cart.css';
+import './css/Cart.css';
 
 const Cart = () => {
     const { userId } = useParams();
@@ -28,6 +28,7 @@ const Cart = () => {
     };
 
     useEffect(() => {
+        const updateCart = [];
         setIsAcornPayModalOpen(false);
         axios({
             method: "GET",
@@ -35,7 +36,19 @@ const Cart = () => {
             params: { id: userId }
         }).then(response => {
             const { data, status } = response;
-            const updateCart = data.map(x => ({ ...x, checked: false }));
+            if (selectItem.length == 0) {
+                data.forEach(x => {
+                    updateCart.push({ ...x, checked: false })
+                })
+            } else {
+                data.forEach(x => {
+                    if (selectItem.includes(x.id)) {
+                        updateCart.push({ ...x, checked: true });
+                    } else {
+                        updateCart.push({ ...x, checked: false })
+                    }
+                })
+            }
             setMyCart(updateCart);
             setIsDelete(false);
         })
@@ -49,11 +62,14 @@ const Cart = () => {
         }).then(response => {
             const { data, status } = response;
             if (status === 200) {
-                setIsDelete(true);
                 if (selectItem.includes(cart.id)) {
                     setSelectItem(selectItem.filter(x => x !== parseInt(cart.id)));
                     setTotalAcorn(totalAcorn - acorn);
+                    if (selectItem.length === 1) {
+                        setAllCheckBox(false);
+                    }
                 }
+                setIsDelete(true);
             }
         });
     }
@@ -73,7 +89,6 @@ const Cart = () => {
         const oneChangbox = myCart.map(cart => {
             if (cart.id === parseInt(value)) {
                 if (checked) {
-                    console.log(cart.item.price);
                     setTotalAcorn(totalAcorn + cart.item.price);
                 } else {
                     setTotalAcorn(totalAcorn - cart.item.price);
@@ -103,7 +118,7 @@ const Cart = () => {
         let allItemAcorn = 0;
         e.target.checked ? myCart.forEach(x => allCheckItemNum.push(parseInt(x.id))) : setSelectItem([]);
         e.target.checked ? myCart.forEach(x => { allItemAcorn = allItemAcorn + x.item.price }) : setTotalAcorn(0);
-        console.log("모든 가격: " + allItemAcorn);
+
         setSelectItem(allCheckItemNum);
         setMyCart(allCheckItem);
         setTotalAcorn(allItemAcorn);
@@ -118,11 +133,10 @@ const Cart = () => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then( response => {
+        }).then(response => {
             const { data, status } = response;
 
             if (status === 200) {
-                console.log("체크된 아이템 삭제 성공!!!");
                 setTotalAcorn(0);
                 setSelectItem([]);
                 setIsDelete(true);
@@ -133,7 +147,6 @@ const Cart = () => {
     }
 
     const handleAllDelete = () => {
-        console.log(myCart);
         Swal.itemconfirm("체크된 아이템 삭제", "정말 삭제하시겠습니까?", "warning", () => AllDelete(), () => navigate(`/cart/${userId}`))
     }
 
@@ -143,18 +156,18 @@ const Cart = () => {
             <h2>장바구니</h2>
 
             <div className='select-container'>
-                <button className='select-del-btn select-del-btn2' onClick={()=>handleAllDelete()}>선택삭제</button>
-            <div>
-                <div className='all-select-container'>
-                    <input className='all-select'
-                        type="checkbox"
-                        checked={allCheckBox}
-                        onChange={handleSelectAll}
-                    />
-                    <span className='all-select-text'>전체선택</span>
-                </div>
+                <button className='select-del-btn select-del-btn2' onClick={() => handleAllDelete()}>선택삭제</button>
+                <div>
+                    <div className='all-select-container'>
+                        <input className='all-select'
+                            type="checkbox"
+                            checked={allCheckBox}
+                            onChange={handleSelectAll}
+                        />
+                        <span className='all-select-text'>전체선택</span>
+                    </div>
                     <hr />
-                    {myCart.map((cart) => (
+                    {myCart.length === 0 ? <div>담긴아이템이 없습니다.</div> : ((myCart.map((cart) => (
 
                         <div key={cart.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0', fontSize: '18px', fontWeight: 'bold' }}>
                             <input className='item-check-box'
@@ -182,24 +195,23 @@ const Cart = () => {
                                 />
                             )}
                             <div style={{ flex: 1, marginLeft: '10px' }}>
-                                <div>{cart.item.sourceName} - {cart.item.itemName}</div>
+                                {cart.item.itemType === "배경음악" ? (<div>{cart.item.sourceName} - {cart.item.itemName}</div>) : <div>{cart.item.itemName}</div>}
                                 <div style={{ color: '#888' }}>{cart.item.itemType}</div>
                             </div>
-                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
+                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
                             <button onClick={() => handelDeleteItem(cart)} className='item-del-btn'>❌</button>
-
                         </div>
 
-                    ))}
+                    ))))}
                 </div>
                 <div style={{ textAlign: 'right', marginTop: '10px', fontWeight: 'bold' }}><hr />
-                    <div>총 주문금액: {totalAcorn} <img style={{width: 15, height: 15}} src={acorn} alt=''></img></div>
+                    <div>총 주문금액: {totalAcorn} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
                 </div>
             </div>
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                <button className='continue-shopping-btn' onClick={()=>navigate(-1)}>쇼핑계속하기</button>
-                <button className='goods-buy-btn' onClick={()=>acornPayOpenModal()}>상품 구매</button>
-                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo}/>
+                <button className='continue-shopping-btn' onClick={() => navigate(-1)}>쇼핑계속하기</button>
+                <button className='goods-buy-btn' onClick={() => acornPayOpenModal()}>상품 구매</button>
+                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo} setAllCheckBox={setAllCheckBox} setIsDelete={setIsDelete} setTotalAcorn={setTotalAcorn} />
             </div>
         </div>
     );

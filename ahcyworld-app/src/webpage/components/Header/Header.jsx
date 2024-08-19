@@ -42,8 +42,6 @@ const Header = ({ setItemKind }) => {
       const valid = searchValidation();
 
       if (!valid) return;
-      console.log("엔터 쳤지롱");
-      console.log("엔터 check", searchValue);
 
       try {
         await dispatch(
@@ -69,13 +67,10 @@ const Header = ({ setItemKind }) => {
 
   const searchValidation = () => {
     if (!searchValue.search && searchValue.search.trim() === "") {
-      console.log("searchValidation");
       return false;
     }
     return true;
   };
-
-  console.log("check", searchValue);
 
   return (
     <>
@@ -85,17 +80,21 @@ const Header = ({ setItemKind }) => {
             <img src={logo} alt="Acyworld LOGO" />
           </div>
           <div className="search-select">
-            <select name="action" onChange={(e) => searchChangeValue(e)}>
-              <option value={"all"} selected={searchValue.action === "all"}>
+            <select name="action" value={searchValue.action} onChange={(e) => searchChangeValue(e)}>
+              <option value={"all"}
+              selected={searchValue.action.includes("all")}
+              >
                 전체검색
               </option>
               <option
                 value={"people"}
-                selected={searchValue.action === "people"}
+                selected={searchValue.action.includes("people")}
               >
                 사람검색
               </option>
-              <option value={"item"} selected={searchValue.action === "item"}>
+              <option value={"item"}
+              selected={searchValue.action.includes("item")}
+              >
                 아이템검색
               </option>
             </select>
@@ -112,83 +111,61 @@ const Header = ({ setItemKind }) => {
           </div>
         </div>
 
-        <Nav className="navbar">
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("all");
-            }}
-          >
-            전체
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("배경음악");
-            }}
-          >
-            배경음악
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("글꼴");
-            }}
-          >
-            글꼴
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("스킨");
-            }}
-          >
-            스킨
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("미니미");
-            }}
-          >
-            미니미
-          </button>
-          <button
-            onClick={() => {
-              navigate("/item");
-              setItemKind("스토리룸");
-            }}
-          >
-            미니룸
-          </button>
+                <Nav className='navbar'>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("all");
+                        }}
+                    >
+                        전체
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("배경음악");
+                        }}
+                    >
+                        배경음악
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("글꼴");
+                        }}
+                    >
+                        글꼴
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("스킨");
+                        }}
+                    >
+                        스킨
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("미니미");
+                        }}
+                    >
+                        미니미
+                    </button>
+                    <button
+                        onClick={() => {
+                            navigate("/item");
+                            setItemKind("스토리룸");
+                        }}
+                    >
+                        미니룸
+                    </button>
+                </Nav>
+            </div>
 
-          {/* 로그인 여부에 따라 조건부 렌더링 */}
-          {/* {!isLogin ? (
-                        <>
-                            <Link className='nav-link' to='/login'>
-                                로그인
-                            </Link>
-                            <Link className='nav-link' to='/join'>
-                                회원가입
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <Link to='/member'>Member</Link>
-                            <Link to='/admin'>Admin</Link>
-                            <Link to={`/post/${hompyInfo?.id}/board`}>Post</Link>
-                            <Link to={`/hompy/${hompyInfo?.id}`}>미니홈피</Link>
-                            <Link variant='primary' onClick={() => logout()}>
-                                로그아웃
-                            </Link>
-                        </>
-                    )} */}
-        </Nav>
-      </div>
-
-      <Outlet />
-    </>
-  );
+            <Outlet />
+        </>
+    );
 };
 
 export default Header;

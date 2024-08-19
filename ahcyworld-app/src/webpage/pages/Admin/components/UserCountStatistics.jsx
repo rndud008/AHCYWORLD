@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../css/UserManageStatistics.css";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     LineElement,
@@ -16,14 +15,15 @@ import { userList } from "../../../../apis/auth";
 // Chart.js 모듈 등록
 ChartJS.register(LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PointElement);
 
-const UserStatistics = () => {
+const UserCountStatistics = () => {
     const [users, setUsers] = useState([]);
     const [userCount, setUserCount] = useState({});
+    const [totalCount, setTotalCount] = useState({});
 
     const fetchUsers = async () => {
         try {
             const response = await userList();
-            // console.log("유저리스트: ", response.data);
+
             setUsers(response.data);
         } catch (error) {
             console.error("userList Error: ", error);
@@ -36,39 +36,66 @@ const UserStatistics = () => {
 
     useEffect(() => {
         if (users.length > 0) {
-            const sum = {};
+            const monthlyCount = {};
+            const cumulativeCount = {};
+            let cumulativeTotal = 0;
+
+            // 모든 사용자에 대해 월별 사용자 수 계산
             users.forEach((user) => {
                 const date = new Date(user.createAt);
-                const month = date.getMonth();
+                const month = date.getMonth() + 1;
                 const year = date.getFullYear();
-                const key = `${year}-${month + 1}`;
+                const key = `${year}-${month.toString().padStart(2, "0")}`;
 
-                sum[key] = (sum[key] || 0) + 1;
+                monthlyCount[key] = (monthlyCount[key] || 0) + 1;
             });
-            setUserCount(sum);
+
+            // 누적 사용자 계산
+            const sortedKeys = Object.keys(monthlyCount).sort();
+            sortedKeys.forEach((key) => {
+                cumulativeTotal += monthlyCount[key];
+                cumulativeCount[key] = cumulativeTotal;
+            });
+
+            setUserCount(monthlyCount);
+            setTotalCount(cumulativeCount);
         }
     }, [users]);
 
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+    const currentYear = new Date().getFullYear();
+
     const data = {
         labels: labels,
         datasets: [
             {
-                label: "Monthly User Registrations",
-                data: labels.map((_, i) => userCount[`2024-${i + 1}`] || 0), // 월별 데이터 추출
-                backgroundColor: "#fff",
-                borderColor: "#5a5a5a",
+                type: "bar",
+                label: `${currentYear} 신규가입자`,
+                data: labels.map((_, i) => userCount[`${currentYear}-${(i + 1).toString().padStart(2, "0")}`] || 0), // 월별 데이터 추출
+                backgroundColor: "#aebadf",
+                borderColor: "#aebadf",
                 borderWidth: 1,
+            },
+            {
+                type: "line",
+                label: "누적가입자",
+                data: labels.map((_, i) => {
+                    const key = `${currentYear}-${(i + 1).toString().padStart(2, "0")}`;
+                    return totalCount[key] || 0;
+                }),
+                backgroundColor: "#e66e28",
+
+                borderWidth: 2,
                 pointBackgroundColor: "#e66e28",
                 pointBorderColor: "#e66e28",
-                pointBorderWidth: 5,
+                pointBorderWidth: 2,
+                pointRadius: 5,
                 datalabels: {
                     color: "#444",
                     display: true,
                     align: "top",
-                    anchor:"end",
-
+                    anchor: "end",
                 },
             },
         ],
@@ -101,7 +128,7 @@ const UserStatistics = () => {
     return (
         <>
             <div className='chart-container'>
-                <h2>신규가입</h2>
+                <h2>누적회원</h2>
                 <div className='line-chart'>
                     <Line data={data} options={options} />
                 </div>
@@ -110,4 +137,4 @@ const UserStatistics = () => {
     );
 };
 
-export default UserStatistics;
+export default UserCountStatistics;

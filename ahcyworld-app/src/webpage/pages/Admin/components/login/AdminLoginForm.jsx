@@ -4,10 +4,13 @@ import "../../css/AdminLoginForm.css";
 import * as Swal from "../../../../../apis/alert";
 
 import { LoginContext } from "../../../../components/login/context/LoginContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const AdminLoginForm = () => {
-    const { adminLogin } = useContext(LoginContext);
+    const navigate = useNavigate();
+    const { isLogin, adminLogin, roles } = useContext(LoginContext);
     const [rememberUserId, setRememberUserId] = useState(true);
+    const [loading, setLoading] = useState(true); // 관리자 권한이 없는경우 로딩 상태체크를 위함
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -15,7 +18,7 @@ const AdminLoginForm = () => {
         const password = e.target.password.value;
         const rememberId = e.target.rememberId.checked;
 
-        if (username!=="admin1") {
+        if (username !== "admin1") {
             Swal.alert("접근할 수 없는 아이디입니다.", "관리자 아이디로 로그인하세요.", "warning", () => {});
             return;
         }
@@ -34,6 +37,31 @@ const AdminLoginForm = () => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        const checkAccess = async () => {
+            if (!isLogin) {
+                setLoading(false);
+                navigate("/admin/login");
+                return;
+            }
+            // console.log(roles);
+            if (!roles.isAdmin) {
+                Swal.alert("접근권한이 없습니다.", "", "warning", () => {
+                    navigate("/");
+                });
+                return;
+            } else if (roles.isAdmin) {
+                navigate("/admin");
+            }
+            setLoading(false);
+        };
+        checkAccess();
+    });
+
+    if (loading) {
+        return <div>Loading...</div>; // 로딩 중 표시
+    }
 
     return (
         <div className='admin-login-container'>

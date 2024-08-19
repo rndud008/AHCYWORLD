@@ -170,13 +170,11 @@
     right: 15px; */
 }
 
-.friend-request,
-.acorn-status {
+.friend-request {
     transition: all 0.3s ease;
 }
 
-.friend-request:hover,
-.acorn-status:hover {
+.friend-request:hover{
     cursor: pointer;
     background-color: #f0f0f0;
     border-radius: 5px;

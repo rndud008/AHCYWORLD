@@ -44,7 +44,7 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
                 setIsUpdate(true);
                 alert("수정 성공", "정보가 변경되었습니다.", "success", ModalonClose)
             } catch (error) {
-                console.log("이게 간거야?", error)
+                console.error("이게 간거야?", error)
             }
 
         }
@@ -65,9 +65,6 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
         }
 
         if (!isitemfalse && !pricefalse) {
-            console.log(itemNameIsNull)
-            console.log(priceIsNull)
-
             commit();
         }
     }

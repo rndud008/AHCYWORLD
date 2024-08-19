@@ -78,7 +78,6 @@ const Home = ({ itemKind }) => {
     useEffect(() => {
         const fetchUsers = async () => {
             if (isLogin && userInfo.username) {
-                // console.log(userInfo.username);
                 try {
                     const response = await userList();
                     setUsers(response.data);

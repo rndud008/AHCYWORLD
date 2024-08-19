@@ -22,8 +22,6 @@ const Comment = () => {
   const content = useSelector((state) => state.comment.content);
   const post = useSelector((state) => state.post.post);
   const error = useSelector(state => state.comment.error)
-  
-  console.log(post,'?????????')
 
   return (
     <>

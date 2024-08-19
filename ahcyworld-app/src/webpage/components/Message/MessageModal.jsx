@@ -16,14 +16,12 @@ const MessageModal = ({ isOpen, onClose }) => {
 
     useEffect(() => {
         if (isOpen) {
-            // console.log(userInfo.id);
             const fetchPaymentData = async () => {
                 try {
                     const paymentResponse = await axios({
                         method: "GET",
                         url: `${SERVER_HOST}/payment/acorn/gift/${userInfo.id}`,
                     });
-                    // console.log(paymentResponse.data)
                     setUpdateMessage(paymentResponse.data);
                     setIsReloading(false);
                 } catch (error) {
@@ -34,7 +32,6 @@ const MessageModal = ({ isOpen, onClose }) => {
                 const userId = userInfo.id;
                 try {
                     const messageResponse = await getMessageFromAdmin(userId);
-                    // console.log(messageResponse);
                     setMessageList(messageResponse.data);
                     return messageResponse.data;
                 } catch (error) {
@@ -44,7 +41,6 @@ const MessageModal = ({ isOpen, onClose }) => {
 
             fetchPaymentData();
             fetchMessageFromAdmin();
-            console.log(listChoice);
         }
     }, [isOpen, isReloading, listChoice]);
 
@@ -64,11 +60,10 @@ const MessageModal = ({ isOpen, onClose }) => {
                 url: `${SERVER_HOST}/payment/acorn/gift/success`,
                 params: { id: id },
             });
-            // console.log("도토리 추가 성공!");
             setIsReloading(true);
             window.location.reload();
         } catch (error) {
-            console.log("도토리 추가 실패", error);
+            console.error("도토리 추가 실패", error);
         }
     };
 

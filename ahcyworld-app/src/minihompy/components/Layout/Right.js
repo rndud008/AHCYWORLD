@@ -29,6 +29,8 @@ const Right = ({ user,hompy }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log('????friendReview',friendReview)
+
   const userId = user?.id;
 
   useEffect(() => {
@@ -74,6 +76,7 @@ const Right = ({ user,hompy }) => {
       friendReviewListAxios();
       dispatch(FriendAction.findByHompyFriendListAixos(user.username))
       setFriendReview({
+        content:'',
         guestBookName: "friendReview",
         hompy: hompy,
         user: userInfo,
@@ -105,7 +108,7 @@ const Right = ({ user,hompy }) => {
           Authorization: `Bearer ${Cookies.get("accessToken")}`,
         },
       });
-      console.log("miniHomePyInfoTable", response);
+
       const { data, status } = response;
 
       if (status === 200) {
@@ -120,13 +123,17 @@ const Right = ({ user,hompy }) => {
 
   const friendReviewValue = (e) => {
     const { value, name } = e.target;
+    console.log(value)
 
     setFriendReview({ ...friendReview, [name]: value });
   };
 
   const friendReviewCreate = async () => {
 
+    
     if(!friendIdList.some(item => item === userInfo.id)) return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
+
+    if(!friendReview.content || friendReview.content.trim() === "") return Swal.alert("작성실패","글을 작성해주세요.","warning")
 
     try{
       const response = await api.post(
@@ -136,16 +143,20 @@ const Right = ({ user,hompy }) => {
 
       const {data,status} = response;
       if(status === 200){
-        setFriendReviewList([...friendReviewList,data])
+        setFriendReviewList([data,...friendReviewList])
+        setFriendReview({
+          content:"",
+          guestBookName: "friendReview",
+          hompy: hompy,
+          user: userInfo,
+        })
       }
       
     }catch (e){
       return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
     }
 
-
   };
-  console.log(friendReviewList,'?????????????????')
 
   const friendReviewListAxios = async () => {
     const action = "friendReview";
@@ -158,7 +169,6 @@ const Right = ({ user,hompy }) => {
           params: { action, username },
         }
       );
-      console.log("friendReviewList", response);
       const { data, status } = response;
 
       if (status === 200) {
@@ -168,7 +178,10 @@ const Right = ({ user,hompy }) => {
   };
 
   const activeEnter = (e) =>{
+    
     if(e.key === "Enter"){
+      
+      e.preventDefault();
       friendReviewCreate();
     }
   }
@@ -298,6 +311,7 @@ const Right = ({ user,hompy }) => {
           <input
             name="content"
             className="text-box"
+            value={friendReview?.content}
             onChange={friendReviewValue}
             onKeyDown={(e) => activeEnter(e)}
             type="text"

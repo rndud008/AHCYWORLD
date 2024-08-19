@@ -1,6 +1,7 @@
 package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lec.spring.listener.WriteEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import lombok.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@EntityListeners(WriteEntityListener.class)
 public class Comment extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

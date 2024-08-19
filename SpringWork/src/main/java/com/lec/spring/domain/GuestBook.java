@@ -1,5 +1,6 @@
 package com.lec.spring.domain;
 
+import com.lec.spring.listener.WriteEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@EntityListeners(WriteEntityListener.class)
 public class GuestBook extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,14 +8,14 @@ import { CiUser } from "react-icons/ci";
 // Chart.js 모듈 등록
 ChartJS.register(ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
-const UserRange = () => {
+const UserAgeStatistics = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await userList();
-                // console.log("유저리스트: ", response.data);
+
                 setUsers(response.data);
             } catch (error) {
                 console.error("userList Error: ", error);
@@ -101,4 +101,4 @@ const UserRange = () => {
     );
 };
 
-export default UserRange;
+export default UserAgeStatistics;

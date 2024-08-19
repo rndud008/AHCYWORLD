@@ -28,6 +28,8 @@ class PostTest {
     private AttachmentRepository attachmentRepository;
     @Autowired
     private GuestBookRepository guestBookRepository;
+    @Autowired
+    private UserWriteHistoryRepository writeHistoryRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -173,7 +175,7 @@ class PostTest {
     }
 
     @Test
-    void test2(){
+    void test2() {
         Hompy hompy = hompyRepository.findById(2l).orElse(null);
 //
 //        List<Post> postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy,List.of("전체공개","일촌공개"));
@@ -194,10 +196,30 @@ class PostTest {
     }
 
     @Test
-    void test3(){
-        User user = userRepository.findByUsername("k6");
-        user.setPassword(passwordEncoder.encode("1234"));
-        userRepository.save(user);
+    void test3() {
+//        User user = userRepository.findByUsername("k6");
+//        user.setPassword(passwordEncoder.encode("1234"));
+//        userRepository.save(user);
+//        Post
+        List<UserWriteHistroy> writeHistroyList = writeHistoryRepository.findAll();
+
+        for (UserWriteHistroy writeHistroy : writeHistroyList) {
+            if (1 <= writeHistroy.getId() && writeHistroy.getId() < 10) {
+                writeHistroy.setSubject("해성이가 집에 갔다");
+                writeHistroy.setContent("집에서 했을까? 안했을꺼야... 물론 그렇겠지..");
+            } else if (10 <= writeHistroy.getId() && writeHistroy.getId() < 20) {
+                writeHistroy.setSubject("머리머리머리");
+                writeHistroy.setContent("화분화분화분");
+            } else if (20 <= writeHistroy.getId() && writeHistroy.getId() < 30) {
+                writeHistroy.setSubject("해성머리해성머리");
+                writeHistroy.setContent("집화분집화분");
+            } else {
+                writeHistroy.setSubject("테스트");
+                writeHistroy.setContent("마루망곰짱구포챠코");
+            }
+            writeHistoryRepository.save(writeHistroy);
+
+        }
     }
 
 }

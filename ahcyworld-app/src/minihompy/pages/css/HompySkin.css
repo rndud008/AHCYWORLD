@@ -1,0 +1,61 @@
+.hompySkin-container {
+  max-height: auto; /* 최대 높이 설정 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  padding: 10px;
+  gap: 20px; /* 이미지 간의 간격 */
+  box-sizing: border-box; /* 패딩을 포함하여 박스 크기 계산 */
+}
+
+.hompyskin-setting-img {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin: 10px;
+  flex-shrink: 0;  /* 이미지가 줄어들지 않도록 설정 */
+}
+
+.hompyskin-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.hompyskin-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hompyskin-save-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+  border: 2px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.hompyskin-save-btn:hover {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.hompyskin-save-btn:active {
+  background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7);
+  transform: translateY(1px);
+}
+
+.hompyskin-save-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

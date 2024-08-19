@@ -3,6 +3,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./PostWrite.style.css";
 import {
+  back,
   fileAdd,
   fileDelete,
   nameCheck,
@@ -24,6 +25,7 @@ const PostWrite = () => {
     content: "",
     fileList: [{ id: 1, sourceName: null }],
   });
+
 
   return (
     parseInt(hompyId) === hompyInfo?.id && (
@@ -79,7 +81,7 @@ const PostWrite = () => {
             </div>
             <div>
               <Button type="submit">작성완료</Button>
-              <Button type="button" onClick={() => navigate(-1)}>
+              <Button type="button" onClick={() => back(navigate,dispatch)}>
                 이전으로
               </Button>
             </div>
@@ -92,7 +94,7 @@ const PostWrite = () => {
                 type="file"
                 name={`upfile${item.id}`}
                 onChange={(e) =>
-                  writeAndUpdateChangeValue(e, item.id, post, setPost)
+                  writeAndUpdateChangeValue(e, item.id, post, setPost,dispatch,postName)
                 }
               />
               <Button

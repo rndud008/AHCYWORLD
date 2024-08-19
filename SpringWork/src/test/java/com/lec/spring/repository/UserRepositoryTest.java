@@ -29,30 +29,35 @@ class UserRepositoryTest {
     @Test
     void registerTest() {
 
-//        List<User> users = IntStream.range(8, 300)
-//                .mapToObj(index -> User.builder()
-//                        .username(("user" + index).toUpperCase())
-//                        .password(passwordEncoder.encode("1234"))
-//                        .role("ROLE_MEMBER")
-//                        .birthDay(LocalDate.now())
-//                        .email("user" + index + "@mail.com")
-//                        .gender(index % 2 == 0 ? "MALE" : "FEMALE")
-//                        .name("user" + index)
-//                        .acorn((long) (100 * Math.random()))
-//                        .build())
-//                .collect(Collectors.toList());
+        // 현재 존재하는 사용자 수를 가져옴
+        List<User> existingUsers = userRepository.findAll();
+        int existingUserCount = existingUsers.size();
 
-        List<User> users = new ArrayList<>();
+        // 새로 추가할 사용자 수
+        int newUserCount = 200;
+        int startIndex = existingUserCount + 1;
 
-        users = userRepository.findAll();
+        // 새로운 사용자 생성
+        List<User> newUsers = IntStream.range(startIndex, startIndex + newUserCount)
+                .mapToObj(index -> User.builder()
+                        .username(("user" + index).toUpperCase())
+                        .password(passwordEncoder.encode("1234"))
+                        .role("ROLE_MEMBER")
+                        .birthDay(LocalDate.now())
+                        .email("user" + index + "@mail.com")
+                        .gender(index % 2 == 0 ? "MALE" : "FEMALE")
+                        .name("user" + index)
+                        .acorn((long) (100 * Math.random()))
+                        .build())
+                .collect(Collectors.toList());
 
-        // 랜덤 생성기 및 기준 날짜 설정
-        Random random = new Random();
-        LocalDate startDate = LocalDate.of(2024, 1, 1);
-        LocalDate endDate = LocalDate.of(2024, 8, 31);
+        // 랜덤 생성기 및 날짜 범위 설정
+        LocalDate startDate = LocalDate.of(2023, 1, 1);
+        LocalDate endDate = LocalDate.of(2023, 12, 31); // 2024년 8월까지 포함
 
-        for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
+        // 기존 사용자 목록을 갱신하여 날짜를 설정
+        for (int i = 0; i < newUsers.size(); i++) {
+            User user = newUsers.get(i);
 
             // 순서에 따라 날짜 조정
             LocalDate orderedDate = startDate.plusDays(i);
@@ -65,57 +70,10 @@ class UserRepositoryTest {
             user.setCreateAt(orderedDate.atStartOfDay());
         }
 
-        userRepository.saveAllAndFlush(users);
-
-
-//        User admin1 = User.builder()
-//                .username("admin1".toUpperCase())
-//                .password(passwordEncoder.encode("1234"))
-//                .role("ROLE_MEMBER,ROLE_ADMIN")
-//                .birthDay(LocalDate.now())
-//                .email("sss@mail.com")
-//                .gender("MALE")
-//                .name("신우섭")
-//                .acorn(30000L)
-//                .build();
-//
-//
-//        User user1 = User.builder()
-//                .username("user1".toUpperCase())
-//                .password(passwordEncoder.encode("1234"))
-//                .role("ROLE_MEMBER")
-//                .birthDay(LocalDate.now())
-//                .email("www00@mail.com")
-//                .gender("FEMALE")
-//                .name("신")
-//                .acorn(1000L)
-//                .build();
-//
-//
-//        User user2 = User.builder()
-//                .username("user2".toUpperCase())
-//                .password(passwordEncoder.encode("1234"))
-//                .role("ROLE_MEMBER")
-//                .birthDay(LocalDate.now())
-//                .email("admin@mail.com")
-//                .gender("MALE")
-//                .name("우우")
-//                .acorn(300L)
-//                .build();
-//
-//
-//        userRepository.saveAllAndFlush(List.of(user1, user2, admin1));
-//
-//        user1 = userRepository.findById(1L).orElse(null);
-//        user2 = userRepository.findById(2L).orElse(null);
-//        admin1 = userRepository.findById(3L).orElse(null);
-//
-//        user1.setAcorn(300L);
-//        user2.setAcorn(1000L);
-//        admin1.setAcorn(10000L);
-//
-//        userRepository.saveAllAndFlush(List.of(user1, user2, admin1));
+        // 새 사용자 저장
+        userRepository.saveAllAndFlush(newUsers);
     }
+
 
     @Test
     void updateTest() {
@@ -156,9 +114,11 @@ class UserRepositoryTest {
 
         // 생년월일을 랜덤하게 생성하여 각 사용자에게 설정
         for (User user : users) {
-            LocalDate birthDate = generateRandomBirthDate(random);
-            user.setBirthDay(birthDate);
-            userRepository.save(user); // 사용자 업데이트 저장
+            if (user.getId() >= 306) {
+                LocalDate birthDate = generateRandomBirthDate(random);
+                user.setBirthDay(birthDate);
+                userRepository.save(user); // 사용자 업데이트 저장
+            }
         }
     }
 
@@ -195,7 +155,7 @@ class UserRepositoryTest {
 
 
     @Test
-    void test3(){
+    void test3() {
         List<User> users = userRepository.findByNameContainingIgnoreCase("a").orElse(null);
 
         users.forEach(System.out::println);

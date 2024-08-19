@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Admin from "./webpage/pages/Admin/Admin";
 import Header from "./webpage/components/Header/Header";
 import Hompy from "./minihompy/pages/Hompy";
@@ -31,6 +31,46 @@ import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
 // import OAuth2AddInfo from "./webpage/components/login/Login/OAuth2AddInfo";
 import '@fontsource/jua';
 import SearchPage from "./webpage/components/search/SearchPage";
+// 폰트 import
+import '@fontsource/sunflower';
+import '@fontsource-variable/noto-sans-kr';
+import '@fontsource/gothic-a1';
+import '@fontsource/black-han-sans';
+import '@fontsource-variable/noto-serif-kr';
+import '@fontsource/nanum-gothic-coding';
+import '@fontsource/nanum-brush-script';
+import '@fontsource/jua';
+import '@fontsource/nanum-pen-script';
+import '@fontsource/do-hyeon';
+import '@fontsource/nanum-myeongjo';
+import '@fontsource/east-sea-dokdo';
+import '@fontsource/nanum-gothic';
+import '@fontsource/black-and-white-picture';
+import '@fontsource/gaegu';
+import '@fontsource/hi-melody';
+import '@fontsource/dokdo';
+import '@fontsource/gamja-flower';
+import '@fontsource/cute-font';
+import '@fontsource/gugi';
+import '@fontsource/ibm-plex-sans-kr';
+import '@fontsource/single-day';
+import '@fontsource/kirang-haerang';
+import '@fontsource/stylish';
+import '@fontsource/poor-story';
+import '@fontsource/yeon-sung';
+import '@fontsource/song-myung';
+import '@fontsource-variable/hahmlet';
+import '@fontsource/dongle';
+import '@fontsource/gowun-batang';
+import '@fontsource/gowun-dodum';
+import '@fontsource/bagel-fat-one';
+import '@fontsource/diphylleia';
+import '@fontsource/moirai-one';
+import '@fontsource/orbit';
+import '@fontsource/gasoek-one';
+import '@fontsource/grandiflora-one';
+// 폰트 import
+import * as Swal from "./apis/alert"
 
 
 function App() {
@@ -38,6 +78,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const { userInfo, hompyInfo } = useContext(LoginContext);
   const folder = useSelector((state) => state.folder.folder);
+  const navigate = useNavigate()
 
     return (
         <div>
@@ -54,9 +95,8 @@ function App() {
                 </Route>
 
                 {/* 2. 미니홈피 페이지 */}
-                {hompyInfo && (
                     <Route path="/hompy/:hompyId" >
-                        <Route index element={<Hompy />} />
+                        <Route index  element={<Hompy />}/>
                         <Route path="profile" element={<Profile />} />
                         <Route
                             path="guestbook"
@@ -82,10 +122,12 @@ function App() {
                         <Route path="diary/update/:id" element={<DiaryUpdatePage setUserId={setUserId} />}/>
                         <Route path="setting" element={<HompySetting setUserId={setUserId}/>}/>
                     </Route>
-                )}
+
+
+
                 {/* 3. 어드민 페이지 */}
                 <Route>
-                    {/* <Route path='admin/login' element={<AdminLoginForm />} /> */}
+                    <Route path='admin/login' element={<AdminLoginForm />} />
                     <Route path='/admin' element={<Admin />} />
                 </Route>
             </Routes>

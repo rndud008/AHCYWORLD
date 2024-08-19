@@ -10,7 +10,6 @@ import { LoginContext } from "../../webpage/components/login/context/LoginContex
 import { hompyInfo } from "../../apis/auth";
 
 const Profile = () => {
-  console.log("Profile 실행");
   const { hompyId } = useParams();
   const [hompy, setHompy] = useState({});
   const [profile, setProfile] = useState("");
@@ -38,7 +37,6 @@ const Profile = () => {
     } else {
       // 편집 가능 상태 -> 읽기 전용 상태로 전환 및 프로필 업데이트
       try {
-        console.log("홈피", hompyId);
         const response = await axios.post(
           `http://localhost:8070/hompy/${hompyId}/profile`,
           { profile: profile },
@@ -92,9 +90,6 @@ const Profile = () => {
         }}
       />}
 
-
-        {console.log("hompyinfo ", hompyInfo.id)}
-        {console.log("hompyId ", hompyId)}
         {parseInt(hompyInfo.id) === parseInt(hompyId) && (
           <div className="button-container">
             <button className="profile-btn" onClick={handleProfileUpdate}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPaymentList } from "../../../../apis/auth";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import DataLabelsPlugin from "chartjs-plugin-datalabels"; // DataLabels 플러그인 import
 
@@ -9,11 +9,12 @@ Chart.register(DataLabelsPlugin); // DataLabels 플러그인 등록
 const PaymentStatistics = () => {
     const [payments, setPayments] = useState([]);
     const [paymentSum, setPaymentSum] = useState({});
+    const [highestMonthIndex, setHighestMonthIndex] = useState(null);
 
     const fetchPayments = async () => {
         try {
             const response = await getPaymentList();
-            // console.log("결제리스트: ", response.data);
+
             setPayments(response.data);
         } catch (error) {
             console.error("getPaymentList Error: ", error);
@@ -36,6 +37,10 @@ const PaymentStatistics = () => {
                 sums[key] = (sums[key] || 0) + payment.payment;
             });
             setPaymentSum(sums);
+
+            const maxMonth = Object.keys(sums).reduce((a, b) => (sums[a] > sums[b] ? a : b));
+            const maxMonthIndex = new Date(maxMonth).getMonth();
+            setHighestMonthIndex(maxMonthIndex);
         }
     }, [payments]);
 
@@ -47,22 +52,18 @@ const PaymentStatistics = () => {
             {
                 label: "Monthly Payment History",
                 data: labels.map((_, i) => paymentSum[`2024-${i + 1}`] || 0), // 월별 데이터 추출
-                backgroundColor: "#fff",
+                backgroundColor: labels.map((_, i) => (i === highestMonthIndex ? "#FF6384" : "#9bdbf8")),
                 borderColor: "#5a5a5a",
                 borderWidth: 1,
-                pointBackgroundColor: "#e66e28",
-                pointBorderColor: "#e66e28",
-                pointBorderWidth: 5,
                 datalabels: {
                     color: "#444",
                     display: true,
-                    align: "top",
+                    align: "end",
                     anchor: "end",
                     formatter: (value) => {
-                        // 숫자를 원화 포맷으로 변환
-                        return new Intl.NumberFormat('ko-KR', {
-                            style: 'currency',
-                            currency: 'KRW',
+                        return new Intl.NumberFormat("ko-KR", {
+                            style: "currency",
+                            currency: "KRW",
                         }).format(value);
                     },
                     font: {
@@ -84,9 +85,9 @@ const PaymentStatistics = () => {
                     label: function (tooltipItem) {
                         const month = labels[tooltipItem.dataIndex];
                         const amount = tooltipItem.raw;
-                        return `${month}: ${new Intl.NumberFormat('ko-KR', {
-                            style: 'currency',
-                            currency: 'KRW',
+                        return `${month}: ${new Intl.NumberFormat("ko-KR", {
+                            style: "currency",
+                            currency: "KRW",
                         }).format(amount)}`;
                     },
                 },
@@ -121,9 +122,9 @@ const PaymentStatistics = () => {
                 },
                 ticks: {
                     callback: function (value) {
-                        return new Intl.NumberFormat('ko-KR', {
-                            style: 'currency',
-                            currency: 'KRW',
+                        return new Intl.NumberFormat("ko-KR", {
+                            style: "currency",
+                            currency: "KRW",
                         }).format(value);
                     },
                 },
@@ -133,9 +134,9 @@ const PaymentStatistics = () => {
 
     return (
         <>
-            <div className='chart-container'>
-                <h2>결제내역</h2>
-                <div className='line-chart'>
+            <div className='payment-chart-container'>
+                <h2>결제현황</h2>
+                <div className='payment-line-chart'>
                     <Line data={data} options={options} />
                 </div>
             </div>

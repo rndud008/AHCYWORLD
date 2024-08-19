@@ -91,7 +91,7 @@ class ItemRepositoryTest {
 
         String[] skinarr = {"새초롬마루스킨", "망그라진곰스킨", "마루스킨", "라이언스킨",
                 "짱구스킨", "모험을떠나요스킨", "렌고쿠스킨", "토토로스킨", "블리치스킨",
-                "포뇨스킨", "쿠로미스킨", "헬로키티스킨", "탄지로스킨", "당근포차코스킨"
+                "포뇨스킨", "쿠로미스킨", "헬로키티스킨", "탄지로스킨", "`당근포차코스킨"
                 , "따봉포차코스킨", "기류스킨","꽃구경스킨","떡잎마을방범대스킨","원피스스킨"};
 
 
@@ -131,43 +131,29 @@ class ItemRepositoryTest {
 
     @Test
     void font() {
-        Item itme = Item.builder()
-                .itemName("폰트1")
-                .itemType("글꼴")
-                .sourceName("Nanum Pen Script")
-                .fileName("Nanum Pen Script")
-                .price(50L)
-                .status("visible")
-                .build();
 
-        Item itme1 = Item.builder()
-                .itemName("폰트2")
-                .itemType("글꼴")
-                .sourceName("Pacifico")
-                .fileName("Pacifico")
-                .price(50L)
-                .status("visible")
-                .build();
+        String[] arrfont = {"Sunflower", "Noto Sans KR Variable", "Gothic A1", "Black Han Sans", "Noto Serif KR Variable",
+                "Nanum Gothic Coding", "Nanum Brush Script", "Jua", "Nanum Pen Script", "Do Hyeon",
+                "Nanum Myeongjo", "East Sea Dokdo", "Nanum Gothic", "Black And White Picture", "Gaegu",
+                "Hi Melody", "Dokdo", "Gamja Flower", "Cute Font", "Gugi",
+                "IBM Plex Sans KR", "Single Day", "Kirang Haerang", "Stylish", "Poor Story",
+                "Yeon Sung", "Song Myung", "Hahmlet Variable", "Dongle", "Gowun Batang",
+                "Gowun Dodum","Bagel Fat One","Diphylleia","Moirai One","Orbit",
+                "Gasoek One","Grandiflora One"
+        };
 
-        Item itme2 = Item.builder()
-                .itemName("폰트3")
-                .itemType("글꼴")
-                .sourceName("Permanent Marker")
-                .fileName("Permanent Marker")
-                .price(50L)
-                .status("visible")
-                .build();
+        for (int i = 0; i < arrfont.length; i++) {
+            Item item = Item.builder()
+                    .itemName(arrfont[i]+"폰트")
+                    .itemType("글꼴")
+                    .sourceName(arrfont[i])
+                    .fileName(arrfont[i])
+                    .price(50L)
+                    .status("visible")
+                    .build();
 
-        Item itme3 = Item.builder()
-                .itemName("폰트4")
-                .itemType("글꼴")
-                .sourceName("Source Code Pro")
-                .fileName("Source Code Pro")
-                .price(50L)
-                .status("visible")
-                .build();
-
-        itemRepository.saveAllAndFlush(List.of(itme, itme1, itme2, itme3));
+            itemRepository.saveAndFlush(item);
+        }
     }
 
     @Test

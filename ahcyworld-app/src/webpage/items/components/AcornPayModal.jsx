@@ -9,7 +9,7 @@ import { userInfo } from '../../../apis/auth';
 import PaymentModal from '../../payment/PaymentModal';
 import acorn from "../../../upload/acorn.png";
 
-const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, userInfo }) => {
+const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, userInfo, setIsDelete, setTotalAcorn, setAllCheckBox }) => {
     const [payItems, setPayItems] = useState([])
     const navigate = useNavigate();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -23,10 +23,9 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
     };
     useEffect(() => {
         if (isOpen) {
-            console.log(userInfo)
             const params = new URLSearchParams();
             let updateAcorn = 0;
-            console.log("배열의 길이 : " + selectItem.length);
+            
             selectItem.forEach(item => params.append('itemList', item));
             axios({
                 method: 'GET',
@@ -68,7 +67,7 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
                 }).then((response) => {
                     const { data, status } = response;
                     if (status === 200) {
-                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => navigate(`/hompy/${hompyInfo.id}`), onClose)
+                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => openhompy(), () => { setIsDelete(true); setAllCheckBox(false); setTotalAcorn(0); onClose(); })
                     }
                 });
             } else {
@@ -83,6 +82,19 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
     const alertPayed = () => {
         itemconfirm("상품 구매", "구매하시겠습니까?", "question", () => payedItem(), onClose)
     }
+
+    const openhompy = () => {
+        window.open(
+            `http://localhost:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
+            "_blank", // 새로운 창을 엽니다.
+            "width=1700,height=850,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+        );
+        onClose();
+        setIsDelete(true);
+        setAllCheckBox(false);
+        setTotalAcorn(0);
+        navigate("/");
+    };
 
     return (
         <div className='acornpay-modal-overlay'>

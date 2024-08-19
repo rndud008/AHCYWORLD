@@ -8,20 +8,6 @@
   z-index: 1;
 }
 
-/* .cover-image {
-  width: 350px;
-  display: flex;
-  justify-content: center;
-  margin :10px 0;
-  outline: 1px solid lawngreen;
-}
-
-.cover-image img {
-  width: 430px; 
-  height: 100px;
-  border-radius: 5px;
-} */
-
 .track-info {
   width: 100%;
   /* margin-bottom: 10px; */
@@ -82,7 +68,7 @@ bgm 모달
   padding: 10px;
   border-radius: 8px;
   width: 100%; /* 전체 너비 */
-  max-width: 400px; /* 최대 너비 제한 */
+  width: 380px; /* 최대 너비 제한 */
   max-height: 660px; /* 최대 높이 설정 */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 아래쪽 그림자 */
   text-align: center;
