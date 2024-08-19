@@ -49,7 +49,7 @@ const LoginContextProvider = ({ children }) => {
             if (response.status === 401 || response.data === "UNAUTHORIZED") {
                 console.log("JWT(accessToken)이 만료되었거나 인증에 실패했습니다.");
                 logoutSetting();
-                if (isAuthPage) navigate("/login");
+                if (isAuthPage) navigate("/");
                 return;
             }
         } catch (error) {
@@ -68,48 +68,17 @@ const LoginContextProvider = ({ children }) => {
 
         // 인증성공
         loginSetting(data, accessToken);
+        data = response.data;
+        loginSetting(data, accessToken);
+
+        try {
+            response = await auth.hompyInfo();
             data = response.data;
-            loginSetting(data, accessToken);
-
-            try {
-                response = await auth.hompyInfo();
-                data = response.data;
-                setHompyInfo(data);
-                localStorage.setItem("hompyInfo", JSON.stringify(data));
-            } catch (error) {
-                console.error("HompyInfo Error: ", error);
-            }
-        // } catch (error) {
-        //     console.error(`Error during login check: ${error}`);
-        //     logoutSetting();
-        //     if (isAuthPage) navigate("/login");
-        // }
-        // 응답 실패시
-        // if (!response) return;
-
-        // // console.log("JWT (accessToken)으로 사용자 인증 정보 요청 성공");
-
-        // data = response.data;
-        // // console.log(`data: ${data}`);
-
-        // // 인증 실패
-        // if (data === "UNAUTHORIZED" || response.status === 401) {
-        //     console.log("JWT(accessToken)이 만료되었거나 인증에 실패했습니다.");
-        //     return;
-        // }
-
-        // // 인증성공
-        // loginSetting(data, accessToken);
-
-        // try {
-        //     response = await auth.hompyInfo();
-        //     data = response.data;
-
-        //     setHompyInfo(data);
-        //     localStorage.setItem("hompyInfo", JSON.stringify(data));
-        // } catch (error) {
-        //     console.error("HompyInfo Error: ", error);
-        // }
+            setHompyInfo(data);
+            localStorage.setItem("hompyInfo", JSON.stringify(data));
+        } catch (error) {
+            console.error("HompyInfo Error: ", error);
+        }
     };
 
     useEffect(() => {
@@ -117,7 +86,6 @@ const LoginContextProvider = ({ children }) => {
     }, []);
 
     const login = async (username, password, rememberId) => {
-
         // username 저장
         if (rememberId) Cookies.set("rememberId", username);
         else Cookies.remove("rememberId");
@@ -145,7 +113,6 @@ const LoginContextProvider = ({ children }) => {
     };
 
     const adminLogin = async (username, password, rememberId) => {
-
         // username 저장
         if (rememberId) Cookies.set("rememberId", username);
         else Cookies.remove("rememberId");

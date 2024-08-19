@@ -156,10 +156,7 @@ const MyBox = () => {
 
             <div className='middle'>
                 <div className='minimi-box'>
-                    <img
-                        src={minimiPicture}
-                        alt='미니홈피 이미지'
-                    />
+                    <img src={minimiPicture} alt='미니홈피 이미지' />
                 </div>
                 <div className='info-box'>
                     <ul>
