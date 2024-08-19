@@ -30,7 +30,6 @@ const PostDetail = () => {
     detailPage(dispatch, hompyId, postName, folderId, postId, navigate);
     commentListAxios(dispatch, postId, postName);
   }, []);
-  const [color,setColor] = useColor('#561ecb')
 
   return (
     <>
