@@ -15,6 +15,11 @@ export const authInfo = () => api.get(`${SERVER_HOST}/auth`);
 
 export const join = (data) => api.post(`${SERVER_HOST}/user/join`, data);
 
+export const getUserInfoByUsername = (username) =>
+    api.get(`${SERVER_HOST}/user/userinfo`, {
+        params: { username },
+    });
+
 export const checkUsernameAvailable = (username) => {
     return api.get(`${SERVER_HOST}/user/check-username`, {
         params: { username },
@@ -47,9 +52,9 @@ export const checkFriendShip = (username, friendUsername) => {
     });
 };
 
-export const myFriendRequests = (username,action="") => {
+export const myFriendRequests = (username, action = "") => {
     return api.get(`${SERVER_HOST}/friend/friend-requests`, {
-        params: { username,action },
+        params: { username, action },
     });
 };
 
@@ -95,7 +100,6 @@ export const addInfo = (username, gender, birthDay) => {
 };
 
 export const resetHompy = (hompyId) => {
-
     return api.post(
         `${SERVER_HOST}/hompy/reset`,
         { hompyId: hompyId },

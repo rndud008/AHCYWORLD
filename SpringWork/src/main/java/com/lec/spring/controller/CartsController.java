@@ -33,10 +33,10 @@ public class CartsController {
         return new ResponseEntity<>(cartsService.cartsList(id), HttpStatus.OK);
     }
 
-//    @GetMapping("/sold-list")
-//    public List<Carts> cartsSoldList(){
-//        return cartsService.soldItemList();
-//    }
+    @GetMapping("/sold-list")
+    public List<Carts> cartsSoldList(){
+        return cartsService.soldItemList();
+    }
 
     @GetMapping("/{id}/items")
     @CrossOrigin
