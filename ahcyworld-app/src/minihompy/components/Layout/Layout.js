@@ -4,7 +4,7 @@ import Left from "../../../minihompy/components/Layout/Left";
 import Right from "../../../minihompy/components/Layout/Right";
 import "./css/Layout.css";
 import axios from "axios";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Menu from "../menu/Menu";
 import BgmPlayer from "../musicPlayer/BgmPlayer";
 import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
@@ -32,6 +32,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   const hompyId = hompy?.id;
   const userId = user?.id;
   const userCheck = parseInt(hompyId) === hompyInfo.id;
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -73,7 +74,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
     };
     increaseVisitCount();
   }, [user]);
-  
+
   useEffect(() => {
     if (hompyId) {
       axios
@@ -92,6 +93,12 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
           );
         });
     }
+
+    if(hompyInfo.id === undefined){
+      alert('로그인이 필요합니다')
+      console.log('location',location)
+      return navigate('/')
+  }
   }, [userId, hompyInfo]);
 
   const hompyTitleChangeValue = (e) => {
@@ -105,6 +112,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       setShow(true);
     }
   }
+
   const outFocus = ()=>{
 
     setTimeout(()=>{
@@ -145,9 +153,12 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
     return valid;
   }
 
+
+
   return (
     <>
       {/* 배경 이미지 */}
+      {hompyInfo.id &&
       <div
         className="background-image"
         style={{
@@ -220,6 +231,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
           <BgmPlayer />
         </div>
       </div>
+      }
     </>
   );
 };

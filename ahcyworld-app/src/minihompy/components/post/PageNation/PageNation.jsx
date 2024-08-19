@@ -31,7 +31,6 @@ const PageNation = () => {
     pageAndPostList.endpage
   );
 
-  // const folderId = pageAndPostList.folder?.id;
 
   const dispatch = useDispatch();
 

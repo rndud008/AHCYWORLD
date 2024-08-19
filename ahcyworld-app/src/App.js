@@ -95,7 +95,8 @@ function App() {
                 </Route>
 
                 {/* 2. 미니홈피 페이지 */}
-                    <Route path="/hompy/:hompyId" element={<Hompy />} >
+                    <Route path="/hompy/:hompyId" >
+                        <Route index  element={<Hompy />}/>
                         <Route path="profile" element={<Profile />} />
                         <Route
                             path="guestbook"

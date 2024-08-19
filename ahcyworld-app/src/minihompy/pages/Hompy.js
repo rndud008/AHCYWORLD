@@ -8,8 +8,7 @@ const Hompy = ({ setUserId }) => {
     const { hompyId } = useParams();
     const [hompy, setHompy] = useState({});
     const {hompyInfo, userInfo} = useContext(LoginContext);
-    const navigate = useNavigate();
-    const location = useLocation();
+
 
     // 특정 유저의 미니홈피 url 경로유지
     // useEffect(() => {
@@ -17,11 +16,6 @@ const Hompy = ({ setUserId }) => {
     // }, [userId, setUserId]);
 
     useEffect(() => {
-        if(hompyInfo.id === undefined){
-            alert('로그인이 필요합니다')
-            console.log('location',location)
-            return navigate('/')
-        }
 
         if(hompyInfo.id){
             axios
@@ -40,9 +34,8 @@ const Hompy = ({ setUserId }) => {
     return (
         <>
         {/* // props 로 hompy 데이터 전달 */}
-        {hompyInfo.id &&
+
             <Layout hompy={hompy} user={hompy.user} />
-        }
         </>
     );
 };
