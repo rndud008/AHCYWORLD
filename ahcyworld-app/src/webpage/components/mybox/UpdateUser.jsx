@@ -20,6 +20,9 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState("");
+    const [nameError, setNameError] = useState("");
+    const [birthDayError, setBirthDayError] = useState("");
+    const [genderError, setGenderError] = useState("");
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*\d).{8,16}$/;
 
     useEffect(() => {
@@ -37,6 +40,12 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
+        setUpdatedUserInfo((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        // Validation
         if (name === "password") {
             if (!passwordRegex.test(value)) {
                 setPasswordError(
@@ -45,12 +54,13 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
             } else {
                 setPasswordError("");
             }
+        } else if (name === "name") {
+            setNameError(value ? "" : "이름을 입력하세요.");
+        } else if (name === "birthDay") {
+            setBirthDayError(new Date(value) > new Date() ? "생일은 오늘 날짜보다 이전이어야 합니다." : "");
+        } else if (name === "gender") {
+            setGenderError(value ? "" : "성별을 선택하세요.");
         }
-
-        setUpdatedUserInfo((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
     };
 
     const handleSaveUserInfo = async () => {
@@ -96,16 +106,46 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
         }
     };
 
+    const validateForm = () => {
+        let isValid = true;
+
+        if (!updatedUserInfo.name) {
+            setNameError("이름을 입력하세요.");
+            isValid = false;
+        } else {
+            setNameError("");
+        }
+
+        if (!passwordRegex.test(updatedUserInfo.password)) {
+            setPasswordError("비밀번호는 8-16자의 길이로 영문자, 숫자 및 특수문자를 포함해야 합니다.");
+            isValid = false;
+        } else {
+            setPasswordError("");
+        }
+
+        if (new Date(updatedUserInfo.birthDay) > new Date()) {
+            setBirthDayError("생일은 오늘 날짜보다 이전이어야 합니다.");
+            isValid = false;
+        } else {
+            setBirthDayError("");
+        }
+
+        if (!updatedUserInfo.gender) {
+            setGenderError("성별을 선택하세요.");
+            isValid = false;
+        } else {
+            setGenderError("");
+        }
+
+        return isValid;
+    };
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        const form = e.currentTarget;
-        if (!form.checkValidity() || passwordError) {
-            e.stopPropagation();
-        } else {
+        if (validateForm()) {
             handleSaveUserInfo();
         }
-        form.classList.add("was-validated");
     };
 
     const togglePasswordVisibility = () => {
@@ -118,7 +158,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                 <Modal.Header closeButton>
                     <Modal.Title>내 정보 수정</Modal.Title>
                 </Modal.Header>
-                <Form onSubmit={handleFormSubmit}>
+                <Form noValidate onSubmit={handleFormSubmit}>
                     <Modal.Body>
                         <Form.Group controlId="formName">
                             <Form.Label>이름</Form.Label>
@@ -127,11 +167,10 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 name="name"
                                 value={updatedUserInfo.name}
                                 onChange={handleInputChange}
-                                required
-                                isInvalid={!updatedUserInfo.name}
+                                isInvalid={!!nameError}
                             />
                             <Form.Control.Feedback type="invalid">
-                                이름을 입력하세요.
+                                {nameError}
                             </Form.Control.Feedback>
                         </Form.Group>
 
@@ -154,7 +193,6 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                     value={updatedUserInfo.password}
                                     onChange={handleInputChange}
                                     placeholder="비밀번호를 입력하세요"
-                                    required
                                     isInvalid={!!passwordError}
                                 />
                                 <Button
@@ -166,7 +204,7 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 </Button>
                             </div>
                             <Form.Control.Feedback type="invalid">
-                                {passwordError || "비밀번호를 입력해주세요."}
+                                {passwordError}
                             </Form.Control.Feedback>
                         </Form.Group>
 
@@ -192,6 +230,9 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 onChange={handleInputChange}
                                 inline
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {genderError}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="formBirthday">
@@ -201,11 +242,10 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                                 name="birthDay"
                                 value={updatedUserInfo.birthDay}
                                 onChange={handleInputChange}
-                                required
-                                isInvalid={!updatedUserInfo.birthDay}
+                                isInvalid={!!birthDayError}
                             />
-                            <Form.Control.Feedback>
-                                생일을 입력해주세요.
+                            <Form.Control.Feedback type="invalid">
+                                {birthDayError || "생일을 입력해주세요."}
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Modal.Body>
