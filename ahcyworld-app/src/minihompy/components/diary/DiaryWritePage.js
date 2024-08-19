@@ -7,6 +7,7 @@ import * as Swal from "../../../apis/alert";
 import Layout from "../Layout/Layout";
 import moment from "moment";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import '../css/DiaryWritePage.css';
 
 const DiaryWritePage = () => {
     const location = useLocation();
@@ -73,7 +74,7 @@ const DiaryWritePage = () => {
     return (
         <>
         <Layout hompy={hompyInfo} user={hompyInfo.user}>
-            <div className="container d-flex justify-content-center align-items-center min-vh-100">
+            <div className="container d-flex justify-content-center align-items-center min-vh-80">
                 <div className="w-50">
                     <h1 className="mb-4 text-center">다이어리 작성</h1>
                     <Form
@@ -113,13 +114,13 @@ const DiaryWritePage = () => {
                         <div className="d-flex justify-content-end">
                             <Button
                                 type="submit"
-                                className="btn btn-primary me-2"
+                                className="btn diarywirteok-btn"
                             >
-                                제출
+                                작성
                             </Button>
                             <Button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="btn diarywriteno-btn"
                                 onClick={() => navigate(`/hompy/${hompyInfo.id}/diary`)}
                             >
                                 취소
