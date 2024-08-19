@@ -115,8 +115,10 @@ const Right = ({ user,hompy }) => {
     }
   };
 
-  const subjectClick = (postName, folderId) => {
-    navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}`);
+  const subjectClick = (postName, folderId, postId) => {
+    postName.includes('게시판') && navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}/detail/${postId}`) ||
+    !postName.includes('게시판') && navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}`)
+    
   };
 
   const friendReviewValue = (e) => {
@@ -201,7 +203,7 @@ const Right = ({ user,hompy }) => {
       alert('삭제완료.');
     }
   }
-
+  
   return (
     <div className="right-container">
       <div className="content-section">
@@ -216,7 +218,7 @@ const Right = ({ user,hompy }) => {
                   <li
                     className="newListItem"
                     onClick={() =>
-                      subjectClick(item.folder.boardType.name, item.folder.id)
+                      subjectClick(item.folder.boardType.name, item.folder.id, item.id)
                     }
                   >
                     <span>[{item.folder.boardType.name}]&nbsp;&nbsp;</span>

@@ -13,7 +13,6 @@ const SearchPage = () => {
   const params = new URLSearchParams(location.search);
 
   const actionQuery = params.get("action");
-
   const searchQuery = params.get("search");
   const dispatch = useDispatch();
   const navigate = useNavigate();

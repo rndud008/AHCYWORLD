@@ -39,11 +39,11 @@ function FolderReducer(state = initialState, action) {
           ...state,
           folder: state.folderList.find(
             (item) => parseInt(item.id) === parseInt(payload.folderId)
-          ),
+          )|| null,
           createFolder: state.folderList.find(
             (item) => parseInt(item.id) === parseInt(payload.folderId)
-          ),
-        } || null
+          )|| null,
+        } 
       );
     case "BEFORE_CREATE_FOLDER_STATE":
       return {

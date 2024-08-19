@@ -14,7 +14,6 @@ function getFolderListAxios(hompyId, postName) {
       );
 
       const { data } = response;
-
       dispatch({ type: "GET_FOLDER_LIST", payload: { data } });
 
     } catch (e) {
