@@ -21,9 +21,6 @@ const MyBox = () => {
     const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
-    // console.log("userInfo : ", userInfo)
-    // console.log("setUserInfo : ", setUserInfo)
-
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     // 알림 모달창
@@ -64,8 +61,6 @@ const MyBox = () => {
     };
 
     const openEditModal = () => {
-        // console.log("userInfo : ", userInfo);
-        // console.log("hompyInfo : ", hompyInfo);
         setIsEditModalOpen(true);
     };
 
@@ -85,19 +80,11 @@ const MyBox = () => {
         navigate(`/cart/${userInfo.id}`);
     };
 
-    // const handleUserInfoUpdate = (updateUser) => {
-    //     if (typeof setUserInfo === 'function') {
-    //         setUserInfo(updateUser);
-    //     } else {
-    //         console.error("setUserInfo은 함수가 아님");
-    //     }
-    // }
-
     useEffect(() => {
-        // console.log(hompyInfo);
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);
+                setFriendRequest(response.data);
                 let requestCnt = 0;
 
                 response.data.forEach((request) => {
@@ -109,11 +96,6 @@ const MyBox = () => {
                 });
 
                 setFriendRequestCnt(requestCnt);
-                // console.log("내 이름: ",userInfo.username);
-                // console.log("요청응답: ", response.data);
-                // console.log("보낸사람 이름: ", myResponse.senderName);
-                // console.log("친구요청 개수: ", myResponse.length);
-                // console.log("내가 보낸거아냐?? : ", response.data.senderName === userInfo.username);
             } catch (error) {
                 console.error("myFriendRequests Error: ", error);
             }
@@ -135,15 +117,11 @@ const MyBox = () => {
                 const messageResponse = await getMessageFromAdmin(userInfo.id);
                 msgCount += messageResponse.data.length;
 
-                console.log(msgCount);
                 setMessageCnt(msgCount);
             } catch (error) {
-                console.log("에러!!", error);
+                console.error("에러!!", error);
             }
         };
-
-        // console.log(userInfo.username);
-
         fetchMessage();
     }, [isMessageModalOpen]);
 
@@ -181,11 +159,6 @@ const MyBox = () => {
                     <img
                         src={minimiPicture}
                         alt='미니홈피 이미지'
-                        // style={{
-                        //     width: "100%",
-                        //     height: "100%",
-                        //     objectFit: "cover",
-                        // }}
                     />
                 </div>
                 <div className='info-box'>
@@ -207,15 +180,6 @@ const MyBox = () => {
                             onClose={closeFriendRequestModal}
                             onRequestUpdate={handleFriendRequestUpdate}
                         />
-
-                        {/* <li onClick={openModal} className="acorn-status">
-                            내 도토리
-                            <img src={acorn} />
-                            {isLogin ? (
-                                <span>{userInfo.acorn}</span>
-                            ) : (
-                                <span>0</span>
-                            )} */}
                         <li className='acorn-status'>
                             <span className='my-acorn'>
                                 <img src={acorn} alt='' />

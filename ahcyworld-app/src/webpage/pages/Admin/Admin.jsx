@@ -28,7 +28,6 @@ const Admin = () => {
     const [loading, setLoading] = useState(true); // 관리자 권한이 없는경우 로딩 상태체크를 위함
 
     const toggleMenu = (menu) => {
-        // console.log(menu);
         setOpenMenu(openMenu === menu ? null : menu);
     };
 

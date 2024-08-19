@@ -67,8 +67,6 @@ const JoinForm = ({ join }) => {
 
         const { username, password, email, name, gender, birthDay } = formData;
 
-        console.log("입력값: ", username, password, name, email, gender, birthDay);
-
         const validate = () => {
             const newErrors = {};
             let hasError = false;

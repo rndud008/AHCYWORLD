@@ -14,7 +14,7 @@ const ItemCategoryStatistics = () => {
         const fetchCarts = async () => {
             try {
                 const response = await soldItemList();
-                // console.log(response.data);
+
                 const typeCounts = response.data.reduce((acc, cart) => {
                     const itemType = cart.item.itemType;
                     if (acc[itemType]) {

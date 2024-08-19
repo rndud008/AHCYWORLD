@@ -39,7 +39,7 @@ const DiaryModal = ({
         }
     }
 
-    // console.log("diaryContent:", diaryContent);
+
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>

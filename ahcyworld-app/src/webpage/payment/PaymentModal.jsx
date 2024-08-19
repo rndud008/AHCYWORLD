@@ -45,7 +45,6 @@ const PaymentModal = ({ isOpen, onClose }) => {
                 url: `${SERVER_HOST}/friend/myfriends`,
                 params: { username: userInfo.username }
             }).then(response => {
-                console.log("내 친구들: ", response.data)
                 setFriends(response.data);
 
             })

@@ -44,6 +44,7 @@ const HompySkin = () => {
     let hompy = hompyInfo;
     hompy.miniHompySkin = selectedSkin;
 
+  try{  
     const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`, hompy, {
       headers: {
         'Authorization':'Bearer ' +Cookies.get('accessToken')
@@ -52,11 +53,31 @@ const HompySkin = () => {
 
     const {data , status} = response;
 
-    if(status === 200) {
-
-      setHompyInfo(data)
+    if (status === 200) {
+      setHompyInfo(data);
+      Swal.fire({
+        icon: "success",
+        title: "성공!",
+        text: "스킨이 변경되었습니다.",
+        confirmButtonText: "확인",
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "실패",
+        text: "업데이트 중 오류가 발생했습니다.",
+        confirmButtonText: "확인",
+      });
     }
-  };
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "실패",
+      text: "업데이트 중 오류가 발생했습니다.",
+      confirmButtonText: "확인",
+    });
+  }
+};
 
   return (
   <>

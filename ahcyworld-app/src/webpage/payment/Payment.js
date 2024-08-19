@@ -32,9 +32,8 @@ const Payment = (user, acorns, navigatorFunction, friendData) => {
                 acornCnt: acorns * 1,
             };
             if (response.success) {
-                console.log("결제 성공:", savePayment);
-                // 성공 시 처리 로직
 
+                // 성공 시 처리 로직
                 axios({
                     method: "POST",
                     url: `${SERVER_HOST}/payment/save`,

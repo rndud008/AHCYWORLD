@@ -14,7 +14,7 @@ const PaymentStatistics = () => {
     const fetchPayments = async () => {
         try {
             const response = await getPaymentList();
-            // console.log("결제리스트: ", response.data);
+
             setPayments(response.data);
         } catch (error) {
             console.error("getPaymentList Error: ", error);

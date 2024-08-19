@@ -22,10 +22,6 @@ const Menu = () => {
   const dispatch = useDispatch();
   const hompy = useSelector((state) => state.hompy.hompy);
 
-  console.log('hompy?',hompy)
-  console.log('hompyid',hompyId)
-  console.log('hompinfo',hompyInfo)
-
   // 메뉴 설정 가져오기
   useEffect(() => {
     axios

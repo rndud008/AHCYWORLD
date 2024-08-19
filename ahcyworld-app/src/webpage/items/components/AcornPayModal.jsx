@@ -23,10 +23,9 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
     };
     useEffect(() => {
         if (isOpen) {
-            console.log(userInfo)
             const params = new URLSearchParams();
             let updateAcorn = 0;
-            console.log("배열의 길이 : " + selectItem.length);
+            
             selectItem.forEach(item => params.append('itemList', item));
             axios({
                 method: 'GET',

@@ -51,7 +51,6 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
             ...prev,
             [name]: value,
         }));
-        // console.log(`${name} updated to ${value}`);
     };
 
     const handleSaveUserInfo = async () => {
@@ -65,7 +64,6 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                     },
                 }
             );
-            // console.log("울랄라", response.data);
 
             const newUser = response.data;
 
