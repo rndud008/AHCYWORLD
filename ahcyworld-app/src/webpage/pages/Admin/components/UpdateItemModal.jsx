@@ -87,7 +87,7 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
                 <h4>판매 상태</h4>
                 <div >
                     <div>
-                        <input type="radio" name="status" id="status1" onChange={(e) => changeValue(e)} value="visible" checked={item.status === 'visible'} />
+                        <input type="radio"className='itemname-input' name="status" id="status1" onChange={(e) => changeValue(e)} value="visible" checked={item.status === 'visible'} />
                         <label htmlFor="status1">활성화</label>
                     </div>
                     <div>
