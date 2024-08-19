@@ -79,11 +79,11 @@ const LoginContextProvider = ({ children }) => {
             } catch (error) {
                 console.error("HompyInfo Error: ", error);
             }
-        } catch (error) {
-            console.error(`Error during login check: ${error}`);
-            logoutSetting();
-            if (isAuthPage) navigate("/login");
-        }
+        // } catch (error) {
+        //     console.error(`Error during login check: ${error}`);
+        //     logoutSetting();
+        //     if (isAuthPage) navigate("/login");
+        // }
         // 응답 실패시
         // if (!response) return;
 

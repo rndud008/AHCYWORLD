@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const PostDetail = () => {
-  const { userInfo, hompyInfo } = useContext(LoginContext);
+  const { userInfo, hompyInfo, roles } = useContext(LoginContext);
   const { hompyId, postName, folderId, postId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,9 +45,10 @@ const PostDetail = () => {
             >
               목록
             </Button>
-            {parseInt(hompyId) === hompyInfo?.id && (
+            {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin)&& (
               <>
                 <Button onClick={() => handleOpen(dispatch)}>이동</Button>
+
                 <Button
                   onClick={() =>
                     navigate(
@@ -57,6 +58,7 @@ const PostDetail = () => {
                 >
                   수정
                 </Button>
+                
                 <Button
                   onClick={() =>
                     postDelete(

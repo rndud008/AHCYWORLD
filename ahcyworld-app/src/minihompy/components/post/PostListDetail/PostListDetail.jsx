@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 const PostListDetail = () => {
   const { postName, hompyId } = useParams();
-  const { hompyInfo } = useContext(LoginContext);
+  const { hompyInfo , roles} = useContext(LoginContext);
   const pageAndPostList = useSelector((state) => state.post.pageAndPostList);
   const folder = useSelector((state) => state.folder.folder);
 
@@ -16,8 +16,8 @@ const PostListDetail = () => {
     <>
       <Container className="postContainer">
         <div className="postListHeader">
-          {folder && <h4>{folder.name}</h4>}
-          {parseInt(hompyId) === hompyInfo?.id && (
+          {folder && <h4>{folder.name}</h4>} 
+          {(parseInt(hompyId) === hompyInfo?.id) && (
             <>
               {folder && (
                 <div>

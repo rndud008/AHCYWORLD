@@ -14,8 +14,8 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "./Comment.style.css"
 
 const Comment = () => {
-  const { userInfo } = useContext(LoginContext);
-  const { postId, postName } = useParams();
+  const { userInfo, roles, hompyInfo } = useContext(LoginContext);
+  const { postId, postName, hompyId } = useParams();
   const dispatch = useDispatch();
   const commentList = useSelector((state) => state.comment.commentList);
   const show = useSelector((state) => state.comment.show);
@@ -57,7 +57,7 @@ const Comment = () => {
                 <div className="postDetailComment">
                   <p>{item.user.name}</p>
                   <p>{item.createAt}</p>
-                  {item.user.id === userInfo.id && (
+                  {(item.user.id === userInfo.id || roles.isAdmin || hompyInfo.id === parseInt(hompyId)) && (
                     <Button
                     onClick={() =>
                       commentDeleteAxios(dispatch, item.id, postId, postName)

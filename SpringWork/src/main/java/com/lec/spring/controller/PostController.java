@@ -116,8 +116,11 @@ public class PostController {
 
         if (action.equals("null")) {
             boolean hompyCheck = hompyId.equals(hompy.getId());
-            if (!hompyCheck) {
+            boolean adminCheck = hompy.getUser().getRole().contains("ROLE_ADMIN");
+            if (!hompyCheck && !adminCheck) {
+
                 return new ResponseEntity<>("Hompy ID 불일치", HttpStatus.BAD_REQUEST);
+
             } // status 400
 
         }
@@ -385,17 +388,17 @@ public class PostController {
             hompy = hompyService.findById(hompyId);
             Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
 
-            if(friend == null) {
+            if (friend == null) {
                 aciton = "OTHER";
-            }else {
+            } else {
                 aciton = "FRIEND";
             }
-        }else {
+        } else {
             aciton = "OWNER";
             hompy = tourUser;
         }
 
-        return new ResponseEntity<>(postService.hompyNewList(hompy,aciton), HttpStatus.OK);
+        return new ResponseEntity<>(postService.hompyNewList(hompy, aciton), HttpStatus.OK);
     }
 
     @GetMapping("/{hompyId}/infotable")
@@ -408,17 +411,17 @@ public class PostController {
             hompy = hompyService.findById(hompyId);
             Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
 
-            if(friend == null) {
+            if (friend == null) {
                 aciton = "OTHER";
-            }else {
+            } else {
                 aciton = "FRIEND";
             }
-        }else {
+        } else {
             aciton = "OWNER";
-            hompy=tourUser;
+            hompy = tourUser;
         }
 
-        return new ResponseEntity<>(postService.hompyInfoPostCount(hompy,aciton), HttpStatus.OK);
+        return new ResponseEntity<>(postService.hompyInfoPostCount(hompy, aciton), HttpStatus.OK);
     }
 
 }
