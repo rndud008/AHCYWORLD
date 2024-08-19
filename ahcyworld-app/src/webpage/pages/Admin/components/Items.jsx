@@ -5,6 +5,7 @@ import ItemPagination from '../../../items/components/ItemPagination';
 import { Button } from 'react-bootstrap';
 import '../css/Items.css';
 import UpdateItemModal from './UpdateItemModal';
+import { BsSearch } from 'react-icons/bs';
 
 const Items = () => {
     const [itemType, setItemType] = useState("all");
@@ -15,7 +16,22 @@ const Items = () => {
     const [item, setItem] = useState({});
     const [isUpdate, setIsUpdate] = useState(false)
     const [searchValue, setSearchValue] = useState("");
-    
+
+    const [btnColors, setBtnColors] = useState({
+        all: 'white',
+        allColor: 'black',
+        music: '#0d6efd',
+        musicColor: 'white',
+        font: '#0d6efd',
+        fontColor: 'white',
+        minimi: '#0d6efd',
+        minimiColor: 'white',
+        miniroom: '#0d6efd',
+        miniroomColor: 'white',
+        skin: '#0d6efd',
+        skinColor: 'white'
+    });
+
 
     const updateItemopenModal = () => {
         setIsUpdateItemModalOpen(true);
@@ -80,7 +96,7 @@ const Items = () => {
     }
 
     const handleKeyDown = (e) => {
-        if(e.key === 'Enter'){
+        if (e.key === 'Enter') {
             handleSearch();
         }
     }
@@ -89,20 +105,49 @@ const Items = () => {
         searchItem();
     }
 
+    const handleChangeColor = (e) => {
+        const clickedButton = e.target.name;
+        // 모든 버튼의 색을 초기화
+        const newColors = Object.keys(btnColors).reduce((colors,key,index) => {
+            if(index%2 === 0){
+                colors[key] = '#0d6efd';
+            }else{
+                colors[key] = 'white'
+            }
+            return colors;
+        }, {});
+        // 클릭된 버튼의 색을 white로 변경
+        newColors[clickedButton] = 'white';
+        newColors[clickedButton+'Color'] = 'black'
+
+        setBtnColors(newColors);
+    };
 
     return (
         <>
             <div >
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '40px' }}>
-                    <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("all"); setSearchValue(""); setIsUpdate(true) }} >전체</button>
-                    <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("배경음악"); setSearchValue(""); }}>배경음약</button>
-                    <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("글꼴"); setSearchValue(""); }}>글꼴</button>
-                    <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("미니미"); setSearchValue(""); }}>미니미</button>
-                    <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("스토리룸"); setSearchValue(""); }}>미니룸</button>
-                    <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("스킨"); setSearchValue(""); }}>스킨</button>
-                    <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+                    <button className='items-category-button' style={{ background: btnColors['all'], color:btnColors['allColor'] }} name='all' onClick={(e) => { setItemType("all"); setSearchValue(""); setIsUpdate(true); handleChangeColor(e); }} >전체</button>
+                    <button className='items-category-button' style={{ background: btnColors['music'], color:btnColors['musicColor'] }} name='music' onClick={(e) => { setItemType("배경음악"); setSearchValue(""); handleChangeColor(e); }}>배경음약</button>
+                    <button className='items-category-button' style={{ background: btnColors['font'], color:btnColors['fontColor'] }} name='font' onClick={(e) => { setItemType("글꼴"); setSearchValue(""); handleChangeColor(e); }}>글꼴</button>
+                    <button className='items-category-button' style={{ background: btnColors['minimi'], color:btnColors['minimiColor'] }} name='minimi' onClick={(e) => { setItemType("미니미"); setSearchValue(""); handleChangeColor(e); }}>미니미</button>
+                    <button className='items-category-button' style={{ background: btnColors['miniroom'], color:btnColors['miniroomColor'] }} name='miniroom' onClick={(e) => { setItemType("스토리룸"); setSearchValue(""); handleChangeColor(e); }}>미니룸</button>
+                    <button className='items-category-button' style={{ background: btnColors['skin'], color:btnColors['skinColor'] }} name='skin' onClick={(e) => { setItemType("스킨"); setSearchValue(""); handleChangeColor(e); }}>스킨</button>
+                    {/* <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
                         <input type='text' value={searchValue} onChange={(e) => changeValue(e)} onKeyDown={handleKeyDown} style={{ height: '40px' }} />
                         <button style={{ width: '50px', height: '40px' }} onClick={() => searchItem()}>검색</button>
+                    </div> */}
+                    <div className='items-search-box'>
+                        <input
+                            type='text'
+                            placeholder='Search by itemname'
+                            value={searchValue}
+                            onChange={(e) => changeValue(e)}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <button type='button' onClick={() => searchItem()}>
+                            <BsSearch />
+                        </button>
                     </div>
 
                 </div>
@@ -151,11 +196,11 @@ const Items = () => {
                                 <td>{item.itemType}</td>
                                 <td>{item.price}</td>
                                 <td>{item.status}</td>
-                                <td className='state-btn-box' style={{ height: '120px' }}>
+                                <td className='item-state-btn-box' style={{ height: '120px' }}>
 
                                     <Button
-                                        variant='danger'
-                                        className='state-invisible'
+                                        variant='primary'
+                                        className='items-state-visible'
                                         onClick={() => openUpdateItemModal(item)}
                                     >
                                         수정
