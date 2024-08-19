@@ -28,8 +28,7 @@ import Item from "./webpage/pages/Item";
 import { LoginContext } from "./webpage/components/login/context/LoginContextProvider";
 import AdminLoginForm from "./webpage/pages/Admin/components/login/AdminLoginForm";
 import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
-// import OAuth2AddInfo from "./webpage/components/login/Login/OAuth2AddInfo";
-import '@fontsource/jua';
+import OAuth2AddInfo from "./webpage/components/login/login/OAuth2AddInfo";
 import SearchPage from "./webpage/components/search/SearchPage";
 // 폰트 import
 import '@fontsource/sunflower';
@@ -86,7 +85,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Header setItemKind={setItemKind} />}>
                     <Route index element={<Home itemkind={itemkind} />} />
-                    {/* <Route path='addinfo' element={<OAuth2AddInfo />} /> */}
+                    <Route path='addinfo' element={<OAuth2AddInfo />} />
                     <Route path='join' element={<Join />} />
                     <Route path='member' element={<Member />} />
                     <Route path='cart/:userId' element={<Cart />} />

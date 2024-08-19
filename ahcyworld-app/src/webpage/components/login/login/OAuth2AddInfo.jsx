@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import { LoginContext } from "../context/LoginContextProvider";
-import { addInfo } from "../../../../apis/auth";
+import { addInfo, hompyInfo } from "../../../../apis/auth";
 import { useNavigate } from "react-router-dom";
 
 const OAuth2AddInfo = () => {
@@ -17,7 +17,7 @@ const OAuth2AddInfo = () => {
         birthDay: "",
     });
 
-    const { userInfo } = useContext(LoginContext);
+    const { userInfo, setHompyInfo } = useContext(LoginContext);
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -52,6 +52,7 @@ const OAuth2AddInfo = () => {
             try {
                 const response = await addInfo(username, gender, birthDay);
 
+                setHompyInfo(hompyInfo);
                 if (response) {
                     navigate("/");
                 }

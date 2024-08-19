@@ -81,6 +81,21 @@ const MyBox = () => {
     };
 
     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`${SERVER_HOST}/user/info/${userInfo.id}`);
+                setUserInfo(response.data);
+            } catch (error) {
+                console.error("사용자 정보를 가져오는 중 에러 발생:", error);
+            }
+        };
+    
+        if (isLogin) {
+            fetchUserData();
+        }
+    }, [isLogin]);
+
+    useEffect(() => {
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);

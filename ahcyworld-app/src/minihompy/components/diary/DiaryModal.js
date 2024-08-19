@@ -19,8 +19,11 @@ const DiaryModal = ({
 
     const navigate = useNavigate();
 
-    const onUpdateClick = (id) => {
-        navigate(`/hompy/${hompyInfo.id}/diary/update/` + id);
+    const onUpdateClick = (diary) => {
+        if(diary.hompy.id !== hompyInfo.id) return;
+        // console.log("diary : ", diary);
+        // console.log("hompyInfo : ", hompyInfo);
+        navigate(`/hompy/${hompyInfo.id}/diary/update/` + diary.id);
     };
 
     const onDeleteClick = (id) => {
@@ -55,20 +58,36 @@ const DiaryModal = ({
                                 <tr>
                                     <th>KeyWord</th>
                                     <th>Content</th>
-                                    <th>Delete</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {diaryContent.map((diary, index) => (
                                     <tr key={index}>
-                                        <td onClick={() => onUpdateClick(diary.id)}>{diary.keyWord}</td>
-                                        <td onClick={() => onUpdateClick(diary.id)}>{diary.content}</td>
-                                        <td><Button variant="danger" onClick={() => onDeleteClick(diary.id)}>X</Button></td>
+                                         <td
+                                            onClick={() => onUpdateClick(diary)}
+                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default' }}
+                                        >
+                                            {diary.keyWord}
+                                        </td>
+                                        <td
+                                            onClick={() => onUpdateClick(diary)}
+                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default' }}
+                                        >
+                                            {diary.content}
+                                        </td>
+                                        {diary.hompy.id === hompyInfo.id && (
+                                            <td>
+                                                <Button variant="danger" onClick={() => onDeleteClick(diary.id)}>
+                                                    X
+                                                </Button>
+                                            </td>
+                                        )}
                                     </tr>
                                 ))}
                             </tbody>
                         </Table>
-                        <Button onClick={onWriteClick}>
+                        <Button onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
                             다이어리 작성하기
                         </Button>
                     </>
@@ -76,7 +95,7 @@ const DiaryModal = ({
                     <>
                         <p>일정이 없습니다.</p>
                         <hr />
-                        <Button onClick={onWriteClick}>
+                        <Button onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
                             다이어리 작성하기
                         </Button>
                     </>

@@ -71,6 +71,7 @@ const GuestBookHome = () => {
                   user: {
                     ...entry.user,
                     homepage: hompyResponse.data,
+                    minimiPicture: hompyResponse.data.minimiPicture
                   },
                 };
               } catch (error) {
@@ -226,9 +227,28 @@ const GuestBookHome = () => {
         }
       );
       if (response.status === 200) {
+        const hompyResponse = await api.get(
+          `${SERVER_HOST}/cyworld/cy/guestbook/user/hompy/${userInfo.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${cookie}`,
+            },
+          }
+        );
+
+        const newEntry = {
+          ...response.data,
+          user: {
+            ...response.data.user,
+            homepage: hompyResponse.data,
+            minimiPicture: hompyResponse.data.minimiPicture
+          },
+        };
+
+        setGuestBook([newEntry, ...guestBook]);
         setContent("");
         setIsSecret(false);
-        setGuestBook([response.data, ...guestBook]);
+        
         Swal.alert(
           "방명록 등록에 성공했습니다",
           "방명록 등록 성공",
@@ -259,8 +279,8 @@ const GuestBookHome = () => {
     setIsSecret(e.target.checked);
   };
 
-  const getMinimiImgUrl = () => {
-    return `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}?v=${new Date().getTime()}`;
+  const getMinimiImgUrl = (guest) => {
+    return `${process.env.PUBLIC_URL}/image/${guest.user.minimiPicture || "default_img.png"}?v=${new Date().getTime()}`;
   };
 
   return (
@@ -352,7 +372,7 @@ const GuestBookHome = () => {
                       <tr>
                         <td className="minimi-cell">
                           <img
-                            src={getMinimiImgUrl()}
+                            src={getMinimiImgUrl(guest)}
                             alt="Minimi"
                             className="minimi-img"
                           />

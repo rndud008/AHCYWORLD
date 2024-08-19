@@ -35,6 +35,24 @@ class PostTest {
     PasswordEncoder passwordEncoder;
 
     @Test
+    void test4(){
+        BoardType boardType = new BoardType();
+        boardType.setName("게시판");
+
+        boardTypeRepository.save(boardType);
+
+        BoardType boardType1 = new BoardType();
+        boardType1.setName("사진첩");
+
+        boardTypeRepository.save(boardType1);
+
+        BoardType boardType2 = new BoardType();
+        boardType2.setName("동영상");
+
+        boardTypeRepository.save(boardType2);
+    }
+
+    @Test
     void test() {
         // --- 게시판 타입 생성.
 //        BoardType boardType = new BoardType();

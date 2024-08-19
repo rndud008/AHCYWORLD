@@ -69,7 +69,6 @@ const LoginContextProvider = ({ children }) => {
         // 인증성공
         loginSetting(data, accessToken);
             data = response.data;
-            loginSetting(data, accessToken);
 
             try {
                 response = await auth.hompyInfo();

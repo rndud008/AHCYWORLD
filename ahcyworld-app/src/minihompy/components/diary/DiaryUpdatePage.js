@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button, Form, Container } from 'react-bootstrap';
+import { Button, Form, Container, Spinner } from 'react-bootstrap';
 import Layout from '../Layout/Layout';
 import Cookies from "js-cookie";
-import { SERVER_HOST } from '../../../apis/api';
+import api, { SERVER_HOST } from '../../../apis/api';
 import { LoginContext } from '../../../webpage/components/login/context/LoginContextProvider';
 
-const DiaryUpdatePage = ({hompy}) => {
+const DiaryUpdatePage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [diary, setDiary] = useState({
@@ -18,18 +18,38 @@ const DiaryUpdatePage = ({hompy}) => {
         eventDate: ""
     });
 
+    const [hompy, setHompy] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const { userInfo, hompyInfo } = useContext(LoginContext);
+
+    const cookie = Cookies.get("accessToken");
 
     // 다이어리 정보를 가져오는 useEffect
     useEffect(() => {
-        axios.get(`${SERVER_HOST}/cyworld/cy/diaries/detail/${id}`)
-            .then(response => {
-                setDiary(response.data);
-            })
-            .catch(error => {
-                console.error("다이어리 데이터를 가져오지 못했습니다.", error);
-            });
-    }, [id]);
+        const fetchData = async () => {
+            try {
+                const [hompyResponse, diaryResponse] = await Promise.all([
+                    api.get(`${SERVER_HOST}/hompy/${hompyInfo.id}`, {
+                        headers: {
+                            Authorization: `Bearer ${cookie}`,
+                        },
+                    }),
+                    api.get(`${SERVER_HOST}/cyworld/cy/diaries/detail/${id}`)
+                ]);
+    
+                setHompy(hompyResponse.data);
+                setDiary(diaryResponse.data);
+            } catch (error) {
+                console.error("데이터를 불러오는 데 실패했습니다.", error);
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+    }, [id, hompyInfo.id, cookie]);
 
     // 입력값 변경 핸들러
     const handleChange = (e) => {
@@ -60,9 +80,17 @@ const DiaryUpdatePage = ({hompy}) => {
             });
     };
 
+    if (loading) {
+        return <Spinner animation="border" />;
+    }
+    
+    if (error) {
+        return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
+    }
+
     return (
         <Layout hompy={hompy} user={hompy.user}>
-        <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
             <div className="w-50">
                 <h1>다이어리 수정</h1>
                 <Form onSubmit={handleSubmit}>

@@ -10,7 +10,7 @@ import Post from "../../../minihompy/components/post/Post";
 import Hompy from "../../../minihompy/pages/Hompy";
 import Profile from "../../../minihompy/pages/Profile";
 import GuestBookHome from "../../../minihompy/components/guestBook/GuestBookHome";
-import OAuth2AddInfo from "./Login/OAuth2AddInfo";
+import OAuth2AddInfo from "./login/OAuth2AddInfo";
 
 const AppLogin = () => {
 

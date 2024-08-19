@@ -23,8 +23,8 @@ select * from message;
 select * from comment;
 select * from guest_book;
 
-delete from friend
-where id = 61;
+delete from ah_user
+where id = 3;
 
 
 select * from attachment where post_id='7285';
