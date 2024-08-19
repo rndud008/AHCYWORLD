@@ -19,7 +19,7 @@ const GuestBookHome = () => {
   const { hompyId } = useParams();
   const [hompy, setHompy] = useState(""); // hompy 상태 설정
 
-  const { hompyInfo, userInfo } = useContext(LoginContext);
+  const { hompyInfo, userInfo, roles } = useContext(LoginContext);
 
   useEffect(() => {
     // console.log("hompyId:", hompyId);
@@ -128,6 +128,7 @@ const GuestBookHome = () => {
 
 
   const handleDelete = async (id) => {
+    console.log("roles : ", roles);
     if (window.confirm("삭제하시겠습니까?")) {
       const cookie = Cookies.get("accessToken");
       try {
@@ -199,6 +200,11 @@ const GuestBookHome = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(hompyInfo.id === parseInt(hompyId)){
+      Swal.alert("홈피 주인은 방명록에 글을 작성할 수 없습니다.", " 방명록 등록 실패", "warning", () => {return;});
+      return;
+    };
 
     if (!content.trim()) {
       window.alert("내용을 입력해주세요.");
@@ -335,7 +341,7 @@ const GuestBookHome = () => {
                                   </span>
                                 )}
                               {(guest.user.username === userName ||
-                                hompyInfo.user.id === guest.user.id || hompyInfo.id === parseInt(hompyId)) && (
+                                hompyInfo.user.id === guest.user.id || hompyInfo.id === parseInt(hompyId) || roles.isAdmin) && (
                                 <span
                                   className="delete"
                                   onClick={() => handleDelete(guest.id)}
@@ -363,7 +369,7 @@ const GuestBookHome = () => {
                             guest.user.username !== userName &&
                             hompy.user.username !== userName && (
                               <div className="secret-message">
-                                비밀글입니다. 작성자만 볼 수 있습니다.
+                                🔒 비밀글입니다. 작성자만 볼 수 있습니다.
                               </div>
                             )) || (
                             <div className="secret-message">

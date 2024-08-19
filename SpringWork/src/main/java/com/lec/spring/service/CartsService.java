@@ -119,8 +119,8 @@ public class CartsService {
         List<String> itemTypes = List.of("배경음악", "글꼴", "스킨", "미니미", "스토리룸");
 
         for (String itemType : itemTypes) {
-            Pageable topThree = PageRequest.of(0, 5);
-            List<Item> items = cartsRepository.findTopSellingItemsByType(itemType, topThree);
+            Pageable topFive = PageRequest.of(0, 5);
+            List<Item> items = cartsRepository.findTopSellingItemsByType(itemType, topFive);
             topSellingItems.put(itemType, items);
         }
         return topSellingItems;
@@ -131,7 +131,7 @@ public class CartsService {
     public List<Carts> getPaymentHistory(Long id) {
         User user = new User();
         user.setId(id);
-        return cartsRepository.findByUserAndCartsStatus(user, "Y");
+        return cartsRepository.findByUserAndCartsStatusOrderByCreateAtDesc(user, "Y");
     }
 
 }

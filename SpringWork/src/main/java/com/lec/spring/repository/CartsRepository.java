@@ -23,7 +23,7 @@ public interface CartsRepository extends JpaRepository<Carts, Long> {
             "ORDER BY count (c.id) DESC ")
     List<Item> findTopSellingItemsByType(@Param("itemType") String itemType, Pageable pageable);
 
-    List<Carts> findByUserAndCartsStatus(User user, String cartsStatus);
+    List<Carts> findByUserAndCartsStatusOrderByCreateAtDesc(User user, String cartsStatus);
 
     List<Carts> findByCartsStatus(String cartsStatus);
 }
