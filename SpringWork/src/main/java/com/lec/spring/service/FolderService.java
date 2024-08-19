@@ -70,27 +70,23 @@ public class FolderService {
         return result;
     }
 
-    public List<Folder> folderListByBoardType(BoardType boardType, Hompy miniHompy, Friend friend, String action) {
+    public List<Folder> folderListByBoardType(BoardType boardType, Hompy miniHompy, Friend friend, String action, Hompy hompy) {
         List<Folder> folderList = new ArrayList<>();
 
         boolean adminCheck;
 
-        if(friend != null){
-            adminCheck = friend.getUser().getRole().contains("ROLE_ADMIN");
-            if (action.equals("OWNER") || adminCheck ) {
-                return folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
-            }
-        }
 
-        if (action.equals("OWNER") ) {
-            folderList = folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
+        adminCheck = hompy.getUser().getRole().contains("ROLE_ADMIN");
+
+        if (action.equals("OWNER" ) || adminCheck) {
+            return folderRepository.findByBoardTypeAndHompy(boardType, miniHompy, Sort.by(Sort.Order.asc("id"))).orElse(null);
         } else if (action.equals("OTHER") && friend == null) {
             folderList = folderRepository
                     .findByBoardTypeAndHompyAndStatus(boardType, miniHompy, Sort.by(Sort.Order.asc("id")), "전체공개").orElse(null);
         } else if (action.equals("OTHER")) {
             folderList = folderRepository
                     .findByBoardTypeAndHompyAndStatusIn
-                            (boardType, miniHompy, Sort.by(Sort.Order.asc("id")), Arrays.asList("전체공개","일촌공개")).orElse(null);
+                            (boardType, miniHompy, Sort.by(Sort.Order.asc("id")), Arrays.asList("전체공개", "일촌공개")).orElse(null);
         }
 
         return folderList;

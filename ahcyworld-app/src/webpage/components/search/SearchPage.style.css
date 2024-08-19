@@ -19,7 +19,40 @@
   margin-left: 10px
 }
 
+.search-useritem {
+  border-radius: 5px;
+  font-weight: bold;
+  background: linear-gradient(145deg, #0d6afd, #0d6efd); 
+  border: none;
+  color: #fff; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
+              -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.search-useritem:hover {
+  background: linear-gradient(145deg,#2a8ceb, #0b5ed7); 
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(-1px);
+}
+
+.search-useritem:active {
+  background: linear-gradient(145deg, #0b5ed7, #094aba); 
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
+              inset -1px -1px 4px rgba(255, 255, 255, 0.7); 
+  transform: translateY(1px);
+}
+
+.search-useritem:focus {
+  outline: none; 
+  box-shadow: 0 0 5px rgba(13, 106, 253, 0.5);
+}
+
 .searchPageNotFound{
   width: 700px;
   margin: 0 auto 10px auto; 
+  text-align: center;
+  font-size: 25px;
 }

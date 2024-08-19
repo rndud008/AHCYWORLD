@@ -90,7 +90,7 @@ const DiaryUpdatePage = () => {
 
     return (
         <Layout hompy={hompy} user={hompy.user}>
-        <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
+        <div className="container d-flex justify-content-center align-items-center min-vh-80">
             <div className="w-50">
                 <h1>다이어리 수정</h1>
                 <Form onSubmit={handleSubmit}>
@@ -116,12 +116,12 @@ const DiaryUpdatePage = () => {
                         />
                     </Form.Group>
                     <div className="d-flex justify-content-end mt-3">
-                        <Button type="submit" className="btn btn-primary me-2">저장</Button>
-                        <Button type="button" className="btn btn-secondary" onClick={() => navigate(`/hompy/${hompyInfo.id}/diary`)}>취소</Button>
+                        <Button type="submit" className="diarywriteok-btn">저장</Button>
+                        <Button type="button" className="diarywriteno-btn" onClick={() => navigate(`/hompy/${hompyInfo.id}/diary`)}>취소</Button>
                     </div>
                 </Form>
             </div>
-        </Container>
+        </div>
         </Layout>
     );
 };

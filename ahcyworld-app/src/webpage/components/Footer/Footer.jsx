@@ -9,8 +9,16 @@ const Footer = () => {
                 <div className="footer-logo">
                     <img src={logo} alt="Cyworld Logo" />
                 </div>
+                <div className="footer-info">
+                    <p>
+                        상호: (주)AhCyworld <br/>
+                        사업자등록번호: 312-05-15823 <br/>
+                        통신판매업신고번호: 제0123-서울강남-0178호<br/>
+                        전화: 010-5678-4321 | 팩스: 02-862-1200 | 이메일: spring@mail.com<br/>
+                        주소: 서울특별시 강남구 현익빌딩 13층
+                    </p>
+                </div>
                 <div className="footer-links">
-                    <h3>사이트 링크</h3>
                     <ul>
                         <li><a href="/">홈</a></li>
                         <li><a href="/">소개</a></li>
@@ -18,37 +26,39 @@ const Footer = () => {
                         <li><a href="/">공지사항</a></li>
                     </ul>
                 </div>
-
+                <div className="footer-policy">
+                    <ul>
+                        <li><a href="/">이용약관</a></li>
+                        <li><a href="/">개인정보처리방침</a></li>
+                    </ul>
+                </div>
                 <div className="footer-social">
-                    <h3>Social Media</h3>
-                    <div className="social-icons">
-                        <a
-                            href="https://facebook.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img src="/image/facebook.png" alt="Facebook" />
-                        </a>
-                        <a
-                            href="https://twitter.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img src="/image/twitter.png" alt="Twitter" />
-                        </a>
-                        <a
-                            href="https://instagram.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img src="/image/instagram.png" alt="Instagram" />
-                        </a>
-                    </div>
+                    <a
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src="/image/facebook.png" alt="Facebook" />
+                    </a>
+                    <a
+                        href="https://twitter.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src="/image/twitter.png" alt="Twitter" />
+                    </a>
+                    <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src="/image/instagram.png" alt="Instagram" />
+                    </a>
                 </div>
             </div>
 
             <div className="footer-bottom">
-                <p>© 2024 Cyworld Company. All rights reserved.</p>
+                <p>Copyright © AhCyworld</p>
             </div>
         </footer>
     );

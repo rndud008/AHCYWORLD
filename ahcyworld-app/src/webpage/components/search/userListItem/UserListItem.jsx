@@ -40,7 +40,7 @@ const UserListItem = () => {
             <div>
               <div className="userListItemDivInfo">
                 <h2>{item.title}</h2>
-                <Button onClick={() => miniHompyLink(item.id)}>
+                <Button className="user-hompy-go" onClick={() => miniHompyLink(item.id)}>
                   {" "}
                   바로가기
                 </Button>

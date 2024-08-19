@@ -20,7 +20,6 @@ div.searchItem div:first-child{
   width: 300px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 0 auto;
 }
 
 div.searchItem div:first-child input{
@@ -39,5 +38,10 @@ div.searchItem div:first-child img.skinAndStoryRoom{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
 
+.searchItem span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

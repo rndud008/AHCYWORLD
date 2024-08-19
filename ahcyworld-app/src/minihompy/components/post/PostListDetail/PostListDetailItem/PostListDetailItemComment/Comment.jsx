@@ -33,7 +33,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
       <>
       <div className="postDetailCommentTool photoAndVideoToggle">
         <div className="commentToggle">
-          <Button onClick={() => setCommentShow(!commentShow)}>
+          <Button className="commentToggle-btn" onClick={() => setCommentShow(!commentShow)}>
             {commentShow === false ? "댓글보기" : "댓글닫기"}
           </Button>
         </div>
@@ -44,11 +44,12 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
             placeholder="댓글입력"
           />
           <Button
+            className="commentwrite-btn"
             onClick={() =>
               commentWriteAxios(dispatch, userInfo, item, content, postName)
             }
           >
-            확인
+            등록
           </Button>
         </div>
       </div>

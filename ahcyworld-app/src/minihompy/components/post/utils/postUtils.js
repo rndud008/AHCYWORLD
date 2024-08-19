@@ -1,5 +1,4 @@
 import api, { SERVER_HOST } from "../../../../apis/api";
-import { CommentAction } from "../../../../redux/actions/CommentAction";
 import { PostAction } from "../../../../redux/actions/PostAction";
 import { list } from "./FolderUtils";
 import { FolderAction } from "../../../../redux/actions/FolderAction";
@@ -34,9 +33,9 @@ export const axiosPostList = async (
 ) => {
   try {
     await dispatch(PostAction.axiosPostList(hompyId, postName, folderId, page));
+
   } catch (error) {
-    list(postName, dispatch, hompyId, navigate);
-    return navigate(`/hompy/${hompyId}/${postName}`)
+
   }
 };
 
