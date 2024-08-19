@@ -15,6 +15,7 @@ const Items = () => {
     const [item, setItem] = useState({});
     const [isUpdate, setIsUpdate] = useState(false)
     const [searchValue, setSearchValue] = useState("");
+    
 
     const updateItemopenModal = () => {
         setIsUpdateItemModalOpen(true);
@@ -74,9 +75,18 @@ const Items = () => {
     }
 
     const searchItem = () => {
-        setItemType("all")
         setIsUpdate(true);
         setCurrentPage(1);
+    }
+
+    const handleKeyDown = (e) => {
+        if(e.key === 'Enter'){
+            handleSearch();
+        }
+    }
+
+    const handleSearch = () => {
+        searchItem();
     }
 
 
@@ -91,7 +101,7 @@ const Items = () => {
                     <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("스토리룸"); setSearchValue(""); }}>미니룸</button>
                     <button style={{ width: 180, height: 50 }} onClick={() => { setItemType("스킨"); setSearchValue(""); }}>스킨</button>
                     <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                        <input type='text' value={searchValue} onChange={(e) => changeValue(e)} style={{ height: '40px' }} />
+                        <input type='text' value={searchValue} onChange={(e) => changeValue(e)} onKeyDown={handleKeyDown} style={{ height: '40px' }} />
                         <button style={{ width: '50px', height: '40px' }} onClick={() => searchItem()}>검색</button>
                     </div>
 

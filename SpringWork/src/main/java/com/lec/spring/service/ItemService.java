@@ -67,10 +67,10 @@ public class ItemService {
                 }
             }
         } else {
-            if (urlarr[2].equals("admin")) {
+            if (type.equals("all")) {
                 itemPage = itemRepository.findByItemNameContaining(searchItem, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
             } else {
-                itemPage = itemRepository.findByItemNameContainingAndStatus(searchItem, "visible", PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
+                itemPage = itemRepository.findByItemNameContainingAndAndItemType(searchItem, type, PageRequest.of(page - 1, PAGE_ROWS, Sort.by(Sort.Order.desc("id"))));
             }
         }
 
