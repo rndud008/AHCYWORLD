@@ -25,9 +25,9 @@ function PostReducer(state = initialState, action) {
     case "DELETE_POST":
       return {
         ...state,
-        pageAndPostList: state.pageAndPostList.posts.filter(
+        pageAndPostList: {...state.pageAndPostList ,posts:state.pageAndPostList.posts.filter(
           (item) => parseInt(item.id) !== payload.postId
-        ),
+        )},
       };
     case "DETAIL_POST":
       return{...state, post:payload.data};

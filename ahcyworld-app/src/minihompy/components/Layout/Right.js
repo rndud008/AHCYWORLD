@@ -16,6 +16,7 @@ import * as Swal from "../../../apis/alert";
 
 const Right = ({ user, hompy }) => {
   const { hompyId } = useParams();
+  const [isComposing, setIsComposing] = useState(false);
   const { userInfo, hompyInfo, roles } = useContext(LoginContext);
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
@@ -302,6 +303,8 @@ const Right = ({ user, hompy }) => {
             className="text-box"
             value={friendReview?.content}
             onChange={friendReviewValue}
+            onCompositionStart={() => setIsComposing(true)}
+      onCompositionEnd={() => setIsComposing(false)}
             onKeyDown={(e) => activeEnter(e)}
             type="text"
             placeholder="일촌평 작성.."
