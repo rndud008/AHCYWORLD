@@ -22,9 +22,9 @@ const Post = () => {
   const folder = useSelector((state) => state.folder.folder);
   const hompy = useSelector((state) => state.hompy.hompy);
   const page = useSelector((state) => state.post.page);
-  const photoVisibleCheck = (hompyInfo.menuStatus.split(',')[0] === 'visible' || roles.isAdmin) && postName.includes('photo')
-  const boardVisibleCheck = (hompyInfo.menuStatus.split(',')[1] === 'visible' || roles.isAdmin) && postName.includes('board') 
-  const videoVisibleCheck = (hompyInfo.menuStatus.split(',')[2] === 'visible' || roles.isAdmin) && postName.includes('video') 
+  const photoVisibleCheck = (hompy.menuStatus.split(',')[0] === 'visible' || roles.isAdmin) && postName.includes('photo')
+  const boardVisibleCheck = (hompy.menuStatus.split(',')[1] === 'visible' || roles.isAdmin) && postName.includes('board') 
+  const videoVisibleCheck = (hompy.menuStatus.split(',')[2] === 'visible' || roles.isAdmin) && postName.includes('video') 
 
   useEffect(() => {
     if(keyword.some(item => postName.includes(item)) && hompyInfo.id !== undefined){
@@ -33,7 +33,6 @@ const Post = () => {
       dispatch(CommentAction.contentState(false,""));
       dispatch(CommentAction.contentErrorState("content",false))
     }
-
   }, [postName, hompyId, dispatch]);
 
   useEffect( () => {

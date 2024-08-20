@@ -12,19 +12,19 @@ import { LoginContext } from "../../../webpage/components/login/context/LoginCon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FriendAction } from "../../../redux/actions/FriendAction";
-import * as Swal from "../../../apis/alert"
+import * as Swal from "../../../apis/alert";
 
-const Right = ({ user,hompy }) => {
+const Right = ({ user, hompy }) => {
   const { hompyId } = useParams();
-  const { userInfo,hompyInfo, roles } = useContext(LoginContext);
+  const { userInfo, hompyInfo, roles } = useContext(LoginContext);
   const [minimi, setMinimi] = useState();
   const [miniRoom, setMiniRoom] = useState();
   const [recentlyPost, setRecentlyPost] = useState();
   const [infoTable, setInfoTable] = useState();
   const [friendReview, setFriendReview] = useState();
   const [friendReviewList, setFriendReviewList] = useState();
-  const friendList = useSelector(state => state.friend.hompyFriendList)
-  const friendIdList = friendList.map(item => item.friendUser.id);
+  const friendList = useSelector((state) => state.friend.hompyFriendList);
+  const friendIdList = friendList.map((item) => item.friendUser.id);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,15 +72,14 @@ const Right = ({ user,hompy }) => {
 
     if (user) {
       friendReviewListAxios();
-      dispatch(FriendAction.findByHompyFriendListAixos(user.username))
+      dispatch(FriendAction.findByHompyFriendListAixos(user.username));
       setFriendReview({
-        content:'',
+        content: "",
         guestBookName: "friendReview",
         hompy: hompy,
         user: userInfo,
-      })
+      });
     }
-
   }, [hompyId, user]);
 
   const miniHomePyRecentlyPost = async () => {
@@ -116,47 +115,56 @@ const Right = ({ user,hompy }) => {
   };
 
   const subjectClick = (postName, folderId, postId) => {
-    postName.includes('게시판') && navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}/detail/${postId}`) ||
-    !postName.includes('게시판') && navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}`)
-    
+    (postName.includes("게시판") &&
+      navigate(
+        `/hompy/${hompyId}/${boardNameCheck(
+          postName
+        )}/${folderId}/detail/${postId}`
+      )) ||
+      (!postName.includes("게시판") &&
+        navigate(`/hompy/${hompyId}/${boardNameCheck(postName)}/${folderId}`));
   };
 
   const friendReviewValue = (e) => {
     const { value, name } = e.target;
-    console.log(value)
+    console.log(value);
 
     setFriendReview({ ...friendReview, [name]: value });
   };
 
   const friendReviewCreate = async () => {
+    if (parseInt(hompyId) === hompyInfo.id)
+      return Swal.alert(
+        "작성실패",
+        "미니홈피주인은 작성할수 없습니다.",
+        "warning"
+      );
 
-    if(parseInt(hompyId) === hompyInfo.id) return Swal.alert("작성실패","미니홈피주인은 작성할수 없습니다.","warning")
+    if (!friendIdList.some((item) => item === userInfo.id))
+      return Swal.alert("작성실패", "일촌관계만 작성가능합니다.", "warning");
 
-    if(!friendIdList.some(item => item === userInfo.id)) return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
+    if (!friendReview.content || friendReview.content.trim() === "")
+      return Swal.alert("작성실패", "글을 작성해주세요.", "warning");
 
-    if(!friendReview.content || friendReview.content.trim() === "") return Swal.alert("작성실패","글을 작성해주세요.","warning")
-
-    try{
+    try {
       const response = await api.post(
         `${SERVER_HOST}/cyworld/cy/guestbook/save`,
         friendReview
       );
 
-      const {data,status} = response;
-      if(status === 200){
-        setFriendReviewList([data,...friendReviewList])
+      const { data, status } = response;
+      if (status === 200) {
+        setFriendReviewList([data, ...friendReviewList]);
         setFriendReview({
-          content:"",
+          content: "",
           guestBookName: "friendReview",
           hompy: hompy,
           user: userInfo,
-        })
+        });
       }
-      
-    }catch (e){
-      return Swal.alert("작성실패","일촌관계만 작성가능합니다.","warning")
+    } catch (e) {
+      return Swal.alert("작성실패", "일촌관계만 작성가능합니다.", "warning");
     }
-
   };
 
   const friendReviewListAxios = async () => {
@@ -178,32 +186,32 @@ const Right = ({ user,hompy }) => {
     }
   };
 
-  const activeEnter = (e) =>{
-    
-    if(e.key === "Enter"){
-      
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
       e.preventDefault();
       friendReviewCreate();
     }
-  }
+  };
 
-  const friendReviewDelete = async(id)=>{
-
-    if(!window.confirm('삭제하시겠습니까?')) return;
+  const friendReviewDelete = async (id) => {
+    if (!window.confirm("삭제하시겠습니까?")) return;
 
     const username = userInfo.username;
-    const response = await api.delete(`${SERVER_HOST}/cyworld/cy/guestbook/delete/${id}`,{
-      params:{username}
-    })
+    const response = await api.delete(
+      `${SERVER_HOST}/cyworld/cy/guestbook/delete/${id}`,
+      {
+        params: { username },
+      }
+    );
 
-    const {data,status} = response;
+    const { data, status } = response;
 
-    if(status === 200){
-      setFriendReviewList(friendReviewList.filter(item => item.id !== id));
-      alert('삭제완료.');
+    if (status === 200) {
+      setFriendReviewList(friendReviewList.filter((item) => item.id !== id));
+      alert("삭제완료.");
     }
-  }
-  
+  };
+
   return (
     <div className="right-container">
       <div className="content-section">
@@ -218,7 +226,11 @@ const Right = ({ user,hompy }) => {
                   <li
                     className="newListItem"
                     onClick={() =>
-                      subjectClick(item.folder.boardType.name, item.folder.id, item.id)
+                      subjectClick(
+                        item.folder.boardType.name,
+                        item.folder.id,
+                        item.id
+                      )
                     }
                   >
                     <span>[{item.folder.boardType.name}]&nbsp;&nbsp;</span>
@@ -229,67 +241,42 @@ const Right = ({ user,hompy }) => {
           </ul>
         </div>
 
-        {infoTable && (
-          <div className="info-table">
-            {/* 업데이트 목록 게시판 테이블 */}
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    다이어리{" "}
-                    <span className="count">
-                      {infoTable.todayDiary}/{infoTable.totalDiary}{" "}
-                      {infoTable.todayDiary !== 0 && (
-                        <span className="new-icon">N</span>
+        <div className="info-table">
+          {/* 업데이트 목록 게시판 테이블 */}
+          <table>
+            <tbody>
+              {infoTable &&infoTable.map((item,index) => {
+                if (index % 2 === 0) {
+                  return (
+                    <tr>
+                      <td>
+                        {infoTable[index].name}
+                        <span className="count">
+                          {infoTable[index].today}/{infoTable[index].total}{" "}
+                          {infoTable[index].today !== 0 && (
+                            <span className="new-icon">N</span>
+                          )}
+                        </span>
+                      </td>
+                      {infoTable[index + 1] && (
+                        <td>
+                          {infoTable[index + 1].name}
+                          <span className="count">
+                            {infoTable[index + 1].today}/
+                            {infoTable[index + 1].total}{" "}
+                            {infoTable[index + 1].today !== 0 && (
+                              <span className="new-icon">N</span>
+                            )}
+                          </span>
+                        </td>
                       )}
-                    </span>
-                  </td>
-                  <td>
-                    사진첩{" "}
-                    <span className="count">
-                      {infoTable.todayPhoto}/{infoTable.totalPhoto}{" "}
-                      {infoTable.todayPhoto !== 0 && (
-                        <span className="new-icon">N</span>
-                      )}
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    게시판{" "}
-                    <span className="count">
-                      {infoTable.todayBoard}/{infoTable.totalBoard}{" "}
-                      {infoTable.todayBoard !== 0 && (
-                        <span className="new-icon">N</span>
-                      )}
-                    </span>
-                  </td>
-                  <td>
-                    방명록{" "}
-                    <span className="count">
-                      {infoTable.todayGuestBook}/{infoTable.totalGuestBook}{" "}
-                      {infoTable.todayGuestBook !== 0 && (
-                        <span className="new-icon">N</span>
-                      )}
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    동영상{" "}
-                    <span className="count">
-                      {infoTable.todayVideo}/{infoTable.totalVideo}{" "}
-                      {infoTable.todayVideo !== 0 && (
-                        <span className="new-icon">N</span>
-                      )}
-                    </span>
-                  </td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        )}
+                    </tr>
+                  );
+                }
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* 미니룸 */}
@@ -328,18 +315,37 @@ const Right = ({ user,hompy }) => {
           </button>
         </div>
         <div className="friend-review-container">
-          {(friendList && friendReviewList?.length > 0) && friendReviewList.map((item) => (
-            <div>
-              <span>{item.content} </span>
-              <span>{item.user.name} </span>
-              <span>({friendList.find(item2 => item.user.id === item2.friendUser.id)?.friendName}) </span>
-              {(userInfo.id === item.user.id || hompyInfo.id === parseInt(hompyId) || roles.isAdmin) && (
-                <span className="friendReviewDelete" onClick={() =>friendReviewDelete(item.id)}>
-                  <FontAwesomeIcon icon={faTrashCan} />
+          {(friendList &&
+            friendReviewList?.length > 0 &&
+            friendReviewList.map((item) => (
+              <div>
+                <span>{item.content} </span>
+                <span>{item.user.name} </span>
+                <span>
+                  (
+                  {
+                    friendList.find(
+                      (item2) => item.user.id === item2.friendUser.id
+                    )?.friendName
+                  }
+                  ){" "}
                 </span>
-              )}
+                {(userInfo.id === item.user.id ||
+                  hompyInfo.id === parseInt(hompyId) ||
+                  roles.isAdmin) && (
+                  <span
+                    className="friendReviewDelete"
+                    onClick={() => friendReviewDelete(item.id)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </span>
+                )}
+              </div>
+            ))) || (
+            <div className="friend-review-container-not">
+              작성된 일촌평이 없습니다.
             </div>
-          )) || <div className="friend-review-container-not">작성된 일촌평이 없습니다.</div>}
+          )}
         </div>
       </div>
     </div>
