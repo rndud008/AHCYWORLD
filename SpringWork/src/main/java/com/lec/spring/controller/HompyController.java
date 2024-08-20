@@ -1,9 +1,11 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Friend;
 import com.lec.spring.domain.Hompy;
 import com.lec.spring.domain.User;
 import com.lec.spring.jwt.JWTUtil;
 import com.lec.spring.repository.HompyRepository;
+import com.lec.spring.service.FriendService;
 import com.lec.spring.service.HompyService;
 import com.lec.spring.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,14 +39,16 @@ public class HompyController {
     private String UPLOADDIR;
     private final HompyService hompyService;
     private final UserService userService;
+    private final FriendService friendService;
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil, HompyRepository hompyRepository) {
+    public HompyController(HompyService hompyService, UserService userService, JWTUtil jwtUtil, HompyRepository hompyRepository, FriendService friendService) {
         this.hompyService = hompyService;
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.hompyRepository = hompyRepository;
+        this.friendService = friendService;
     }
 
     public Hompy check(HttpServletRequest request) {
@@ -307,5 +311,49 @@ public class HompyController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("설정 저장 중 오류가 발생했습니다.");
         }
+    }
+
+    @GetMapping("/{hompyId}/recentlypost")
+    public ResponseEntity<?> minihomyRecentlyPost(HttpServletRequest request, @PathVariable Long hompyId) {
+        Hompy tourUser = check(request);
+        String aciton = "";
+        Hompy hompy = new Hompy();
+
+        if (!tourUser.getId().equals(hompyId)) {
+            hompy = hompyService.findById(hompyId);
+            Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
+            boolean adminCheck = tourUser.getUser().getRole().contains("ROLE_ADMIN");
+
+            aciton = friend == null && !adminCheck ? "OTHER" : "FRIEND";
+
+        } else {
+            aciton = "OWNER";
+            hompy = tourUser;
+        }
+
+        return new ResponseEntity<>(hompyService.hompyNewList(hompy, aciton), HttpStatus.OK);
+    }
+
+    @GetMapping("/{hompyId}/infotable")
+    public ResponseEntity<?> minihompInfoTable(HttpServletRequest request, @PathVariable Long hompyId) {
+        Hompy tourUser = check(request);
+        String aciton = "";
+        Hompy hompy = new Hompy();
+
+        if (!tourUser.getId().equals(hompyId)) {
+            hompy = hompyService.findById(hompyId);
+            Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
+
+            if (friend == null) {
+                aciton = "OTHER";
+            } else {
+                aciton = "FRIEND";
+            }
+        } else {
+            aciton = "OWNER";
+            hompy = tourUser;
+        }
+
+        return new ResponseEntity<>(hompyService.hompyInfoPostCount(hompy, aciton), HttpStatus.OK);
     }
 }

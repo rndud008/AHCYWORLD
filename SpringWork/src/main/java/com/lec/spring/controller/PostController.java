@@ -165,11 +165,6 @@ public class PostController {
         return null; // 모든 검증을 통과한경우.
     }
 
-
-    // 아싸메인홈피페이지 -> hompy -> board -> folder -> write
-    // boardType: 1. board, 2. photo, 3. video
-    // folder: id
-
     // 작성
     @PostMapping(value = "/{hompyId}/{postName}/{folderId}/write",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -377,50 +372,6 @@ public class PostController {
         }
 
         return new ResponseEntity<>(postService.list(page, url, folder), HttpStatus.OK);// status 200
-    }
-
-    @GetMapping("/{hompyId}/recentlypost")
-    public ResponseEntity<?> minihomyRecentlyPost(HttpServletRequest request, @PathVariable Long hompyId) {
-        Hompy tourUser = check(request);
-        String aciton = "";
-        Hompy hompy = new Hompy();
-
-        if (!tourUser.getId().equals(hompyId)) {
-            hompy = hompyService.findById(hompyId);
-            Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
-            boolean adminCheck = tourUser.getUser().getRole().contains("ROLE_ADMIN");
-
-            aciton = friend == null && !adminCheck ? "OTHER" : "FRIEND";
-
-        } else {
-            aciton = "OWNER";
-            hompy = tourUser;
-        }
-
-        return new ResponseEntity<>(postService.hompyNewList(hompy, aciton), HttpStatus.OK);
-    }
-
-    @GetMapping("/{hompyId}/infotable")
-    public ResponseEntity<?> minihompInfoTable(HttpServletRequest request, @PathVariable Long hompyId) {
-        Hompy tourUser = check(request);
-        String aciton = "";
-        Hompy hompy = new Hompy();
-
-        if (!tourUser.getId().equals(hompyId)) {
-            hompy = hompyService.findById(hompyId);
-            Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
-
-            if (friend == null) {
-                aciton = "OTHER";
-            } else {
-                aciton = "FRIEND";
-            }
-        } else {
-            aciton = "OWNER";
-            hompy = tourUser;
-        }
-
-        return new ResponseEntity<>(postService.hompyInfoPostCount(hompy, aciton), HttpStatus.OK);
     }
 
 }
