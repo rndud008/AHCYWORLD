@@ -48,7 +48,7 @@ public class CartsService {
         User user = userRepository.findById(id).orElse(null);
         Sort sort = Sort.by(Sort.Order.desc("id"));
 
-        return cartsRepository.findByUserAndCartsStatus(user, "N", sort);
+        return cartsRepository.findByUserAndCartsStatusAndItem_Status(user, "N", sort,"visible");
     }
 
     @Transactional

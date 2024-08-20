@@ -54,7 +54,7 @@ const ItemUpload = ({ setSubMenu }) => {
             sourceName: "",
             fileName: "",
             price: "",
-            status: "",
+            status: "visible",
             bgmImg: "",
         });
         setButton("No");
@@ -62,6 +62,7 @@ const ItemUpload = ({ setSubMenu }) => {
         setIsDuplication(false);
         setShowItemName(false);
         setSuccessName(false);
+        setPreview(null);
     }
 
     const submitItem = (e) => {
@@ -158,6 +159,9 @@ const ItemUpload = ({ setSubMenu }) => {
     };
 
     const handleDuplication = () => {
+        setButton("yes");
+        setIsDonClick(false);
+        let isitemname;
         const duplication = async () => {
             try {
                 const response = await axios({
@@ -167,23 +171,27 @@ const ItemUpload = ({ setSubMenu }) => {
                 })
                 let isDuplication1 = response.data;
                 let isDonclick1 = false;
-                let isitemname;
-                item.itemName === "" ? isitemname = true : isitemname = false;
-                console.log(isitemname);
-                setIsDonClick(false);
+
                 setIsDuplication(isDuplication1);
-                setButton("yes");
+
 
                 handleSuccessName(isDonclick1, isDuplication1, isitemname);
-                console.log(isitemname);
-                console.log(isDuplication1);
 
             } catch (error) {
                 console.error("요청 실패 : ", error)
             }
         }
+        if(item.itemName === ""){
+            isitemname = true
+            setShowItemName(isitemname);
+            setIsDuplication(false)
+        }else{
+            isitemname = false;
+            setShowItemName(isitemname);
+            duplication();
+        }
 
-        duplication();
+        
     }
 
     const rename = () => {
@@ -216,7 +224,7 @@ const ItemUpload = ({ setSubMenu }) => {
 
                         <div className="mt-3">
                             <label htmlFor="itemTypeText"><h4>상품 종류 <small>(택1)</small></h4></label>
-                            <select className="form-select itemupload-type" onChange={changeValue} name="itemType" id="itemTypeText">
+                            <select className="form-select itemupload-type" value={item.itemType} onChange={changeValue} name="itemType" id="itemTypeText">
                                 <option value="">-- 상품종류를 선택해 주세요 --</option>
                                 <option value="미니미">미니미</option>
                                 <option value="미니룸">미니룸</option>
@@ -228,7 +236,7 @@ const ItemUpload = ({ setSubMenu }) => {
 
                         <div className="mt-3">
                             <label htmlFor="priceText"><h4>도토리개수</h4></label>
-                            <input type="number" className="form-control itemupload-price" val id='priceText' placeholder="도토리개수를 입력하세요" onChange={changeValue} name="price" min="0" />
+                            <input type="number" className="form-control itemupload-price" value={item.price} id='priceText' placeholder="도토리개수를 입력하세요" onChange={changeValue} name="price" min="0" />
                         </div>
                         {showPrice && (<div><span className="text-danger">도토리는 0이상의 값이어야 합니다</span></div>)}
 

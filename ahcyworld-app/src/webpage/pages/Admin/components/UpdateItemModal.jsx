@@ -15,6 +15,7 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
     const [updatebutton, setUpdateButton] = useState("No")
     const [successUpdateName, setSuccessUpdateName] = useState(false);
     const [isNamedisabled, setIsNameDisabled] = useState(false);
+    const [originalName,setOriginalName] = useState("");
 
 
     useEffect(() => {
@@ -22,6 +23,7 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
             setItem({ ...updateitem });
             setItemNameIsNull(false);
             setPriceIsNull(false);
+            setOriginalName(updateitem.itemName);
         }
     }, [isOpen])
 
@@ -49,9 +51,9 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
                     data: JSON.stringify(item),
                 })
                 setIsUpdate(true);
-                alert("수정 성공", "정보가 변경되었습니다.", "success", ModalonClose)
+                alert("수정 성공", "정보가 변경되었습니다.", "success", ()=>exit())
             } catch (error) {
-                console.log("이게 간거야?", error)
+                console.log("요청 실패 : ", error)
             }
 
         }
@@ -61,11 +63,12 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
 
         (item.price < 0 || item.price === "") ? setPriceIsNull(true) : setPriceIsNull(false);
         updatebutton === "No" ? setIsBtnClick(true) : setIsBtnClick(false);
-        console.log(updatebutton);
     }
 
     const Duplicate = () => {
-        console.log(item.itemName);
+        let isitemname;
+        setUpdateButton("yes");
+        setIsBtnClick(false);
         const duplication1 = async () => {
             try {
                 const response = await axios({
@@ -76,23 +79,28 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
 
                 let isDuplication1 = response.data;
                 let isDonclick1 = false;
-                let isitemname;
-                item.itemName === "" ? isitemname = true : isitemname = false;
-                setIsBtnClick(false);
-                setItemNameIsNull(isitemname);
-                setIsDuplicate(isDuplication1);
-                setUpdateButton("yes");
-                console.log(isitemname);
-                console.log(isDuplication1);
+
+                setIsDuplicate(isDuplication1); 
                 handleSuccessName(isDonclick1, isDuplication1, isitemname);
 
             } catch (error) {
                 console.error("요청 실패 : ", error);
-                console.log(item.itemName);
             }
         }
-
-        duplication1();
+        if(item.itemName === ""){
+            isitemname = true
+            setItemNameIsNull(isitemname);
+            setIsDuplicate(false)
+        }else{
+            isitemname = false;
+            setItemNameIsNull(isitemname);
+            if(item.itemName === originalName){
+                handleSuccessName(false, false, isitemname);
+            }else{
+                duplication1();
+            }
+        }
+        
     }
 
     const handleSuccessName = (isDonclick1, isDuplication1, isitemname) => {
@@ -121,6 +129,7 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
         setIsDuplicate(false);
         setSuccessUpdateName(false);
         setIsNameDisabled(false);
+        setUpdateButton("No")
     }
 
     return (
