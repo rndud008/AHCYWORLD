@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import { alert, itemconfirm } from '../../../../apis/alert';
 import { SERVER_HOST } from '../../../../apis/api';
+import '../css/ItemUpload.css';
 
 
 const ItemUpload = ({ setSubMenu }) => {
@@ -168,12 +169,14 @@ const ItemUpload = ({ setSubMenu }) => {
                 let isDonclick1 = false;
                 let isitemname;
                 item.itemName === "" ? isitemname = true : isitemname = false;
+                console.log(isitemname);
                 setIsDonClick(false);
-                setShowItemName(isitemname);
                 setIsDuplication(isDuplication1);
                 setButton("yes");
 
                 handleSuccessName(isDonclick1, isDuplication1, isitemname);
+                console.log(isitemname);
+                console.log(isDuplication1);
 
             } catch (error) {
                 console.error("요청 실패 : ", error)
@@ -199,10 +202,10 @@ const ItemUpload = ({ setSubMenu }) => {
                     <hr />
                     <form onSubmit={submitItem}>
                         <div className="mt-3">
-                            <label htmlFor="itemNameText"><h5>상품 이름 <small>(필수)</small></h5></label>
+                            <label htmlFor="itemNameText"><h4>상품 이름 <small>(필수)</small></h4></label>
                             <div style={{ display: 'flex' }}>
-                                <input type="text" id='itemNameText' className="form-control" value={item.itemName} placeholder="상품 이름를 입력하세요" onChange={changeValue} name="itemName" disabled={isdisabled} />
-                                {successName ? <button style={{ width: '100px' }} onClick={() => rename()}>수정</button> : <button style={{ width: '100px' }} onClick={() => handleDuplication()}>중복확인</button>}
+                                <input type="text" id='itemNameText' className="itemUpload-itemname" value={item.itemName} placeholder="상품 이름를 입력하세요" onChange={changeValue} name="itemName" disabled={isdisabled} />
+                                {successName ? <button className="itemUpload-itembtn" onClick={() => rename()}>수정</button> : <button className="itemUpload-itembtn" onClick={() => handleDuplication()}>중복확인</button>}
                             </div>
 
                         </div>
@@ -212,8 +215,8 @@ const ItemUpload = ({ setSubMenu }) => {
                         {(successName) && (<div><span className="text-success">사용 가능한 이름입니다.</span></div>)}
 
                         <div className="mt-3">
-                            <label htmlFor="itemTypeText"><h5>상품 종류 <small>(택1)</small></h5></label>
-                            <select className="form-select" onChange={changeValue} name="itemType" id="itemTypeText">
+                            <label htmlFor="itemTypeText"><h4>상품 종류 <small>(택1)</small></h4></label>
+                            <select className="form-select itemupload-type" onChange={changeValue} name="itemType" id="itemTypeText">
                                 <option value="">-- 상품종류를 선택해 주세요 --</option>
                                 <option value="미니미">미니미</option>
                                 <option value="미니룸">미니룸</option>
@@ -224,21 +227,21 @@ const ItemUpload = ({ setSubMenu }) => {
                         {showItemType && (<div><span className="text-danger">상품종류를 선택해주세요</span></div>)}
 
                         <div className="mt-3">
-                            <label htmlFor="priceText"><h5>도토리개수</h5></label>
-                            <input type="number" className="form-control" val id='priceText' placeholder="도토리개수를 입력하세요" onChange={changeValue} name="price" min="0" />
+                            <label htmlFor="priceText"><h4>도토리개수</h4></label>
+                            <input type="number" className="form-control itemupload-price" val id='priceText' placeholder="도토리개수를 입력하세요" onChange={changeValue} name="price" min="0" />
                         </div>
                         {showPrice && (<div><span className="text-danger">도토리는 0이상의 값이어야 합니다</span></div>)}
 
 
                         <div className="mt-3">
-                            <label><h5>판매 상태</h5></label>
+                            <label><h4>판매 상태</h4></label>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" id='itemStatus1' name="status" checked={item.status === 'visible'} onChange={changeValue} value="visible" />
-                                <label className="form-check-label" htmlFor="itemStatus1">활성화</label>
+                                <input className="update-status-radio" type="radio" id='itemStatus1' name="status" checked={item.status === 'visible'} onChange={changeValue} value="visible" />
+                                <label className="update-status-input" htmlFor="itemStatus1">활성화</label>
                             </div>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" id='itemStatus2' name="status" onChange={changeValue} value="invisible" />
-                                <label className="form-check-label" htmlFor="itemStatus2">비활성화</label>
+                                <input className="update-status-radio" type="radio" id='itemStatus2' name="status" onChange={changeValue} value="invisible" />
+                                <label className="update-status-input" htmlFor="itemStatus2">비활성화</label>
                             </div>
                         </div>
                         {showStatus && (<div><span className="text-danger">상태를 선택해주세요</span></div>)}
@@ -253,7 +256,7 @@ const ItemUpload = ({ setSubMenu }) => {
                             />
                         </div>
                         <div className="my-3">
-                            <button type="submit" name='submitButton' className="btn btn-outline-dark">작성완료</button>
+                            <button type="submit" name='submitButton' className="file-submin-btn">작성완료</button>
                         </div>
                     </form>
                 </div>
@@ -266,7 +269,7 @@ const ItemUpload = ({ setSubMenu }) => {
                             {preview ? <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', textAlign: 'center' }} /> : <div>미리보기 이미지</div>}
                         </div>
                         {showImg && (<div><span className="text-danger">이미지를 추가해주세요.</span></div>)}
-                        <button style={{ marginTop: '10px' }} className="btn btn-outline-dark" onClick={handleOpenFile}>파일선택</button>
+                        <button style={{ marginTop: '10px' }} className="file-submin-btn" onClick={handleOpenFile}>파일선택</button>
                     </div>
 
                 </div>

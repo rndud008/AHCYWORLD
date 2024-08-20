@@ -27,6 +27,14 @@ select * from guest_book;
 delete from friend
 where id = 61;
 
+delete
+from ah_user
+where id = 11;
+
+
+delete from hompy
+where user_id=11;
+
 
 select * from attachment where post_id='7285';
 select * from email_authentication;
@@ -77,13 +85,7 @@ from guest_book;
 select *
 from carts;
 
-delete
-from ah_user
-where id = 9;
 
-
-delete from hompy
-where user_id=9;
 
 update hompy set total_visitor = 0 where id = 1;
 
@@ -138,7 +140,8 @@ FROM Hompy
 WHERE user_id = 4;
 
 delete
-from ah_user;
+from ah_user
+where id = 7;
 alter table ah_user
     AUTO_INCREMENT = 1;
 
@@ -148,7 +151,8 @@ alter table friend
     AUTO_INCREMENT = 1;
 
 delete
-from hompy;
+from hompy
+where id = 6;
 alter table hompy
     AUTO_INCREMENT = 1;
 

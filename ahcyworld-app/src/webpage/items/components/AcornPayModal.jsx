@@ -67,7 +67,7 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
                 }).then((response) => {
                     const { data, status } = response;
                     if (status === 200) {
-                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => openhompy(), () => { setIsDelete(true); setAllCheckBox(false); setTotalAcorn(0); onClose(); })
+                        itemconfirm("구매 성공", "미니홈피로 이동하시겠습니까?", "success", () => openhompy(), () =>fetchHome())
                     }
                 });
             } else {
@@ -94,7 +94,16 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
         setAllCheckBox(false);
         setTotalAcorn(0);
         navigate("/");
+        window.location.reload();
     };
+
+    const fetchHome = () => {
+        setIsDelete(true);
+        setAllCheckBox(false);
+        setTotalAcorn(0);
+        onClose();
+        window.location.reload();
+    }
 
     return (
         <div className='acornpay-modal-overlay'>

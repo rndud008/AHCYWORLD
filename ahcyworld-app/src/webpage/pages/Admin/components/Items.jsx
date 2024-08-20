@@ -44,7 +44,6 @@ const Items = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                window.scroll(0, 0);
                 const type = itemType;
                 let firstpage = 0;
                 if (localStorage.getItem("AdminItemType") === type) {

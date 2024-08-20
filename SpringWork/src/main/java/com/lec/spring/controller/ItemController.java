@@ -131,6 +131,7 @@ public class ItemController {
     @CrossOrigin
     public ResponseEntity<?> duplication(@RequestParam String itemname) {
 
+        System.out.println("여기오냐?"+itemname);
         return new ResponseEntity<>(itemService.duplication(itemname), HttpStatus.OK);
     }
 
