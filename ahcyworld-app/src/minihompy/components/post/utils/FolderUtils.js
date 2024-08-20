@@ -17,10 +17,13 @@ export const radioName = [
   },
 ];
 
-export const list = async (postName, dispatch, hompyId) => {
-  if (postName) {
-    dispatch(FolderAction.getFolderListAxios(hompyId, postName));
+export const list = async (postName, dispatch, hompyId, navigate) => {
+  try{
+    await dispatch(FolderAction.getFolderListAxios(hompyId, postName));
+  }catch(e){
+    navigate(`/hompy/${hompyId}/${postName}`)
   }
+
 };
 
 export const handleClose = (dispatch) => {
@@ -105,6 +108,7 @@ export const folderClick = async (e, dispatch, navigate, hompyId, postName) => {
 };
 
 export const folderDelete = async (dispatch, hompyId, postName, id) => {
+  if (id === undefined) return Swal.alert("폴더 삭제 실패", "폴더가 존재하지 않습니다.", "error");
   if (!window.confirm("삭제하시겠습니까?")) return;
 
   dispatch(FolderAction.deleteFolderAxios(hompyId, postName, id));

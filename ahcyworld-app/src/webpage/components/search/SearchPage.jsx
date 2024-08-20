@@ -13,7 +13,6 @@ const SearchPage = () => {
   const params = new URLSearchParams(location.search);
 
   const actionQuery = params.get("action");
-
   const searchQuery = params.get("search");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,8 +61,8 @@ const SearchPage = () => {
       {actionQuery === "all" && (
         <>
           <div className="searchPageButtonGroup">
-            <Button name="hompy" onClick={showChangeValue}>유저</Button>
-            <Button name="item" onClick={showChangeValue}>아이템</Button>
+            <Button className="search-useritem" name="hompy" onClick={showChangeValue}>유저</Button>
+            <Button className="search-useritem" name="item" onClick={showChangeValue}>아이템</Button>
           </div>
           {show.hompyList &&(searchList.hompyList?.length > 0 && <UserListItem />) ||
             show.hompyList &&(searchList.hompyList?.length === 0 && (

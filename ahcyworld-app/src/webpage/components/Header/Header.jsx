@@ -1,17 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import backgroundImg from "../../../upload/배경1.png";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../upload/LOGO2.png";
-import styled from "styled-components";
 import "./Header.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
-import SlideImg from "../slideImg/SlideImg";
-import News from "../news/News";
-import { BsSearch } from "react-icons/bs";
-import api, { SERVER_HOST } from "../../../apis/api";
 import { useDispatch } from "react-redux";
 import { SearchAction } from "../../../redux/actions/SearchAction";
 
@@ -19,6 +11,12 @@ const Header = ({ setItemKind }) => {
   const { isLogin, logout, userInfo, hompyInfo } = useContext(LoginContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const actionQuery = params.get("action");
+  const searchQuery = params.get("search");
 
   const [searchValue, setSearchValue] = useState({
     action: "all",
@@ -53,6 +51,20 @@ const Header = ({ setItemKind }) => {
       }
     }
   };
+
+  useEffect(()=>{
+    if(searchQuery && actionQuery){
+      setSearchValue({
+        action: actionQuery,
+        search: searchQuery,
+      })
+    }else{
+      setSearchValue({
+        action: 'all',
+        search: '',
+      })
+    }
+  },[actionQuery,searchQuery])
   
   const searchListAxios = async () => {
     try {

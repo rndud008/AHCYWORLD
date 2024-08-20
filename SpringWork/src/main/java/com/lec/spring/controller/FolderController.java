@@ -226,7 +226,7 @@ public class FolderController {
             return validateResponse;
         }
 
-        return new ResponseEntity<>(folderService.folderListByBoardType(boardType, miniHompy,friend,aciton), HttpStatus.OK);// status 200
+        return new ResponseEntity<>(folderService.folderListByBoardType(boardType, miniHompy,friend,aciton,hompy), HttpStatus.OK);// status 200
     }
 
     @GetMapping("/{hompyId}/{postName}/scrapfolder")

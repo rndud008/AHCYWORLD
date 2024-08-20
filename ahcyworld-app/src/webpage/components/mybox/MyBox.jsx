@@ -81,6 +81,21 @@ const MyBox = () => {
     };
 
     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`${SERVER_HOST}/user/info/${userInfo.id}`);
+                setUserInfo(response.data);
+            } catch (error) {
+                console.error("사용자 정보를 가져오는 중 에러 발생:", error);
+            }
+        };
+    
+        if (isLogin) {
+            fetchUserData();
+        }
+    }, [isLogin]);
+
+    useEffect(() => {
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);
@@ -156,10 +171,7 @@ const MyBox = () => {
 
             <div className='middle'>
                 <div className='minimi-box'>
-                    <img
-                        src={minimiPicture}
-                        alt='미니홈피 이미지'
-                    />
+                    <img src={minimiPicture} alt='미니홈피 이미지' />
                 </div>
                 <div className='info-box'>
                     <ul>

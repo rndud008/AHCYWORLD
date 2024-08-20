@@ -323,10 +323,10 @@ const JoinForm = ({ join }) => {
     }, [show]);
 
     return (
-        <div className='join_form'>
-            <h1 className='login-title'>AhcyWorld</h1>
+        <div className='join-form-container'>
+            <h1 className='jogin-title'>AhcyWorld</h1>
 
-            <form className='login-form' onSubmit={(e) => onJoin(e)}>
+            <form className='join-form' onSubmit={(e) => onJoin(e)}>
                 <div className='id-box'>
                     <label htmlFor='username'>아이디</label>
                     <StyledBox>
@@ -339,7 +339,7 @@ const JoinForm = ({ join }) => {
                             autoComplete='username'
                             onChange={onChange}
                         />
-                        <Button onClick={checkUsername}>중복확인</Button>
+                        <Button className="joincheck-btn" onClick={checkUsername}>중복확인</Button>
                     </StyledBox>
                 </div>
                 <div className='text-success'>{successMessages.username}</div>
@@ -356,11 +356,10 @@ const JoinForm = ({ join }) => {
                         autoComplete='current-password'
                         onChange={onChange}
                     />
-                    <br />
-                    <small style={{ color: "gray", marginLeft: "20px" }}>영문자+숫자+특수문자 조합 8~16글자</small>
+                    <span style={{ color: "gray"}}>영문자+숫자+특수문자 조합 8~16글자</span>
                     <div className='text-danger'>{errors.password}</div>
                 </div>
-
+   
                 <div>
                     <label htmlFor='name'>이름</label>
                     <input
@@ -388,7 +387,7 @@ const JoinForm = ({ join }) => {
                             disabled={show.email}
                             onChange={onChange}
                         />
-                        <Button onClick={checkEmail}>중복확인</Button>
+                        <Button className="joincheck-btn" onClick={checkEmail}>중복확인</Button>
                     </StyledBox>
                     <StyledBox>
                         {show.emailAuthValue && (
@@ -401,17 +400,17 @@ const JoinForm = ({ join }) => {
                             />
                         )}
                         {show.authSend && (
-                            <Button ref={buttonDisabled} type='button' id='authSend' onClick={emailAuth}>
+                            <Button className="joinform-btn" ref={buttonDisabled} type='button' id='authSend' onClick={emailAuth}>
                                 인증
                             </Button>
                         )}
                         {show.authCheck && (
-                            <Button type='button' id='authCheck' onClick={emailAuthCheck}>
+                            <Button className="joinform-btn" type='button' id='authCheck' onClick={emailAuthCheck}>
                                 {show.emailAuthValue === true ? "인증하기" : "인증완료"}
                             </Button>
                         )}
                         {show.emailRe && (
-                            <Button  type='button' id='emailRe' onClick={emailAuthRe}>
+                            <Button className="joinform-btn" type='button' id='emailRe' onClick={emailAuthRe}>
                                 재입력
                             </Button>
                         )}
@@ -462,7 +461,7 @@ const JoinForm = ({ join }) => {
                     />
                     <div className='text-danger'>{errors.birthDay}</div>
                 </div>
-                <div className='login-btn-box'>
+                <div className='join-btn-box'>
                     <button className='btn-join' type='submit'>
                         Join
                     </button>

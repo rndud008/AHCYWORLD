@@ -40,13 +40,13 @@ const BoardTypeList = () => {
                 {item.status === "전체공개" && <Folder item={item} />}
 
                 {item.status === "일촌공개" &&
-                  (parseInt(hompyId) === hompyInfo.id ||
+                  (parseInt(hompyId) === hompyInfo.id || roles.isAdmin ||
                     hompyFriendList.some(
                       (item) => parseInt(item) === parseInt(userInfo.id)
                     )) && <Folder item={item} />}
 
-                {item.status === "비공개" &&
-                  parseInt(hompyId) === hompyInfo.id && <Folder item={item} />}
+                {item.status === "비공개" && (roles.isAdmin ||
+                  parseInt(hompyId) === hompyInfo.id) && <Folder item={item} />}
               </>
             ))}
         </ListGroup>
@@ -61,7 +61,7 @@ const BoardTypeList = () => {
 
             <Button  variant="none"
               onClick={() =>
-                folderDelete(dispatch, hompyId, postName, folder.id)
+                folderDelete(dispatch, hompyId, postName, folder?.id)
               }
             >
               삭제

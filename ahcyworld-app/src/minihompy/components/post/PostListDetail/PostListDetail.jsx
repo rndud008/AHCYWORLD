@@ -12,6 +12,8 @@ const PostListDetail = () => {
   const pageAndPostList = useSelector((state) => state.post.pageAndPostList);
   const folder = useSelector((state) => state.folder.folder);
 
+  console.log('PostListDetail :' ,hompyInfo)
+
   return (
     <>
       <Container className="postContainer">

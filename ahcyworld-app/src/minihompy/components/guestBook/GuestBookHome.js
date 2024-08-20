@@ -30,13 +30,12 @@ const GuestBookHome = () => {
 
     const fetchHompy = async () => {
       try {
-        const respone = await api.get(`${SERVER_HOST}/hompy/${hompyId}`, {
+        const response = await api.get(`${SERVER_HOST}/hompy/${hompyId}`, {
           headers: {
             Authorization: `Bearer ${cookie}`,
           },
         });
-        setHompy(respone.data);
-
+        setHompy(response.data);
       } catch (error) {
         console.error("홈피 정보 불러오기 실패", error);
       }
@@ -72,6 +71,7 @@ const GuestBookHome = () => {
                   user: {
                     ...entry.user,
                     homepage: hompyResponse.data,
+                    minimiPicture: hompyResponse.data.minimiPicture
                   },
                 };
               } catch (error) {
@@ -125,7 +125,7 @@ const GuestBookHome = () => {
 
 
   const handleDelete = async (id) => {
-    console.log("roles : ", roles);
+    // console.log("roles : ", roles);
     if (window.confirm("삭제하시겠습니까?")) {
       const cookie = Cookies.get("accessToken");
       try {
@@ -227,9 +227,28 @@ const GuestBookHome = () => {
         }
       );
       if (response.status === 200) {
+        const hompyResponse = await api.get(
+          `${SERVER_HOST}/cyworld/cy/guestbook/user/hompy/${userInfo.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${cookie}`,
+            },
+          }
+        );
+
+        const newEntry = {
+          ...response.data,
+          user: {
+            ...response.data.user,
+            homepage: hompyResponse.data,
+            minimiPicture: hompyResponse.data.minimiPicture
+          },
+        };
+
+        setGuestBook([newEntry, ...guestBook]);
         setContent("");
         setIsSecret(false);
-        setGuestBook([response.data, ...guestBook]);
+        
         Swal.alert(
           "방명록 등록에 성공했습니다",
           "방명록 등록 성공",
@@ -258,6 +277,10 @@ const GuestBookHome = () => {
 
   const handleSecretChange = (e) => {
     setIsSecret(e.target.checked);
+  };
+
+  const getMinimiImgUrl = (guest) => {
+    return `${process.env.PUBLIC_URL}/image/${guest.user.minimiPicture || "default_img.png"}?v=${new Date().getTime()}`;
   };
 
   return (
@@ -349,10 +372,7 @@ const GuestBookHome = () => {
                       <tr>
                         <td className="minimi-cell">
                           <img
-                            src={`${process.env.PUBLIC_URL}/image/${
-                              guest.user.homepage?.minimiPicture ||
-                              "default_img.png"
-                            }`}
+                            src={getMinimiImgUrl(guest)}
                             alt="Minimi"
                             className="minimi-img"
                           />

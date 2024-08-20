@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import React, { useContext, useEffect, useState } from "react";
 import "./LoginForm.css";
 import { LoginContext } from "../context/LoginContextProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import naver from "../../../../upload/네이버버튼.png";
 import kakao from "../../../../upload/카카오버튼.png";
 
@@ -91,7 +91,7 @@ const LoginForm = () => {
                     <img src={naver} alt='' className='naver-btn' onClick={onNaverLogin} />
                     <img src={kakao} alt='' className='kakao-btn' onClick={onKakaoLogin} />
                     <button className='login-btn' value='Login' type='submit'>
-                    로그인
+                        로그인
                     </button>
                 </div>
             </form>

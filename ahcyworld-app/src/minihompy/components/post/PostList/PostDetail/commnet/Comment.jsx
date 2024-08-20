@@ -27,7 +27,7 @@ const Comment = () => {
     <>
       <div className="postDetailCommentTool">
         <div  className="commentToggle">
-          <Button onClick={() => showState(dispatch, show)}>
+          <Button className="commentToggle-btn" onClick={() => showState(dispatch, show)}>
             {show === false ? "댓글보기" : "댓글닫기"}
           </Button>
         </div>
@@ -38,11 +38,12 @@ const Comment = () => {
             placeholder="댓글입력"
           />
           <Button
+            className="commentwrite-btn"
             onClick={() =>
               commentWriteAxios(dispatch, userInfo, post, content, postName)
             }
           >
-            확인
+            등록
           </Button>
         </div>
       </div>
