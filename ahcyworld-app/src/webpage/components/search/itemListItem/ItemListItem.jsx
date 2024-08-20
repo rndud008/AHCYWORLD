@@ -18,7 +18,6 @@ const ItemListItem = () => {
   const skinAndSotryRoom = ["스킨", "스토리룸"];
 
   const addCart = async (item) => {
-    
     if (!userInfo) {
       Swal.alert("로그인이 필요합니다", "로그인을 해주세요.", "warning");
       return navigate("/");
@@ -35,8 +34,11 @@ const ItemListItem = () => {
       }
     );
 
-    const { status } = response;
-    (status === 201 &&
+    const { status,data } = response;
+
+    
+    if(status === 201){
+      setUserCartList([...userCartList,data])
       Swal.itemconfirm(
         "장바구니에 추가",
         "장바구니화면으로 이동하시겠습니까?",
@@ -47,8 +49,13 @@ const ItemListItem = () => {
         () => {
           return;
         }
-      )) ||
-      Swal.alert("Error", "저장에 실패했습니다.", "warning");
+      )
+    } else{
+      Swal.alert("Error", "저장에 실패했습니다.", "warning")
+    }
+    
+      
+        
   };
 
   const userListItemAxios = async () => {
@@ -74,6 +81,8 @@ const ItemListItem = () => {
     }
   }, []);
 
+  console.log('usercheck',userCartList)
+
   return (
     <div className="searchItemList">
       {searchList.itemList &&
@@ -87,6 +96,7 @@ const ItemListItem = () => {
                 />
               </div>
             )}
+
             {skinAndSotryRoom.some((item2) =>
               item2.includes(item.itemType)
             ) && (
