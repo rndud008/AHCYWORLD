@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import '../css/UpdateItemModal.css';
 import { alert } from '../../../../apis/alert';
 import { SERVER_HOST } from '../../../../apis/api';
+import '../css/UpdateItemModal.css';
 
 const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
 
@@ -158,8 +159,8 @@ const UpdateItemModal = ({ isOpen, ModalonClose, updateitem, setIsUpdate }) => {
                 <br />
 
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '30px' }}>
-                    <button style={{ width: '90px' }} onClick={() => updateCommit()}>완료</button>
-                    <button style={{ width: '90px' }} onClick={() => exit()}>닫기</button>
+                    <button className='diarywriteok-btn' style={{ width: '90px' }} onClick={() => updateCommit()}>완료</button>
+                    <button className='diarywriteno-btn' style={{ width: '90px' }} onClick={() => exit()}>닫기</button>
                 </div>
             </div>
         </div>

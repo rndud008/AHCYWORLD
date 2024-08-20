@@ -72,7 +72,7 @@ const LoginContextProvider = ({ children }) => {
             loginSetting(data, accessToken);
 
         try {
-            response = await auth.hompyInfo();
+            response = await auth.getHompyInfo();
             data = response.data;
             setHompyInfo(data);
             localStorage.setItem("hompyInfo", JSON.stringify(data));
