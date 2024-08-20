@@ -84,7 +84,7 @@ const Right = ({ user, hompy }) => {
 
   const miniHomePyRecentlyPost = async () => {
     if (hompyId) {
-      const response = await api.get(`${SERVER_HOST}/${hompyId}/recentlypost`, {
+      const response = await api.get(`${SERVER_HOST}/hompy/${hompyId}/recentlypost`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("accessToken")}`,
         },
@@ -100,7 +100,7 @@ const Right = ({ user, hompy }) => {
 
   const miniHomePyInfoTable = async () => {
     if (hompyId) {
-      const response = await api.get(`${SERVER_HOST}/${hompyId}/infotable`, {
+      const response = await api.get(`${SERVER_HOST}/hompy/${hompyId}/infotable`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("accessToken")}`,
         },

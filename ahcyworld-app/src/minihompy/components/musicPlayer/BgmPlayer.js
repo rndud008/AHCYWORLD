@@ -19,6 +19,7 @@ import "./BgmPlayer.css";
 import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api"; // SERVER_HOST 가져오기
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import Swal from "sweetalert2";
 
 const BgmPlayer = () => {
   const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
@@ -57,10 +58,6 @@ const BgmPlayer = () => {
   }, [hompyInfo]);
 
   const togglePlayPause = useCallback(() => {
-    console.log('들어왔다')
-    if (bgmList?.length === undefined) return console.log('나간다.');
-
-    console.log('들어왔냐?')
     if (isPlaying) {
       audioRef.current.pause();
     } else {
@@ -125,15 +122,17 @@ const BgmPlayer = () => {
     setIsModalOpen(false); // 모달을 닫음
   };
 
-  console.log(bgmList?.length);
+  const bgmListNull = () => {
+    Swal.fire({
+      icon: "error",
+      title: "재생실패!",
+      text: "리스트에 음악이 없습니다.",
+      confirmButtonText: "확인",
+    });
+  }
 
   return (
     <div className="bgm-player">
-      {/* <div className="cover-image">
-        {bgmList.length > 0 && (
-          <img src={bgmList[currentTrackIndex].bgmImg} alt="Cover" />
-        )} 
-      </div> */}
       <div className="track-info">
         {bgmList && bgmList.length !== 0 && (
           <strong>
@@ -149,7 +148,7 @@ const BgmPlayer = () => {
       ></audio>
       <div className="controls">
         <div className="controls-box">
-          <button onClick={togglePlayPause}>
+          <button onClick={bgmList && (bgmList.length !== 0 && togglePlayPause || bgmListNull)}>
             {isPlaying ? <FaPause /> : <FaPlay />}
           </button>
           <button onClick={stopPlayback}>

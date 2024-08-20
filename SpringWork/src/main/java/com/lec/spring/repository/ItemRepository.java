@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     boolean existsItemByItemName(String itemName);
 
-    Optional<List<Item>> findByItemNameContainingIgnoreCaseAndStatus(String itemName,String status);
+    Optional<List<Item>> findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus(String itemType,String itemName,String status);
+
+    @Query("select i from Item  i where i.itemType = :itemType and i.status = :status and (i.fileName like %:keyword% or i.sourceName like %:keyword%)")
+    Optional<List<Item>> findByItemTypeAndStatusAndItemNameOrSourceName(@Param("itemType") String itemType, @Param("status") String status, @Param("keyword") String keyword);
 
 }
