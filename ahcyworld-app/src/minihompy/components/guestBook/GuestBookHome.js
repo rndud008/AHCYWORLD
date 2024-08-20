@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import { hompyInfo, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const GuestBookHome = () => {
     const [guestBook, setGuestBook] = useState([]);
@@ -296,12 +296,14 @@ const GuestBookHome = () => {
         }?v=${new Date().getTime()}`;
     };
 
+    const hompyCheck = useSelector((state) => state.hompy.hompy);
+
     const guestBookVisibleCheck =
-        hompy.menuStatus?.split(",")[3] === "visible" || roles.isAdmin;
+      hompyCheck.menuStatus?.split(",")[3] === "visible" || roles.isAdmin;
 
     return (
         <>
-            {hompy && guestBookVisibleCheck ? (
+            {hompyCheck && guestBookVisibleCheck ? (
                 <Layout hompy={hompy} user={hompy.user}>
                     <Container className="container">
                         <Form
