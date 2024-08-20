@@ -85,7 +85,6 @@ const MenuSetting = () => {
           guestbook: statusString.split(',')[3],
         });
         dispatch(HompyAction.findByHompyIdAxios(hompyId));
-
       })
       .catch(error => {
         console.error("설정 저장 오류: ", error);
