@@ -54,6 +54,7 @@ const OAuth2AddInfo = () => {
 
                 if (response) {
                     navigate("/");
+                    window.location.reload();
                 }
             } catch (error) {
                 console.error("addInfo Error: ", error);

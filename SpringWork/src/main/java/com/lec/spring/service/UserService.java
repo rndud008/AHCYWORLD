@@ -107,22 +107,26 @@ public class UserService {
     }
 
     public String OAuthAddInfo(String username, String gender, String birthday) {
-//        System.out.println("username2: " + username);
-//        System.out.println("gender2: " + gender);
-//        System.out.println("birthDay2: " + birthday);
-
         User user = userRepository.findByUsername(username);
+        Hompy hompy = hompyRepository.findByUser(user);
 
         LocalDate birthDay = LocalDate.parse(birthday);
 
         if (user != null) {
             user.setBirthDay(birthDay);
             user.setGender(gender);
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
+            if (gender.equals("MALE")) {
+                hompy.setMinimiPicture("male.png");
+            } else {
+                hompy.setMinimiPicture("female.png");
+            }
+            hompyRepository.saveAndFlush(hompy);
             return "ok";
         }
 
         return "ok";
+
     }
 
     @Transactional

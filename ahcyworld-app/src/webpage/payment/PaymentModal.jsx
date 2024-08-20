@@ -63,7 +63,7 @@ const PaymentModal = ({ isOpen, onClose }) => {
         setFriendData("");
     }
     const pay = () => {
-        if (parseInt(acorns > 0)) {
+        if (parseInt(acorns) > 0) {
             Payment(user, acorns, navigator, friendData);
             setIsZeroAcorn(false);
         } else {

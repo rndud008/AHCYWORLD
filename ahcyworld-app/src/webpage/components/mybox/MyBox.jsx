@@ -3,7 +3,7 @@ import "./MyBox.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png";
-import { getLogedUser, getMessageFromAdmin, myFriendRequests } from "../../../apis/auth";
+import { getHompyInfo, getLogedUser, getMessageFromAdmin, myFriendRequests } from "../../../apis/auth";
 import FriendRequestModal from "../../../minihompy/components/friendShip/FriendRequestModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -14,7 +14,7 @@ import * as Swal from "../../../apis/alert";
 import MessageModal from "../Message/MessageModal";
 import PaymentHistory from "../paymentHistory/PaymentHistory";
 const MyBox = () => {
-    const { isLogin, logout, userInfo, setUserInfo, hompyInfo } = useContext(LoginContext);
+    const { isLogin, logout, userInfo, setUserInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [friendRequest, setFriendRequest] = useState([]);
     const [friendRequestCnt, setFriendRequestCnt] = useState(0);
