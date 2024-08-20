@@ -189,6 +189,7 @@ const Right = ({ user, hompy }) => {
   const activeEnter = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
+      e.stopPropagation();
       friendReviewCreate();
     }
   };
