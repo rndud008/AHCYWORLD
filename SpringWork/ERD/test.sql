@@ -2,6 +2,7 @@ show tables;
 
 drop table if exists attachment_id;
 
+ALTER TABLE hompy MODIFY COLUMN mini_hompy_bgm LONGTEXT;
 
 select *
 from hompy;

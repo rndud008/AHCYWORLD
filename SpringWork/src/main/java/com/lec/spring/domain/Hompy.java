@@ -39,6 +39,8 @@ public class Hompy {
     private String miniRoom; // 미니룸
     private String miniHompySkin; // 미니홈피 스킨
     private String miniHompyFont; // 미니홈피 폰트
+    @Lob
+    @Column(name = "mini_hompy_bgm", columnDefinition = "LONGTEXT")
     private String miniHompyBgm; // 미니홈피 bgm
 
     private String profile;
