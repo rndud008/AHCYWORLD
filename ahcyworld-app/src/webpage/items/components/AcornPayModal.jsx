@@ -9,8 +9,18 @@ import { userInfo } from '../../../apis/auth';
 import PaymentModal from '../../payment/PaymentModal';
 import acorn from "../../../upload/acorn.png";
 
-const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, userInfo, setIsDelete, setTotalAcorn, setAllCheckBox }) => {
-    const [payItems, setPayItems] = useState([])
+const AcornPayModal = ({
+    isOpen,
+    onClose,
+    selectItem,
+    totalAcorn,
+    hompyInfo,
+    userInfo,
+    setIsDelete,
+    setTotalAcorn,
+    setAllCheckBox,
+}) => {
+    const [payItems, setPayItems] = useState([]);
     const navigate = useNavigate();
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -25,13 +35,13 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
         if (isOpen) {
             const params = new URLSearchParams();
             let updateAcorn = 0;
-            
-            selectItem.forEach(item => params.append('itemList', item));
+
+            selectItem.forEach((item) => params.append("itemList", item));
             axios({
-                method: 'GET',
+                method: "GET",
                 url: `${SERVER_HOST}/cart/itemcheck`,
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
                 params: params,
             }).then((response) => {
@@ -41,29 +51,28 @@ const AcornPayModal = ({ isOpen, onClose, selectItem, totalAcorn, hompyInfo, use
                 }
             });
         }
-    }, [isOpen])
+    }, [isOpen]);
 
     if (!isOpen) {
         return null;
     }
 
     const payedItem = () => {
-
         if (selectItem.length === 0) {
-            alert("주의", "구매할 아이템이 없습니다.", "warning", () => onClose)
+            alert("주의", "구매할 아이템이 없습니다.", "warning", () => onClose);
         } else {
             if (userInfo.acorn >= totalAcorn) {
                 axios({
-                    method: 'POST',
+                    method: "POST",
                     url: `${SERVER_HOST}/cart/payed/item`,
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json",
                     },
                     data: JSON.stringify(selectItem),
                     params: {
                         id: userInfo.id,
                         totalAcorn: totalAcorn,
-                    }
+                    },
                 }).then((response) => {
                     const { data, status } = response;
                     if (status === 200) {

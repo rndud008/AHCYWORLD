@@ -1,6 +1,7 @@
 show tables;
 
 drop table if exists attachment_id;
+drop table  if exists ah_user;
 
 
 select *
@@ -91,7 +92,7 @@ update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 9999999
-where id = 8;
+where id = 9;
 
 
 
