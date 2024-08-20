@@ -109,6 +109,7 @@ const PostUpdate = () => {
               {originFileList?.map((item, idx) => (
                 <div className="file">
                   <Form.Control
+                    key={idx}
                     type="text"
                     className={item.status === false ? "textLineThrough": ""}
                     name={`originFileList${item.id}`}
@@ -153,7 +154,7 @@ const PostUpdate = () => {
 
           <Form.Group className="files">
             {post?.fileList.map((item, idx) => (
-              <div className="file">
+              <div key={item.id}  className="file">
                 <Form.Control
                   type="file"
                   name={`fileList${item.id}`}

@@ -78,6 +78,8 @@ const LoginContextProvider = ({ children }) => {
             response = await auth.getHompyInfo();
             data = response.data;
             setHompyInfo(data);
+
+            dispatch(HompyAction.findByHompyIdAxios(data.id))
             
             localStorage.setItem("hompyInfo", JSON.stringify(data));
         } catch (error) {

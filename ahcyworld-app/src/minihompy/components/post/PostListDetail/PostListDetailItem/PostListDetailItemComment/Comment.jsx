@@ -27,6 +27,14 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
   const content = useSelector((state) => state.comment.content);
   const error = useSelector(state => state.comment.error);
 
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      commentWriteAxios(dispatch, userInfo, item, content, postName)
+    }
+  };
+
   return (
     <>
       {result &&
@@ -40,6 +48,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
         <div className="commentInputSection">
           <input
             value={content.id === result.postId ? content.content : ""}
+            onKeyDown={(e) => activeEnter(e)}
             onChange={(e) => contentState(e.target.value, dispatch,result.postId)}
             placeholder="댓글입력"
           />
@@ -65,7 +74,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
           ) : (
             result?.data.map((item) => (
               <>
-                <div className="postDetailComment">
+                <div key={item.id} className="postDetailComment">
                   <p>{item.user.name}</p>
                   <p>{item.createAt}</p>
                   {(item.user.id === userInfo.id  || roles.isAdmin || hompyInfo.id === parseInt(hompyId)) && (

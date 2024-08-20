@@ -90,7 +90,7 @@ const PostWrite = () => {
 
           <Form.Group className="files">
           {post.fileList.map((item, idx) => (
-            <div className="file">
+            <div key={item.id}  className="file">
               <Form.Control
                 type="file"
                 name={`upfile${item.id}`}

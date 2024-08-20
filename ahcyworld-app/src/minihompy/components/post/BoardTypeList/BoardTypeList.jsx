@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import "./BoardTypeList.style.css";
 import { Button, ListGroup, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
@@ -23,6 +23,8 @@ const BoardTypeList = () => {
   const folder = useSelector((state) => state.folder.folder);
   const BoardTypeName = folderList?.[0]?.boardType.name;
 
+  const memoHompyFriendList = useMemo(() =>hompyFriendList,[hompyFriendList] )
+
   useEffect(() => {
     hompyFriendListAxios(username, dispatch);
   }, [username]);
@@ -35,20 +37,17 @@ const BoardTypeList = () => {
         </div>
         <ListGroup className="board-type-list-group">
           {folderList &&
-            folderList.map((item) => (
-              <>
-                {item.status === "전체공개" && <Folder item={item} />}
-
-                {item.status === "일촌공개" &&
-                  (parseInt(hompyId) === hompyInfo.id || roles.isAdmin ||
-                    hompyFriendList.some(
-                      (item) => parseInt(item) === parseInt(userInfo.id)
-                    )) && <Folder item={item} />}
-
-                {item.status === "비공개" && (roles.isAdmin ||
-                  parseInt(hompyId) === hompyInfo.id) && <Folder item={item} />}
-              </>
-            ))}
+            folderList.map((item) =>{
+              const itemStatusCheck = (item.status === "전체공개") || (item.status === "일촌공개" &&
+              (parseInt(hompyId) === hompyInfo.id || roles.isAdmin ||
+              memoHompyFriendList.some(
+                  (item) => parseInt(item) === parseInt(userInfo.id)
+                )))|| (item.status === "비공개" && (roles.isAdmin ||
+                  parseInt(hompyId) === hompyInfo.id))
+             return (
+                itemStatusCheck && <Folder key={item.id} item={item} />
+              )
+          })}
         </ListGroup>
         {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin) && (
           <div className="board-type-folder">

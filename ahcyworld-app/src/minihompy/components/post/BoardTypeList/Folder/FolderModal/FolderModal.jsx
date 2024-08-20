@@ -56,6 +56,7 @@ const FolderModal = () => {
               <div className="folder-status-value">
                 {radioName.map((item) => (
                   <Form.Check
+                  key={item.id}
                     type="radio"
                     id={item.id}
                     value={item.name}

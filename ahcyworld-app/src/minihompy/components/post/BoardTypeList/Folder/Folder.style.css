@@ -15,8 +15,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 16px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
-  /* outline: 1px solid rgb(12, 188, 237); */
+
 }
 .form-check .form-check-input{
   float: none;

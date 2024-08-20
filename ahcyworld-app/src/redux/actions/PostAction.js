@@ -5,7 +5,6 @@ import { FolderAction } from "./FolderAction";
 function axiosPostList(hompyId, postName, folderId, page = 0) {
   return async (dispatch, getState) => {
     try {
-      console.log('try PostAction axiosPostList 실행')
       const response = await api.get(
         `${SERVER_HOST}/${hompyId}/${postName}/${folderId}/list?page=${page}`
       );

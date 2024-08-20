@@ -31,7 +31,7 @@ const PostListDetailItem = ({ item }) => {
   }, [postId]);
 
   return (
-    <div className="postDetailListItem">
+    <div key={item.id} className="postDetailListItem">
       <div className="postDetailListItemHeader1">
         <span>작성번호 : {item.id}</span>
         <span>제목 : {item.subject}</span>

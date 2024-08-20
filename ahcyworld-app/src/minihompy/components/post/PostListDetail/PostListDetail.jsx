@@ -12,8 +12,6 @@ const PostListDetail = () => {
   const pageAndPostList = useSelector((state) => state.post.pageAndPostList);
   const folder = useSelector((state) => state.folder.folder);
 
-  console.log('PostListDetail :' ,hompyInfo)
-
   return (
     <>
       <Container className="postContainer">
@@ -39,7 +37,7 @@ const PostListDetail = () => {
         <div>
           {pageAndPostList?.posts != null ? (
             pageAndPostList?.posts?.map((item) => {
-              return <PostListDetailItem item={item} />;
+              return <PostListDetailItem key={item.id} item={item} />;
             })
           ) : (
             <h4>게시물이 존재하지 않습니다.</h4>
