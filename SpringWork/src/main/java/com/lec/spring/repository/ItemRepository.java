@@ -28,7 +28,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Optional<List<Item>> findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus(String itemType,String itemName,String status);
 
-    @Query("select i from Item  i where i.itemType = :itemType and i.status = :status and (i.fileName like %:keyword% or i.sourceName like %:keyword%)")
-    Optional<List<Item>> findByItemTypeAndStatusAndItemNameOrSourceName(@Param("itemType") String itemType, @Param("status") String status, @Param("keyword") String keyword);
+    @Query("select i from Item  i where i.itemType = :itemType and i.status = :status and (i.itemName like %:keyword% or i.sourceName like %:keyword%)")
+    Optional<List<Item>> findByItemTypeAndStatusAndItemNameOrSourceName(@Param("itemType") String itemType, @Param("keyword") String keyword, @Param("status") String status);
 
 }

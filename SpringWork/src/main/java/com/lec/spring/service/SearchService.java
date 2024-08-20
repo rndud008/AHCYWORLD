@@ -67,8 +67,8 @@ public class SearchService {
 
         List<Hompy> hompyList = hompyRepository.findByUserNameContainingIgnoreCase(allItemNameAndName).orElse(null);
 
-        List<Item> itemBgmList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악",allItemNameAndName,"visible").orElse(null);
-        List<Item> itemAllList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악",allItemNameAndName,"visible").orElse(null);
+        List<Item> itemAllList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악",allItemNameAndName,"visible").orElse(null);
+        List<Item> itemBgmList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악",allItemNameAndName,"visible").orElse(null);
 
         List<Item> itemList = new ArrayList<>();
 

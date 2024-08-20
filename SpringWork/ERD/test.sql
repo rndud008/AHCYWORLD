@@ -11,6 +11,9 @@ from folder;
 select * from post;
 select * from user_write_histroy;
 
+insert into item (price, bgm_img, file_name, item_name, item_type, source_name, status)
+values (100, null, '블라블라','아이유','배경음악','홀씨','visible');
+
 select * from friend;
 select * from ah_user;
 select* from friend;
