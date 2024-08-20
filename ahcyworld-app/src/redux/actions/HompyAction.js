@@ -8,6 +8,7 @@ function findByHompyIdAxios(hompyId){
   
       if(status === 200){
         dispatch({type:"HOMPY_FIND_BY_HOMPYID",payload:{data}})
+    
       }
     }catch(e){
       throw e

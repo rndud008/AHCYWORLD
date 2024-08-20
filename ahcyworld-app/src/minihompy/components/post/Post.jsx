@@ -11,20 +11,21 @@ import { CommentAction } from "../../../redux/actions/CommentAction";
 import { PostAction } from "../../../redux/actions/PostAction";
 import { hompyInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
 const keyword =['board','photo','video'];
 
 const Post = () => {
   const { hompyId, postName, folderId } = useParams();
-  const {hompyInfo, roles} = useContext(LoginContext)
+  const { hompyInfo, roles} = useContext(LoginContext)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const folder = useSelector((state) => state.folder.folder);
   const hompy = useSelector((state) => state.hompy.hompy);
   const page = useSelector((state) => state.post.page);
-  const photoVisibleCheck = (hompy.menuStatus.split(',')[0] === 'visible' || roles.isAdmin) && postName.includes('photo')
-  const boardVisibleCheck = (hompy.menuStatus.split(',')[1] === 'visible' || roles.isAdmin) && postName.includes('board') 
-  const videoVisibleCheck = (hompy.menuStatus.split(',')[2] === 'visible' || roles.isAdmin) && postName.includes('video') 
+  const photoVisibleCheck = (hompy.menuStatus?.split(',')[0] === 'visible' || roles.isAdmin) && postName.includes('photo') 
+  const boardVisibleCheck = (hompy.menuStatus?.split(',')[1] === 'visible' || roles.isAdmin) && postName.includes('board') 
+  const videoVisibleCheck = (hompy.menuStatus?.split(',')[2] === 'visible' || roles.isAdmin) && postName.includes('video') 
 
   useEffect(() => {
     if(keyword.some(item => postName.includes(item)) && hompyInfo.id !== undefined){
@@ -32,6 +33,7 @@ const Post = () => {
       findByHompyIdAxios(dispatch, hompyId);
       dispatch(CommentAction.contentState(false,""));
       dispatch(CommentAction.contentErrorState("content",false))
+      dispatch(HompyAction.findByHompyIdAxios(hompyId))
     }
   }, [postName, hompyId, dispatch]);
 
@@ -51,12 +53,13 @@ const Post = () => {
   }, [page, folder?.id,folderId]);  
 
 
+
   return (
     <>
-    {(photoVisibleCheck || boardVisibleCheck || videoVisibleCheck) && 
+    {hompy && ((photoVisibleCheck || boardVisibleCheck || videoVisibleCheck) && 
       <Layout hompy={hompy} user={hompy.user}>
         <Outlet />
-      </Layout> || Swal.alert('잘못된 접근입니다.','메인페이지로 돌아갑니다.',"error",navigate('/'))
+      </Layout> || Swal.alert('잘못된 접근입니다.','메인페이지로 돌아갑니다.',"error",navigate('/')))
     }
     </>
   );
