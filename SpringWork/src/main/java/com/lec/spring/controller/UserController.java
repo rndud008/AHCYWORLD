@@ -118,17 +118,6 @@ public class UserController {
     public String addInfo(@RequestParam String username
             , @RequestParam String gender
             , @RequestParam String birthDay) {
-
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//
-//        LocalDate birthday;
-//
-//        try {
-//            birthday = LocalDate.parse(birthDay, formatter);
-//        } catch (DateTimeParseException e) {
-//            return "Invalid date format";
-//        }
-
         String response = userService.OAuthAddInfo(username, gender, birthDay);
 
         return response;

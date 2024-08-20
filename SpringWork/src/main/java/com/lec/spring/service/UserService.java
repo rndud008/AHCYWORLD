@@ -107,10 +107,6 @@ public class UserService {
     }
 
     public String OAuthAddInfo(String username, String gender, String birthday) {
-//        System.out.println("username2: " + username);
-//        System.out.println("gender2: " + gender);
-//        System.out.println("birthDay2: " + birthday);
-
         User user = userRepository.findByUsername(username);
 
         LocalDate birthDay = LocalDate.parse(birthday);
