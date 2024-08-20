@@ -349,6 +349,7 @@ public class PostController {
 
         Hompy hompy = check(request);
         Folder folder = folderService.findById(folderId);
+        boolean adminCheck = hompy.getUser().getRole().contains("ROLE_ADMIN");
 
         String action = "";
 
@@ -356,14 +357,14 @@ public class PostController {
             action = "OTHER";
         }
 
-        if (folder.getStatus().equals("일촌공개") && action.equals("OTHER")) {
+        if (folder.getStatus().equals("일촌공개") && action.equals("OTHER") && !adminCheck) {
             Friend friend = friendService.findByUserAndFriendUser(folder.getHompy().getUser(), hompy.getUser());
             if (friend == null) {
                 return new ResponseEntity<>("일촌 잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
             }
         }
 
-        if (folder.getStatus().equals("비공개") && !hompy.getId().equals(hompyId)) {
+        if (folder.getStatus().equals("비공개") && !hompy.getId().equals(hompyId) && !adminCheck) {
             return new ResponseEntity<>("비공개 잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
         }
 
@@ -387,12 +388,10 @@ public class PostController {
         if (!tourUser.getId().equals(hompyId)) {
             hompy = hompyService.findById(hompyId);
             Friend friend = friendService.findByUserAndFriendUser(tourUser.getUser(), hompy.getUser());
+            boolean adminCheck = tourUser.getUser().getRole().contains("ROLE_ADMIN");
 
-            if (friend == null) {
-                aciton = "OTHER";
-            } else {
-                aciton = "FRIEND";
-            }
+            aciton = friend == null && !adminCheck ? "OTHER" : "FRIEND";
+
         } else {
             aciton = "OWNER";
             hompy = tourUser;
