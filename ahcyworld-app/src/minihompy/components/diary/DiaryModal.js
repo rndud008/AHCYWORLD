@@ -96,7 +96,7 @@ const DiaryModal = ({
                     <>
                         <p>일정이 없습니다.</p>
                         <hr />
-                        <Button onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
+                        <Button className="diarywriteok-btn" onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
                             다이어리 작성하기
                         </Button>
                     </>
