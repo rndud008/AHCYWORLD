@@ -19,9 +19,10 @@ const PaymentModal = ({ isOpen, onClose }) => {
     });
     const [friends, setFriends] = useState([]);
     const [friendData, setFriendData] = useState("");
-    const [acorns, setAcorns] = useState(0);
+    const [acorns, setAcorns] = useState("");
     const [isPayedDisabled, setIsPayedDisabled] = useState(true)
     const [isZeroAcorn, setIsZeroAcorn] = useState(false);
+    const [directText,setDirctText] = useState(false);
 
     if (!isOpen) {
         return null;
@@ -116,37 +117,37 @@ const PaymentModal = ({ isOpen, onClose }) => {
                         <tbody>
                             <tr style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', gap: '40px' }}>
                                 <td className="form-check">
-                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn100' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); }} value='100' />
+                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn100' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); setDirctText(true); }} value='100' />
                                     <label style={{ fontSize: '20px', width: '70px' }} className="form-check-label" htmlFor="acorn100">100개</label>
                                 </td>
                                 <td className="form-check">
-                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn300' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); }} value='300' />
+                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn300' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); setDirctText(true); }} value='300' />
                                     <label style={{ fontSize: '20px', width: '70px' }} className="form-check-label" htmlFor="acorn300">300개</label>
                                 </td>
                                 <td className="form-check">
-                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn500' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); }} value='500' />
+                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn500' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); setDirctText(true); }} value='500' />
                                     <label style={{ fontSize: '20px', width: '70px' }} className="form-check-label" htmlFor="acorn500">500개</label>
                                 </td>
                             </tr>
                             <tr style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', gap: '40px' }}>
                                 <td className="form-check">
-                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn1000' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); }} value='1000' />
+                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn1000' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); setDirctText(true); }} value='1000' />
                                     <label style={{ fontSize: '20px', width: '70px' }} className="form-check-label" htmlFor="acorn1000">1000개</label>
                                 </td>
                                 <td className="form-check">
-                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn5000' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); }} value='5000' />
+                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn5000' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); setDirctText(true); }} value='5000' />
                                     <label style={{ fontSize: '20px', width: '70px' }} className="form-check-label" htmlFor="acorn5000">5000개</label>
                                 </td>
                                 <td className="form-check">
-                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn10000' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); }} value='10000' />
+                                    <input style={{ fontSize: '20px' }} className="form-check-input" type="radio" id='acorn10000' name="acorn" onChange={(e) => { changeValue(e); setIsPayedDisabled(true); setDirctText(true); }} value='10000' />
                                     <label style={{ fontSize: '20px', width: '80px' }} className="form-check-label" htmlFor="acorn10000">10000개</label>
                                 </td>
                             </tr>
                             <tr style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                                 <td style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
-                                    <input style={{ fontSize: '20px', marginRight: '5px' }} className="form-check-input" type="radio" id='acorntext' name="acorn" onChange={() => { setIsPayedDisabled(false); setAcorns(0) }} />
+                                    <input style={{ fontSize: '20px', marginRight: '5px' }} className="form-check-input" type="radio" id='acorntext' name="acorn" onChange={() => { setIsPayedDisabled(false); setDirctText(false); setAcorns(""); }} />
                                     <label style={{ fontSize: '20px', width: '140px' }} className="form-check-label" htmlFor="acorntext">직접입력:</label>
-                                    <input type='text' className='form-control' placeholder='숫자를 입력하세요' onChange={(e) => { changeValue(e) }} disabled={isPayedDisabled} />
+                                    <input type='text' className='form-control' placeholder='숫자를 입력하세요' {...(directText ? {value: ""} : {})} onChange={(e) => { changeValue(e) }} disabled={isPayedDisabled} />
                                     <div style={{ fontSize: '20px' }}>개</div>
                                 </td>
                             </tr>
