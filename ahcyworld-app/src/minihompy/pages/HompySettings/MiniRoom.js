@@ -98,7 +98,7 @@ const MiniRoom = () => {
           </div>
 
           {miniRoomItems && miniRoomItems.map(item => (
-            <div>
+            <div key={item.id}>
             <img onClick={() =>setMiniRoom(item.fileName)} src={`/image/${item.fileName}`} />{" "}
             <input
               type="radio"

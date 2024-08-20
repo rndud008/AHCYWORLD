@@ -224,8 +224,9 @@ const Right = ({ user, hompy }) => {
           <ul className="news-list">
             {recentlyPost &&
               recentlyPost.map((item) => (
-                <>
+                
                   <li
+                  key={item.id}
                     className="newListItem"
                     onClick={() =>
                       subjectClick(
@@ -238,7 +239,7 @@ const Right = ({ user, hompy }) => {
                     <span>[{item.folder.boardType.name}]&nbsp;&nbsp;</span>
                     <span>{item.subject}</span>
                   </li>
-                </>
+                
               ))}
           </ul>
         </div>
@@ -250,7 +251,7 @@ const Right = ({ user, hompy }) => {
               {infoTable &&infoTable.map((item,index) => {
                 if (index % 2 === 0) {
                   return (
-                    <tr>
+                    <tr key={index}>
                       <td>
                         {infoTable[index].name}
                         <span className="count">
@@ -304,11 +305,10 @@ const Right = ({ user, hompy }) => {
             value={friendReview?.content}
             onChange={friendReviewValue}
             onCompositionStart={() => setIsComposing(true)}
-      onCompositionEnd={() => setIsComposing(false)}
+            onCompositionEnd={() => setIsComposing(false)}
             onKeyDown={(e) => activeEnter(e)}
             type="text"
             placeholder="일촌평 작성.."
-            onenter
           />
           <button
             type="button"
@@ -322,7 +322,7 @@ const Right = ({ user, hompy }) => {
           {(friendList &&
             friendReviewList?.length > 0 &&
             friendReviewList.map((item) => (
-              <div>
+              <div key={item.id}>
                 <span>{item.content} </span>
                 <span>{item.user.name} </span>
                 <span>

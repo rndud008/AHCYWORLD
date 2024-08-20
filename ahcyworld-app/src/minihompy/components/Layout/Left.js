@@ -214,7 +214,7 @@ const Left = ({ user, hompy }) => {
     return (
         <div className='left-container'>
             <img className='profile-img' src={profilePicture || "default_profileImg.png"} alt='유저 이미지' />
-            <input type='file' id='fileInput' style={{ display: "none" }} onChange={handleFileChange} />
+            <input value={''} type='file' id='fileInput' style={{ display: "none" }} onChange={handleFileChange} />
             {hompyInfo.id === parseInt(hompyId) && (
                 <>
                     <button

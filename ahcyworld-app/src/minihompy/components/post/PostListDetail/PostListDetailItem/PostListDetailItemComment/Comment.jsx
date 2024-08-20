@@ -62,7 +62,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
           </Button>
         </div>
       </div>
-      {( error.postId=== result.postId) && error.content && <div className="post-error-message">{error.content}</div>}
+      {( error.postId=== result.postId) && error.content && <div key={result.postId} className="post-error-message">{error.content}</div>}
       
       </>
       }
@@ -70,7 +70,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
       {commentShow && (
         <div className="postDetailListCommentList">
           {result?.data?.length === 0 ? (
-            <div className="commentNotFound">작성된 댓글이 없습니다.</div>
+            <div key={item.id} className="commentNotFound">작성된 댓글이 없습니다.</div>
           ) : (
             result?.data.map((item) => (
               <>

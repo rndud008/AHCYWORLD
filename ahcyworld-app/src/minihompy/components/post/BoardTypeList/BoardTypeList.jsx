@@ -21,9 +21,8 @@ const BoardTypeList = () => {
     })
   );
   const folder = useSelector((state) => state.folder.folder);
-  const BoardTypeName = folderList?.[0]?.boardType.name;
+  const BoardTypeName = useMemo(()=> folderList?.[0]?.boardType.name,[folderList]) ;
 
-  const memoHompyFriendList = useMemo(() =>hompyFriendList,[hompyFriendList] )
 
   useEffect(() => {
     hompyFriendListAxios(username, dispatch);
@@ -40,7 +39,7 @@ const BoardTypeList = () => {
             folderList.map((item) =>{
               const itemStatusCheck = (item.status === "전체공개") || (item.status === "일촌공개" &&
               (parseInt(hompyId) === hompyInfo.id || roles.isAdmin ||
-              memoHompyFriendList.some(
+              hompyFriendList.some(
                   (item) => parseInt(item) === parseInt(userInfo.id)
                 )))|| (item.status === "비공개" && (roles.isAdmin ||
                   parseInt(hompyId) === hompyInfo.id))

@@ -127,6 +127,7 @@ public class AttachmentController {
         File file = new File(UPLOADDIR + File.separator + filename);
         if (file.exists()) {
             FileSystemResource resource = new FileSystemResource(file);
+
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
                     .body(resource);
