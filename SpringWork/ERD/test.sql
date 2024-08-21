@@ -58,6 +58,10 @@ update ah_user
 set role = 'ROLE_MEMBER,ROLE_ADMIN'
 where username = 'K3';
 
+update friend
+set friend_status = 'waiting'
+where id = 67;
+
 delete
     from item
 where id = 51;
