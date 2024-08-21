@@ -78,7 +78,7 @@ const PaymentHistory = ({ isOpen, onClose }) => {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={onClose}>
+                    <Button className="textedit-btn" onClick={onClose}>
                         닫기
                     </Button>
                 </Modal.Footer>

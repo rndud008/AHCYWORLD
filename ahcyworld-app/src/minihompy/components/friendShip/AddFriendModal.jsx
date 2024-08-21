@@ -34,7 +34,7 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
             const response = await addFriend(friendType1, friendType2, message, userInfo.username, friend.username);
 
             if (response) {
-                Swal.alert("일촌신청을 보냈습니다.", "상대방이 수락하면 일존이 맺어집니다~!", "success", () => {
+                Swal.alert("일촌신청을 보냈습니다.", "상대방이 수락하면 일촌이 맺어집니다~!", "success", () => {
                     onClose();
                     // navigate(`/hompy/${hompyInfo.id}`)
                 });
@@ -73,10 +73,10 @@ const AddFriendModal = ({ isOpen, onClose, selectedFriend }) => {
                 <Form.Control type='text' value={message} onChange={handleMessage} style={{ height: "80px" }} />
             </Modal.Body>
             <Modal.Footer>
-                <Button variant='primary' onClick={sendFriendRequest}>
+                <Button className="diarywriteok-btn" variant='primary' onClick={sendFriendRequest}>
                     일촌신청
                 </Button>
-                <Button variant='secondary' onClick={onClose}>
+                <Button className="diarywriteno-btn" variant='secondary' onClick={onClose}>
                     닫기
                 </Button>
             </Modal.Footer>
