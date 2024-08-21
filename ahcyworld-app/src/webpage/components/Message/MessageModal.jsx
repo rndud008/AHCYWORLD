@@ -153,7 +153,7 @@ const MessageModal = ({ isOpen, onClose }) => {
             )}
 
             <Modal.Footer>
-                <Button variant='secondary' onClick={handleClose}>
+                <Button className="textedit-btn" onClick={handleClose}>
                     닫기
                 </Button>
             </Modal.Footer>

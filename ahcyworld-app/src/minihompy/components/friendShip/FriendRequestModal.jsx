@@ -58,10 +58,10 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
                                             {request.user.name}({request.userName}) - {request.friendUser.name}(
                                             {request.friendName})
                                             <br />
-                                            <Button onClick={() => friendShipStatus(request.id, "true")}>
+                                            <Button className="diarywriteok-btn" onClick={() => friendShipStatus(request.id, "true")}>
                                                 수락
                                             </Button>{" "}
-                                            <Button onClick={() => friendShipStatus(request.id, "false")}>거절</Button>
+                                            <Button className="diarywriteno-btn" onClick={() => friendShipStatus(request.id, "false")}>거절</Button>
                                         </div>
                                     </ListGroup.Item>
                                 )
@@ -73,7 +73,7 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
                 <hr />
             </Modal.Body>
             <Modal.Footer>
-                <Button variant='secondary' onClick={onClose}>
+                <Button className="textedit-btn" onClick={onClose}>
                     닫기
                 </Button>
             </Modal.Footer>
