@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +19,7 @@ const keyword = ["board", "photo", "video"];
 const Post = () => {
   const { hompyId, postName, folderId } = useParams();
   const { hompyInfo, roles } = useContext(LoginContext);
+  const [isLoading,setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const folder = useSelector((state) => state.folder.folder);
@@ -35,35 +36,54 @@ const Post = () => {
     postName.includes("video");
 
   useEffect(() => {
-    if (
-      keyword.some((item) => postName.includes(item)) &&
-      hompyInfo.id !== undefined
-    ) {
-      list(postName, dispatch, hompyId, navigate);
-      findByHompyIdAxios(dispatch, hompyId);
-      dispatch(CommentAction.contentState(false, ""));
-      dispatch(CommentAction.contentErrorState("content", false));
-      dispatch(HompyAction.findByHompyIdAxios(hompyId));
+
+    const fetchData = async () =>{
+
+      if (
+        keyword.some((item) => postName.includes(item)) 
+      ) {
+        try{
+          setIsLoading(true)
+          await list(postName, dispatch, hompyId, navigate);
+          await findByHompyIdAxios(dispatch, hompyId);
+          dispatch(CommentAction.contentState(false, ""));
+          dispatch(CommentAction.contentErrorState("content", false));
+          dispatch(HompyAction.findByHompyIdAxios(hompyId));
+        }catch(e){
+
+        }
+      }
     }
+
+    fetchData()
   }, [postName, hompyId, dispatch]);
 
   useEffect(() => {
-    if ((folder || folder?.length > 0) && hompyInfo.id !== undefined) {
-      try {
-        axiosPostList(dispatch, folderId, hompyId, postName, page, navigate);
-        dispatch(CommentAction.contentState(false, ""));
-        dispatch(CommentAction.contentErrorState("content", false));
-        dispatch(PostAction.postErrorState("subject", false));
-        dispatch(PostAction.postErrorState("content", false));
-        navigate(`/hompy/${hompyId}/${postName}/${folder?.id}`);
-      } catch (e) {
-        Swal.alert("게시글을 불러오는데 실패했습니다.", e, "error");
+
+    const fetchPost = async() =>{
+      if ((folder && Object.keys(folder).length > 0) && hompyInfo.id !== undefined ) {
+        try {
+          setIsLoading(true)
+          await axiosPostList(dispatch, folderId, hompyId, postName, page, navigate);
+          dispatch(CommentAction.contentState(false, ""));
+          dispatch(CommentAction.contentErrorState("content", false));
+          dispatch(PostAction.postErrorState("subject", false));
+          dispatch(PostAction.postErrorState("content", false));
+          navigate(`/hompy/${hompyId}/${postName}/${folder?.id}`);
+        } catch (e) {
+          Swal.alert("게시글을 불러오는데 실패했습니다.", e, "error");
+        }finally{
+          setIsLoading(false)
+        }
       }
     }
+
+      fetchPost()
+
   }, [page, folder?.id, folderId]);
 
   const isHompyLoaded = hompy && Object.keys(hompy).length > 0;
-  if (!isHompyLoaded) {
+  if (!isHompyLoaded || isLoading) {
     return <LoadingSpinner />;
   }
 

@@ -44,7 +44,7 @@ const Comment = () => {
           <input
             value={content.content ? content.content :""}
             onChange={(e) => contentState(e.target.value, dispatch, post.id )}
-            onKeyDown={(e) => activeEnter(e)}
+            onKeyPress={(e) => activeEnter(e)}
             placeholder="댓글입력"
           />
           <Button

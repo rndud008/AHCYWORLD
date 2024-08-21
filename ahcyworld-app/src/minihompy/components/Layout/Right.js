@@ -306,7 +306,7 @@ const Right = ({ user, hompy }) => {
             onChange={friendReviewValue}
             onCompositionStart={() => setIsComposing(true)}
             onCompositionEnd={() => setIsComposing(false)}
-            onKeyDown={(e) => activeEnter(e)}
+            onKeyPress={(e) => activeEnter(e)}
             type="text"
             placeholder="일촌평 작성.."
           />
