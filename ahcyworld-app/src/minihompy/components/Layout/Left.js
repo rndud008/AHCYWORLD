@@ -128,7 +128,7 @@ const Left = ({ user, hompy }) => {
             window.open(
                 miniHompyUrl, // 열고 싶은 URL
                 "_blank", // 새로운 창을 엽니다.
-                "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+                "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
             );
 
             // 일촌 선택 후 기본값으로 되돌리기

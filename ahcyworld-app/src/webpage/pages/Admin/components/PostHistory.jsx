@@ -114,7 +114,7 @@ const PostHistory = () => {
         window.open(
             `http://localhost:3000/hompy/${hompyId}`,
             "_blank",
-            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no"
+            "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no"
         );
     };
 
