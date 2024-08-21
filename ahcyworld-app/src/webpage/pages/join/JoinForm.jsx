@@ -216,6 +216,8 @@ const JoinForm = ({ join }) => {
                     ...message,
                     email: "사용 가능한 이메일입니다.",
                 }));
+
+                emailAuth();
             } else {
                 setemailAvailable(false);
                 newErrors.email = "이미 사용중인 이메일 입니다.";
@@ -387,9 +389,15 @@ const JoinForm = ({ join }) => {
                             disabled={show.email}
                             onChange={onChange}
                         />
-                        <Button className="joincheck-btn" onClick={checkEmail}>중복확인</Button>
+                        {
+                            show.authSend &&
+
+                        <Button className="joincheck-btn" ref={buttonDisabled} type='button' id='authSend' onClick={checkEmail}>중복확인</Button>
+                        }
                     </StyledBox>
                     <StyledBox>
+                        <div>
+
                         {show.emailAuthValue && (
                             <input
                                 className='join_input'
@@ -398,11 +406,6 @@ const JoinForm = ({ join }) => {
                                 name='emailAuthValue'
                                 onChange={(e) => setAuthValue(e.target.value)}
                             />
-                        )}
-                        {show.authSend && (
-                            <Button className="joinform-btn" ref={buttonDisabled} type='button' id='authSend' onClick={emailAuth}>
-                                인증
-                            </Button>
                         )}
                         {show.authCheck && (
                             <Button className="joinform-btn" type='button' id='authCheck' onClick={emailAuthCheck}>
@@ -414,7 +417,10 @@ const JoinForm = ({ join }) => {
                                 재입력
                             </Button>
                         )}
+                        </div>
+                        <div>
                         {show.timer && <p id='timer-display'></p>}
+                        </div>
                     </StyledBox>
                 </div>
                 <div className='text-success'>{successMessages.email}</div>

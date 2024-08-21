@@ -109,6 +109,7 @@ btn-join:focus {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
                 -2px -2px 5px rgba(255, 255, 255, 0.7);
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .joinform-btn {
@@ -121,6 +122,7 @@ btn-join:focus {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
                 -2px -2px 5px rgba(255, 255, 255, 0.7);
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .joinform-btn:hover, .joincheck-btn:hover {
@@ -140,4 +142,10 @@ btn-join:focus {
 .joinform-btn:focus, .joincheck-btn:focus {
     outline: none; 
     box-shadow: 0 0 5px rgba(13, 106, 253, 0.5);
+}
+
+#timer-display{
+    white-space: nowrap;
+    padding-bottom: 30px;
+    padding-left: 10px;
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import "./Post.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,14 +26,18 @@ const Post = () => {
   const hompy = useSelector((state) => state.hompy.hompy);
   const page = useSelector((state) => state.post.page);
   const photoVisibleCheck =
-    (hompy.menuStatus?.split(",")[0] === "visible" || roles.isAdmin) &&
+    (hompy.menuStatus?.split(",")[0] === "visible" || roles?.isAdmin) &&
     postName.includes("photo");
   const boardVisibleCheck =
-    (hompy.menuStatus?.split(",")[1] === "visible" || roles.isAdmin) &&
+    (hompy.menuStatus?.split(",")[1] === "visible" || roles?.isAdmin) &&
     postName.includes("board");
   const videoVisibleCheck =
-    (hompy.menuStatus?.split(",")[2] === "visible" || roles.isAdmin) &&
+    (hompy.menuStatus?.split(",")[2] === "visible" || roles?.isAdmin) &&
     postName.includes("video");
+
+    const  extraCheck = photoVisibleCheck || boardVisibleCheck || videoVisibleCheck;
+
+    const isHompyLoaded = hompy && Object.keys(hompy).length > 0;
 
   useEffect(() => {
 
@@ -50,7 +54,9 @@ const Post = () => {
           dispatch(CommentAction.contentErrorState("content", false));
           dispatch(HompyAction.findByHompyIdAxios(hompyId));
         }catch(e){
-
+          
+        }finally{
+          setIsLoading(false)
         }
       }
     }
@@ -82,19 +88,19 @@ const Post = () => {
 
   }, [page, folder?.id, folderId]);
 
-  const isHompyLoaded = hompy && Object.keys(hompy).length > 0;
-  if (!isHompyLoaded || isLoading) {
+
+  if (!isHompyLoaded) {
     return <LoadingSpinner />;
   }
 
   return (
     <>
-      {hompy &&
-        (((photoVisibleCheck || boardVisibleCheck || videoVisibleCheck) && (
+      {isHompyLoaded && (extraCheck && isLoading) && <LoadingSpinner /> ||
+        (((extraCheck && !isLoading) &&  (
           <Layout hompy={hompy} user={hompy.user}>
             <Outlet />
           </Layout>
-        )) ||
+        )) || 
           Swal.alert(
             "잘못된 접근입니다.",
             "메인페이지로 돌아갑니다.",
