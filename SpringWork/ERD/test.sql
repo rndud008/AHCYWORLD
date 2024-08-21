@@ -1,8 +1,8 @@
 show tables;
 
 drop table if exists attachment_id;
-drop table  if exists ah_user;
 
+ALTER TABLE hompy MODIFY COLUMN mini_hompy_bgm LONGTEXT;
 
 select *
 from hompy;
@@ -10,6 +10,9 @@ select *
 from folder;
 select * from post;
 select * from user_write_histroy;
+
+insert into item (price, bgm_img, file_name, item_name, item_type, source_name, status)
+values (100, null, '블라블라','아이유','배경음악','홀씨','visible');
 
 select * from friend;
 select * from ah_user;
@@ -92,7 +95,7 @@ update hompy set total_visitor = 0 where id = 1;
 
 update ah_user
 set acorn = 9999999
-where id = 9;
+where id = 2;
 
 
 

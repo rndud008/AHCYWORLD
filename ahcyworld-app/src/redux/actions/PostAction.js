@@ -5,7 +5,6 @@ import { FolderAction } from "./FolderAction";
 function axiosPostList(hompyId, postName, folderId, page = 0) {
   return async (dispatch, getState) => {
     try {
-      console.log('try PostAction axiosPostList 실행')
       const response = await api.get(
         `${SERVER_HOST}/${hompyId}/${postName}/${folderId}/list?page=${page}`
       );
@@ -60,7 +59,6 @@ function movePostFolderAxios(
           `/hompy/${hompyId}/${postName}/${data.folder.id}/detail/${postId}`
         );
       }else{
-        dispatch(PostAction.axiosPostList(hompyId, postName, data.folder.id))
         dispatch(FolderAction.clickFolder(data.folder.id))
         navigate(
           `/hompy/${hompyId}/${postName}/${data.folder.id}`
@@ -83,7 +81,6 @@ function deletePostAxios(hompyId, postName, folderId, postId, navigate) {
     if (status === 200) {
       alert("삭제 성공.");
       dispatch({ type: "DELETE_POST", payload: { postId } });
-      dispatch(PostAction.axiosPostList(hompyId, postName, folderId));
       navigate(`/hompy/${hompyId}/${postName}/${folderId}`);
     } else {
       alert("삭제 실패.");

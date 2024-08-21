@@ -27,6 +27,14 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
   const content = useSelector((state) => state.comment.content);
   const error = useSelector(state => state.comment.error);
 
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      commentWriteAxios(dispatch, userInfo, item, content, postName)
+    }
+  };
+
   return (
     <>
       {result &&
@@ -40,6 +48,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
         <div className="commentInputSection">
           <input
             value={content.id === result.postId ? content.content : ""}
+            onKeyPress={(e) => activeEnter(e)}
             onChange={(e) => contentState(e.target.value, dispatch,result.postId)}
             placeholder="댓글입력"
           />
@@ -53,7 +62,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
           </Button>
         </div>
       </div>
-      {( error.postId=== result.postId) && error.content && <div className="post-error-message">{error.content}</div>}
+      {( error.postId=== result.postId) && error.content && <div key={result.postId} className="post-error-message">{error.content}</div>}
       
       </>
       }
@@ -61,11 +70,11 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
       {commentShow && (
         <div className="postDetailListCommentList">
           {result?.data?.length === 0 ? (
-            <div className="commentNotFound">작성된 댓글이 없습니다.</div>
+            <div key={item.id} className="commentNotFound">작성된 댓글이 없습니다.</div>
           ) : (
             result?.data.map((item) => (
               <>
-                <div className="postDetailComment">
+                <div key={item.id} className="postDetailComment">
                   <p>{item.user.name}</p>
                   <p>{item.createAt}</p>
                   {(item.user.id === userInfo.id  || roles.isAdmin || hompyInfo.id === parseInt(hompyId)) && (

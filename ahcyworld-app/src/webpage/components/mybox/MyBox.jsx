@@ -3,7 +3,7 @@ import "./MyBox.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png";
-import { getHompyInfo, getLogedUser, getMessageFromAdmin, myFriendRequests } from "../../../apis/auth";
+import { getHompyInfo, getLogedUser, getMessageFromAdmin, getUserInfoByUsername, myFriendRequests } from "../../../apis/auth";
 import FriendRequestModal from "../../../minihompy/components/friendShip/FriendRequestModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -83,7 +83,7 @@ const MyBox = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`${SERVER_HOST}/user/info/${userInfo.id}`);
+                const response = await getUserInfoByUsername(userInfo.username);
                 setUserInfo(response.data);
             } catch (error) {
                 console.error("사용자 정보를 가져오는 중 에러 발생:", error);
@@ -146,7 +146,7 @@ const MyBox = () => {
         window.open(
             `http://localhost:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
             "_blank", // 새로운 창을 엽니다.
-            "width=1700,height=850,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+            "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
         );
     };
 

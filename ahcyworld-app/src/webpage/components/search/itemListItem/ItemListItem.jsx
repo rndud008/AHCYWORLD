@@ -18,7 +18,6 @@ const ItemListItem = () => {
   const skinAndSotryRoom = ["스킨", "스토리룸"];
 
   const addCart = async (item) => {
-    
     if (!userInfo) {
       Swal.alert("로그인이 필요합니다", "로그인을 해주세요.", "warning");
       return navigate("/");
@@ -35,8 +34,11 @@ const ItemListItem = () => {
       }
     );
 
-    const { status } = response;
-    (status === 201 &&
+    const { status,data } = response;
+
+    
+    if(status === 201){
+      setUserCartList([...userCartList,data])
       Swal.itemconfirm(
         "장바구니에 추가",
         "장바구니화면으로 이동하시겠습니까?",
@@ -47,8 +49,13 @@ const ItemListItem = () => {
         () => {
           return;
         }
-      )) ||
-      Swal.alert("Error", "저장에 실패했습니다.", "warning");
+      )
+    } else{
+      Swal.alert("Error", "저장에 실패했습니다.", "warning")
+    }
+    
+    
+        
   };
 
   const userListItemAxios = async () => {
@@ -78,7 +85,7 @@ const ItemListItem = () => {
     <div className="searchItemList">
       {searchList.itemList &&
         searchList.itemList.map((item) => (
-          <div className="searchItem">
+          <div key={item.id} className="searchItem">
             {item.itemType.includes("미니미") && (
               <div>
                 <img
@@ -87,6 +94,7 @@ const ItemListItem = () => {
                 />
               </div>
             )}
+
             {skinAndSotryRoom.some((item2) =>
               item2.includes(item.itemType)
             ) && (
@@ -131,9 +139,9 @@ const ItemListItem = () => {
               (!item.itemType.includes("배경음악") && (
                 <div style={{ fontSize: 30 }}>
                   <span>{item.itemName}</span>
-                  <sapn>
+                  <span>
                     {item.price} <img className="acorn-img" src={acorn} />
-                  </sapn>{" "}
+                  </span>{" "}
                 </div>
               ))}
 

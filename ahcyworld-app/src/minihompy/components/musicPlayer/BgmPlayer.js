@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useEffect, useContext } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useContext,
+} from "react";
 import {
   FaPlay,
   FaPause,
@@ -13,7 +19,7 @@ import "./BgmPlayer.css";
 import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api"; // SERVER_HOST 가져오기
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
-
+import Swal from "sweetalert2";
 
 const BgmPlayer = () => {
   const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
@@ -27,7 +33,8 @@ const BgmPlayer = () => {
 
   useEffect(() => {
     const playList =
-    (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) || (hompyInfo.miniHompyBgm == null && []);
+      (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) ||
+      (hompyInfo.miniHompyBgm == null && []);
     let type = "배경음악";
     let musics = [];
     const userItemLits = async () => {
@@ -40,10 +47,12 @@ const BgmPlayer = () => {
           musics.push(cart.item);
         }
       });
-   
-      setBgmList(musics.filter((item) => (
-        playList.includes(`${item.sourceName}-${item.itemName}`)
-      )));
+
+      setBgmList(
+        musics.filter((item) =>
+          playList.includes(`${item.sourceName}-${item.itemName}`)
+        )
+      );
     };
     userItemLits();
   }, [hompyInfo]);
@@ -54,6 +63,7 @@ const BgmPlayer = () => {
     } else {
       audioRef.current.play();
     }
+
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
@@ -71,7 +81,7 @@ const BgmPlayer = () => {
   };
 
   const handleNextTrack = () => {
-    if (bgmList.length > 0) {
+    if (bgmList.length !== 0) {
       const nextIndex = (currentTrackIndex + 1) % bgmList.length;
       setCurrentTrackIndex(nextIndex);
       audioRef.current.src = bgmList[nextIndex].fileName;
@@ -81,8 +91,9 @@ const BgmPlayer = () => {
   };
 
   const handlePreviousTrack = () => {
-    if (bgmList.length > 0) {
-      const prevIndex = (currentTrackIndex - 1 + bgmList.length) % bgmList.length;
+    if (bgmList.length !== 0) {
+      const prevIndex =
+        (currentTrackIndex - 1 + bgmList.length) % bgmList.length;
       setCurrentTrackIndex(prevIndex);
       audioRef.current.src = bgmList[prevIndex].fileName;
       audioRef.current.play();
@@ -97,10 +108,10 @@ const BgmPlayer = () => {
   const handleTrackSelect = (index) => {
     setCurrentTrackIndex(index);
     const selectedTrack = bgmList[index];
-    
+
     if (selectedTrack.fileName) {
       audioRef.current.src = selectedTrack.fileName;
-      audioRef.current.play().catch(error => {
+      audioRef.current.play().catch((error) => {
         console.error("Audio playback failed:", error);
       });
       setIsPlaying(true);
@@ -111,22 +122,33 @@ const BgmPlayer = () => {
     setIsModalOpen(false); // 모달을 닫음
   };
 
+  const bgmListNull = () => {
+    Swal.fire({
+      icon: "error",
+      title: "재생실패!",
+      text: "리스트에 음악이 없습니다.",
+      confirmButtonText: "확인",
+    });
+  }
+
   return (
     <div className="bgm-player">
-      {/* <div className="cover-image">
-        {bgmList.length > 0 && (
-          <img src={bgmList[currentTrackIndex].bgmImg} alt="Cover" />
-        )} 
-      </div> */}
       <div className="track-info">
-        {bgmList&& bgmList.length > 0 && (
-          <strong>{bgmList[currentTrackIndex].itemName} - {bgmList[currentTrackIndex].sourceName}</strong>
-        )}
+        {bgmList && bgmList.length !== 0 && (
+          <strong>
+            {bgmList[currentTrackIndex].itemName} -{" "}
+            {bgmList[currentTrackIndex].sourceName}
+          </strong>
+        )|| <strong>재생목록이 존재하지 않습니다.</strong>}
       </div>
-      <audio ref={audioRef} src={ bgmList && bgmList.length > 0 ? bgmList[0].fileName : ""} onEnded={handleNextTrack}></audio>
+      <audio
+        ref={audioRef}
+        src={bgmList && bgmList.length > 0 ? bgmList[0].fileName : ""}
+        onEnded={handleNextTrack}
+      ></audio>
       <div className="controls">
         <div className="controls-box">
-          <button onClick={togglePlayPause}>
+          <button onClick={bgmList && (bgmList.length !== 0 && togglePlayPause || bgmListNull)}>
             {isPlaying ? <FaPause /> : <FaPlay />}
           </button>
           <button onClick={stopPlayback}>
@@ -163,7 +185,11 @@ const BgmPlayer = () => {
             <h2>BGM List</h2>
             <ol>
               {bgmList.map((track, index) => (
-                <li key={index} onClick={() => handleTrackSelect(index)} className="bgm-list">
+                <li
+                  key={index}
+                  onClick={() => handleTrackSelect(index)}
+                  className="bgm-list"
+                >
                   {track.itemName} - {track.sourceName}
                 </li>
               ))}

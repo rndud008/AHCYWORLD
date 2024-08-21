@@ -32,151 +32,30 @@ import java.util.Optional;
 @Service
 public class PostService {
 
-    @Value("${app.upload.path}")
-    private String UPLOADDIR;
+
     @Value("${app.pagination.write_pages}")
     private int WRITE_PAGE;
     @Value("${app.pagination.page_rows}")
     private int PAGE_ROWS;
 
-    private final FolderRepository folderRepository;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
     private final AttachmentRepository attachmentRepository;
     private final CommentRepository commentRepository;
+    private final AttachmentService attachmentService;
     private final GuestBookRepository guestBookRepository;
     private final DiaryRepository diaryRepository;
 
 
-    public PostService(FolderRepository folderRepository, PostRepository postRepository, UserRepository userRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository, GuestBookRepository guestBookRepository, DiaryRepository diaryRepository) {
-        this.folderRepository = folderRepository;
+    public PostService(PostRepository postRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository, AttachmentService attachmentService, GuestBookRepository guestBookRepository, DiaryRepository diaryRepository) {
+
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
         this.attachmentRepository = attachmentRepository;
         this.commentRepository = commentRepository;
+        this.attachmentService = attachmentService;
         this.guestBookRepository = guestBookRepository;
         this.diaryRepository = diaryRepository;
     }
 
-    private Attachment upload(MultipartFile multipartFile) {
-        // 물리적으로 파일을 서버에 저장.
-        Attachment attachment = null;
-
-        String originalFileName = multipartFile.getOriginalFilename();
-        boolean check = originalFileName == null || originalFileName.trim().isEmpty();
-        if (check) return null;
-        // 첨부파일이 없는경우.
-
-        String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        // 원본 파일명
-
-        String fileName = sourceName;
-        // 저장될 파일명
-
-        File file = new File(UPLOADDIR, fileName);
-        if (file.exists()) {
-            // 파일이 중복되는지 확인.
-
-            int pos = fileName.lastIndexOf(".");
-
-            if (pos > -1) {
-                // 확장자가 있는 경우.
-
-                String name = fileName.substring(0, pos);
-                String ext = fileName.substring(pos + 1);
-
-                fileName = name + "_" + System.currentTimeMillis() + "." + ext;
-
-            } else {
-                // 확장자가 없는 경우.
-                fileName += "-" + System.currentTimeMillis();
-            }
-
-        }
-
-        Path copyPath = Paths.get(new File(UPLOADDIR, fileName).getAbsolutePath());
-
-        try {
-            Files.copy(multipartFile.getInputStream(), copyPath, StandardCopyOption.REPLACE_EXISTING);
-            // 기존에 존재하면 덮어쓰기.
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        attachment = Attachment.builder()
-                .fileName(fileName)
-                .sourceName(sourceName)
-                .build();
-
-        return attachment;
-    }
-
-    private void addFiles(Map<String, MultipartFile> files, Post post) {
-        if (files == null) return;
-
-        for (Map.Entry<String, MultipartFile> e : files.entrySet()) {
-            if (!e.getKey().startsWith("files")) continue;
-
-            Attachment file = upload(e.getValue());
-            // 물리적인 파일저장.
-
-            if (file != null) {
-                file.setPost(post);
-                attachmentRepository.save(file);
-            }
-        }
-
-        List<Attachment> attachmentList = attachmentRepository.findByPostId(post.getId());
-        post.setFileList(attachmentList);
-        postRepository.save(post);
-
-    }
-
-    private void setImageAndVideo(List<Attachment> fileList) {
-        // 이미지 파일 여부 세팅.
-
-        String realPath = new File(UPLOADDIR).getAbsolutePath();
-
-        for (Attachment attachment : fileList) {
-            BufferedImage bufferedImage = null;
-            File file = new File(realPath, attachment.getFileName());
-
-            Tika tika = new Tika();
-            String mimeType;
-
-            try {
-                bufferedImage = ImageIO.read(file);
-                // 이미지가 아닌경우 null 을 리턴 그리고 파일이 존재하지 않으면 IOException 발생.
-
-                mimeType = tika.detect(file);
-
-                if (mimeType.startsWith("video/")) attachment.setVideo(true);
-                if (bufferedImage != null) attachment.setImage(true);
-            } catch (IOException e) {
-                System.out.println("파일이 존재하지 않음.");
-            }
-        }
-    }
-
-    private void deleteFile(Attachment attachment) {
-        String saveDir = new File(UPLOADDIR).getAbsolutePath();
-
-        File file = new File(saveDir, attachment.getFileName());
-        // 저장된 파일명.
-
-        if (file.exists()) {
-            if (file.delete()) {
-                System.out.println("삭제성공");
-
-            } else {
-                System.out.println("삭제 실패");
-            }
-        } else {
-            System.out.println("파일이 존재하지 않음.");
-        }
-
-    }
 
     @Transactional
     public long write(Post post, Map<String, MultipartFile> files, Folder folder) {
@@ -189,7 +68,7 @@ public class PostService {
         post = postRepository.saveAndFlush(post);
 
         // 첨부파일 추가.
-        addFiles(files, post);
+        attachmentService.addFiles(files, post);
 
         return post.getId() != null ? post.getId() : result;
     }
@@ -206,7 +85,7 @@ public class PostService {
 
             // 첨부파일들 을 가져와서 image 파일 관련 세팅.
             List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
-            setImageAndVideo(fileList);
+            attachmentService.setImageAndVideo(fileList);
             post.setFileList(fileList);
         }
 
@@ -234,8 +113,6 @@ public class PostService {
         if (cnt > 0) {
             if (page > totalPage) page = totalPage;
 
-//            int fromRow = (page-1) * PAGE_ROWS;
-
             startPage = (((page - 1) / WRITE_PAGE) * WRITE_PAGE) + 1;
             endPage = startPage + WRITE_PAGE - 1;
             if (endPage >= totalPage) endPage = totalPage;
@@ -248,7 +125,7 @@ public class PostService {
 
         if (list != null) {
             for (Post post : list) {
-                setImageAndVideo(post.getFileList());
+                attachmentService.setImageAndVideo(post.getFileList());
             }
         }
 
@@ -273,7 +150,7 @@ public class PostService {
 
         if (post != null) {
             List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
-            setImageAndVideo(fileList);
+            attachmentService.setImageAndVideo(fileList);
             post.setFileList(fileList);
             post.setUpdateViews(false);
         }
@@ -292,21 +169,17 @@ public class PostService {
             oringPost.setSubject(post.getSubject());
             oringPost.setContent(post.getContent());
 
-
             oringPost = postRepository.saveAndFlush(oringPost);
 
-            addFiles(files, oringPost);
+            attachmentService.addFiles(files, oringPost);
 
             if (delFile != null) {
                 for (Long fileId : delFile) {
-                    System.out.println("찾기 시작");
                     Attachment file = attachmentRepository.findById(fileId).orElse(null);
                     if (file != null) {
-                        System.out.println(file.getId() + "????");
-                        deleteFile(file);
+                        attachmentService.deleteFile(file);
                         oringPost.getFileList().remove(file);
                         attachmentRepository.delete(file);
-                        System.out.println(file.getId() + "삭제완료");
                     }
                 }
             }
@@ -328,7 +201,7 @@ public class PostService {
 
             if (fileList != null && fileList.size() > 0) {
                 for (Attachment file : fileList) {
-                    deleteFile(file);
+                    attachmentService.deleteFile(file);
                 }
             }
 
@@ -373,7 +246,7 @@ public class PostService {
                 copyAttachmentList.add(copyAttachment);
             }
             copyAttachmentList = attachmentRepository.saveAll(copyAttachmentList);
-            setImageAndVideo(copyAttachmentList);
+            attachmentService.setImageAndVideo(copyAttachmentList);
             copyPost.setFileList(copyAttachmentList);
             postRepository.saveAndFlush(copyPost);
         }
@@ -391,70 +264,5 @@ public class PostService {
 
         return copyPost;
     }
-
-    @Transactional(readOnly = true)
-    public List<Post> hompyNewList(Hompy hompy, String action) {
-        Pageable pageable = PageRequest.of(0, 5);
-
-        if (action.equals("OWNER") || action.equals("FRIEND")) {
-
-            return postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, pageable, List.of("전체공개", "일촌공개"));
-        } else {
-
-            return postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, pageable, List.of("전체공개"));
-        }
-
-    }
-
-    @Transactional(readOnly = true)
-    public MiniHompyInfoCountDTO hompyInfoPostCount(Hompy hompy, String action) {
-        MiniHompyInfoCountDTO miniHompyInfoCountDTO = new MiniHompyInfoCountDTO();
-
-        List<Post> postList = new ArrayList<>();
-
-        if (action.equals("OWNER") || action.equals("FRIEND")) {
-
-            postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개", "일촌공개"));
-        } else {
-
-            postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개" ));
-        }
-
-        long today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("게시판")).count();
-        long total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("게시판")).count();
-
-        miniHompyInfoCountDTO.setTodayBoard(today);
-        miniHompyInfoCountDTO.setTotalBoard(total);
-
-        today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("사진첩")).count();
-        total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("사진첩")).count();
-        miniHompyInfoCountDTO.setTodayPhoto(today);
-        miniHompyInfoCountDTO.setTotalPhoto(total);
-
-        today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("동영상")).count();
-        total = postList.stream().filter(post -> post.getFolder().getBoardType().getName().equals("동영상")).count();
-
-        miniHompyInfoCountDTO.setTodayVideo(today);
-        miniHompyInfoCountDTO.setTotalVideo(total);
-
-        List<GuestBook> guestBookList = guestBookRepository.findByHompyId(hompy.getId());
-
-        today = guestBookList.stream().filter(guestBook -> guestBook.getCreateAt().toLocalDate().equals(LocalDate.now())).count();
-        total = guestBookList.stream().count();
-
-        miniHompyInfoCountDTO.setTodayGuestBook(today);
-        miniHompyInfoCountDTO.setTotalGuestBook(total);
-
-        List<Diary> diaryList = diaryRepository.findByHompyId(hompy.getId());
-
-        today = diaryList.stream().filter(diary -> diary.getCreateAt().toLocalDate().equals(LocalDate.now())).count();
-        total = diaryList.stream().count();
-
-        miniHompyInfoCountDTO.setTodayDiary(today);
-        miniHompyInfoCountDTO.setTotalDiary(total);
-
-        return miniHompyInfoCountDTO;
-    }
-
 
 }

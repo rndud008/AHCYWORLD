@@ -23,7 +23,7 @@ const Folder = ({ item }) => {
             name="folder"
             value={item.name}
             label={item.name}
-            onClick={(e) =>
+            onChange={(e) =>
               folderClick(e, dispatch, navigate, hompyId, postName)
             }
             checked={item.id === folder.id}

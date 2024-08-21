@@ -23,6 +23,15 @@ const Comment = () => {
   const post = useSelector((state) => state.post.post);
   const error = useSelector(state => state.comment.error)
 
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      commentWriteAxios(dispatch, userInfo, post, content, postName)
+    }
+  };
+
+
   return (
     <>
       <div className="postDetailCommentTool">
@@ -35,6 +44,7 @@ const Comment = () => {
           <input
             value={content.content ? content.content :""}
             onChange={(e) => contentState(e.target.value, dispatch, post.id )}
+            onKeyPress={(e) => activeEnter(e)}
             placeholder="댓글입력"
           />
           <Button

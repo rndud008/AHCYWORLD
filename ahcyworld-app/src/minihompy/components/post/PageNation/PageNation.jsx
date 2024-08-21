@@ -76,6 +76,7 @@ const PageNation = () => {
             } else {
               return (
                 <Link
+                key={item}
                   onClick={() => pageSave(item)}
                   to={`/hompy/${hompyId}/${postName}/${folderId}?page=${item}`}
                 >

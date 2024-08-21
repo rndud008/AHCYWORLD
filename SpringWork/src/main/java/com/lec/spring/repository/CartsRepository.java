@@ -14,6 +14,8 @@ import java.util.List;
 public interface CartsRepository extends JpaRepository<Carts, Long> {
     List<Carts> findByUserAndCartsStatus(User user, String cartsStatus, Sort sort);
 
+    List<Carts> findByUserAndCartsStatusAndItem_Status(User user, String cartsStatus, Sort sort,String itemStatus);
+
     @Query("SELECT i " +
             "FROM Carts c " +
             "JOIN c.item i " +

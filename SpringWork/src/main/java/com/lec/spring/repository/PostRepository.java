@@ -17,4 +17,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     List<Post> findByFolderHompyAndFolderStatusInOrderByIdDesc(Hompy hompy, Pageable pageable, List<String> status);
     List<Post> findByFolderHompyAndFolderStatusInOrderByIdDesc(Hompy hompy, List<String> status);
+
+    List<Post> findByFolderHompyAndFolderBoardTypeNameInAndFolderStatusInOrderByIdDesc(Hompy hompy, Pageable pageable, List<String> boardTypeName, List<String> status);
 }

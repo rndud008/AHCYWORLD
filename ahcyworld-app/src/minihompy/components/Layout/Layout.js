@@ -45,7 +45,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       });
       setHompyTitle(hompy.title);
     }
-  }, [hompy]);
+  }, [hompy,dispatch]);
 
   useEffect(() => {
     // 미니홈피에 방문 시 방문자 수 증가 API 호출
@@ -159,7 +159,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
-          fontFamily: `${hompyInfo.miniHompyFont}`
+          fontFamily: `${hompy.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}

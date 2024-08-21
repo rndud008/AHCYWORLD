@@ -110,7 +110,7 @@ const Minimi = () => {
 
             {minimiItems &&
               minimiItems.map((item) => (
-                <div>
+                <div key={item.id}>
                   <img onClick={() =>setMinimi(item.fileName)} src={`/image/${item.fileName}`} />{" "}
                   <div>
                     <input

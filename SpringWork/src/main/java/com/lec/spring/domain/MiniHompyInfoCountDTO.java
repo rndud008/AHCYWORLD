@@ -10,20 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MiniHompyInfoCountDTO {
-    private Long todayBoard;
-    private Long totalBoard;
+    private String name;
+    private Long today;
+    private Long total;
 
-    private Long todayPhoto;
-    private Long totalPhoto;
-
-    private Long todayVideo;
-    private Long totalVideo;
-
-    private Long todayGuestBook;
-    private Long totalGuestBook;
-
-    private Long todayDiary;
-    private Long totalDiary;
 
 
 }

@@ -37,7 +37,7 @@ class ItemRepositoryTest {
     void storyRoom() {
 //        itemRepository.findByItemType("배경음악").forEach(System.out::println);
         Item item = Item.builder()
-                .itemName("스토리룸1")
+                .itemName("집앞마당미니룸")
                 .itemType("스토리룸")
                 .sourceName("스토리룸1.jpg")
                 .fileName("스토리룸1.jpg")
@@ -47,7 +47,7 @@ class ItemRepositoryTest {
         itemRepository.saveAndFlush(item);
 
         Item item1 = Item.builder()
-                .itemName("스토리룸2")
+                .itemName("다과회미니룸")
                 .itemType("스토리룸")
                 .sourceName("스토리룸2.jpg")
                 .fileName("스토리룸2.jpg")
@@ -55,6 +55,8 @@ class ItemRepositoryTest {
                 .status("visible")
                 .build();
         itemRepository.saveAndFlush(item1);
+
+        String[] miniroomarr = {"물래방아","여행을떠나요","꽃나무길","디즈니","우주여행","단풍나무길","꿈나라","장미정원","동물농장","생제르망","광교호수마을","세진이의꿈","신데렐라","숲길","겨울왕국"};
         for (int i = 2; i < 17; i++) {
             Item item3 = Item.builder()
                     .itemName("마루" + (i + 1))

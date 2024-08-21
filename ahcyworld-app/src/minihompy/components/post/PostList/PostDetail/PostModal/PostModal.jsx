@@ -42,6 +42,7 @@ const PostModal = () => {
                     return (
                       <Form.Check
                         type="radio"
+                        key={item.id}
                         id={`move-folder-radio-${item.id}`}
                         value={item.name}
                         name="folder"

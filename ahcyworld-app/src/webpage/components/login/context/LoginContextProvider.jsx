@@ -6,12 +6,15 @@ import * as auth from "../../../../apis/auth";
 
 import { useNavigate } from "react-router-dom";
 import api from "../../../../apis/api";
+import { useDispatch } from "react-redux";
+import { HompyAction } from "../../../../redux/actions/HompyAction";
 
 export const LoginContext = createContext();
 LoginContext.displayName = "LoginContextName";
 
 const LoginContextProvider = ({ children }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem("userInfo")) || {});
 
@@ -75,6 +78,9 @@ const LoginContextProvider = ({ children }) => {
             response = await auth.getHompyInfo();
             data = response.data;
             setHompyInfo(data);
+
+            dispatch(HompyAction.findByHompyIdAxios(data.id))
+            
             localStorage.setItem("hompyInfo", JSON.stringify(data));
         } catch (error) {
             console.error("HompyInfo Error: ", error);

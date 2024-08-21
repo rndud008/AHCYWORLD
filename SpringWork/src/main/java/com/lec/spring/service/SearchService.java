@@ -9,6 +9,7 @@ import com.lec.spring.repository.ItemRepository;
 import com.lec.spring.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,10 +38,22 @@ public class SearchService {
     }
 
     public SearchListDTO searchItemList(String itemName){
-        List<Item> itemList = itemRepository.findByItemNameContainingIgnoreCaseAndStatus(itemName,"visible").orElse(null);
+        List<Item> itemBgmList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악",itemName,"visible").orElse(null);
+        List<Item> itemAllList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악",itemName,"visible").orElse(null);
 
-        if( itemList.isEmpty()){
-            throw new RuntimeException("검색기록이 없습니다.");
+        List<Item> itemList = new ArrayList<>();
+
+
+            if( itemAllList.isEmpty() && itemBgmList.isEmpty()){
+                throw new RuntimeException("검색기록이 없습니다.");
+            }
+
+            if (!itemAllList.isEmpty()){
+                itemList.addAll(itemAllList);
+            }
+
+            if (!itemBgmList.isEmpty()){
+                itemList.addAll(itemBgmList);
         }
 
         SearchListDTO searchListDTO = new SearchListDTO();
@@ -54,9 +67,20 @@ public class SearchService {
 
         List<Hompy> hompyList = hompyRepository.findByUserNameContainingIgnoreCase(allItemNameAndName).orElse(null);
 
-        List<Item> itemList = itemRepository.findByItemNameContainingIgnoreCaseAndStatus(allItemNameAndName,"visible").orElse(null);
+        List<Item> itemAllList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악",allItemNameAndName,"visible").orElse(null);
+        List<Item> itemBgmList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악",allItemNameAndName,"visible").orElse(null);
+
+        List<Item> itemList = new ArrayList<>();
 
         SearchListDTO searchListDTO = new SearchListDTO();
+
+        if (!itemAllList.isEmpty()){
+            itemList.addAll(itemAllList);
+        }
+
+        if (!itemBgmList.isEmpty()){
+            itemList.addAll(itemBgmList);
+        }
 
         if(itemList.isEmpty() && hompyList.isEmpty()){
             throw new RuntimeException("검색기록이 없습니다.");
