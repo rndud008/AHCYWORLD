@@ -29,7 +29,7 @@ const UserListItem = () => {
     <>
       {searchList.hompyList &&
         searchList.hompyList.map((item) => (
-          <div className="userListItemDiv">
+          <div key={item.id} className="userListItemDiv">
             <div className="userListItemDivImg">
               <img
                 src={`${process.env.PUBLIC_URL}/image/${
