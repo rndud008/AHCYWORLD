@@ -30,6 +30,7 @@ import AdminLoginForm from "./webpage/pages/Admin/components/login/AdminLoginFor
 import PaymentHistory from "./webpage/components/paymentHistory/PaymentHistory";
 import OAuth2AddInfo from "./webpage/components/login/login/OAuth2AddInfo";
 import SearchPage from "./webpage/components/search/SearchPage";
+import MusicApi from "./webpage/items/api/MusicApi";
 // 폰트 import
 import "@fontsource/sunflower";
 import "@fontsource-variable/noto-sans-kr";
@@ -119,6 +120,10 @@ function App() {
                     <Route path='admin/login' element={<AdminLoginForm />} />
                     <Route path='/admin' element={<Admin />} />
                 </Route>
+
+                {/* 4. 노래api */}
+                <Route path='music/additem' element={<MusicApi />} />
+  
             </Routes>
         </div>
     );
