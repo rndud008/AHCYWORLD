@@ -26,6 +26,7 @@ public class GuestBookController {
     }
 
     @PostMapping("/save")
+    @CrossOrigin
     public ResponseEntity<?> save(@RequestBody GuestBook guestBook) {
         // 일촌 관계인지 확인
         try {
@@ -37,6 +38,7 @@ public class GuestBookController {
     }
 
     @GetMapping("/list/{hompyId}")
+    @CrossOrigin
     public ResponseEntity<?> list(@PathVariable Long hompyId, @RequestParam String username,@RequestParam(required = false ,defaultValue = "null") String action){
         System.out.println("hompyId:" + hompyId);
         try {
@@ -49,6 +51,7 @@ public class GuestBookController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin
     public ResponseEntity<?> delete(@PathVariable Long id, @RequestParam String username) {
         try {
             int result = guestBookService.delete(id, username);
@@ -62,6 +65,7 @@ public class GuestBookController {
     }
 
     @PutMapping("/hide/{id}")
+    @CrossOrigin
     public ResponseEntity<?> hide(@PathVariable Long id, @RequestParam String username) {
         try {
             GuestBook guestBook = guestBookService.hideGuestBook(id, username);
@@ -72,6 +76,7 @@ public class GuestBookController {
     }
 
     @GetMapping("/friends/check/{hompyId}")
+    @CrossOrigin
     public ResponseEntity<?> friendsCheck(@PathVariable Long hompyId, @RequestParam String username) {
         try {
             boolean isFriend = guestBookService.isFriend(hompyId, username);
@@ -82,6 +87,7 @@ public class GuestBookController {
     }
 
     @GetMapping("/user/hompy/{userId}")
+    @CrossOrigin
     public ResponseEntity<?> getUserHompy(@PathVariable Long userId){
         try {
             Hompy hompy = guestBookService.findHompyByUserId(userId);

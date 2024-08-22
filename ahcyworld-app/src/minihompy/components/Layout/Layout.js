@@ -159,7 +159,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
-          fontFamily: `${hompy.miniHompyFont}`
+          fontFamily: `${hompyInfo.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}

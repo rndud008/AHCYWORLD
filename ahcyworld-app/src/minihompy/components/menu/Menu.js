@@ -28,9 +28,9 @@ const Menu = () => {
     axios
       .get(`${SERVER_HOST}/hompy/${hompyId}/menu-settings`)
       .then((response) => {
-        setMenuColor(response.data.menuColor || "#FFFFFF");
-        setTextColor(response.data.menuText || "#000000");
-        setBorderColor(response.data.menuBorder || "#CCCCCC");
+        setMenuColor(response.data.menuColor || "#147DAF");
+        setTextColor(response.data.menuText || "#fff");
+        setBorderColor(response.data.menuBorder || "#000000");
 
         if (response.data.menuStatus) {
           const statusArray = response.data.menuStatus.split(",");

@@ -78,6 +78,7 @@ public class HompyController {
 
     // 특정 User의 Hompy 조회
     @GetMapping("/{hompyId}")
+    @CrossOrigin
     public Hompy HompyByUser(@PathVariable Long hompyId) {
 
         Hompy hompy = hompyService.findById(hompyId);
@@ -88,6 +89,7 @@ public class HompyController {
     }
 
     @GetMapping("/list")
+    @CrossOrigin
     public List<Hompy> hompyList() {
         return hompyService.hompyList();
     }
@@ -108,6 +110,7 @@ public class HompyController {
 
     // 프로필 이미지
     @PostMapping("/{hompyId}/profileImg")
+    @CrossOrigin
     public ResponseEntity<?> updateProfileImg(@PathVariable Long hompyId, @RequestParam("file") MultipartFile file) {
         Hompy hompy = hompyService.findById(hompyId);
 
@@ -120,6 +123,7 @@ public class HompyController {
 
     // 상태메시지
     @PostMapping("/{hompyId}/statusMessage")
+    @CrossOrigin
     public ResponseEntity<?> updateStatusMessage(@PathVariable Long hompyId, @RequestBody Map<String, String> request) {
         String statusMessage = request.get("statusMessage");
         Hompy hompy = hompyService.findById(hompyId);
@@ -130,6 +134,7 @@ public class HompyController {
     }
 
     @PutMapping("/{hompyId}/hompytitle")
+    @CrossOrigin
     public ResponseEntity<?> updateHompyTitle(@PathVariable Long hompyId, @RequestBody String hompyTitle, HttpServletRequest request) {
 
         if(hompyTitle.trim().isEmpty()){
@@ -147,6 +152,7 @@ public class HompyController {
     }
 
     @PostMapping("/{hompyId}")
+    @CrossOrigin
     public ResponseEntity<?> updateHompy(@PathVariable Long hompyId, @RequestBody Hompy hompy, HttpServletRequest request){
 
         Hompy requestHompyUser = check(request);
@@ -172,6 +178,7 @@ public class HompyController {
     }
 
     @GetMapping("/profileImg/{filename:.+}")
+    @CrossOrigin
     public ResponseEntity<?> imageFile(@PathVariable String filename) {
 
         File file = new File(UPLOADDIR + File.separator + filename);
@@ -202,6 +209,7 @@ public class HompyController {
 
     // 방문자 수
     @PostMapping("/{hompyId}/visit")
+    @CrossOrigin
     public ResponseEntity<Hompy> visitCnt(@PathVariable Long hompyId) {
         User user = hompyService.findById(hompyId).getUser();
 
@@ -213,6 +221,7 @@ public class HompyController {
 
     // 프로필 (간단한 자기소개?)
     @PostMapping("/{hompyId}/profile")
+    @CrossOrigin
     public ResponseEntity<?> profile(@PathVariable Long hompyId, @RequestBody Map<String, String> profile) {
         User user = hompyService.findById(hompyId).getUser();
 
@@ -222,42 +231,8 @@ public class HompyController {
         return ResponseEntity.ok(Map.of("profile", profileData));
     }
 
-
-
-    // 미니미
-//    @PostMapping("/{hompyId}/minimi")
-//    public ResponseEntity<?> minimi(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
-//        User user = hompyService.findById(hompyId).getUser();
-//
-//        String minimiPicturePath = saveFile(file);
-//
-//        hompyService.minimi(user, minimiPicturePath);
-//
-//        return ResponseEntity.ok().body(Map.of("minimiPicture", minimiPicturePath));
-//    }
-//
-//    // 미니룸
-//    @PostMapping("/{hompyId}/miniroom")
-//    public ResponseEntity<?> miniroom(@PathVariable Long hompyId, @RequestPart("file") MultipartFile file) {
-//        User user = hompyService.findById(hompyId).getUser();
-//
-//        String miniroomPicturePath = saveFile(file);
-//
-//        hompyService.miniRoom(user, miniroomPicturePath);
-//
-//        return ResponseEntity.ok().body(Map.of("miniroomPicture", miniroomPicturePath));
-//    }
-//
-//    // 미니홈피 스킨
-//    @PostMapping("/{hompyId}/hompyskin")
-//    public ResponseEntity<Hompy> homyskin(@PathVariable Long hompyId, @RequestParam String skinName) {
-//        Hompy updatedHompy = hompyService.miniHompySkin(hompyId, skinName);
-//        return new ResponseEntity<>(updatedHompy, HttpStatus.OK);
-//    }
-
-
-
     @PostMapping("/reset")
+    @CrossOrigin
     public String reset(@RequestParam Long hompyId) {
         Hompy hompy = hompyService.findById(hompyId);
         System.out.println("리셋할 홈피: "+hompy);
@@ -271,6 +246,7 @@ public class HompyController {
 
     // 메뉴 색상 및 보이기 숨기기
     @GetMapping("/{hompyId}/menu-settings")
+    @CrossOrigin
     public ResponseEntity<?> getMenuSettings(@PathVariable Long hompyId) {
         try {
             Hompy hompy = hompyService.findById(hompyId);
@@ -292,6 +268,7 @@ public class HompyController {
 
 
     @PostMapping("/{hompyId}/menu-settings")
+    @CrossOrigin
     public ResponseEntity<?> updateMenuSettings(@PathVariable Long hompyId, @RequestBody Map<String, String> settings) {
         try {
             Hompy hompy = hompyService.findById(hompyId);
@@ -314,6 +291,7 @@ public class HompyController {
     }
 
     @GetMapping("/{hompyId}/recentlypost")
+    @CrossOrigin
     public ResponseEntity<?> minihomyRecentlyPost(HttpServletRequest request, @PathVariable Long hompyId) {
         Hompy tourUser = check(request);
         String aciton = "";
@@ -335,6 +313,7 @@ public class HompyController {
     }
 
     @GetMapping("/{hompyId}/infotable")
+    @CrossOrigin
     public ResponseEntity<?> minihompInfoTable(HttpServletRequest request, @PathVariable Long hompyId) {
         Hompy tourUser = check(request);
         String aciton = "";
