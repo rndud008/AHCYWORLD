@@ -166,6 +166,7 @@ public class PostController {
     }
 
     // 작성
+    @CrossOrigin
     @PostMapping(value = "/{hompyId}/{postName}/{folderId}/write",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> write(
@@ -190,6 +191,7 @@ public class PostController {
     }
 
     // 수정
+    @CrossOrigin
     @PutMapping(value = "/{hompyId}/{postName}/{folderId}/update",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> update(
@@ -224,6 +226,7 @@ public class PostController {
     }
 
     // 삭제
+    @CrossOrigin
     @DeleteMapping("/{hompyId}/{postName}/{folderId}/delete/{id}")
     public ResponseEntity<?> delete(
             @PathVariable Long hompyId
@@ -244,6 +247,7 @@ public class PostController {
     }
 
     // 조회 - 조회수 증가.
+    @CrossOrigin
     @GetMapping("/{hompyId}/{postName}/{folderId}/detail/{id}")
     public ResponseEntity<?> detail(
             @PathVariable Long hompyId
@@ -265,6 +269,7 @@ public class PostController {
     }
 
     // 게시물 폴더 이동.
+    @CrossOrigin
     @PutMapping("/{hompyId}/{postName}/{folderId}/detail/{id}/{moveFolderId}")
     public ResponseEntity<?> movePost(
             @PathVariable Long hompyId
@@ -289,6 +294,7 @@ public class PostController {
     }
 
     // 게시물 스크랩.
+    @CrossOrigin
     @PostMapping("/{hompyId}/{postName}/{folderId}/detail/{scrapFolderId}")
     public ResponseEntity<?> scrapPost(
             @PathVariable Long hompyId
@@ -313,6 +319,7 @@ public class PostController {
     }
 
     // 조회 - 조회수 증가X
+    @CrossOrigin
     @GetMapping("/{hompyId}/{postName}/{folderId}/update/{id}")
     public ResponseEntity<?> updateCheck(
             @PathVariable Long hompyId
@@ -334,6 +341,7 @@ public class PostController {
     }
 
     // list?
+    @CrossOrigin
     @GetMapping("/{hompyId}/{postName}/{folderId}/list")
     public ResponseEntity<?> list(
             @PathVariable Long hompyId
