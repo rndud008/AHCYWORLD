@@ -159,7 +159,7 @@ function moveFolderIdState(data){
 function postUpdate(hompyId,postName,folderId,formData,navigate,postId){
   return async(dispatch,getState) =>{
     const response = await api.put(
-      `http://localhost:8070/${hompyId}/${postName}/${folderId}/update`,
+      `${SERVER_HOST}${hompyId}/${postName}/${folderId}/update`,
       formData,
       {
         headers: {

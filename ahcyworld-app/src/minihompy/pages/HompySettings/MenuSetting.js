@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { BlockPicker, ChromePicker, CirclePicker, SketchPicker, SwatchesPicker } from 'react-color';
 import {HompyAction} from "../../../redux/actions/HompyAction"
 import { useDispatch, useSelector } from "react-redux";
+import { SERVER_HOST } from '../../../apis/api';
 
 
 const MenuSetting = () => {
@@ -32,7 +33,7 @@ const MenuSetting = () => {
   // 메뉴색상 바꾸기
   useEffect(() => {
     // 메뉴의 기존 설정
-    axios.get(`http://localhost:8070/hompy/${hompyId}/menu-settings`)
+    axios.get(`${SERVER_HOST}/hompy/${hompyId}/menu-settings`)
     .then(response => {
       // 백엔드에서 가져온 값이 없을 경우 기본값 유지
       setMenuColor(response.data.menuColor || "#147DAF");
@@ -66,7 +67,7 @@ const MenuSetting = () => {
       menuBorder: borderColor,
       menuStatus: statusString, 
     };
-    axios.post(`http://localhost:8070/hompy/${hompyId}/menu-settings`, settings)
+    axios.post(`${SERVER_HOST}/hompy/${hompyId}/menu-settings`, settings)
       .then(response => {
         Swal.fire({
           title: '저장완료!',

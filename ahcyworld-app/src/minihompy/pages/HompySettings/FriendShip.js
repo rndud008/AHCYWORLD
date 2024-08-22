@@ -3,6 +3,7 @@ import '../css/FriendShip.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import FriendNameModal from './FriendNameModal';
+import { SERVER_HOST } from '../../../apis/api';
 
 
 const FriendShip = ({user}) => {
@@ -16,7 +17,7 @@ const FriendShip = ({user}) => {
       if (user?.username) {
         // user 객체가 존재하고, 그 안에 username이 있을 경우 실행
         try {
-          const response = await axios.get(`http://localhost:8070/friend/myfriends`, {
+          const response = await axios.get(`${SERVER_HOST}/friend/myfriends`, {
             params: { username: user.username }
           });
 
@@ -26,7 +27,7 @@ const FriendShip = ({user}) => {
             response.data.map(async (friend) => {
               try {
                 // 각 친구의 userId(friend.friendUser.id)를 사용하여 해당 유저의 hompyId를 조회
-                const hompyResponse = await axios.get(`http://localhost:8070/hompy/user/${friend.friendUser.id}`);
+                const hompyResponse = await axios.get(`${SERVER_HOST}/hompy/user/${friend.friendUser.id}`);
 
                 // hompyId를 친구 데이터에 추가하여 반환
                 return { ...friend, hompyId: hompyResponse.data };
@@ -67,7 +68,7 @@ const FriendShip = ({user}) => {
       params.append('friendId', selectedFriend.id);
       params.append('newFriendName', newFriendName);
   
-      await axios.post('http://localhost:8070/friend/change-friend-name', params);
+      await axios.post('${SERVER_HOST}/friend/change-friend-name', params);
       
       setFriends(friends.map(friend => 
         friend.id === selectedFriend.id 
@@ -114,7 +115,7 @@ const FriendShip = ({user}) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:8070/friend/remove-friend/${userId}/${friendUserId}`);
+          await axios.delete(`${SERVER_HOST}/friend/remove-friend/${userId}/${friendUserId}`);
           setFriends(prevFriends => prevFriends.filter(friend => friend.friendUser.id !== friendUserId && friend.id !== friendUserId));
           Swal.fire(
             "성공!",

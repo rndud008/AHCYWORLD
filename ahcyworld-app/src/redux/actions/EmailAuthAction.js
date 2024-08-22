@@ -4,7 +4,7 @@ function emailAuthAxios(email) {
   return async (dispatch, getState) => {
     try {
       const response = await api.post(
-        `http://localhost:8070/email/auth`,
+        `${SERVER_HOST}/email/auth`,
         { email },
         {
           headers: {
@@ -25,7 +25,7 @@ function emailAuthReAxios(email) {
   return async (dispatch, getState) => {
     try {
       const response = await api.delete(
-        `http://localhost:8070/email/auth/delete`,
+        `${SERVER_HOST}/email/auth/delete`,
         {
           data: { email },
           headers: {
@@ -49,7 +49,7 @@ function emailAuthCheckAxios(email, authenticationCode) {
 
     try{
       const response = await api.post(
-        "http://localhost:8070/email/auth/check",
+        "${SERVER_HOST}/email/auth/check",
         { email, authenticationCode },
         {
           headers: {

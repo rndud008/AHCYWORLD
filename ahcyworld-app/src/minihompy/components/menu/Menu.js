@@ -5,6 +5,7 @@ import axios from "axios";
 import { HompyAction } from "../../../redux/actions/HompyAction";
 import { useDispatch, useSelector } from "react-redux";
 import {LoginContext} from "../../../webpage/components/login/context/LoginContextProvider"
+import { SERVER_HOST } from "../../../apis/api";
 
 const Menu = () => {
   const { hompyId } = useParams();
@@ -25,7 +26,7 @@ const Menu = () => {
   // 메뉴 설정 가져오기
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/hompy/${hompyId}/menu-settings`)
+      .get(`${SERVER_HOST}/hompy/${hompyId}/menu-settings`)
       .then((response) => {
         setMenuColor(response.data.menuColor || "#FFFFFF");
         setTextColor(response.data.menuText || "#000000");

@@ -83,10 +83,10 @@ public class KakaoOAuth2Controller {
         response.addCookie(cookie);
 
         if (kakaoUser.getBirthDay() == null) {
-            response.sendRedirect("http://localhost:3000/addinfo");
+            response.sendRedirect("http://43.201.136.217:3000/addinfo");
         } else {
 
-            response.sendRedirect("http://localhost:3000/");
+            response.sendRedirect("http://43.201.136.217:3000/");
         }
     }
 
