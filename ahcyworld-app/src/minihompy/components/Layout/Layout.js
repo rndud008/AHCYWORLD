@@ -13,28 +13,31 @@ import { LoginContext } from "../../../webpage/components/login/context/LoginCon
 import { Button } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
-const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
+const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
   const [visitorInfo, setVisitorInfo] = useState({
     todayVisitor: 0,
     totalVisitor: 0,
   });
+
   const [miniHompySkin, setMiniHompySkin] = useState();
   const [hompyTitle, setHompyTitle] = useState();
   const [show,setShow] = useState(false);
-
   const { hompyInfo, setHompyInfo } = useContext(LoginContext);
-  const { postName } = useParams();
+  const { postName,hompyId } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
 
-  const hompyId = hompy?.id;
+  const reduxHompy = useSelector(state => state.hompy.hompy)
+
+  // const hompyId = hompy?.id;
   const userId = user?.id;
   const userCheck = parseInt(hompyId) === hompyInfo.id;
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -96,7 +99,8 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       console.log('location',location)
       return navigate('/')
   }
-  }, [userId, hompyInfo]);
+  dispatch(HompyAction.findByHompyIdAxios(hompyId))
+  }, [userId,hompyId]);
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
@@ -159,7 +163,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
-          fontFamily: `${hompyInfo.miniHompyFont}`
+          fontFamily: `${reduxHompy.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}

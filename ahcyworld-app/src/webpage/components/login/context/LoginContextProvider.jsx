@@ -79,7 +79,7 @@ const LoginContextProvider = ({ children }) => {
             data = response.data;
             setHompyInfo(data);
 
-            dispatch(HompyAction.findByHompyIdAxios(data.id))
+            // dispatch(HompyAction.findByHompyIdAxios(data.id))
             
             localStorage.setItem("hompyInfo", JSON.stringify(data));
         } catch (error) {

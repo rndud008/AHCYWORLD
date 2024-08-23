@@ -9,6 +9,7 @@ import { ServerStyleSheet } from "styled-components";
 import { useParams } from "react-router-dom";
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
+import { useSelector } from "react-redux";
 
 
 const MiniRoom = () => {
@@ -16,6 +17,7 @@ const MiniRoom = () => {
   const {hompyId} = useParams();
   const [miniRoomItems, setMiniRoomItems] = useState([]);
   const [miniRoom, setMiniRoom] = useState(hompyInfo.miniRoom || 'miniroom.png');
+  const hompy = useSelector(state => state.hompy.hompy)
 
   useEffect(() => {
     let type = "스토리룸";
@@ -23,7 +25,7 @@ const MiniRoom = () => {
     const userItemLits = async () => {
       const response = await axios({
         method: "GET",
-        url: `${SERVER_HOST}/cart/${userInfo.id}/items`,
+        url: `${SERVER_HOST}/cart/${hompy.user.id}/items`,
       });
       response.data.forEach((cart) => {
         if (cart.item.itemType === type) {
