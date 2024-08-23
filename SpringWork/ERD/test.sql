@@ -40,6 +40,7 @@ delete from hompy
 where user_id=11;
 
 
+
 select * from attachment where post_id='7285';
 select * from email_authentication;
 
@@ -56,6 +57,10 @@ from friend;
 update item
 set status = 'visible'
 where id = 116;
+
+update ah_user
+set acorn = 3000
+where id = 8;
 
 update ah_user
 set role = 'ROLE_MEMBER,ROLE_ADMIN'
