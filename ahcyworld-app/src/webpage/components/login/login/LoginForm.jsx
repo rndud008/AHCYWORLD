@@ -5,6 +5,7 @@ import { LoginContext } from "../context/LoginContextProvider";
 import { Link, useNavigate } from "react-router-dom";
 import naver from "../../../../upload/네이버버튼.png";
 import kakao from "../../../../upload/카카오버튼.png";
+import { SERVER_HOST } from "../../../../apis/api";
 
 const LoginForm = () => {
     const { login } = useContext(LoginContext);
@@ -31,12 +32,12 @@ const LoginForm = () => {
     }, []);
 
     const onNaverLogin = () => {
-        window.location.href = "http://localhost:8070/oauth2/authorization/naver";
+        window.location.href = `${SERVER_HOST}/oauth2/authorization/naver`;
     };
 
     const onKakaoLogin = () => {
         window.location.href =
-            "https://kauth.kakao.com/oauth/authorize?client_id=e6a276bbc03eba1dceba18ea7095056c&redirect_uri=http://localhost:8070/oauth2/kakao/callback&response_type=code";
+            `https://kauth.kakao.com/oauth/authorize?client_id=e6a276bbc03eba1dceba18ea7095056c&redirect_uri=${SERVER_HOST}/oauth2/kakao/callback&response_type=code`;
     };
 
     return (

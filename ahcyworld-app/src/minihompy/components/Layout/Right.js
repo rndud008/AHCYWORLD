@@ -35,7 +35,7 @@ const Right = ({ user, hompy }) => {
   useEffect(() => {
     if (hompyId) {
       axios
-        .get(`http://localhost:8070/hompy/${hompyId}`)
+        .get(`${SERVER_HOST}/hompy/${hompyId}`)
         .then((response) => {
           const hompyData = response.data;
 

@@ -25,6 +25,7 @@ public class FriendController {
     }
 
     @GetMapping("/myfriends")
+    @CrossOrigin
     public List<Friend> friendList(@RequestParam(value = "username") String username) {
         User user = userService.findByUsername(username.toUpperCase());
 
@@ -36,6 +37,7 @@ public class FriendController {
     }
 
     @GetMapping("/check-friendship")
+    @CrossOrigin
     public Map<String, Boolean> checkFriendship(@RequestParam(value = "username") String username, @RequestParam(value = "friendUsername") String friendUsername) {
         Map<String, Boolean> response = new HashMap<>();
 
@@ -66,6 +68,7 @@ public class FriendController {
     }
 
     @PostMapping("/addfriend")
+    @CrossOrigin
     public String addFriend(@RequestParam String friendType1
             , @RequestParam String friendType2
             , @RequestParam String message
@@ -83,6 +86,7 @@ public class FriendController {
     }
 
     @GetMapping("/friend-requests")
+    @CrossOrigin
     public List<Friend> friendRequests(String username,@RequestParam(defaultValue = "waiting") String action) {
         List<Friend> response = friendService.friendRequests(username, action);
 
@@ -91,12 +95,14 @@ public class FriendController {
     }
 
     @PostMapping("/friend-response")
+    @CrossOrigin
     public void friendShipResponse(Long id, String reply) {
         friendService.friendShipResponse(id, reply);
     }
 
     // 일촌명 변경
     @PostMapping("/change-friend-name")
+    @CrossOrigin
     public ResponseEntity<?> changeFriendName(@RequestParam Long friendId, @RequestParam String newFriendName) {
         try {
             friendService.changeFriendName(friendId, newFriendName);
@@ -108,6 +114,7 @@ public class FriendController {
 
     // 일촌 끊기
     @DeleteMapping("/remove-friend/{userId}/{friendUserId}")
+    @CrossOrigin
     public ResponseEntity<?> removeFriend(@PathVariable("friendUserId") Long friendUserId, @PathVariable("userId") Long userId) {
         try {
             friendService.removeFriend(friendUserId, userId);

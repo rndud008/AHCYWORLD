@@ -11,6 +11,7 @@ import DetailModal from "./PostListDetailItemModal/DetailModal";
 import DetailScrapModal from "./PostListDetailItemModal/DetailScrapModal";
 import "./PostListDetailItem.style.css";
 import { photoAndVideoCommentListAxios } from "../../utils/commentUtils";
+import { SERVER_HOST } from "../../../../../apis/api";
 
 const PostListDetailItem = ({ item }) => {
   const { hompyInfo, userInfo , roles} = useContext(LoginContext);
@@ -111,7 +112,7 @@ const PostListDetailItem = ({ item }) => {
                   <img
                     className="postDetailListItemDetailImg"
                     key={`photo-${fileItem.fileName}-${fileItem.id}`}
-                    src={`http://localhost:8070/post/${fileItem.fileName}`}
+                    src={`${SERVER_HOST}/post/${fileItem.fileName}`}
                     alt={fileItem.fileName}
                   />
                 )
@@ -133,7 +134,7 @@ const PostListDetailItem = ({ item }) => {
                     loop
                   >
                     <source
-                      src={`http://localhost:8070/video/${fileItem.fileName}`}
+                      src={`${SERVER_HOST}/video/${fileItem.fileName}`}
                     />
                   </video>
                 )

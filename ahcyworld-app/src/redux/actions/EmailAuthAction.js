@@ -49,7 +49,7 @@ function emailAuthCheckAxios(email, authenticationCode) {
 
     try{
       const response = await api.post(
-        `${SERVER_HOST}/email/auth/check`,
+        "${SERVER_HOST}/email/auth/check",
         { email, authenticationCode },
         {
           headers: {

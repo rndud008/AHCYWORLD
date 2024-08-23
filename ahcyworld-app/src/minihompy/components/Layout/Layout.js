@@ -56,7 +56,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       if (userId && !hasVisited) {
         try {
           const response = await axios.post(
-            `http://localhost:8070/hompy/${hompyId}/visit`
+            `${SERVER_HOST}/hompy/${hompyId}/visit`
           );
           setVisitorInfo({
             todayVisitor: response.data.todayVisitor || 0,
@@ -76,7 +76,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   useEffect(() => {
     if (hompyId) {
       axios
-        .get(`http://localhost:8070/hompy/${hompyId}`)
+        .get(`${SERVER_HOST}/hompy/${hompyId}`)
         .then((response) => {
           const hompyData = response.data;
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
@@ -159,7 +159,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
-          fontFamily: `${hompy.miniHompyFont}`
+          fontFamily: `${hompyInfo.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}

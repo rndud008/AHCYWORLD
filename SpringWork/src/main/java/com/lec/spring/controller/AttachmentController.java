@@ -13,10 +13,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.mail.Quota;
@@ -71,6 +68,7 @@ public class AttachmentController {
     }
 
     @RequestMapping("/post/download")
+    @CrossOrigin
     public ResponseEntity<?> download(Long id, HttpServletRequest request) {
 
         Hompy hompy = check(request);
@@ -122,6 +120,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/post/{filename:.+}")
+    @CrossOrigin
     public ResponseEntity<?> imageFile(@PathVariable String filename) {
 
         File file = new File(UPLOADDIR + File.separator + filename);
@@ -138,6 +137,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/video/{filename:.+}")
+    @CrossOrigin
     public ResponseEntity<?> videoFile(@PathVariable("filename") String filename) {
         File file = new File(UPLOADDIR + File.separator + filename);
 

@@ -3,6 +3,7 @@ import Layout from "../components/Layout/Layout";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../../webpage/components/login/context/LoginContextProvider";
+import { SERVER_HOST } from "../../apis/api";
 
 const Hompy = ({ setUserId }) => {
     const { hompyId } = useParams();
@@ -11,7 +12,7 @@ const Hompy = ({ setUserId }) => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8070/hompy/${hompyId}`)
+            .get(`${SERVER_HOST}/hompy/${hompyId}`)
             .then((response) => {
                 setHompy(response.data);
             })

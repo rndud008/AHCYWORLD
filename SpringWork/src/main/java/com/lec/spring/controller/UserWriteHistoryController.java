@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.UserWriteHistroy;
 import com.lec.spring.service.UserWriteHistoryService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ public class UserWriteHistoryController {
     }
 
     @GetMapping("/list")
+    @CrossOrigin
     public List<UserWriteHistroy> list(){
         return userWriteHistoryService.list();
     }

@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ public class HomeController {
 
 
     @GetMapping("/admin")
+    @CrossOrigin
     public String admin() {
         return "admin Page";
     }
@@ -37,11 +39,13 @@ public class HomeController {
 
 
     @GetMapping("/member")
+    @CrossOrigin
     public String member() {
         return "member Page";
     }
 
     @RequestMapping("/user")
+    @CrossOrigin
     public User user(@AuthenticationPrincipal PrincipalDetails userDetail) {
         Long userId = userDetail.getUser().getId();
         User user = userService.findByUserId(userId).orElse(null);
@@ -50,6 +54,7 @@ public class HomeController {
     }
 
     @RequestMapping("/hompy")
+    @CrossOrigin
     public Hompy hompy(@AuthenticationPrincipal PrincipalDetails userDetail) {
         Long userId = userDetail.getUser().getId();
         User user = userService.findByUserId(userId).orElse(null);
@@ -59,6 +64,7 @@ public class HomeController {
     }
 
     @RequestMapping("/auth")
+    @CrossOrigin
     public Authentication auth() { // org.springframework.security.core.Authentication
         return SecurityContextHolder.getContext().getAuthentication();
     }

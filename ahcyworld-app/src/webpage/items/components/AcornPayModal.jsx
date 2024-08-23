@@ -94,7 +94,7 @@ const AcornPayModal = ({
 
     const openhompy = () => {
         window.open(
-            `http://localhost:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
+            `http://43.201.136.217:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
             "_blank", // 새로운 창을 엽니다.
             "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
         );

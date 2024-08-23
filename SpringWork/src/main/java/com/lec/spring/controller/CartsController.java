@@ -80,11 +80,13 @@ public class CartsController {
     }
 
     @GetMapping("/top-selling-items")
+    @CrossOrigin
     public ResponseEntity<?> getTopSellingItems() {
         return ResponseEntity.ok(cartsService.getTopSellingItems());
     }
 
     @GetMapping("/history")
+    @CrossOrigin
     public List<Carts> getHistory(@RequestParam Long id) {
         return cartsService.getPaymentHistory(id);
     }

@@ -20,18 +20,21 @@ public class MessageController {
     }
 
     @PostMapping("/save")
+    @CrossOrigin
     public ResponseEntity<?> save(@RequestParam String title
             , @RequestParam String message, @RequestParam Long senderId, @RequestParam Long receiverId) {
         return new ResponseEntity<>(messageService.save(title, message, senderId, receiverId), HttpStatus.CREATED);
     }
 
     @GetMapping("/mymessage")
+    @CrossOrigin
     public List<Message> getMyMessage(@RequestParam Long userId) {
         System.out.println("유저아이디: " + userId);
         return messageService.myMessages(userId);
     }
 
     @PostMapping("/read")
+    @CrossOrigin
     public ResponseEntity<?> read(@RequestParam Long messageId) {
         return new ResponseEntity<>(messageService.read(messageId), HttpStatus.OK);
     }

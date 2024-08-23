@@ -21,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
@@ -58,6 +59,7 @@ public class KakaoOAuth2Controller {
     }
 
     @GetMapping("/kakao/callback")
+    @CrossOrigin
     public void kakaoCallBack(String code, HttpServletResponse response) throws IOException {
 //        System.out.println("\n<<카카오 인증 완료>>\ncode: " + code);
 
@@ -83,10 +85,10 @@ public class KakaoOAuth2Controller {
         response.addCookie(cookie);
 
         if (kakaoUser.getBirthDay() == null) {
-            response.sendRedirect("http://localhost:3000/addinfo");
+            response.sendRedirect("http://43.201.136.217:3000/addinfo");
         } else {
 
-            response.sendRedirect("http://localhost:3000/");
+            response.sendRedirect("http://43.201.136.217:3000/");
         }
     }
 
