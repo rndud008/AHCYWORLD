@@ -140,7 +140,13 @@ update hompy
 set mini_hompy_skin = 'background.png'
 where id = 5;
 
+insert into item (file_name, item_name, item_type, price, source_name, status)
+values ('asdfqweradfqwer', '렌고쿠', '미니미', 100, 'asdfsadfsdaqwerwqerwqer', 'visible')
+;
 
+select * from item;
+
+desc item;
 
 
 SELECT *
