@@ -132,21 +132,27 @@ public class HompyService {
     }
 
     public String resetHompy(Hompy hompy) {
+        String userMinimi;
 
-        hompy.setProfilePicture(null);
+        hompy.setProfilePicture("/upload/default_profile.png");
         hompy.setStatusMessage(null);
         hompy.setTodayVisitor(0L);
         hompy.setTotalVisitor(0L);
-        hompy.setMiniHompySkin(null);
-        hompy.setMiniRoom(null);
-        hompy.setMinimiPicture(null);
+        hompy.setMiniHompySkin("background.png");
+        hompy.setMiniRoom("miniroom.png");
         hompy.setProfile(null);
         hompy.setMenuColor("#147DAF,#FFF,#147DAF");
         hompy.setMenuStatus("visible,visible,visible,visible");
 
+        if (hompy.getUser().getGender().equals("MALE")) {
+            userMinimi = "male.png";
+        } else {
+            userMinimi="female.png";
+        }
+        hompy.setMinimiPicture(userMinimi);
 
         hompy = hompyRepository.saveAndFlush(hompy);
-        System.out.println(hompy);
+//        System.out.println(hompy);
 
         List<Folder> folderList = folderRepository.findAll();
 //        List<Post> postList = postRepository.findAll();
