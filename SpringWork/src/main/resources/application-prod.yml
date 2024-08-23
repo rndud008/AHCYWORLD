@@ -54,7 +54,7 @@ jwt:
   secret: ${rds.jwttoken}
 
 cors:
-  allowed-origins: http://localhost:3000
+  allowed-origins: http://43.201.136.217:3000
 
 app:
   pagination:
