@@ -68,7 +68,7 @@ const FriendShip = ({user}) => {
       params.append('friendId', selectedFriend.id);
       params.append('newFriendName', newFriendName);
   
-      await axios.post('${SERVER_HOST}/friend/change-friend-name', params);
+      await axios.post(`${SERVER_HOST}/friend/change-friend-name`, params);
       
       setFriends(friends.map(friend => 
         friend.id === selectedFriend.id 
