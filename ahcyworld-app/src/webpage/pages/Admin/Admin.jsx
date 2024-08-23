@@ -73,15 +73,15 @@ const Admin = () => {
         }
     }, [roles, navigate]);
     
-    if (loading) {
-        return <div>Loading...</div>; // 로딩 중 표시
-    }
-
+    
     useEffect(() => {
         localStorage.setItem("openMenu", openMenu);
         localStorage.setItem("subMenu", subMenu);
     }, [openMenu, subMenu]);
-
+    
+    if (loading) {
+        return <div>Loading...</div>; // 로딩 중 표시
+    }
 
     const handleSubMenuClick = (menu) => {
         if (menu === "main") {

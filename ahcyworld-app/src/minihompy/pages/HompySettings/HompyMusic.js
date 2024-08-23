@@ -9,66 +9,81 @@ import '../css/HompyMusic.css';
 import Swal from "sweetalert2";
 
 const HompyMusic = () => {
-  const { hompyId } = useParams();
+  const { hompyId } = useParams(); // URL에서 hompyId 가져오기
   const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
   const [musicItems, setMusicItems] = useState([]);
-  const [myplayList, setMyPlayList] = useState();
+  const [myplayList, setMyPlayList] = useState([]);
 
   useEffect(() => {
     const playList =
-    (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) || (hompyInfo.miniHompyBgm == null && []);
+      (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) || [];
     let type = "배경음악";
     let musics = [];
+    
     const userItemLits = async () => {
-      const response = await axios({
-        method: "GET",
-        url: `${SERVER_HOST}/cart/${userInfo.id}/items`,
-      });
-      response.data.forEach((cart) => {
-        if (cart.item.itemType === type) {
-          musics.push(cart.item);
-        }
-      });
-   
-      setMusicItems(musics.filter((item) => (
-        !playList.includes(`${item.sourceName}-${item.itemName}`)
-      )));
+      try {
+        const response = await axios({
+          method: "GET",
+          url: `${SERVER_HOST}/cart/${userInfo.id}/items`, // 로그인된 사용자의 아이템 가져오기
+        });
+        
+        response.data.forEach((cart) => {
+          if (cart.item.itemType === type) {
+            musics.push(cart.item);
+          }
+        });
+      
+        setMusicItems(musics.filter((item) => (
+          !playList.includes(`${item.sourceName}-${item.itemName}`)
+        )));
 
-      setMyPlayList(musics.filter((item) => (
-        playList.includes(`${item.sourceName}-${item.itemName}`)
-      )));
+        setMyPlayList(musics.filter((item) => (
+          playList.includes(`${item.sourceName}-${item.itemName}`)
+        )));
+      } catch (error) {
+        console.error("Error fetching user items:", error);
+      }
     };
+    
     userItemLits();
-  }, []);
+  }, [userInfo.id, hompyInfo]);
 
   const handleSaveBgm = async () => {
-    let hompy = hompyInfo;
+    try {
+      let hompy = { ...hompyInfo }; // hompyInfo를 복사해서 사용
 
-    // 음악 저장
-    let playList = myplayList.map((item) => 
-    {return `${item.sourceName}-${item.itemName}`}
-    ).join(",");
+      // 음악 저장
+      let playList = myplayList.map((item) => 
+        `${item.sourceName}-${item.itemName}`
+      ).join(",");
 
-    hompy.miniHompyBgm = playList;
-    
-  try{
-    const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`, hompy, {
-      headers: {
-        Authorization: "Bearer " + Cookies.get("accessToken"),
-      },
-    });
+      hompy.miniHompyBgm = playList;
 
-    const { data, status } = response;
-
-    if (status === 200) {
-      setHompyInfo(data);
-      Swal.fire({
-        icon: "success",
-        title: "성공!",
-        text: "음악이 추가되었습니다.",
-        confirmButtonText: "확인",
+      const response = await api.post(`${SERVER_HOST}/hompy/${hompyId}`, hompy, {
+        headers: {
+          Authorization: "Bearer " + Cookies.get("accessToken"),
+        },
       });
-    } else {
+
+      const { data, status } = response;
+
+      if (status === 200) {
+        setHompyInfo(data); // hompyInfo를 업데이트
+        Swal.fire({
+          icon: "success",
+          title: "성공!",
+          text: "BGM 설정 완료!",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "실패",
+          text: "업데이트 중 오류가 발생했습니다.",
+          confirmButtonText: "확인",
+        });
+      }
+    } catch (error) {
       Swal.fire({
         icon: "error",
         title: "실패",
@@ -76,15 +91,7 @@ const HompyMusic = () => {
         confirmButtonText: "확인",
       });
     }
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "실패",
-      text: "업데이트 중 오류가 발생했습니다.",
-      confirmButtonText: "확인",
-    });
-  }
-};
+  };
 
   const bgmChangeValue = (music) => {
     setMyPlayList([...myplayList, music]);
@@ -100,7 +107,6 @@ const HompyMusic = () => {
     )));
   }
 
-
   return (
   <>  
     <div className="hompyMusic-container">
@@ -110,6 +116,7 @@ const HompyMusic = () => {
           {musicItems &&
             musicItems.map((item) => (
               <div
+                key={`${item.sourceName}-${item.itemName}`}
                 className="music-item"
                 onClick={() => bgmChangeValue(item)}
               >
@@ -127,6 +134,7 @@ const HompyMusic = () => {
           {myplayList &&
             myplayList.map((item) => (
               <div
+                key={`${item.sourceName}-${item.itemName}`}
                 className="music-item"
                 onClick={() => playChangeValue(item)}
               >
