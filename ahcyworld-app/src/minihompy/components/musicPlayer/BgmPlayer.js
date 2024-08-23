@@ -18,44 +18,51 @@ import {
 import "./BgmPlayer.css";
 import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api"; // SERVER_HOST 가져오기
-import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import Swal from "sweetalert2";
+import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
-const BgmPlayer = () => {
-  const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
+const BgmPlayer = ({ hompyId }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
   const volumeRef = useRef(0.5);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bgmList, setBgmList] = useState();
+  const [bgmList, setBgmList] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const {userInfo, hompyInfo} = useContext(LoginContext);
 
   useEffect(() => {
-    const playList =
-      (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) ||
-      (hompyInfo.miniHompyBgm == null && []);
-    let type = "배경음악";
-    let musics = [];
-    const userItemLits = async () => {
-      const response = await axios({
-        method: "GET",
-        url: `${SERVER_HOST}/cart/${userInfo.id}/items`,
-      });
-      response.data.forEach((cart) => {
-        if (cart.item.itemType === type) {
-          musics.push(cart.item);
-        }
-      });
+    const fetchBgmData = async () => {
+      try {
+        const hompyResponse = await axios.get(`${SERVER_HOST}/hompy/${hompyId}`);
+        const hompyInfo = hompyResponse.data;
 
-      setBgmList(
-        musics.filter((item) =>
-          playList.includes(`${item.sourceName}-${item.itemName}`)
-        )
-      );
+        const playList =
+          (hompyInfo.miniHompyBgm != null && hompyInfo.miniHompyBgm.split(",")) ||
+          [];
+
+        let type = "배경음악";
+        let musics = [];
+        const response = await axios.get(`${SERVER_HOST}/cart/${userInfo.id}/items`);
+        
+        response.data.forEach((cart) => {
+          if (cart.item.itemType === type) {
+            musics.push(cart.item);
+          }
+        });
+
+        setBgmList(
+          musics.filter((item) =>
+            playList.includes(`${item.sourceName}-${item.itemName}`)
+          )
+        );
+      } catch (error) {
+        console.error("Error fetching BGM data:", error);
+      }
     };
-    userItemLits();
-  }, [hompyInfo]);
+
+    fetchBgmData();
+  }, [hompyInfo, hompyId]);
 
   const togglePlayPause = useCallback(() => {
     if (isPlaying) {
@@ -134,12 +141,14 @@ const BgmPlayer = () => {
   return (
     <div className="bgm-player">
       <div className="track-info">
-        {bgmList && bgmList.length !== 0 && (
+        {bgmList && bgmList.length !== 0 ? (
           <strong>
             {bgmList[currentTrackIndex].itemName} -{" "}
             {bgmList[currentTrackIndex].sourceName}
           </strong>
-        )|| <strong>재생목록이 존재하지 않습니다.</strong>}
+        ) : (
+          <strong>재생목록이 존재하지 않습니다.</strong>
+        )}
       </div>
       <audio
         ref={audioRef}
@@ -148,7 +157,7 @@ const BgmPlayer = () => {
       ></audio>
       <div className="controls">
         <div className="controls-box">
-          <button onClick={bgmList && (bgmList.length !== 0 && togglePlayPause || bgmListNull)}>
+          <button onClick={bgmList.length !== 0 ? togglePlayPause : bgmListNull}>
             {isPlaying ? <FaPause /> : <FaPlay />}
           </button>
           <button onClick={stopPlayback}>

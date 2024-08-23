@@ -8,7 +8,7 @@ import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Menu from "../menu/Menu";
 import BgmPlayer from "../musicPlayer/BgmPlayer";
 import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
-import { hompyInfo } from "../../../apis/auth";
+import { hompyInfo, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import { Button } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
@@ -224,7 +224,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
 
         <div className="bgmbox">
           {/* Bgm 자리 */}
-          <BgmPlayer />
+          <BgmPlayer hompyId={hompyId}/>
         </div>
       </div>
       }
