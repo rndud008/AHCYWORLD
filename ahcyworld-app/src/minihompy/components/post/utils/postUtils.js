@@ -173,7 +173,7 @@ export const postScrap = async (e,hompyId,postName,folderId,scrapFolderId,item,d
   e.preventDefault();
 
   const response = await api.post(
-    `http://localhost:8070/${hompyId}/${postName}/${folderId}/detail/${scrapFolderId}`,
+    `${SERVER_HOST}/${hompyId}/${postName}/${folderId}/detail/${scrapFolderId}`,
     item
   );
 

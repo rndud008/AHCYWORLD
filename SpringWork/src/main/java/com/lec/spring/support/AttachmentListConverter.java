@@ -14,7 +14,6 @@ public class AttachmentListConverter implements AttributeConverter<List<Attachme
     @Override
     public String convertToDatabaseColumn(List<Attachment> attachmentList) {
 
-
         try {
             return mapper.writeValueAsString(attachmentList);
         } catch (JsonProcessingException e) {

@@ -9,7 +9,6 @@ import { list } from "./utils/FolderUtils";
 import * as Swal from "../../../apis/alert";
 import { CommentAction } from "../../../redux/actions/CommentAction";
 import { PostAction } from "../../../redux/actions/PostAction";
-import { hompyInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import { HompyAction } from "../../../redux/actions/HompyAction";
 import LoadingSpinner from "../../pages/LoadingSpinner";
@@ -35,7 +34,7 @@ const Post = () => {
     (hompy.menuStatus?.split(",")[2] === "visible" || roles?.isAdmin) &&
     postName.includes("video");
 
-    const  extraCheck = photoVisibleCheck || boardVisibleCheck || videoVisibleCheck;
+    const extraCheck = photoVisibleCheck || boardVisibleCheck || videoVisibleCheck;
 
     const isHompyLoaded = hompy && Object.keys(hompy).length > 0;
 
@@ -62,7 +61,7 @@ const Post = () => {
     }
 
     fetchData()
-  }, [postName, hompyId, dispatch]);
+  }, [postName, hompyId]);
 
   useEffect(() => {
 
@@ -70,7 +69,7 @@ const Post = () => {
       if ((folder && Object.keys(folder).length > 0) && hompyInfo.id !== undefined ) {
         try {
           setIsLoading(true)
-          await axiosPostList(dispatch, folderId, hompyId, postName, page, navigate);
+          await axiosPostList(dispatch, folder?.id, hompyId, postName, page, navigate);
           dispatch(CommentAction.contentState(false, ""));
           dispatch(CommentAction.contentErrorState("content", false));
           dispatch(PostAction.postErrorState("subject", false));
@@ -86,7 +85,7 @@ const Post = () => {
 
       fetchPost()
 
-  }, [page, folder?.id, folderId]);
+  }, [page, folder?.id]);
 
 
   if (!isHompyLoaded) {

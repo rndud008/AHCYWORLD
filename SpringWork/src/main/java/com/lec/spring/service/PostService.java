@@ -32,7 +32,6 @@ import java.util.Optional;
 @Service
 public class PostService {
 
-
     @Value("${app.pagination.write_pages}")
     private int WRITE_PAGE;
     @Value("${app.pagination.page_rows}")
@@ -42,32 +41,24 @@ public class PostService {
     private final AttachmentRepository attachmentRepository;
     private final CommentRepository commentRepository;
     private final AttachmentService attachmentService;
-    private final GuestBookRepository guestBookRepository;
-    private final DiaryRepository diaryRepository;
 
-
-    public PostService(PostRepository postRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository, AttachmentService attachmentService, GuestBookRepository guestBookRepository, DiaryRepository diaryRepository) {
+    public PostService(PostRepository postRepository, AttachmentRepository attachmentRepository, CommentRepository commentRepository, AttachmentService attachmentService) {
 
         this.postRepository = postRepository;
         this.attachmentRepository = attachmentRepository;
         this.commentRepository = commentRepository;
         this.attachmentService = attachmentService;
-        this.guestBookRepository = guestBookRepository;
-        this.diaryRepository = diaryRepository;
-    }
 
+    }
 
     @Transactional
     public long write(Post post, Map<String, MultipartFile> files, Folder folder) {
         long result = 0;
 
-        // 폴더 세팅?
         post.setFolder(folder);
 
-        // 글저장
         post = postRepository.saveAndFlush(post);
 
-        // 첨부파일 추가.
         attachmentService.addFiles(files, post);
 
         return post.getId() != null ? post.getId() : result;
@@ -81,7 +72,6 @@ public class PostService {
         if (post != null) {
             post.setViewCnt(post.getViewCnt() + 1);
             post.setUpdateViews(false);
-            postRepository.save(post);
 
             // 첨부파일들 을 가져와서 image 파일 관련 세팅.
             List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
@@ -169,20 +159,20 @@ public class PostService {
             oringPost.setSubject(post.getSubject());
             oringPost.setContent(post.getContent());
 
-            oringPost = postRepository.saveAndFlush(oringPost);
-
             attachmentService.addFiles(files, oringPost);
 
             if (delFile != null) {
                 for (Long fileId : delFile) {
                     Attachment file = attachmentRepository.findById(fileId).orElse(null);
                     if (file != null) {
-                        attachmentService.deleteFile(file);
+                        attachmentService.deleteFile(file); // 물리적 파일 제거.
                         oringPost.getFileList().remove(file);
                         attachmentRepository.delete(file);
                     }
                 }
+                oringPost.setFileList(oringPost.getFileList());
             }
+
             result = 1;
         }
 
@@ -219,7 +209,6 @@ public class PostService {
 
         return post;
     }
-
 
     // 게시물 스크랩.
     @Transactional

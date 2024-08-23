@@ -19,7 +19,6 @@ public class SearchService {
 
     public SearchService(HompyRepository hompyRepository, ItemRepository itemRepository) {
         this.hompyRepository = hompyRepository;
-
         this.itemRepository = itemRepository;
     }
 
