@@ -14,7 +14,7 @@ spring:
           naver:
             client-name: naver
             client-id: ${rds.naverid}
-            client-secret: ${fds.naversecret}
+            client-secret: ${rds.naversecret}
             scope:
               - name
               - email
