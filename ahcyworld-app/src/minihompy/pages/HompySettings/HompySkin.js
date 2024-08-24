@@ -6,6 +6,8 @@ import { LoginContext } from '../../../webpage/components/login/context/LoginCon
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux';
+import { HompyAction } from '../../../redux/actions/HompyAction';
 
 
 const HompySkin = () => {
@@ -13,6 +15,7 @@ const HompySkin = () => {
   const {userInfo, hompyInfo, setHompyInfo} = useContext(LoginContext);
   const [skinItems, setSkinItems] = useState([]);
   const [selectedSkin, setSelectedSkin] = useState(hompyInfo.miniHompySkin);
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     let type = "스킨";
@@ -54,6 +57,7 @@ const HompySkin = () => {
     const {data , status} = response;
 
     if (status === 200) {
+      // dispatch(HompyAction.hompyUpdate(data))
       setHompyInfo(data);
       Swal.fire({
         icon: "success",

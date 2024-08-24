@@ -9,6 +9,8 @@ import { hompyInfo, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import * as Swal from "../../../apis/alert";
 import { useDispatch, useSelector } from "react-redux";
+import LoadingSpinner from "../../pages/LoadingSpinner";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
 const GuestBookHome = () => {
     const [guestBook, setGuestBook] = useState([]);
@@ -20,6 +22,7 @@ const GuestBookHome = () => {
     const { hompyId } = useParams();
     const [hompy, setHompy] = useState(""); // hompy 상태 설정
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const { hompyInfo, userInfo, roles } = useContext(LoginContext);
 
@@ -117,6 +120,7 @@ const GuestBookHome = () => {
         };
 
         if (hompyId) {
+            dispatch(HompyAction.findByHompyIdAxios(hompyId))
             fetchHompy();
             fetchGuestBook();
             checkFriendship();
@@ -301,9 +305,15 @@ const GuestBookHome = () => {
     const guestBookVisibleCheck =
         hompyCheck.menuStatus?.split(",")[3] === "visible" || roles.isAdmin;
 
+
+      const isHompyLoaded = hompyCheck && Object.keys(hompy).length > 0;
+      if (!isHompyLoaded) {
+        return <LoadingSpinner />;
+      }
+
     return (
         <>
-            {hompyCheck && guestBookVisibleCheck ? (
+            {hompyCheck && (guestBookVisibleCheck ? (
                 <Layout hompy={hompy} user={hompy.user}>
                     <Container className="container">
                         <Form
@@ -474,7 +484,7 @@ const GuestBookHome = () => {
                         navigate("/");
                     }
                 )
-            )}
+            ))}
         </>
     );
 };

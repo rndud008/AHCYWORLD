@@ -64,10 +64,10 @@ const SendMessageModal = ({ isOpen, onClose, selectedUser }) => {
                 </div>
             </Modal.Body>
             <Modal.Footer className="custom-modal-footer">
-                <Button variant="outline-danger" onClick={onClose} className="custom-btn">
+                <Button variant="outline-danger" onClick={onClose} className="custom-btn textedit-btn">
                     닫기
                 </Button>
-                <Button variant="outline-primary" onClick={sendMessage} className="custom-btn">
+                <Button variant="outline-primary" onClick={sendMessage} className="custom-btn diarywriteok-btn">
                     <IoIosSend />
                 </Button>
             </Modal.Footer>

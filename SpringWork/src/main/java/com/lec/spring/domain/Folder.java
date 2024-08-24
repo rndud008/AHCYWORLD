@@ -35,4 +35,12 @@ public class Folder {
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Post> posts;
+
+    public void baseFolder(Hompy hompy,BoardType boardType){
+        name = boardType.getName()+" 기본폴더";
+        this.hompy = hompy;
+        status = "전체공개";
+        this.boardType = boardType;
+    }
+
 }

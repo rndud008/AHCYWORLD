@@ -20,6 +20,7 @@ public class EmailAuthenticationController {
     }
 
     @PostMapping("/auth")
+    @CrossOrigin
     public ResponseEntity<?> authResister(@RequestBody EmailDto emailDto) {
         if (!userService.emailAvailable(emailDto.getEmail())) {
             return new ResponseEntity<>("이미 존재하는 email 입니다.", HttpStatus.BAD_REQUEST);
@@ -34,6 +35,7 @@ public class EmailAuthenticationController {
     }
 
     @PostMapping("/auth/check")
+    @CrossOrigin
     public ResponseEntity<?> authCheck(@RequestBody EmailDto emailDto) {
 
         EmailAuthentication emailAuthentication = emailAuthenticationService.findByEmail(emailDto.getEmail());
@@ -49,6 +51,7 @@ public class EmailAuthenticationController {
     }
 
     @DeleteMapping("/auth/delete")
+    @CrossOrigin
     public ResponseEntity<?> authDelete(@RequestBody EmailDto emailDto){
 
         return new ResponseEntity<>(emailAuthenticationService.delete(emailDto),HttpStatus.OK);

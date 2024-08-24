@@ -35,7 +35,7 @@ const Right = ({ user, hompy }) => {
   useEffect(() => {
     if (hompyId) {
       axios
-        .get(`http://localhost:8070/hompy/${hompyId}`)
+        .get(`${SERVER_HOST}/hompy/${hompyId}`)
         .then((response) => {
           const hompyData = response.data;
 
@@ -306,7 +306,7 @@ const Right = ({ user, hompy }) => {
             onChange={friendReviewValue}
             onCompositionStart={() => setIsComposing(true)}
             onCompositionEnd={() => setIsComposing(false)}
-            onKeyDown={(e) => activeEnter(e)}
+            onKeyPress={(e) => activeEnter(e)}
             type="text"
             placeholder="일촌평 작성.."
           />

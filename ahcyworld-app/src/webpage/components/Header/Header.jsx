@@ -25,14 +25,14 @@ const Header = ({ setItemKind }) => {
 
   const searchChangeValue = (e) => {
     const { name, value } = e.target;
+    
+      if (name.includes("search")) {
+        setSearchValue({ ...searchValue, search: value });
+      }
 
-    if (name.includes("search")) {
-      setSearchValue({ ...searchValue, search: value });
-    }
-
-    if (name.includes("action")) {
-      setSearchValue({ ...searchValue, action: value });
-    }
+      if (name.includes("action")) {
+        setSearchValue({ ...searchValue, action: value });
+      }
   };
 
   const searchEnter = async (e) => {
@@ -43,7 +43,11 @@ const Header = ({ setItemKind }) => {
 
       try {
         await dispatch(
-          SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
+          SearchAction.searchListAxios(
+            searchValue.search,
+            searchValue.action,
+            navigate
+          )
         );
       } catch (e) {
         // return alert(e);
@@ -52,24 +56,28 @@ const Header = ({ setItemKind }) => {
     }
   };
 
-  useEffect(()=>{
-    if(searchQuery && actionQuery){
+  useEffect(() => {
+    if (searchQuery && actionQuery) {
       setSearchValue({
         action: actionQuery,
         search: searchQuery,
-      })
-    }else{
+      });
+    } else {
       setSearchValue({
-        action: 'all',
-        search: '',
-      })
+        action: "all",
+        search: "",
+      });
     }
-  },[actionQuery,searchQuery])
-  
+  }, [actionQuery, searchQuery]);
+
   const searchListAxios = async () => {
     try {
       await dispatch(
-        SearchAction.searchListAxios(searchValue.search, searchValue.action,navigate)
+        SearchAction.searchListAxios(
+          searchValue.search,
+          searchValue.action,
+          navigate
+        )
       );
     } catch (e) {
       // return alert(e);
@@ -92,26 +100,17 @@ const Header = ({ setItemKind }) => {
             <img src={logo} alt="Acyworld LOGO" />
           </div>
           <div className="search-select">
-            <select name="action" value={searchValue.action} onChange={(e) => searchChangeValue(e)}>
-              <option value={"all"}
-              selected={searchValue.action.includes("all")}
-              >
-                전체검색
-              </option>
-              <option
-                value={"people"}
-                selected={searchValue.action.includes("people")}
-              >
-                사람검색
-              </option>
-              <option value={"item"}
-              selected={searchValue.action.includes("item")}
-              >
-                아이템검색
-              </option>
+            <select
+              name="action"
+              value={searchValue.action}
+              onChange={(e) => searchChangeValue(e)}
+            >
+              <option value={"all"}>전체검색</option>
+              <option value={"people"}>사람검색</option>
+              <option value={"item"}>아이템검색</option>
             </select>
             <input
-              onKeyDown={searchEnter}
+              onKeyPress={searchEnter}
               name="search"
               value={searchValue.search}
               onChange={(e) => searchChangeValue(e)}
@@ -123,61 +122,61 @@ const Header = ({ setItemKind }) => {
           </div>
         </div>
 
-                <Nav className='navbar'>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("all");
-                        }}
-                    >
-                        전체
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("배경음악");
-                        }}
-                    >
-                        배경음악
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("글꼴");
-                        }}
-                    >
-                        글꼴
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("스킨");
-                        }}
-                    >
-                        스킨
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("미니미");
-                        }}
-                    >
-                        미니미
-                    </button>
-                    <button
-                        onClick={() => {
-                            navigate("/item");
-                            setItemKind("스토리룸");
-                        }}
-                    >
-                        미니룸
-                    </button>
-                </Nav>
-            </div>
+        <Nav className="navbar">
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("all");
+            }}
+          >
+            전체
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("배경음악");
+            }}
+          >
+            배경음악
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("글꼴");
+            }}
+          >
+            글꼴
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("스킨");
+            }}
+          >
+            스킨
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("미니미");
+            }}
+          >
+            미니미
+          </button>
+          <button
+            onClick={() => {
+              navigate("/item");
+              setItemKind("스토리룸");
+            }}
+          >
+            미니룸
+          </button>
+        </Nav>
+      </div>
 
-            <Outlet />
-        </>
-    );
+      <Outlet />
+    </>
+  );
 };
 
 export default Header;

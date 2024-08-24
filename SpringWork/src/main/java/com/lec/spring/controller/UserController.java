@@ -33,6 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/join")
+    @CrossOrigin
     public String join(@RequestBody UserDTO joinUser) {
         User user = User.builder()
                 .username(joinUser.getUsername().toUpperCase())
@@ -51,11 +52,13 @@ public class UserController {
     }
 
     @GetMapping("/userinfo")
+    @CrossOrigin
     public User getUserInfo(@RequestParam String username) {
         return userService.findByUsername(username);
     }
 
     @GetMapping("/check-username")
+    @CrossOrigin
     public Map<String, Boolean> checkUsername(@RequestParam String username) {
 
         boolean available = userService.usernameAvailable(username);
@@ -67,6 +70,7 @@ public class UserController {
     }
 
     @GetMapping("/check-email")
+    @CrossOrigin
     public Map<String, Boolean> checkEmail(@RequestParam String email) {
         boolean available = userService.emailAvailable(email);
 
@@ -77,6 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @CrossOrigin
     public List<User> list() {
         List<User> user = userService.list();
         return user;
@@ -85,6 +90,7 @@ public class UserController {
 
 
     @GetMapping("/check-friendship")
+    @CrossOrigin
     public Map<String, Boolean> checkFriendship(@RequestParam(value = "username") String username, @RequestParam(value = "friendUsername") String friendUsername) {
         Map<String, Boolean> response = new HashMap<>();
 
@@ -115,26 +121,17 @@ public class UserController {
     }
 
     @PostMapping("/addinfo")
+    @CrossOrigin
     public String addInfo(@RequestParam String username
             , @RequestParam String gender
             , @RequestParam String birthDay) {
-
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//
-//        LocalDate birthday;
-//
-//        try {
-//            birthday = LocalDate.parse(birthDay, formatter);
-//        } catch (DateTimeParseException e) {
-//            return "Invalid date format";
-//        }
-
         String response = userService.OAuthAddInfo(username, gender, birthDay);
 
         return response;
     }
 
     @PostMapping("/user-update/{id}")
+    @CrossOrigin
     public User updateUser(@PathVariable Long id,
                            @RequestBody Map<String, String> updatedUserInfo) {
         try {

@@ -7,12 +7,15 @@ import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../css/HompyFont.css";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
 const HompyFont = () => {
   const { hompyId } = useParams();
   const { userInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
   const [fontItems, setFontItems] = useState([]);
   const [selectedFont, setSelectedFont] = useState(hompyInfo.miniHompyFont || "Arial");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let type = "글꼴";
@@ -52,7 +55,8 @@ const HompyFont = () => {
       const { data, status } = response;
 
       if (status === 200) {
-        setHompyInfo(data);
+        dispatch(HompyAction.hompyUpdate(data));
+        // setHompyInfo(data);
         Swal.fire({
           icon: "success",
           title: "성공!",

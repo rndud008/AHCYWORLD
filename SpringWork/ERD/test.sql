@@ -40,6 +40,7 @@ delete from hompy
 where user_id=11;
 
 
+
 select * from attachment where post_id='7285';
 select * from email_authentication;
 
@@ -58,8 +59,16 @@ set status = 'visible'
 where id = 116;
 
 update ah_user
+set acorn = 3000
+where id = 8;
+
+update ah_user
 set role = 'ROLE_MEMBER,ROLE_ADMIN'
 where username = 'K3';
+
+update friend
+set friend_status = 'waiting'
+where id = 67;
 
 delete
     from item
@@ -136,7 +145,13 @@ update hompy
 set mini_hompy_skin = 'background.png'
 where id = 5;
 
+insert into item (file_name, item_name, item_type, price, source_name, status)
+values ('asdfqweradfqwer', '렌고쿠', '미니미', 100, 'asdfsadfsdaqwerwqerwqer', 'visible')
+;
 
+select * from item;
+
+desc item;
 
 
 SELECT *

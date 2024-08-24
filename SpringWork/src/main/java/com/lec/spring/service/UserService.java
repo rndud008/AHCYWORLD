@@ -1,12 +1,7 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.EmailAuthentication;
-import com.lec.spring.domain.Hompy;
-import com.lec.spring.domain.SearchListDTO;
-import com.lec.spring.domain.User;
-import com.lec.spring.repository.EmailAuthenticationRepository;
-import com.lec.spring.repository.HompyRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.domain.*;
+import com.lec.spring.repository.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +17,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final HompyRepository hompyRepository;
+    private final BoardTypeRepository boardTypeRepository;
+    private final FolderRepository folderRepository;
 
     private final EmailAuthenticationRepository emailAuthenticationRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, HompyRepository hompyRepository, EmailAuthenticationRepository emailAuthenticationRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, HompyRepository hompyRepository, BoardTypeRepository boardTypeRepository, FolderRepository folderRepository, EmailAuthenticationRepository emailAuthenticationRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.hompyRepository = hompyRepository;
+        this.boardTypeRepository = boardTypeRepository;
+        this.folderRepository = folderRepository;
         this.emailAuthenticationRepository = emailAuthenticationRepository;
     }
 
@@ -82,6 +81,15 @@ public class UserService {
                 .build();
 
         hompyRepository.save(hompy);
+
+        // 기본폴더 추가.
+        List<BoardType> boardTypes = boardTypeRepository.findAll();
+        for (BoardType boardType : boardTypes) {
+            Folder folder = new Folder();
+            folder.baseFolder(hompy,boardType);
+            folderRepository.save(folder);
+        }
+
 //        System.out.println("hompy만들었지롱~ " + hompy);
         return savedUser;
     }

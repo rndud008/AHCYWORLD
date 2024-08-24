@@ -41,7 +41,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        String token = jwtUtil.createJwt(id,hompyId, username, role, name, 30 * 60 * 1000L);
+        String token = jwtUtil.createJwt(id, hompyId, username, role, name, 30 * 60 * 1000L);
 
 
 //        System.out.println("token:" + token);
@@ -52,9 +52,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String redirectUrl;
 
         if (birthDay == null) {
-            redirectUrl = "http://localhost:3000/addinfo";
+            redirectUrl = "http://43.201.136.217:3000/addinfo";
         } else {
-            redirectUrl = "http://localhost:3000/";
+            redirectUrl = "http://43.201.136.217:3000/";
         }
 
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
@@ -64,7 +64,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Cookie cookie = new Cookie(key, value);
         cookie.setPath("/");
 //        cookie.setHttpOnly(true);
-        cookie.setMaxAge(60 * 60 * 60);
+        cookie.setMaxAge(60 * 60 * 24);
 
         return cookie;
     }

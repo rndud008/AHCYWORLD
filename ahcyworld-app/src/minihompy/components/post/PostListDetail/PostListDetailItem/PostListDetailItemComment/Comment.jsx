@@ -48,7 +48,7 @@ const Comment = ({ commentShow, item, setCommentShow }) => {
         <div className="commentInputSection">
           <input
             value={content.id === result.postId ? content.content : ""}
-            onKeyDown={(e) => activeEnter(e)}
+            onKeyPress={(e) => activeEnter(e)}
             onChange={(e) => contentState(e.target.value, dispatch,result.postId)}
             placeholder="댓글입력"
           />

@@ -30,6 +30,7 @@ public class PaymentHistoryController {
     }
 
     @GetMapping("/list")
+    @CrossOrigin
     public List<PaymentHistory> list() {
 
         return paymentHistoryService.findAll();

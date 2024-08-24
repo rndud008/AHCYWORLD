@@ -12,6 +12,7 @@ import HompyFont from "./HompySettings/HompyFont";
 import HompyMusic from "./HompySettings/HompyMusic";
 import Minimi from "./HompySettings/Minimi";
 import MiniRoom from "./HompySettings/MiniRoom";
+import { SERVER_HOST } from "../../apis/api";
 
 
 
@@ -22,7 +23,7 @@ const HompySetting = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/hompy/${hompyId}`)
+      .get(`${SERVER_HOST}/hompy/${hompyId}`)
       .then((response) => {
         setHompy(response.data);
       })

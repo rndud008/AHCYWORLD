@@ -15,9 +15,10 @@ const UserListItem = () => {
   const miniHompyLink = (hompyId) => {
     if (accessToken) {
       window.open(
-        `http://localhost:3000/hompy/${hompyId}`, // 열고 싶은 URL
+        // `/hompy/${hompyId}`, // 열고 싶은 URL
+        `http://43.201.136.217:3000/hompy/${hompyId}`, // 열고 싶은 URL
         "_blank", // 새로운 창을 엽니다.
-        "width=1700,height=850,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+        "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
       );
     } else {
       alert("로그인이 필요합니다.");
@@ -29,7 +30,7 @@ const UserListItem = () => {
     <>
       {searchList.hompyList &&
         searchList.hompyList.map((item) => (
-          <div className="userListItemDiv">
+          <div key={item.id} className="userListItemDiv">
             <div className="userListItemDivImg">
               <img
                 src={`${process.env.PUBLIC_URL}/image/${

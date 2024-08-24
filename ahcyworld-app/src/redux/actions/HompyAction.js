@@ -8,7 +8,6 @@ function findByHompyIdAxios(hompyId){
   
       if(status === 200){
         dispatch({type:"HOMPY_FIND_BY_HOMPYID",payload:{data}})
-    
       }
     }catch(e){
       throw e
@@ -16,6 +15,12 @@ function findByHompyIdAxios(hompyId){
   }
 }
 
+function hompyUpdate(data){
+  return (dispatch,getState)=>{
+    dispatch({type:"HOMPY_UPDATE",payload:{data}})
+  }
+}
 
 
-export const HompyAction ={findByHompyIdAxios}
+
+export const HompyAction ={findByHompyIdAxios,hompyUpdate}

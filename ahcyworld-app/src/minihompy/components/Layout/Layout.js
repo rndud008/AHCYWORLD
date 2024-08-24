@@ -8,33 +8,36 @@ import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Menu from "../menu/Menu";
 import BgmPlayer from "../musicPlayer/BgmPlayer";
 import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
-import { hompyInfo } from "../../../apis/auth";
+import { hompyInfo, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import { Button } from "react-bootstrap";
 import api, { SERVER_HOST } from "../../../apis/api";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
-const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
+const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
   const [visitorInfo, setVisitorInfo] = useState({
     todayVisitor: 0,
     totalVisitor: 0,
   });
+
   const [miniHompySkin, setMiniHompySkin] = useState();
   const [hompyTitle, setHompyTitle] = useState();
   const [show,setShow] = useState(false);
-
   const { hompyInfo, setHompyInfo } = useContext(LoginContext);
-  const { postName } = useParams();
+  const { postName,hompyId } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
 
-  const hompyId = hompy?.id;
+  const reduxHompy = useSelector(state => state.hompy.hompy)
+
+  // const hompyId = hompy?.id;
   const userId = user?.id;
   const userCheck = parseInt(hompyId) === hompyInfo.id;
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -56,7 +59,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       if (userId && !hasVisited) {
         try {
           const response = await axios.post(
-            `http://localhost:8070/hompy/${hompyId}/visit`
+            `${SERVER_HOST}/hompy/${hompyId}/visit`
           );
           setVisitorInfo({
             todayVisitor: response.data.todayVisitor || 0,
@@ -76,7 +79,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
   useEffect(() => {
     if (hompyId) {
       axios
-        .get(`http://localhost:8070/hompy/${hompyId}`)
+        .get(`${SERVER_HOST}/hompy/${hompyId}`)
         .then((response) => {
           const hompyData = response.data;
           // 서버에서 받아온 이미지 파일 이름을 리액트 퍼블릭 폴더의 경로와 결합
@@ -96,7 +99,8 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
       console.log('location',location)
       return navigate('/')
   }
-  }, [userId, hompyInfo]);
+  dispatch(HompyAction.findByHompyIdAxios(hompyId))
+  }, [userId,hompyId,hompyInfo]);
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
@@ -149,8 +153,6 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
     return valid;
   }
 
-
-
   return (
     <>
       {/* 배경 이미지 */}
@@ -159,7 +161,8 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
-          fontFamily: `${hompy.miniHompyFont}`
+          // backgroundImage: `url(${process.env.PUBLIC_URL}/image/${reduxHompy.miniHompySkin})`,
+          fontFamily: `${reduxHompy.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}
@@ -224,7 +227,7 @@ const Layout = ({ hompy, user, children, LeftPanelComponent }) => {
 
         <div className="bgmbox">
           {/* Bgm 자리 */}
-          <BgmPlayer />
+          <BgmPlayer hompyId={hompyId}/>
         </div>
       </div>
       }

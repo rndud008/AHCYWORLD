@@ -114,6 +114,7 @@ public class FolderController {
 
     // 작성
     @PostMapping("/{hompyId}/{postName}/write")
+    @CrossOrigin
     public ResponseEntity<?> write(
             @PathVariable Long hompyId
             , @PathVariable String postName
@@ -135,6 +136,7 @@ public class FolderController {
     }
 
     @GetMapping("/{hompyId}/{postName}/update/{id}")
+    @CrossOrigin
     public ResponseEntity<?> updateCheck(
             @PathVariable Long hompyId
             , @PathVariable String postName
@@ -157,6 +159,7 @@ public class FolderController {
 
     // 수정
     @PutMapping("/{hompyId}/{postName}/update")
+    @CrossOrigin
     public ResponseEntity<?> update(
             @PathVariable Long hompyId
             , @PathVariable String postName
@@ -179,6 +182,7 @@ public class FolderController {
 
     // 삭제
     @DeleteMapping("/{hompyId}/{postName}/delete/{id}")
+    @CrossOrigin
     public ResponseEntity<?> delete(
             @PathVariable Long hompyId
             , @PathVariable String postName
@@ -200,6 +204,7 @@ public class FolderController {
     }
 
     @GetMapping("/{hompyId}/{postName}/list")
+    @CrossOrigin
     public ResponseEntity<?> list(
             @PathVariable Long hompyId
             , @PathVariable String postName
@@ -230,6 +235,7 @@ public class FolderController {
     }
 
     @GetMapping("/{hompyId}/{postName}/scrapfolder")
+    @CrossOrigin
     public ResponseEntity<?> scrapFolderList(
             @PathVariable Long hompyId
             , @PathVariable String postName

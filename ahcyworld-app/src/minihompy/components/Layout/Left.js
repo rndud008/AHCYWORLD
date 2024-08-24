@@ -8,6 +8,7 @@ import { hompyInfo, myFriendRequests, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import AddFriendModal from "../friendShip/AddFriendModal";
 import { useSelector } from "react-redux";
+import { SERVER_HOST } from "../../../apis/api";
 
 const Left = ({ user, hompy }) => {
     const { hompyId } = useParams();
@@ -51,14 +52,14 @@ const Left = ({ user, hompy }) => {
     useEffect(() => {
         if (hompyId) {
             axios
-                .get(`http://localhost:8070/hompy/${hompyId}`)
+                .get(`${SERVER_HOST}/hompy/${hompyId}`)
                 .then((response) => {
                     const hompyData = response.data;
                     setStatusMessage(hompyData.statusMessage || "");
                     if (hompyData.profilePicture) {
                         const profilePicturePath = hompyData.profilePicture.replaceAll(/\\/g, "//");
 
-                        const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath
+                        const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath
                             .split("/")
                             .pop()}`;
                         setProfilePicture(imageUrl);
@@ -76,7 +77,7 @@ const Left = ({ user, hompy }) => {
             if (user?.username) {
                 // user 객체가 존재하고, 그 안에 username이 있을 경우 실행
                 try {
-                    const response = await axios.get(`http://localhost:8070/friend/myfriends`, {
+                    const response = await axios.get(`${SERVER_HOST}/friend/myfriends`, {
                         params: { username: user.username },
                     });
 
@@ -87,7 +88,7 @@ const Left = ({ user, hompy }) => {
                             try {
                                 // 각 친구의 userId(friend.friendUser.id)를 사용하여 해당 유저의 hompyId를 조회
                                 const hompyResponse = await axios.get(
-                                    `http://localhost:8070/hompy/user/${friend.friendUser.id}`
+                                    `${SERVER_HOST}/hompy/user/${friend.friendUser.id}`
                                 );
 
                                 // hompyId를 친구 데이터에 추가하여 반환
@@ -122,13 +123,13 @@ const Left = ({ user, hompy }) => {
     const handleFriendSelect = (event) => {
         const selectedHompyId = event.target.value;
         if (selectedHompyId !== "option1") {
-            const miniHompyUrl = `http://localhost:3000/hompy/${encodeURIComponent(selectedHompyId)}`;
+            const miniHompyUrl = `http://43.201.136.217:3000/hompy/${encodeURIComponent(selectedHompyId)}`;
 
             // 새 창 열기 설정
             window.open(
                 miniHompyUrl, // 열고 싶은 URL
                 "_blank", // 새로운 창을 엽니다.
-                "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
+                "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
             );
 
             // 일촌 선택 후 기본값으로 되돌리기
@@ -141,7 +142,7 @@ const Left = ({ user, hompy }) => {
     if (userId) {
       axios
         .post(
-          `http://localhost:8070/hompy/${hompyId}/statusMessage`,
+          `${SERVER_HOST}/hompy/${hompyId}/statusMessage`,
           { statusMessage },
           {
             headers: {
@@ -164,7 +165,7 @@ const Left = ({ user, hompy }) => {
             formData.append("file", selectedFile);
 
       axios
-        .post(`http://localhost:8070/hompy/${hompyId}/profileImg`, formData, {
+        .post(`${SERVER_HOST}/hompy/${hompyId}/profileImg`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -174,7 +175,7 @@ const Left = ({ user, hompy }) => {
             /\\/g,
             "//"
           );
-          const imageUrl = `http://localhost:8070/hompy/profileImg/${profilePicturePath
+          const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath
             .split("/")
             .pop()}`;
 

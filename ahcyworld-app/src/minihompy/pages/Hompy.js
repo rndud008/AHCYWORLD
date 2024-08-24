@@ -3,15 +3,19 @@ import Layout from "../components/Layout/Layout";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../../webpage/components/login/context/LoginContextProvider";
+import { SERVER_HOST } from "../../apis/api";
+import { useDispatch, useSelector } from "react-redux";
+import { HompyAction } from "../../redux/actions/HompyAction";
 
 const Hompy = ({ setUserId }) => {
     const { hompyId } = useParams();
     const [hompy, setHompy] = useState({});
     const {hompyInfo, userInfo} = useContext(LoginContext);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8070/hompy/${hompyId}`)
+            .get(`${SERVER_HOST}/hompy/${hompyId}`)
             .then((response) => {
                 setHompy(response.data);
             })
@@ -23,7 +27,7 @@ const Hompy = ({ setUserId }) => {
     return (
         <>
         {/* // props 로 hompy 데이터 전달 */}
-            <Layout hompy={hompy} user={hompy.user} />
+            <Layout hompy={hompy} user={hompy.user} setHompy={setHompy} />
         </>
     );
 };

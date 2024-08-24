@@ -7,6 +7,7 @@ import com.lec.spring.repository.PostRepository;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +41,6 @@ public class AttachmentService {
     }
 
     public Attachment findById(Long id){ return attachmentRepository.findById(id).orElse(null);}
-
 
     public Attachment upload(MultipartFile multipartFile) {
         // 물리적으로 파일을 서버에 저장.

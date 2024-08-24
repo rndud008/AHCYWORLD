@@ -22,6 +22,7 @@ public class Post extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 가짜 맵핑..
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @Builder.Default // builder 제공안함.
     @ToString.Exclude

@@ -112,9 +112,9 @@ const PostHistory = () => {
 
     const goMinihompy = (hompyId) => {
         window.open(
-            `http://localhost:3000/hompy/${hompyId}`,
+            `http://43.201.136.217:3000/hompy/${hompyId}`,
             "_blank",
-            "width=800,height=600,menubar=no,toolbar=no,scrollbars=no,resizable=no"
+            "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no"
         );
     };
 

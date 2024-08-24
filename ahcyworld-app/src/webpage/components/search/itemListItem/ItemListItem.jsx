@@ -54,7 +54,7 @@ const ItemListItem = () => {
       Swal.alert("Error", "저장에 실패했습니다.", "warning")
     }
     
-      
+    
         
   };
 
@@ -81,13 +81,11 @@ const ItemListItem = () => {
     }
   }, []);
 
-  console.log('usercheck',userCartList)
-
   return (
     <div className="searchItemList">
       {searchList.itemList &&
         searchList.itemList.map((item) => (
-          <div className="searchItem">
+          <div key={item.id} className="searchItem">
             {item.itemType.includes("미니미") && (
               <div>
                 <img
@@ -141,9 +139,9 @@ const ItemListItem = () => {
               (!item.itemType.includes("배경음악") && (
                 <div style={{ fontSize: 30 }}>
                   <span>{item.itemName}</span>
-                  <sapn>
+                  <span>
                     {item.price} <img className="acorn-img" src={acorn} />
-                  </sapn>{" "}
+                  </span>{" "}
                 </div>
               ))}
 

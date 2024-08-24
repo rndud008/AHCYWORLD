@@ -24,6 +24,7 @@ public class NaverNewsController {
     private String clientSecret; //애플리케이션 클라이언트 시크릿
 
     @GetMapping("/api")
+    @CrossOrigin
     public ResponseEntity<String> apiTest(@RequestParam(value = "query", required = false) String query,
                                           @RequestParam(value = "category", required= false) String category,
                                           @RequestParam(value = "display", defaultValue = "100") int display,
