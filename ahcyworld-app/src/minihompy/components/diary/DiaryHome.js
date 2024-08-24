@@ -164,7 +164,6 @@ const DiaryHome = () => {
 
     return (
         <>
-            <Layout hompy={hompy} user={hompy.user}>
             <div className="calendar-container">
                 <Calendar
                     locale="en-US"
@@ -190,7 +189,7 @@ const DiaryHome = () => {
                     onWriteClick={handleWriteClick}
                     />
             </div>
-            </Layout>
+
         </>
     );
 };

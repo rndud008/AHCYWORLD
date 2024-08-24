@@ -2,12 +2,15 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.ItemService;
+import com.sun.tools.jconsole.JConsoleContext;
+import com.sun.tools.jconsole.JConsolePlugin;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -79,7 +82,8 @@ public class ItemController {
         }
 
 
-        Path Dir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();
+//        Path Dir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();        // 로컬호스트의 파일 경로
+        Path Dir = Paths.get("/home/ubuntu/build/", "image").toAbsolutePath(); //aws서버의 파일 경로
         if (Files.isDirectory(Dir)) {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Dir)) {
                 for (Path path : directoryStream) {
@@ -102,8 +106,9 @@ public class ItemController {
                     break;
                 }
             }
-            String uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath().toString();
-            System.out.println(uploadDir);
+//            String uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath().toString();   //로컬호스트 파일 경로
+            String uploadDir = Paths.get("build/", "image").toAbsolutePath().toString();   //aws 서버 파일 경로
+
             // 실제 파일 저장
             if (found) {
                 int pos = fileName.lastIndexOf(".");
@@ -119,7 +124,6 @@ public class ItemController {
             } else {
                 file.transferTo(new java.io.File(uploadDir + "/" + fileName));
             }
-
             return new ResponseEntity<>(fileName, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("파일 업로드 실패: " + e.getMessage());

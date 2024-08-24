@@ -66,7 +66,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout hompy={hompy} user={hompy.user}>
+    <>
       <div className="profile-container">
         
         {isReadOnly && <CKEditor
@@ -99,7 +99,7 @@ const Profile = () => {
           </div>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -174,8 +174,6 @@ const Menu = () => {
           }
         </ul>
       </nav>
-      {/* <BgmPlayer /> */}
-      {/* <Outlet /> */}
     </>
   );
 };

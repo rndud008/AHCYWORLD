@@ -16,10 +16,10 @@ import { SERVER_HOST } from "../../apis/api";
 
 
 
-const HompySetting = () => {
+const HompySetting = ({activeMenu}) => {
   const { hompyId } = useParams();
   const [hompy, setHompy] = useState(null);
-  const [activeMenu, setActiveMenu] = useState("basicInfo");
+
 
   useEffect(() => {
     axios
@@ -61,17 +61,11 @@ const HompySetting = () => {
   };
 
   return (
-    <Layout
-      hompy={hompy}
-      user={hompy.user}
-      LeftPanelComponent={() => (<HompySettingLeft setActiveMenu={setActiveMenu} />)}
-      showTitle={false}
-      showVisitorInfo={false}
-    >
+    <>
       <div className="setting_container">
       {settingContent()}
       </div>
-    </Layout>
+    </>
   );
 };
 

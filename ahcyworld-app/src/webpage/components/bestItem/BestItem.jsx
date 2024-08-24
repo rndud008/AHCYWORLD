@@ -17,9 +17,7 @@ const BestItem = () => {
     useEffect(() => {
         const fetchTopItems = async () => {
             try {
-                const response = await axios.get(
-                    `${SERVER_HOST}/cart/top-selling-items`
-                );
+                const response = await axios.get(`${SERVER_HOST}/cart/top-selling-items`);
                 if (response.status === 200) {
                     setTopItems(response.data);
                     setSelectedCategory(Object.keys(response.data)[0]);
@@ -35,9 +33,7 @@ const BestItem = () => {
         const fetchUserItems = async () => {
             if (userInfo && userInfo.id) {
                 try {
-                    const response = await axios.get(
-                        `${SERVER_HOST}/cart/${userInfo.id}/items`
-                    );
+                    const response = await axios.get(`${SERVER_HOST}/cart/${userInfo.id}/items`);
                     const items = response.data.map((item) => item.item.id);
                     setUserItems(items);
                 } catch (error) {
@@ -58,41 +54,27 @@ const BestItem = () => {
     const addCart = async (item) => {
         // 로그인 상태 확인
         if (!userInfo || !userInfo.id) {
-            Swal.alert(
-                "로그인이 필요합니다.",
-                "아이템을 추가하려면 로그인이 필요합니다.",
-                "warning",
-                () => {
-                    return;
-                }
-            );
+            Swal.alert("로그인이 필요합니다.", "아이템을 추가하려면 로그인이 필요합니다.", "warning", () => {
+                return;
+            });
             return;
         }
 
         // 이미 장바구니 또는 보유 여부 확인
         if (userItems.includes(item.id)) {
-            Swal.alert(
-                "이미 보유중입니다.",
-                "해당 아이템을 이미 갖고 있거나 장바구니에 있습니다.",
-                "info",
-                () => {
-                    return;
-                }
-            );
+            Swal.alert("이미 보유중입니다.", "해당 아이템을 이미 갖고 있거나 장바구니에 있습니다.", "info", () => {
+                return;
+            });
             return;
         }
 
         try {
-            const response = await axios.post(
-                `${SERVER_HOST}/cart/additem`,
-                null,
-                {
-                    params: {
-                        username: userInfo.username,
-                        itemname: item.itemName,
-                    },
-                }
-            );
+            const response = await axios.post(`${SERVER_HOST}/cart/additem`, null, {
+                params: {
+                    username: userInfo.username,
+                    itemname: item.itemName,
+                },
+            });
 
             if (response.status === 201) {
                 Swal.itemconfirm(
@@ -108,21 +90,12 @@ const BestItem = () => {
                 );
                 setUserItems((prev) => [...prev, item.id]);
             } else {
-                window.alert(
-                    "베스트아이템에서 장바구니에 넣기 실패! : " + response.error
-                );
-                console.error(
-                    "베스트아이템에서 장바구니에 넣기 실패! : " +
-                        response.statusText
-                );
+                window.alert("베스트아이템에서 장바구니에 넣기 실패! : " + response.error);
+                console.error("베스트아이템에서 장바구니에 넣기 실패! : " + response.statusText);
             }
         } catch (error) {
             console.error("아이템 추가 중 에러 발생 :", error);
-            Swal.alert(
-                "오류",
-                "아이템을 추가하는 동안 오류가 발생했습니다.",
-                "error"
-            );
+            Swal.alert("오류", "아이템을 추가하는 동안 오류가 발생했습니다.", "error");
         }
     };
 
@@ -132,15 +105,13 @@ const BestItem = () => {
 
     return (
         <>
-            <div className="bestItems-container">
-                <div className="category-menu">
-                    <h2 className="best-item-title">{selectedCategory}</h2>
+            <div className='bestItems-container'>
+                <div className='category-menu'>
+                    <h2 className='best-item-title'>{selectedCategory}</h2>
                     {Object.keys(topItems).map((itemType) => (
                         <button
                             key={itemType}
-                            className={`category-button ${
-                                selectedCategory === itemType ? "active" : ""
-                            }`}
+                            className={`category-button ${selectedCategory === itemType ? "active" : ""}`}
                             onClick={() => handleCategoryClick(itemType)}
                         >
                             {itemType}
@@ -148,26 +119,19 @@ const BestItem = () => {
                     ))}
                 </div>
 
-                <div className="item-display">
+                <div className='item-display'>
                     {topItems[selectedCategory] && (
-                        <div className="item-type-section">
+                        <div className='item-type-section'>
                             <ul>
-                                {topItems[selectedCategory].map((item) => (
-                                    <li
-                                        key={item.id}
-                                        className="item-card"
-                                        onClick={() => addCart(item)}
-                                    >
-                                        <div className="item-name">
+                                {topItems[selectedCategory].map((item, index) => (
+                                    <li key={item.id} className='item-card' onClick={() => addCart(item)}>
+                                        <div className='item-name'>
+                                            {index + 1}. &nbsp;
                                             {item.itemName}
                                         </div>
-                                        <div className="item-price">
+                                        <div className='item-price'>
                                             가격 : {item.price}
-                                            <img
-                                                className="bestItem-acorn"
-                                                src={acorn}
-                                                alt=""
-                                            />
+                                            <img className='bestItem-acorn' src={acorn} alt='' />
                                         </div>
                                     </li>
                                 ))}

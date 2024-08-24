@@ -71,12 +71,14 @@ import "@fontsource/gasoek-one";
 import "@fontsource/grandiflora-one";
 // 폰트 import
 import * as Swal from "./apis/alert";
+import Layout from "./minihompy/components/Layout/Layout";
 
 function App() {
     const [itemkind, setItemKind] = useState("all");
     const [userId, setUserId] = useState(null);
     const { userInfo, hompyInfo } = useContext(LoginContext);
     const folder = useSelector((state) => state.folder.folder);
+    const [activeMenu, setActiveMenu] = useState("basicInfo");
     const navigate = useNavigate();
 
     return (
@@ -94,7 +96,7 @@ function App() {
                 </Route>
 
                 {/* 2. 미니홈피 페이지 */}
-                <Route path='/hompy/:hompyId'>
+                <Route path='/hompy/:hompyId' element={<Layout setActiveMenu={setActiveMenu}/>}>
                     <Route index element={<Hompy />} />
                     <Route path='profile' element={<Profile />} />
                     <Route path='guestbook' element={<GuestBookHome />} />
@@ -112,7 +114,7 @@ function App() {
                     <Route path='diary' element={<DiaryHome setUserId={setUserId} />} />
                     <Route path='diary/write' element={<DiaryWritePage setUserId={setUserId} />} />
                     <Route path='diary/update/:id' element={<DiaryUpdatePage setUserId={setUserId} />} />
-                    <Route path='setting' element={<HompySetting setUserId={setUserId} />} />
+                    <Route path='setting' element={<HompySetting activeMenu={activeMenu} />} />
                 </Route>
 
                 {/* 3. 어드민 페이지 */}

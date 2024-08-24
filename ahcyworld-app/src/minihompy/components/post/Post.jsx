@@ -96,9 +96,9 @@ const Post = () => {
     <>
       {isHompyLoaded && (extraCheck && isLoading) && <LoadingSpinner /> ||
         (((extraCheck && !isLoading) &&  (
-          <Layout hompy={hompy} user={hompy.user}>
+
             <Outlet />
-          </Layout>
+
         )) || 
           Swal.alert(
             "잘못된 접근입니다.",

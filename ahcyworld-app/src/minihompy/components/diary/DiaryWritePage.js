@@ -73,7 +73,7 @@ const DiaryWritePage = () => {
 
     return (
         <>
-        <Layout hompy={hompyInfo} user={hompyInfo.user}>
+
             <div className="container d-flex justify-content-center align-items-center min-vh-80">
                 <div className="w-50">
                     <h1 className="mb-4 text-center">다이어리 작성</h1>
@@ -129,7 +129,6 @@ const DiaryWritePage = () => {
                     </Form>
                 </div>
             </div>
-            </Layout>
         </>
     );
 };

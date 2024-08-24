@@ -22,10 +22,16 @@ public class SearchService {
         this.itemRepository = itemRepository;
     }
 
-    public SearchListDTO searchUserList(String name){
-        List<Hompy> hompyList = hompyRepository.findByUserNameContainingIgnoreCase(name.isEmpty() ? "" : name).orElse(null);
+    public SearchListDTO searchUserList(String name) {
+        List<Hompy> hompyList = new ArrayList<>();
 
-        if( hompyList.isEmpty()){
+        if (!name.isEmpty() || !name.trim().isEmpty()) {
+            hompyList = hompyRepository.findByUserNameContainingIgnoreCase(name).orElse(null);
+        } else {
+            hompyList = hompyRepository.findAll();
+        }
+
+        if (hompyList.isEmpty()) {
             throw new RuntimeException("검색기록이 없습니다.");
         }
 
@@ -36,23 +42,28 @@ public class SearchService {
         return searchListDTO;
     }
 
-    public SearchListDTO searchItemList(String itemName){
-        List<Item> itemBgmList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악",itemName,"visible").orElse(null);
-        List<Item> itemAllList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악",itemName,"visible").orElse(null);
-
+    public SearchListDTO searchItemList(String itemName) {
+        List<Item> itemBgmList = new ArrayList<>();
+        List<Item> itemAllList = new ArrayList<>();
         List<Item> itemList = new ArrayList<>();
 
+        if (!itemName.isEmpty() || !itemName.trim().isEmpty()) {
+            itemBgmList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악", itemName, "visible").orElse(null);
+            itemAllList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악", itemName, "visible").orElse(null);
+        } else {
+            itemList = itemRepository.findAll();
+        }
 
-            if( itemAllList.isEmpty() && itemBgmList.isEmpty()){
-                throw new RuntimeException("검색기록이 없습니다.");
-            }
+        if (itemAllList.isEmpty() && itemBgmList.isEmpty() && itemList.isEmpty()) {
+            throw new RuntimeException("검색기록이 없습니다.");
+        }
 
-            if (!itemAllList.isEmpty()){
-                itemList.addAll(itemAllList);
-            }
+        if (!itemAllList.isEmpty()) {
+            itemList.addAll(itemAllList);
+        }
 
-            if (!itemBgmList.isEmpty()){
-                itemList.addAll(itemBgmList);
+        if (!itemBgmList.isEmpty()) {
+            itemList.addAll(itemBgmList);
         }
 
         SearchListDTO searchListDTO = new SearchListDTO();
@@ -62,31 +73,46 @@ public class SearchService {
 
     }
 
-    public SearchListDTO searchAllList(String allItemNameAndName){
+    public SearchListDTO searchAllList(String allItemNameAndName) {
+        List<Hompy> hompyList = new ArrayList<>();
 
-        List<Hompy> hompyList = hompyRepository.findByUserNameContainingIgnoreCase(allItemNameAndName.isEmpty() ? "" : allItemNameAndName).orElse(null);
+        if (!allItemNameAndName.isEmpty() || !allItemNameAndName.trim().isEmpty()) {
+            hompyList = hompyRepository.findByUserNameContainingIgnoreCase(allItemNameAndName).orElse(null);
+        } else {
+            hompyList = hompyRepository.findAll();
+        }
 
-        List<Item> itemAllList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악",allItemNameAndName,"visible").orElse(null);
-        List<Item> itemBgmList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악",allItemNameAndName,"visible").orElse(null);
-
+        List<Item> itemBgmList = new ArrayList<>();
+        List<Item> itemAllList = new ArrayList<>();
         List<Item> itemList = new ArrayList<>();
 
-        SearchListDTO searchListDTO = new SearchListDTO();
-
-        if (!itemAllList.isEmpty()){
-            itemList.addAll(itemAllList);
+        if (!allItemNameAndName.isEmpty() || !allItemNameAndName.trim().isEmpty()) {
+            itemBgmList = itemRepository.findByItemTypeNotAndItemNameContainingIgnoreCaseAndStatus("배경음악", allItemNameAndName, "visible").orElse(null);
+            itemAllList = itemRepository.findByItemTypeAndStatusAndItemNameOrSourceName("배경음악", allItemNameAndName, "visible").orElse(null);
+        } else {
+            itemList = itemRepository.findAll();
         }
 
-        if (!itemBgmList.isEmpty()){
-            itemList.addAll(itemBgmList);
-        }
-
-        if(itemList.isEmpty() && hompyList.isEmpty()){
+        if (itemAllList.isEmpty() && itemBgmList.isEmpty() && itemList.isEmpty()) {
             throw new RuntimeException("검색기록이 없습니다.");
         }
 
-        itemList = itemList.isEmpty()? null: itemList;
-        hompyList = hompyList.isEmpty()? null: hompyList;
+        if (!itemAllList.isEmpty()) {
+            itemList.addAll(itemAllList);
+        }
+
+        if (!itemBgmList.isEmpty()) {
+            itemList.addAll(itemBgmList);
+        }
+
+        if (itemList.isEmpty() && hompyList.isEmpty()) {
+            throw new RuntimeException("검색기록이 없습니다.");
+        }
+
+        itemList = itemList.isEmpty() ? null : itemList;
+        hompyList = hompyList.isEmpty() ? null : hompyList;
+
+        SearchListDTO searchListDTO = new SearchListDTO();
 
         searchListDTO.setItemList(itemList);
         searchListDTO.setHompyList(hompyList);

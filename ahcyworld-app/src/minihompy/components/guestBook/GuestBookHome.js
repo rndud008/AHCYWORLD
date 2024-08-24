@@ -314,7 +314,6 @@ const GuestBookHome = () => {
     return (
         <>
             {hompyCheck && (guestBookVisibleCheck ? (
-                <Layout hompy={hompy} user={hompy.user}>
                     <Container className="container">
                         <Form
                             onSubmit={handleSubmit}
@@ -446,7 +445,6 @@ const GuestBookHome = () => {
                             )}
                         </div>
                     </Container>
-                </Layout>
             ) : (
                 Swal.alert(
                     "잘못된 접근입니다.",

@@ -31,9 +31,15 @@ select * from guest_book;
 delete from friend
 where id = 61;
 
+delete from item
+where id = 147;
+
+delete from carts
+where id = 35;
+
 delete
 from ah_user
-where id = 11;
+where id = 13;
 
 
 delete from hompy
@@ -59,8 +65,8 @@ set status = 'visible'
 where id = 116;
 
 update ah_user
-set acorn = 3000
-where id = 8;
+set acorn = 10000
+where id = 9;
 
 update ah_user
 set role = 'ROLE_MEMBER,ROLE_ADMIN'
@@ -72,7 +78,8 @@ where id = 67;
 
 delete
     from item
-where id = 51;
+where id = 1;
+
 delete
     from item
 where item_type = '폰트';

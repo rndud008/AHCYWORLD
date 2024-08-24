@@ -20,8 +20,10 @@ import axios from "axios";
 import { SERVER_HOST } from "../../../apis/api"; // SERVER_HOST 가져오기
 import Swal from "sweetalert2";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const BgmPlayer = ({ hompyId }) => {
+const BgmPlayer = ({  }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
@@ -30,8 +32,12 @@ const BgmPlayer = ({ hompyId }) => {
   const [bgmList, setBgmList] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const {userInfo, hompyInfo} = useContext(LoginContext);
+  const {hompyId} = useParams();
+  const hompy = useSelector(state => state.hompy.hompy);
 
+  console.log('bgm 다시 렌더링?',hompyId)
   useEffect(() => {
+
     const fetchBgmData = async () => {
       try {
         const hompyResponse = await axios.get(`${SERVER_HOST}/hompy/${hompyId}`);
@@ -43,7 +49,7 @@ const BgmPlayer = ({ hompyId }) => {
 
         let type = "배경음악";
         let musics = [];
-        const response = await axios.get(`${SERVER_HOST}/cart/${userInfo.id}/items`);
+        const response = await axios.get(`${SERVER_HOST}/cart/${hompy.user.id}/items`);
         
         response.data.forEach((cart) => {
           if (cart.item.itemType === type) {
@@ -56,13 +62,14 @@ const BgmPlayer = ({ hompyId }) => {
             playList.includes(`${item.sourceName}-${item.itemName}`)
           )
         );
+
       } catch (error) {
         console.error("Error fetching BGM data:", error);
       }
     };
 
     fetchBgmData();
-  }, [hompyInfo, hompyId]);
+  }, [hompyInfo]);
 
   const togglePlayPause = useCallback(() => {
     if (isPlaying) {

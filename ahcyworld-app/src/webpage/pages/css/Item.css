@@ -38,7 +38,7 @@
 .select-container {
   margin-top: 10px;
   padding: 10px;
-  border: 2px solid #E66E27;
+  border-top: 2px double #E66E27;
 }
 
 .all-select-container {

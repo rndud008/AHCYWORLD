@@ -94,9 +94,6 @@ public class UserService {
         return savedUser;
     }
 
-    public User findByName(String name) {
-        return userRepository.findByName(name);
-    }
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username.toUpperCase());
@@ -149,6 +146,12 @@ public class UserService {
 
         existingUser.setName(user.getName());
         existingUser.setGender(user.getGender());
+        if(user.getGender().equals(existingUser.getGender())){
+            Hompy hompy = hompyRepository.findByUser(existingUser);
+            if(hompy.getMinimiPicture().equals("male.png") || hompy.getMinimiPicture().equals("female.png")){
+                hompy.setMinimiPicture(user.getGender().toLowerCase()+".png");
+            }
+        }
         existingUser.setBirthDay(user.getBirthDay());
         existingUser.setPassword(user.getPassword());
 
