@@ -139,7 +139,7 @@ public class HompyService {
         hompy.setTodayVisitor(0L);
         hompy.setTotalVisitor(0L);
         hompy.setMiniHompySkin("background.png");
-        hompy.setMiniRoom("");
+        hompy.setMiniRoom("miniroom.png");
         hompy.setProfile(null);
         hompy.setMenuColor("#147DAF");
         hompy.setMenuBorder("#000000");
