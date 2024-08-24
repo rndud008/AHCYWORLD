@@ -7,6 +7,7 @@ import * as Swal from "../../../apis/alert";
 import { Navigate, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../components/login/context/LoginContextProvider";
 import acorn from "../../../upload/acorn.png"
+import Footer from "../../components/Footer/Footer";
 
 const ItemList = (props) => {
     const [items, setItems] = useState([]);
@@ -175,6 +176,8 @@ const ItemList = (props) => {
             <div className="itemPagination">
                 <ItemPagination pageData={pageData} setCurrentPage={setCurrentPage} />
             </div>
+
+            <Footer />
         </>
     );
 };
