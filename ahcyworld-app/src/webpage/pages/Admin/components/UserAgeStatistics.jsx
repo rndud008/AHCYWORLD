@@ -38,8 +38,9 @@ const UserAgeStatistics = () => {
             else if (age >= 60) ageCounts[5]++;
         }
     });
+    
 
-    const totalUsers = users.length;
+    const totalUsers = users.length || 1;
 
     const data = {
         labels: ageRanges,
