@@ -381,54 +381,26 @@ const GuestBookHome = () => {
                                             {/* 각 방명록 항목을 감싸는 div */}
                                             <div className="info-row">
                                                 <div className="info">
-                                                    <span>
-                                                        No.{" "}
-                                                        {guestBook.length -
-                                                            index}
-                                                    </span>
-                                                    <span>
-                                                        {guest.user.name}
-                                                    </span>
-                                                    <span>
-                                                        ({guest.createAt})
-                                                    </span>
-                                                </div>
-                                                <div className="actions">
-                                                    {guest.status ===
-                                                        "visible" &&
-                                                        guest.user.username ===
-                                                            userName && (
-                                                            <span
-                                                                className="secret"
-                                                                onClick={() =>
-                                                                    handleHide(
-                                                                        guest.id
-                                                                    )
-                                                                }
-                                                            >
-                                                                🔒
-                                                            </span>
-                                                        )}
-                                                    {(guest.user.username ===
-                                                        userName ||
-                                                        hompyInfo.user.id ===
-                                                            guest.user.id ||
-                                                        hompyInfo.id ===
-                                                            parseInt(hompyId) ||
-                                                        roles.isAdmin) && (
-                                                        <span
-                                                            className="delete"
-                                                            onClick={() =>
-                                                                handleDelete(
-                                                                    guest.id
-                                                                )
-                                                            }
-                                                        >
-                                                            삭제
-                                                        </span>
-                                                    )}
-                                                </div>
+                                                <div>No.{guestBook.length - index}</div>
+                                                <div>{guest.user.name}</div>
+                                                <div>({guest.createAt})</div>
                                             </div>
+                                            <div className="actions">
+                                                {guest.status === "visible" && guest.user.username === userName && (
+                                                    <div className="secret" onClick={() => handleHide(guest.id)}>
+                                                    🔒
+                                                    </div>
+                                                )}
+                                                {(guest.user.username === userName ||
+                                                    hompyInfo.user.id === guest.user.id ||
+                                                    hompyInfo.id === parseInt(hompyId) ||
+                                                    roles.isAdmin) && (
+                                                        <button className="delete" onClick={() => handleDelete(guest.id)}>
+                                                        삭제
+                                                        </button>
+                                                )}
+                                            </div>
+                                        </div>
                                             {/* 미니미 이미지와 내용 표시 영역 */}
                                             <div className="guest-content">
                                                 <div className="minimi-cell">
@@ -467,7 +439,7 @@ const GuestBookHome = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="guestbook-container">
+                                <div>
                                     <h1>작성된 글이 없습니다.</h1>
                                 </div>
                             )}

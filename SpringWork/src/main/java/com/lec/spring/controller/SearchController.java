@@ -21,13 +21,15 @@ public class SearchController {
         this.itemService = itemService;
         this.searchService = searchService;
     }
-
     @GetMapping("/search")
     @CrossOrigin
-    public ResponseEntity<?> searchList(@RequestParam String search,@RequestParam String action) {
+    public ResponseEntity<?> searchList(@RequestParam String search, @RequestParam String action) {
+
+        System.out.println("searchCheck :" + (search == ""));
 
         try {
             if (action.equals("all")) {
+                System.out.println(action);
                 return new ResponseEntity<>(searchService.searchAllList(search), HttpStatus.OK);
             } else if (action.equals("people")) {
                 return new ResponseEntity<>(searchService.searchUserList(search), HttpStatus.OK);

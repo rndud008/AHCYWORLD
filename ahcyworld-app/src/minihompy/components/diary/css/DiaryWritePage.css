@@ -1,7 +1,20 @@
+.Modal-header {
+  background: linear-gradient(145deg, #c0d9ff, #a0c4ff);
+  color: #003366;
+  padding: 10px 20px;
+  border-radius: 10px 10px 0 0;
+}
+
+.Modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .diarywriteok-btn {
   border: none;
   margin-right: 15px;
-  border-radius: 5px;
+  border-radius: 12px;
   font-size: 18px; 
   font-weight: bold;
   background: linear-gradient(145deg, #c0d9ff, #a0c4ff); 
@@ -10,6 +23,7 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 102, 0.15), 
               -2px -2px 5px rgba(173, 216, 230, 0.7); 
   transition: all 0.2s ease; 
+  backdrop-filter: blur(10px);
 }
 
 .diarywriteok-btn:hover {

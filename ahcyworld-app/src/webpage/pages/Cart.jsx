@@ -7,6 +7,7 @@ import AcornPayModal from '../items/components/AcornPayModal';
 import { LoginContext } from '../../webpage/components/login/context/LoginContextProvider';
 import acorn from "../../upload/acorn.png"
 import './css/Cart.css';
+import Footer from "../../webpage/components/Footer/Footer";
 
 const Cart = () => {
     const { userId } = useParams();
@@ -213,6 +214,7 @@ const Cart = () => {
                 <button className='goods-buy-btn' onClick={() => acornPayOpenModal()}>상품 구매</button>
                 <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo} setAllCheckBox={setAllCheckBox} setIsDelete={setIsDelete} setTotalAcorn={setTotalAcorn} />
             </div>
+            <Footer />
         </div>
     );
 };

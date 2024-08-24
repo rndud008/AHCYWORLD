@@ -19,7 +19,7 @@
     border: 1px solid #999;
     padding: 10px;
     width: 100%;
-    max-width: 500px; /* 최대 너비를 설정 */
+    max-width: 600px; /* 최대 너비를 설정 */
     margin: 0 auto; /* 중앙에 배치 */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
     display: flex;
     align-items: flex-start; /* 텍스트 박스가 이미지와 같은 높이에서 시작 */
     width: 100%;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 .form-row img {
@@ -105,7 +105,10 @@
     justify-content: center;
     margin-top: 10px;
     width: 100%;
-    max-width: 520px; /* 작성 폼과 동일한 최대 너비 설정 */
+    border: 1px solid #999;
+    border-radius: 8px; /* 모서리를 둥글게 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* 작성 폼과 동일한 최대 너비 설정 */
     padding: 10px;
     box-sizing: border-box; /* 패딩을 너비에 포함 */
     margin-left: auto;
@@ -120,25 +123,74 @@
 }
 
 .guestbook-entry {
-    border: 1px solid #999;
-    border-radius: 8px; /* 모서리를 둥글게 */
     overflow: hidden;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 6px 10px;
 }
 
 .info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(211, 211, 211);
-    gap: 10px;
+    gap: 5px 0;
+    padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .secret {
     margin-right: 10px;
+    cursor: pointer;
+}
+
+.delete {
+    width: 100%;
+    padding: auto;
+    font-size: 14px; /* 텍스트 크기 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    background: linear-gradient(
+        145deg,
+        #f0f0f0,
+        #d0d0d0
+    ); /* 가벼운 그라데이션 배경 */
+    border: 2px solid #ccc; /* 회색 테두리 */
+    color: #333; /* 텍스트 색상 */
+    font-weight: bold; /* 텍스트 굵기 */
+    cursor: pointer; /* 커서 모양을 포인터로 변경 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15),
+        -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감을 주는 그림자 */
+    transition: all 0.2s ease; /* 전환 효과 */
+}
+
+.delete:hover {
+    background: linear-gradient(
+        145deg,
+        #e0e0e0,
+        #c0c0c0
+    ); /* 마우스 오버 시 배경 색상 변경 */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+    transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.delete:active {
+    background: linear-gradient(
+        145deg,
+        #d0d0d0,
+        #b0b0b0
+    ); /* 클릭 시 배경 색상 변경 */
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+    transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.delete:focus {
+    outline: none; /* 포커스 시 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 약간의 하이라이트 추가 */
 }
 
 .info {
@@ -152,7 +204,7 @@
 }
 
 .minimi-cell {
-    margin-right: 10px;
+    margin-right: 35px;
 }
 
 .minimi-img {
@@ -168,9 +220,4 @@
 
 .secret-message {
     color: #555;
-}
-
-.delete,
-.secret {
-    cursor: pointer;
 }

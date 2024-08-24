@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,10 @@ const DiaryModal = ({
     diaryContent,
     onWriteClick,
 }) => {
+
+    // useEffect(() => {
+    //     console.log("diaryContent : ", diaryContent);
+    // }, [])
 
     const {userInfo, hompyInfo} = useContext(LoginContext);
 
@@ -47,11 +51,16 @@ const DiaryModal = ({
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>
-                    {moment(selectedDate).format("YYYY-MM-DD")} 다이어리
-                </Modal.Title>
+                <div className="Modal-header">
+                    <Modal.Title>
+                        <div className="Modal-title">
+                            {moment(selectedDate).format("YYYY-MM-DD")} 다이어리
+                        </div>
+                    </Modal.Title>
+                </div>
             </Modal.Header>
             <Modal.Body>
+                <div className="Modal-body">
                 {diaryContent && diaryContent.length > 0 ? (
                     <>
                         <Table striped bordered hover>
@@ -59,7 +68,7 @@ const DiaryModal = ({
                                 <tr>
                                     <th>제목</th>
                                     <th>내용</th>
-                                    <th></th>
+                                    {hompyInfo.user.id === diaryContent[0].hompy.user.id && <th>삭제</th>}
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,6 +110,7 @@ const DiaryModal = ({
                         </Button>
                     </>
                 )}
+                </div>
             </Modal.Body>
         </Modal>
     );
