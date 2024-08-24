@@ -2,12 +2,15 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.ItemService;
+import com.sun.tools.jconsole.JConsoleContext;
+import com.sun.tools.jconsole.JConsolePlugin;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -72,6 +75,7 @@ public class ItemController {
     @CrossOrigin
     public ResponseEntity<?> uploadFile(@RequestParam("image") MultipartFile file) {
         List<String> files = new ArrayList();
+        System.out.println("1.받은 file"+ file);
         boolean found = false;
 
         if (file.isEmpty()) {
@@ -81,6 +85,8 @@ public class ItemController {
 
 //        Path Dir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();        // 로컬호스트의 파일 경로
         Path Dir = Paths.get("../../build/", "image").toAbsolutePath(); //aws서버의 파일 경로
+        System.out.println("2.경로"+ Dir);
+        System.out.println("3. 이미 있는 폴더? : "+Files.isDirectory(Dir));
         if (Files.isDirectory(Dir)) {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Dir)) {
                 for (Path path : directoryStream) {
@@ -106,7 +112,7 @@ public class ItemController {
 //            String uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath().toString();   //로컬호스트 파일 경로
             String uploadDir = Paths.get("../../build/", "image").toAbsolutePath().toString();   //aws 서버 파일 경로
 
-            System.out.println(uploadDir);
+            System.out.println("4.업로드될 폴더 경로"+uploadDir);
             // 실제 파일 저장
             if (found) {
                 int pos = fileName.lastIndexOf(".");
@@ -115,14 +121,16 @@ public class ItemController {
                     String ext = fileName.substring(pos + 1);
 
                     fileName = name + "_" + System.currentTimeMillis() + "." + ext;
+                    System.out.println("5. 최종 업로드: "+uploadDir+"/"+fileName);
                     file.transferTo(new java.io.File(uploadDir + "/" + fileName));
                 } else {
                     fileName += "_" + System.currentTimeMillis();
                 }
             } else {
+                System.out.println("5. 최종 업로드: "+uploadDir+"/"+fileName);
                 file.transferTo(new java.io.File(uploadDir + "/" + fileName));
             }
-
+            System.out.println("6. 저장될 파일 이름: " + fileName);
             return new ResponseEntity<>(fileName, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("파일 업로드 실패: " + e.getMessage());
