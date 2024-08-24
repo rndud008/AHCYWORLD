@@ -84,7 +84,7 @@ public class ItemController {
 
 
 //        Path Dir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();        // 로컬호스트의 파일 경로
-        Path Dir = Paths.get("/build/", "image").toAbsolutePath(); //aws서버의 파일 경로
+        Path Dir = Paths.get("/home/ubuntu/build/", "image").toAbsolutePath(); //aws서버의 파일 경로
         System.out.println("2.경로"+ Dir);
         System.out.println("3. 이미 있는 폴더? : "+Files.isDirectory(Dir));
         if (Files.isDirectory(Dir)) {
