@@ -139,9 +139,12 @@ public class HompyService {
         hompy.setTodayVisitor(0L);
         hompy.setTotalVisitor(0L);
         hompy.setMiniHompySkin("background.png");
-        hompy.setMiniRoom("miniroom.png");
+        hompy.setMiniRoom("");
         hompy.setProfile(null);
-        hompy.setMenuColor("#147DAF,#FFF,#147DAF");
+        hompy.setMenuColor("#147DAF");
+        hompy.setMenuBorder("#000000");
+        hompy.setMenuText("#FFF");
+        hompy.setMiniHompyBgm("");
         hompy.setMenuStatus("visible,visible,visible,visible");
 
         if (hompy.getUser().getGender().equals("MALE")) {
