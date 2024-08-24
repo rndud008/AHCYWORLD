@@ -299,7 +299,7 @@ const GuestBookHome = () => {
     const hompyCheck = useSelector((state) => state.hompy.hompy);
 
     const guestBookVisibleCheck =
-      hompyCheck.menuStatus?.split(",")[3] === "visible" || roles.isAdmin;
+        hompyCheck.menuStatus?.split(",")[3] === "visible" || roles.isAdmin;
 
     return (
         <>
@@ -362,118 +362,101 @@ const GuestBookHome = () => {
 
                         <div className="guestbook-container">
                             {guestBook.length > 0 ? (
-                                <Table className="guestbook-table">
-                                    <tbody>
-                                        {guestBook.map((guest, index) => (
-                                            <React.Fragment key={index}>
-                                                <tr>
-                                                    <td
-                                                        className="info-cell"
-                                                        colSpan="2"
-                                                    >
-                                                        <div className="info-row">
-                                                            <div className="info">
-                                                                <span>
-                                                                    No.
-                                                                    {guestBook.length -
-                                                                        index}
-                                                                    {
-                                                                        guest
-                                                                            .user
-                                                                            .name
-                                                                    }
-                                                                </span>
-                                                                <span>
-                                                                    (
-                                                                    {
-                                                                        guest.createAt
-                                                                    }
+                                <div className="guestbook-table">
+                                    {guestBook.map((guest, index) => (
+                                        <div
+                                            key={index}
+                                            className="guestbook-entry"
+                                        >
+                                            {" "}
+                                            {/* 각 방명록 항목을 감싸는 div */}
+                                            <div className="info-row">
+                                                <div className="info">
+                                                    <span>
+                                                        No.{" "}
+                                                        {guestBook.length -
+                                                            index}
+                                                    </span>
+                                                    <span>
+                                                        {guest.user.name}
+                                                    </span>
+                                                    <span>
+                                                        ({guest.createAt})
+                                                    </span>
+                                                </div>
+                                                <div className="actions">
+                                                    {guest.status ===
+                                                        "visible" &&
+                                                        guest.user.username ===
+                                                            userName && (
+                                                            <span
+                                                                className="secret"
+                                                                onClick={() =>
+                                                                    handleHide(
+                                                                        guest.id
                                                                     )
-                                                                </span>
-                                                            </div>
-                                                            <div className="actions">
-                                                                {guest.status ===
-                                                                    "visible" &&
-                                                                    guest.user
-                                                                        .username ===
-                                                                        userName && (
-                                                                        <span
-                                                                            className="secret"
-                                                                            onClick={() =>
-                                                                                handleHide(
-                                                                                    guest.id
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            비밀로
-                                                                            하기
-                                                                        </span>
-                                                                    )}
-                                                                {(guest.user
-                                                                    .username ===
-                                                                    userName ||
-                                                                    hompyInfo
-                                                                        .user
-                                                                        .id ===
-                                                                        guest
-                                                                            .user
-                                                                            .id ||
-                                                                    hompyInfo.id ===
-                                                                        parseInt(
-                                                                            hompyId
-                                                                        ) ||
-                                                                    roles.isAdmin) && (
-                                                                    <span
-                                                                        className="delete"
-                                                                        onClick={() =>
-                                                                            handleDelete(
-                                                                                guest.id
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        삭제
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="minimi-cell">
-                                                        <img
-                                                            src={getMinimiImgUrl(
-                                                                guest
-                                                            )}
-                                                            alt="Minimi"
-                                                            className="minimi-img"
-                                                        />
-                                                    </td>
-                                                    <td className="content-cell">
-                                                        {(guest.status ===
-                                                            "invisible" &&
-                                                            guest.user
-                                                                .username !==
-                                                                userName &&
-                                                            hompy.user
-                                                                .username !==
-                                                                userName && (
-                                                                <div className="secret-message">
-                                                                    🔒
-                                                                    비밀글입니다.
-                                                                    작성자만 볼
-                                                                    수 있습니다.
-                                                                </div>
-                                                            )) || (
-                                                            <div className="secret-message">
-                                                                {guest.content}
-                                                            </div>
+                                                                }
+                                                            >
+                                                                🔒
+                                                            </span>
                                                         )}
-                                                    </td>
-                                                </tr>
-                                            </React.Fragment>
-                                        ))}
-                                    </tbody>
-                                </Table>
+                                                    {(guest.user.username ===
+                                                        userName ||
+                                                        hompyInfo.user.id ===
+                                                            guest.user.id ||
+                                                        hompyInfo.id ===
+                                                            parseInt(hompyId) ||
+                                                        roles.isAdmin) && (
+                                                        <span
+                                                            className="delete"
+                                                            onClick={() =>
+                                                                handleDelete(
+                                                                    guest.id
+                                                                )
+                                                            }
+                                                        >
+                                                            삭제
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {/* 미니미 이미지와 내용 표시 영역 */}
+                                            <div className="guest-content">
+                                                <div className="minimi-cell">
+                                                    <img
+                                                        src={getMinimiImgUrl(
+                                                            guest
+                                                        )}
+                                                        alt="Minimi"
+                                                        className="minimi-img"
+                                                    />
+                                                </div>
+                                                <div className="content-cell">
+                                                    {guest.status ===
+                                                        "invisible" &&
+                                                    guest.user.username !==
+                                                        userName &&
+                                                    hompy.user.username !==
+                                                        userName ? (
+                                                        <div className="secret-message">
+                                                            🔒 비밀글입니다.
+                                                            작성자만 볼 수
+                                                            있습니다.
+                                                        </div>
+                                                    ) : (
+                                                        <div className="secret-message">
+                                                            {guest.status ===
+                                                            "invisible"
+                                                                ? "🔒 "
+                                                                : ""}
+                                                            {guest.content}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             ) : (
                                 <div className="guestbook-container">
                                     <h1>작성된 글이 없습니다.</h1>

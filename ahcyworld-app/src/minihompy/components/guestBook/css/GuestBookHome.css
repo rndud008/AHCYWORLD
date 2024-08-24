@@ -16,11 +16,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid #999;
     padding: 10px;
     width: 100%;
     max-width: 500px; /* 최대 너비를 설정 */
     margin: 0 auto; /* 중앙에 배치 */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
 .form-row {
@@ -54,27 +57,39 @@
 .submit-button {
     font-size: 14px; /* 텍스트 크기 */
     border-radius: 5px; /* 모서리를 둥글게 */
-    background: linear-gradient(145deg, #f0f0f0, #d0d0d0); /* 가벼운 그라데이션 배경 */
+    background: linear-gradient(
+        145deg,
+        #f0f0f0,
+        #d0d0d0
+    ); /* 가벼운 그라데이션 배경 */
     border: 2px solid #ccc; /* 회색 테두리 */
     color: #333; /* 텍스트 색상 */
     font-weight: bold; /* 텍스트 굵기 */
     cursor: pointer; /* 커서 모양을 포인터로 변경 */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15), 
-                -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감을 주는 그림자 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15),
+        -2px -2px 5px rgba(255, 255, 255, 0.7); /* 입체감을 주는 그림자 */
     transition: all 0.2s ease; /* 전환 효과 */
 }
 
 .submit-button:hover {
-    background: linear-gradient(145deg, #e0e0e0, #c0c0c0); /* 마우스 오버 시 배경 색상 변경 */
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), 
-                -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
+    background: linear-gradient(
+        145deg,
+        #e0e0e0,
+        #c0c0c0
+    ); /* 마우스 오버 시 배경 색상 변경 */
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 4px rgba(255, 255, 255, 0.7); /* 그림자 크기 조정 */
     transform: translateY(-1px); /* 살짝 위로 이동 */
 }
 
 .submit-button:active {
-    background: linear-gradient(145deg, #d0d0d0, #b0b0b0); /* 클릭 시 배경 색상 변경 */
-    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2), 
-                inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
+    background: linear-gradient(
+        145deg,
+        #d0d0d0,
+        #b0b0b0
+    ); /* 클릭 시 배경 색상 변경 */
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 4px rgba(255, 255, 255, 0.7); /* 눌린 듯한 효과 */
     transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
 }
 
@@ -88,7 +103,7 @@
     flex-direction: column;
     align-items: center; /* 세로 중앙 정렬 */
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 10px;
     width: 100%;
     max-width: 520px; /* 작성 폼과 동일한 최대 너비 설정 */
     padding: 10px;
@@ -98,61 +113,64 @@
 }
 
 .guestbook-table {
-    width: 100%; /* 테이블 너비를 100%로 설정하여 컨테이너에 맞춤 */
-    border-collapse: collapse;
-    margin: 0 auto; /* 테이블을 중앙에 배치 */
-    border: 1px solid #999; /* 테이블 테두리 */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 항목 간의 간격 */
 }
 
-.guestbook-table td {
-    padding: 8px;
-    vertical-align: top;
-    position: relative; /* 자식 요소를 절대 위치로 배치하기 위해 */
-}
-
-.minimi-cell {
-    width: 80px; /* 너비를 조절 */
-    text-align: center; /* 이미지 가운데 정렬 */
-}
-
-.minimi-img {
-    height: 80px; /* 높이를 조절 */
-    width: auto; /* 가로 세로 비율 유지 */
-}
-.minimi-cell .minimi-img {
-    justify-content: center;
-    align-items: center;
-    height: 120px;
-    width: 100px;
-}
-
-.info-cell {
-    width: calc(100% - 100px); /* 이미지 셀 너비를 고려하여 조정 */
-    padding-left: 15px;
+.guestbook-entry {
+    border: 1px solid #999;
+    border-radius: 8px; /* 모서리를 둥글게 */
+    overflow: hidden;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: rgb(211, 211, 211);
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-.actions {
-    position: absolute;
-    right: 10px;
-    top: 8px;
+.secret {
+    margin-right: 10px;
+}
+
+.info {
     display: flex;
     gap: 10px;
 }
 
-.delete {
-    cursor: pointer;
+.guest-content {
+    display: flex;
+    padding: 10px;
 }
 
-.secret {
-    cursor: pointer;
+.minimi-cell {
+    margin-right: 10px;
+}
+
+.minimi-img {
+    width: 50px;
+    height: 90px;
 }
 
 .content-cell {
-    padding-left: 15px;
-    height: auto; /* 콘텐츠 높이를 자동으로 조정 */
-    word-wrap: break-word; /* 긴 단어가 셀을 넘어가지 않도록 조정 */
+    flex: 1;
+    word-wrap: break-word;
+    margin-left: 20px;
+}
+
+.secret-message {
+    color: #555;
+}
+
+.delete,
+.secret {
+    cursor: pointer;
 }
