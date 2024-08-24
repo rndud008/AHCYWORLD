@@ -31,9 +31,15 @@ select * from guest_book;
 delete from friend
 where id = 61;
 
+delete from item
+where id = 147;
+
+delete from carts
+where id = 35;
+
 delete
 from ah_user
-where id = 11;
+where id = 13;
 
 
 delete from hompy
