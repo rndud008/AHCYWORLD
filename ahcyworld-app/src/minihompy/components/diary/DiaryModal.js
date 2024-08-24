@@ -57,8 +57,8 @@ const DiaryModal = ({
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>KeyWord</th>
-                                    <th>Content</th>
+                                    <th>제목</th>
+                                    <th>내용</th>
                                     <th></th>
                                 </tr>
                             </thead>

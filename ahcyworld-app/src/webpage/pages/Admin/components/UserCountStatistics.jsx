@@ -76,6 +76,16 @@ const UserCountStatistics = () => {
                 backgroundColor: "#aebadf",
                 borderColor: "#aebadf",
                 borderWidth: 1,
+                datalabels: {
+                    display: true,
+                    align: "center",
+                    anchor: "center",
+                    formatter: (value) => (value === 0 ? null : value),
+                    color: "#fff",
+                    backgroundColor: "#aebadf",
+                    borderRadius: 3,
+                    padding: 4,
+                },
             },
             {
                 type: "line",
@@ -94,12 +104,17 @@ const UserCountStatistics = () => {
                 datalabels: {
                     color: "#444",
                     display: true,
-                    align: "top",
+                    align: "end",
                     anchor: "end",
                 },
             },
         ],
     };
+
+    const maxValue = Math.max(
+        ...labels.map((_, i) => userCount[`${currentYear}-${(i + 1).toString().padStart(2, "0")}`] || 0),
+        ...labels.map((_, i) => totalCount[`${currentYear}-${(i + 1).toString().padStart(2, "0")}`] || 0)
+    );
 
     const options = {
         responsive: true,
@@ -114,6 +129,17 @@ const UserCountStatistics = () => {
                     },
                 },
             },
+            datalabels: {
+                display: true,
+                anchor: "end",
+                align: "top",
+                formatter: (value) => (value === 0 ? null : value),
+                color: "#444",
+                font: {
+                    weight: "bold",
+                },
+                offset: 10,
+            },
         },
         scales: {
             x: {
@@ -121,6 +147,7 @@ const UserCountStatistics = () => {
             },
             y: {
                 beginAtZero: true,
+                suggestedMax: maxValue + 10,
             },
         },
     };

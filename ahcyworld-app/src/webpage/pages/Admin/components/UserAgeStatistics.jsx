@@ -24,22 +24,22 @@ const UserAgeStatistics = () => {
         fetchUsers();
     }, []);
 
-    const ageRanges = ["10대", "20대", "30대", "40대", "50대", "60대"];
+    const ageRanges = ["기타", "10대", "20대", "30대", "40대", "50대", "60대"];
     const ageCounts = new Array(ageRanges.length).fill(0);
 
     users.forEach((user) => {
         if (user.birthDay) {
             const age = new Date().getFullYear() - new Date(user.birthDay).getFullYear();
-            if (age >= 10 && age < 20) ageCounts[0]++;
-            else if (age >= 20 && age < 30) ageCounts[1]++;
-            else if (age >= 30 && age < 40) ageCounts[2]++;
-            else if (age >= 40 && age < 50) ageCounts[3]++;
-            else if (age >= 50 && age < 60) ageCounts[4]++;
-            else if (age >= 60) ageCounts[5]++;
+            if (age < 10 || age >= 60) ageCounts[0]++;
+            else if (age >= 10 && age < 20) ageCounts[1]++;
+            else if (age >= 20 && age < 30) ageCounts[2]++;
+            else if (age >= 30 && age < 40) ageCounts[3]++;
+            else if (age >= 40 && age < 50) ageCounts[4]++;
+            else if (age >= 50 && age < 60) ageCounts[5]++;
         }
     });
 
-    const totalUsers = users.length;
+    const totalUsers = ageCounts.reduce((sum, count) => sum + count, 0) || 1;
 
     const data = {
         labels: ageRanges,
@@ -61,7 +61,10 @@ const UserAgeStatistics = () => {
                 anchor: "center",
                 align: "center",
                 formatter: (value, context) => {
-                    const label = context.chart.data.labels[context.dataIndex];
+                    // const label = context.chart.data.labels[context.dataIndex];
+                    if (value === 0) {
+                        return "";
+                    }
                     const percentage = ((value / totalUsers) * 100).toFixed(1);
                     return `${percentage} %`;
                 },
