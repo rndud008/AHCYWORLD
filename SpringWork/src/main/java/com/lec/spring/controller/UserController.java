@@ -46,7 +46,6 @@ public class UserController {
         user = userService.join(user, null);
         if (user == null) return "JOIN FAILED";
         else {
-
             return "JOIN SUCCESS";
         }
     }
