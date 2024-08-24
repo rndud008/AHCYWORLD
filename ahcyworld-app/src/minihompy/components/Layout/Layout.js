@@ -15,8 +15,10 @@ import api, { SERVER_HOST } from "../../../apis/api";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { HompyAction } from "../../../redux/actions/HompyAction";
+import HompySettingLeft from "../../pages/HompySettingLeft";
 
-const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
+const Layout = ({setActiveMenu}) => {
+  
   const [visitorInfo, setVisitorInfo] = useState({
     todayVisitor: 0,
     totalVisitor: 0,
@@ -30,7 +32,8 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
 
-  const reduxHompy = useSelector(state => state.hompy.hompy)
+  const hompy = useSelector(state => state.hompy.hompy)
+  const user = hompy.user
 
   // const hompyId = hompy?.id;
   const userId = user?.id;
@@ -162,7 +165,7 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
         style={{
           backgroundImage: `url(${miniHompySkin})`,
           // backgroundImage: `url(${process.env.PUBLIC_URL}/image/${reduxHompy.miniHompySkin})`,
-          fontFamily: `${reduxHompy.miniHompyFont}`
+          fontFamily: `${hompy.miniHompyFont}`
         }}
       >
         {/* 컨테이너 아웃라인 */}
@@ -198,9 +201,7 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
               <div className="left-content">
                 {/* <좌측> 프로필, 폴더, 관리 */}
                 {isSettingPage ? (
-                  LeftPanelComponent ? (
-                    <LeftPanelComponent />
-                  ) : null
+                  <HompySettingLeft setActiveMenu={setActiveMenu} />
                 ) : (
                   <>
                     {postName === undefined && (
@@ -214,7 +215,7 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
               {/* <우측> 게시물 들  */}
               {/* children을 통해 오른쪽 컴포넌트를 대체 */}
               <div className="right-content">
-                {children || <Right hompy={hompy} user={user} />}
+                <Outlet/>
               </div>
             </div>
           </div>

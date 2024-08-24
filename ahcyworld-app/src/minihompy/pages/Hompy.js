@@ -6,6 +6,7 @@ import { LoginContext } from "../../webpage/components/login/context/LoginContex
 import { SERVER_HOST } from "../../apis/api";
 import { useDispatch, useSelector } from "react-redux";
 import { HompyAction } from "../../redux/actions/HompyAction";
+import Right from "../components/Layout/Right";
 
 const Hompy = ({ setUserId }) => {
     const { hompyId } = useParams();
@@ -27,7 +28,7 @@ const Hompy = ({ setUserId }) => {
     return (
         <>
         {/* // props 로 hompy 데이터 전달 */}
-            <Layout hompy={hompy} user={hompy.user} setHompy={setHompy} />
+            <Right hompy={hompy} user={hompy.user} />
         </>
     );
 };

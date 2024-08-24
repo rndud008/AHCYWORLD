@@ -14,13 +14,15 @@ const Minimi = () => {
   const { hompyId } = useParams();
 
   const genderCheck = (gender) => {
-    if (gender.includes("MALE") || gender.includes("남자")) {
+    console.log(gender)
+    if (gender==="MALE") {
       return "male.png";
     }
 
-    if (gender.includes("FEMALE") || gender.includes("여자")) {
+    if (gender==="FEMALE" ) {
       return "female.png";
     }
+
   };
 
   const [minimi, setMinimi] = useState(hompyInfo.minimiPicture || genderCheck(hompyInfo.user.gender));
@@ -83,6 +85,7 @@ const Minimi = () => {
     }
   };
 
+  console.log(hompyInfo,'check????')
   return (
     <div className="minimi-container">
       <div className="aaa">
@@ -95,9 +98,10 @@ const Minimi = () => {
               <img
                 onClick={() => {
                   const newMinimi = genderCheck(hompyInfo.user.gender);
+                  console.log(newMinimi,'chekc?A?S')
                   setMinimi(newMinimi);
                 }}
-                src={`/image/${minimi}`}
+                src={`/image/${genderCheck(hompyInfo.user.gender)}`}
                 alt="Default Minimi"
               />{" "}
               <div>
