@@ -94,9 +94,6 @@ public class UserService {
         return savedUser;
     }
 
-    public User findByName(String name) {
-        return userRepository.findByName(name);
-    }
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username.toUpperCase());
