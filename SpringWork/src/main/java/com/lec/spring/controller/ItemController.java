@@ -79,7 +79,8 @@ public class ItemController {
         }
 
 
-        Path Dir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();
+//        Path Dir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath();        // 로컬호스트의 파일 경로
+        Path Dir = Paths.get("../../build/", "image").toAbsolutePath(); //aws서버의 파일 경로
         if (Files.isDirectory(Dir)) {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Dir)) {
                 for (Path path : directoryStream) {
@@ -102,7 +103,9 @@ public class ItemController {
                     break;
                 }
             }
-            String uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath().toString();
+//            String uploadDir = Paths.get("../ahcyworld-app/public", "image").toAbsolutePath().toString();   //로컬호스트 파일 경로
+            String uploadDir = Paths.get("../../build/", "image").toAbsolutePath().toString();   //aws 서버 파일 경로
+
             System.out.println(uploadDir);
             // 실제 파일 저장
             if (found) {
