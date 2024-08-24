@@ -42,4 +42,5 @@ public class Folder {
         status = "전체공개";
         this.boardType = boardType;
     }
+
 }

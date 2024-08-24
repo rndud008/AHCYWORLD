@@ -100,7 +100,7 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
       return navigate('/')
   }
   dispatch(HompyAction.findByHompyIdAxios(hompyId))
-  }, [userId,hompyId]);
+  }, [userId,hompyId,hompyInfo]);
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
@@ -153,8 +153,6 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
     return valid;
   }
 
-
-
   return (
     <>
       {/* 배경 이미지 */}
@@ -163,6 +161,7 @@ const Layout = ({ hompy, setHompy, user, children, LeftPanelComponent }) => {
         className="background-image"
         style={{
           backgroundImage: `url(${miniHompySkin})`,
+          // backgroundImage: `url(${process.env.PUBLIC_URL}/image/${reduxHompy.miniHompySkin})`,
           fontFamily: `${reduxHompy.miniHompyFont}`
         }}
       >

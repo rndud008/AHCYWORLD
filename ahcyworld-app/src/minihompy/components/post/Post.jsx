@@ -61,7 +61,7 @@ const Post = () => {
     }
 
     fetchData()
-  }, [postName, hompyId]);
+  }, [postName, hompyId,hompyInfo]);
 
   useEffect(() => {
 
@@ -85,7 +85,7 @@ const Post = () => {
 
       fetchPost()
 
-  }, [page, folder?.id]);
+  }, [page, folder?.id,]);
 
 
   if (!isHompyLoaded) {
