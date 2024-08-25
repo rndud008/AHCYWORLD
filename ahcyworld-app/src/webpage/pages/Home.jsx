@@ -34,76 +34,52 @@ const StyledMyBox = styled.div`
 const Home = ({ itemKind }) => {
     const { isLogin, userInfo } = useContext(LoginContext);
 
-    const [isFriendListVisible, setIsFriendListVisible] = useState(false);
-    const [friends, setFriends] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [friendShipStatus, setFriendShipStatus] = useState({});
+    // const [isFriendListVisible, setIsFriendListVisible] = useState(false);
+    // const [friends, setFriends] = useState([]);
+    // const [users, setUsers] = useState([]);
+    // const [friendShipStatus, setFriendShipStatus] = useState({});
 
-    /* 모달 상태와 변경 */
-    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    // /* 모달 상태와 변경 */
+    // const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
-    const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
-    const [selectedFriend, setSelectedFriend] = useState(null);
+    // const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
+    // const [selectedFriend, setSelectedFriend] = useState(null);
 
-    const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
+    // const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
 
-    const openAddFriendModal = (friend) => {
-        setSelectedFriend(friend);
-        setIsAddFriendModalOpen(true);
-    };
 
-    const closeAddFriendModal = () => {
-        setSelectedFriend(null);
-        setIsAddFriendModalOpen(false);
-    };
+    // useEffect(() => {
+    //     const fetchUsers = async () => {
+    //         if (isLogin && userInfo.username) {
+    //             try {
+    //                 const response = await userList();
+    //                 setUsers(response.data);
 
-    /* 모달 상태와 변경 */
+    //                 const statues = {};
+    //                 for (const user of response.data) {
+    //                     if (!userInfo.username || !(userInfo.username === undefined)) {
+    //                         try {
+    //                             const respon = await checkFriendShip(userInfo.username, user.name);
+    //                             statues[user.name] = respon.data.friend;
+    //                         } catch (error) {
+    //                             console.error("checkFriendShip Error: ", error);
+    //                             statues[user.name] = false;
+    //                         }
+    //                     }
+    //                 }
+    //                 setFriendShipStatus(statues);
+    //             } catch (error) {
+    //                 console.error("userList Error: ", error);
+    //             }
+    //         }
+    //     };
+    //     if (userInfo) {
+    //         fetchUsers();
+    //     } else return;
 
-    const toggleFriendList = async () => {
-        if (!isFriendListVisible) {
-            try {
-                const response = await findFriendList(userInfo.username);
-                setFriends(response.data);
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        }
-
-        setIsFriendListVisible(!isFriendListVisible);
-    };
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            if (isLogin && userInfo.username) {
-                try {
-                    const response = await userList();
-                    setUsers(response.data);
-
-                    const statues = {};
-                    for (const user of response.data) {
-                        if (!userInfo.username || !(userInfo.username === undefined)) {
-                            try {
-                                const respon = await checkFriendShip(userInfo.username, user.name);
-                                statues[user.name] = respon.data.friend;
-                            } catch (error) {
-                                console.error("checkFriendShip Error: ", error);
-                                statues[user.name] = false;
-                            }
-                        }
-                    }
-                    setFriendShipStatus(statues);
-                } catch (error) {
-                    console.error("userList Error: ", error);
-                }
-            }
-        };
-        if (userInfo) {
-            fetchUsers();
-        } else return;
-
-        localStorage.removeItem("openMenu");
-        localStorage.removeItem("subMenu");
-    }, [isAddFriendModalOpen, isLogin]);
+    //     localStorage.removeItem("openMenu");
+    //     localStorage.removeItem("subMenu");
+    // }, [isAddFriendModalOpen, isLogin]);
 
 
     return (
