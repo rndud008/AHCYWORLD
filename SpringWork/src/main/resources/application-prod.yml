@@ -1,6 +1,9 @@
 spring:
   application.name: SpringWork
 
+  jackson:
+    time-zone: Asia/Seoul
+
   servlet:
     multipart:
       max-request-size: 100MB
