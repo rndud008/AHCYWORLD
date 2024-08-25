@@ -78,13 +78,13 @@ const DiaryModal = ({
                                             onClick={() => onUpdateClick(diary)}
                                             className={diary.hompy.id === hompyInfo.id ? 'clickable-cell' : ''}
                                         >
-                                            {diary.keyWord}
+                                            {index + 1}
                                         </td>
                                         <td
                                             onClick={() => onUpdateClick(diary)}
                                             className={diary.hompy.id === hompyInfo.id ? 'clickable-cell' : ''}
                                         >
-                                            {diary.content}
+                                            {diary.keyWord}
                                         </td>
                                         {diary.hompy.id === hompyInfo.id && (
                                             <td className="delete-cell">
