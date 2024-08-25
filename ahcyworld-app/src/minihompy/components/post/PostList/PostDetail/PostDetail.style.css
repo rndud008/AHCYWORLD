@@ -15,13 +15,11 @@
 
 .postDetail button {
   margin: 0 5px;
-  background: none;
   border-radius: 30px;
   height: 40px;
-  color: black;
+  color: #fff;
 }
 .postDetail button:hover {
-  opacity: 0.6;
   animation: bounce 0.8s infinite;
 }
 @keyframes bounce {
@@ -93,3 +91,38 @@
   scrollbar-width: thin;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
+
+.postdetaillist-btn {
+  border: none;
+  margin-right: 15px;
+  border-radius: 12px;
+  font-size: 18px; 
+  font-weight: bold;
+  background: linear-gradient(145deg, #ffeb3b, #ffc107); /* 노란색 계열의 배경색 */
+  color: #333333;  /* 어두운 텍스트 색상 */
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(255, 193, 7, 0.15), 
+              -2px -2px 5px rgba(255, 235, 59, 0.7); 
+  transition: all 0.2s ease; 
+  backdrop-filter: blur(10px);
+}
+
+.postdetaillist-btn:hover {
+  background: linear-gradient(145deg, #ffd54f, #ffb300); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(255, 193, 7, 0.2), 
+              -1px -1px 4px rgba(255, 235, 59, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.postdetaillist-btn:active {
+  background: linear-gradient(145deg, #ffb300, #ffa000); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(255, 193, 7, 0.2), 
+              inset -1px -1px 4px rgba(255, 235, 59, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.postdetaillist-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); /* 포커스 시 노란색 하이라이트 추가 */
+}
+

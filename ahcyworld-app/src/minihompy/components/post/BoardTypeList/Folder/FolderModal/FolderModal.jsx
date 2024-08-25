@@ -70,10 +70,10 @@ const FolderModal = () => {
             </Form.Group>
                 {errors.status && <p className="folder-error-message">{errors.status}</p>}
             <div className="folder-button-group">
-              <Button variant="primary" type="submit">
+              <Button className="diarywriteok-btn" type="submit">
                 {modalName === "폴더 생성" ? "추가" : "수정"}
               </Button>
-              <Button variant="secondary" onClick={() => handleClose(dispatch)}>
+              <Button className="diarywriteno-btn" onClick={() => handleClose(dispatch)}>
                 취소
               </Button>
             </div>

@@ -2,8 +2,8 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.ItemService;
-import com.sun.tools.jconsole.JConsoleContext;
-import com.sun.tools.jconsole.JConsolePlugin;
+//import com.sun.tools.jconsole.JConsoleContext;
+//import com.sun.tools.jconsole.JConsolePlugin;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

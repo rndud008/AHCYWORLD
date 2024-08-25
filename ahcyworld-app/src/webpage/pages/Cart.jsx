@@ -153,69 +153,71 @@ const Cart = () => {
 
 
     return (
-        <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
-            <h2>장바구니</h2>
+        <>
+            <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
+                <h2>장바구니</h2>
 
-            <div className='select-container'>
-                <button className='select-del-btn select-del-btn2' onClick={() => handleAllDelete()}>선택삭제</button>
-                <div>
-                    <div className='all-select-container'>
-                        <input className='all-select'
-                            type="checkbox"
-                            checked={allCheckBox}
-                            onChange={handleSelectAll}
-                        />
-                        <span className='all-select-text'>전체선택</span>
-                    </div>
-                    <hr />
-                    {myCart.length === 0 ? <div>담긴아이템이 없습니다.</div> : ((myCart.map((cart) => (
-
-                        <div key={cart.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0', fontSize: '18px', fontWeight: 'bold' }}>
-                            <input className='item-check-box'
+                <div className='select-container'>
+                    <button className='select-del-btn select-del-btn2' onClick={() => handleAllDelete()}>선택삭제</button>
+                    <div>
+                        <div className='all-select-container'>
+                            <input className='all-select'
                                 type="checkbox"
-                                checked={cart.checked}
-                                onChange={(e) => handleCheckboxChange(e)}
-                                value={cart.id}
-                                style={{ marginRight: 25 }}
+                                checked={allCheckBox}
+                                onChange={handleSelectAll}
                             />
-                            {cart.item.itemType === "글꼴" ? (
-                                <input
-                                    className='cartfontStyle'
-                                    type='text'
-                                    style={{ fontFamily: `${cart.item.sourceName}, cursive`, fontSize: 50, width: 100, height: 100 }}
-                                    defaultValue='AhCyWorld'
-                                    readOnly
-                                />
-                            ) : cart.item.itemType === "배경음악" ? (
-                                <img className="cartitemImg" src={cart.item.bgmImg} style={{ width: 100, height: 100 }} alt='' />
-                            ) : (
-                                <img
-                                    className="cartitemImg"
-                                    src={`${process.env.PUBLIC_URL}/image/${cart.item.fileName}`}
-                                    style={{ width: 100, height: 100 }} alt=''
-                                />
-                            )}
-                            <div style={{ flex: 1, marginLeft: '10px' }}>
-                                {cart.item.itemType === "배경음악" ? (<div>{cart.item.sourceName} - {cart.item.itemName}</div>) : <div>{cart.item.itemName}</div>}
-                                <div style={{ color: '#888' }}>{cart.item.itemType}</div>
-                            </div>
-                            <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
-                            <button onClick={() => handelDeleteItem(cart)} className='item-del-btn'>❌</button>
+                            <span className='all-select-text'>전체선택</span>
                         </div>
+                        <hr />
+                        {myCart.length === 0 ? <div>담긴아이템이 없습니다.</div> : ((myCart.map((cart) => (
 
-                    ))))}
+                            <div key={cart.id} style={{ display: 'flex', alignItems: 'center', margin: '10px 0', fontSize: '18px', fontWeight: 'bold' }}>
+                                <input className='item-check-box'
+                                    type="checkbox"
+                                    checked={cart.checked}
+                                    onChange={(e) => handleCheckboxChange(e)}
+                                    value={cart.id}
+                                    style={{ marginRight: 25 }}
+                                />
+                                {cart.item.itemType === "글꼴" ? (
+                                    <input
+                                        className='cartfontStyle'
+                                        type='text'
+                                        style={{ fontFamily: `${cart.item.sourceName}, cursive`, fontSize: 50, width: 100, height: 100 }}
+                                        defaultValue='AhCyWorld'
+                                        readOnly
+                                    />
+                                ) : cart.item.itemType === "배경음악" ? (
+                                    <img className="cartitemImg" src={cart.item.bgmImg} style={{ width: 100, height: 100 }} alt='' />
+                                ) : (
+                                    <img
+                                        className="cartitemImg"
+                                        src={`${process.env.PUBLIC_URL}/image/${cart.item.fileName}`}
+                                        style={{ width: 100, height: 100 }} alt=''
+                                    />
+                                )}
+                                <div style={{ flex: 1, marginLeft: '10px' }}>
+                                    {cart.item.itemType === "배경음악" ? (<div>{cart.item.sourceName} - {cart.item.itemName}</div>) : <div>{cart.item.itemName}</div>}
+                                    <div style={{ color: '#888' }}>{cart.item.itemType}</div>
+                                </div>
+                                <div style={{ width: '100px', textAlign: 'right' }}>{cart.item.price} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
+                                <button onClick={() => handelDeleteItem(cart)} className='item-del-btn'>❌</button>
+                            </div>
+
+                        ))))}
+                    </div>
+                    <div style={{ textAlign: 'right', marginTop: '10px', fontWeight: 'bold' }}><hr />
+                        <div>총 주문금액: {totalAcorn} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
+                    </div>
                 </div>
-                <div style={{ textAlign: 'right', marginTop: '10px', fontWeight: 'bold' }}><hr />
-                    <div>총 주문금액: {totalAcorn} <img style={{ width: 15, height: 15 }} src={acorn} alt=''></img></div>
+                <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
+                    <button className='continue-shopping-btn' onClick={() => navigate(-1)}>쇼핑계속하기</button>
+                    <button className='goods-buy-btn' onClick={() => acornPayOpenModal()}>상품 구매</button>
+                    <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo} setAllCheckBox={setAllCheckBox} setIsDelete={setIsDelete} setTotalAcorn={setTotalAcorn} />
                 </div>
-            </div>
-            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                <button className='continue-shopping-btn' onClick={() => navigate(-1)}>쇼핑계속하기</button>
-                <button className='goods-buy-btn' onClick={() => acornPayOpenModal()}>상품 구매</button>
-                <AcornPayModal isOpen={isAcornPayModalOpen} onClose={acornPayCloseModal} selectItem={selectItem} totalAcorn={totalAcorn} hompyInfo={hompyInfo} userInfo={userInfo} setAllCheckBox={setAllCheckBox} setIsDelete={setIsDelete} setTotalAcorn={setTotalAcorn} />
             </div>
             <Footer />
-        </div>
+        </>
     );
 };
 
