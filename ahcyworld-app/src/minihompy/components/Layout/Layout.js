@@ -27,7 +27,7 @@ const Layout = ({setActiveMenu}) => {
   const [miniHompySkin, setMiniHompySkin] = useState();
   const [hompyTitle, setHompyTitle] = useState();
   const [show,setShow] = useState(false);
-  const { hompyInfo, setHompyInfo } = useContext(LoginContext);
+  const { hompyInfo, setHompyInfo ,loginCheck} = useContext(LoginContext);
   const { postName,hompyId } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
@@ -41,6 +41,22 @@ const Layout = ({setActiveMenu}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === 'hompyInfo') {
+        const newHompyInfo = JSON.parse(event.newValue);
+        newHompyInfo !== null && setHompyInfo(newHompyInfo);
+        
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+
+  }, [setHompyInfo]);
 
   useEffect(() => {
     // hompy가 존재하는지 확인 후에 visitorInfo를 업데이트
@@ -50,7 +66,9 @@ const Layout = ({setActiveMenu}) => {
         totalVisitor: hompy.totalVisitor || 0,
       });
       setHompyTitle(hompy.title);
+     
     }
+    
   }, [hompy,dispatch]);
 
   useEffect(() => {
@@ -77,6 +95,7 @@ const Layout = ({setActiveMenu}) => {
       }
     };
     increaseVisitCount();
+
   }, [user]);
 
   useEffect(() => {
@@ -102,8 +121,11 @@ const Layout = ({setActiveMenu}) => {
       console.log('location',location)
       return navigate('/')
   }
+
   dispatch(HompyAction.findByHompyIdAxios(hompyId))
+
   }, [userId,hompyId,hompyInfo,dispatch]);
+
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
