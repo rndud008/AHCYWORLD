@@ -79,7 +79,7 @@ public class NaverNewsController {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL, requestHeaders);
 
-        System.out.println(responseBody);
+//        System.out.println(responseBody);
 
         return ResponseEntity.ok(responseBody); // 응답을 클라이언트로 반환
     }

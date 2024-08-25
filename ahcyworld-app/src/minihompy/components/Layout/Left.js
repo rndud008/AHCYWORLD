@@ -8,7 +8,7 @@ import { hompyInfo, myFriendRequests, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import AddFriendModal from "../friendShip/AddFriendModal";
 import { useSelector } from "react-redux";
-import { SERVER_HOST } from "../../../apis/api";
+import { REACT_HOST, SERVER_HOST } from "../../../apis/api";
 
 const Left = ({ user, hompy }) => {
     const { hompyId } = useParams();
@@ -123,7 +123,7 @@ const Left = ({ user, hompy }) => {
     const handleFriendSelect = (event) => {
         const selectedHompyId = event.target.value;
         if (selectedHompyId !== "option1") {
-            const miniHompyUrl = `http://43.201.136.217:3000/hompy/${encodeURIComponent(selectedHompyId)}`;
+            const miniHompyUrl = `${REACT_HOST}/hompy/${encodeURIComponent(selectedHompyId)}`;
 
             // 새 창 열기 설정
             window.open(

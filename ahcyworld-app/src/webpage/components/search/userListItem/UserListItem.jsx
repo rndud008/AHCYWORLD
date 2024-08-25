@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMarsStroke, faVenus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
+import { REACT_HOST } from "../../../../apis/api";
 
 const UserListItem = () => {
     const searchList = useSelector((state) => state.search.searchList);
@@ -15,8 +16,7 @@ const UserListItem = () => {
     const miniHompyLink = (hompyId) => {
         if (accessToken) {
             window.open(
-                // `/hompy/${hompyId}`, // 열고 싶은 URL
-                `http://43.201.136.217:3000/hompy/${hompyId}`, // 열고 싶은 URL
+                `${REACT_HOST}/hompy/${hompyId}`, // 열고 싶은 URL
                 "_blank", // 새로운 창을 엽니다.
                 "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
             );

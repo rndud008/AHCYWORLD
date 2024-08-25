@@ -91,7 +91,7 @@ const DiaryUpdatePage = () => {
     }
 
     return (
-        <Layout hompy={hompy} user={hompy.user}>
+        <>
         <div className="container d-flex justify-content-center align-items-center min-vh-80">
             <div className="w-50">
                 <h1>다이어리 수정</h1>
@@ -124,7 +124,7 @@ const DiaryUpdatePage = () => {
                 </Form>
             </div>
         </div>
-        </Layout>
+        </>
     );
 };
 

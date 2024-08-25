@@ -37,9 +37,9 @@ const Header = ({ setItemKind }) => {
 
   const searchEnter = async (e) => {
     if (e.key === "Enter") {
-      const valid = searchValidation();
+      // const valid = searchValidation();
 
-      if (!valid) return;
+      // if (!valid) return;
 
       try {
         await dispatch(

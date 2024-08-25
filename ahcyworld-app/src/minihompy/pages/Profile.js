@@ -9,6 +9,8 @@ import "./css/Profile.css";
 import { LoginContext } from "../../webpage/components/login/context/LoginContextProvider";
 import { hompyInfo } from "../../apis/auth";
 import { SERVER_HOST } from "../../apis/api";
+import { useDispatch } from "react-redux";
+import { HompyAction } from "../../redux/actions/HompyAction";
 
 const Profile = () => {
   const { hompyId } = useParams();
@@ -17,6 +19,7 @@ const Profile = () => {
   const [isReadOnly, setIsReadOnly] = useState(true); // CKEditor의 읽기 전용 상태 관리
   const [buttonLabel, setButtonLabel] = useState("프로필 수정"); // 버튼 라벨 관리
   const { userInfo, hompyInfo } = useContext(LoginContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -28,6 +31,10 @@ const Profile = () => {
       .catch((error) => {
         console.error("에러: 프로필을 가져 올 수 없음", error);
       });
+      
+      if(hompyId){
+        dispatch(HompyAction.findByHompyIdAxios(hompyId))
+      }
   }, [hompyId, buttonLabel]);
 
   const handleProfileUpdate = async () => {

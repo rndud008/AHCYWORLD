@@ -35,7 +35,6 @@ const BgmPlayer = ({  }) => {
   const {hompyId} = useParams();
   const hompy = useSelector(state => state.hompy.hompy);
 
-  console.log('bgm 다시 렌더링?',hompyId)
   useEffect(() => {
 
     const fetchBgmData = async () => {
@@ -49,7 +48,7 @@ const BgmPlayer = ({  }) => {
 
         let type = "배경음악";
         let musics = [];
-        const response = await axios.get(`${SERVER_HOST}/cart/${hompy.user.id}/items`);
+        const response = await axios.get(`${SERVER_HOST}/cart/${hompy.user?.id}/items`);
         
         response.data.forEach((cart) => {
           if (cart.item.itemType === type) {
@@ -68,8 +67,10 @@ const BgmPlayer = ({  }) => {
       }
     };
 
-    fetchBgmData();
-  }, [hompyInfo]);
+    if(hompy){
+      fetchBgmData();
+    }
+  }, [hompyInfo,hompy]);
 
   const togglePlayPause = useCallback(() => {
     if (isPlaying) {

@@ -1,13 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./MyBox.css";
 import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png";
-import { getHompyInfo, getLogedUser, getMessageFromAdmin, getUserInfoByUsername, myFriendRequests } from "../../../apis/auth";
+import {
+    getHompyInfo,
+    getLogedUser,
+    getMessageFromAdmin,
+    getUserInfoByUsername,
+    myFriendRequests,
+} from "../../../apis/auth";
 import FriendRequestModal from "../../../minihompy/components/friendShip/FriendRequestModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { SERVER_HOST } from "../../../apis/api";
+import { REACT_HOST, SERVER_HOST } from "../../../apis/api";
 import { Modal } from "react-bootstrap";
 import UpdateUser from "./UpdateUser";
 import * as Swal from "../../../apis/alert";
@@ -20,6 +26,8 @@ const MyBox = () => {
     const [friendRequestCnt, setFriendRequestCnt] = useState(0);
     const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
+    const [refreshFlag, setRefreshFlag] = useState(false);
+    const [minimiPicture, setMinimiPicture] = useState()
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -80,6 +88,12 @@ const MyBox = () => {
         navigate(`/cart/${userInfo.id}`);
     };
 
+    useEffect(()=>{
+        if(hompyInfo){
+            setMinimiPicture(`${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`);
+        }
+    },[hompyInfo])
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -93,7 +107,7 @@ const MyBox = () => {
         if (isLogin) {
             fetchUserData();
         }
-    }, [isLogin]);
+    }, [isLogin, refreshFlag]);
 
     useEffect(() => {
         const fetchFriendRequests = async () => {
@@ -117,7 +131,7 @@ const MyBox = () => {
         };
 
         fetchFriendRequests();
-    }, [isLogin, userInfo, isFriendRequstModalOpen, isMessageModalOpen]);
+    }, [isLogin, userInfo, isFriendRequstModalOpen, isMessageModalOpen, refreshFlag]);
 
     useEffect(() => {
         const fetchMessage = async () => {
@@ -138,18 +152,25 @@ const MyBox = () => {
             }
         };
         fetchMessage();
-    }, [isMessageModalOpen]);
+    }, [isMessageModalOpen, refreshFlag]);
 
-    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`;
 
-    const openMinihompy = () => {
-        window.open(
-            // `/hompy/${hompyInfo.id}`, // 열고 싶은 URL
-            `http://43.201.136.217:3000/hompy/${hompyInfo.id}`, // 열고 싶은 URL
+
+    const openMinihompy = useCallback(() => {
+        const newWindow = window.open(
+            `${REACT_HOST}/hompy/${hompyInfo.id}`, // 열고 싶은 URL
             "_blank", // 새로운 창을 엽니다.
             "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no" // 창의 크기 설정
         );
-    };
+
+        // 새 창이 닫힐 때 MyBox를 새로 로딩
+        const interval = setInterval(() => {
+            if (newWindow.closed) {
+                clearInterval(interval);
+                setRefreshFlag(prevFlag => !prevFlag); // refreshFlag를 토글하여 useEffect를 트리거
+            }
+        }, 1000); // 창이 닫혔는지 확인하기 위해 1초마다 체크
+    }, [hompyInfo.id]);
 
     return (
         <div className='mybox-container'>
@@ -172,7 +193,7 @@ const MyBox = () => {
 
             <div className='middle'>
                 <div className='minimi-box'>
-                    <img src={minimiPicture} alt='미니홈피 이미지' />
+                    <img src={minimiPicture} alt='미니미 이미지' />
                 </div>
                 <div className='info-box'>
                     <ul>
@@ -202,7 +223,6 @@ const MyBox = () => {
                                 충전
                             </button>
                         </li>
-                        {/* </li> */}
                     </ul>
                 </div>
             </div>

@@ -93,10 +93,6 @@ public class SearchService {
             itemList = itemRepository.findAll();
         }
 
-        if (itemAllList.isEmpty() && itemBgmList.isEmpty() && itemList.isEmpty()) {
-            throw new RuntimeException("검색기록이 없습니다.");
-        }
-
         if (!itemAllList.isEmpty()) {
             itemList.addAll(itemAllList);
         }

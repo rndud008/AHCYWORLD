@@ -5,6 +5,7 @@ import Button from "react-bootstrap/esm/Button";
 import { BsSearch } from "react-icons/bs";
 import { RiHomeHeartLine } from "react-icons/ri";
 import { Pagination } from "react-bootstrap";
+import { REACT_HOST } from "../../../../apis/api";
 
 const PostHistory = () => {
     const [userWriteHistory, setUserWriteHistory] = useState([]);
@@ -112,7 +113,7 @@ const PostHistory = () => {
 
     const goMinihompy = (hompyId) => {
         window.open(
-            `http://43.201.136.217:3000/hompy/${hompyId}`,
+            `${REACT_HOST}/hompy/${hompyId}`,
             "_blank",
             "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no"
         );

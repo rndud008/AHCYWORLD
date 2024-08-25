@@ -13,6 +13,9 @@ import Layout from "../Layout/Layout";
 import { Button } from "react-bootstrap";
 import * as Swal from "../../../apis/alert";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { HompyAction } from "../../../redux/actions/HompyAction";
+
 
 const DiaryHome = () => {
     const curDate = new Date();
@@ -29,6 +32,7 @@ const DiaryHome = () => {
     const { hompyInfo, userInfo } = useContext(LoginContext);
     const { hompyId } = useParams();
     const [hompy, setHompy] = useState("");
+    const dispatch = useDispatch();
 
     const cookie = Cookies.get("accessToken"); 
 
@@ -81,8 +85,8 @@ const DiaryHome = () => {
 
     useEffect(()=>{
         if(hompy){
-
             fetchDiaries();   
+            dispatch(HompyAction.findByHompyIdAxios(hompyId))
         }
     },[hompy])
 
