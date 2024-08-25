@@ -27,7 +27,7 @@ const Layout = ({setActiveMenu}) => {
   const [miniHompySkin, setMiniHompySkin] = useState();
   const [hompyTitle, setHompyTitle] = useState();
   const [show,setShow] = useState(false);
-  const { hompyInfo, setHompyInfo , setUserInfo} = useContext(LoginContext);
+  const { hompyInfo, setHompyInfo , setUserInfo, setRoles} = useContext(LoginContext);
   const { postName,hompyId } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
@@ -41,6 +41,8 @@ const Layout = ({setActiveMenu}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  console.log(hompyInfo)
+
   useEffect(() => {
     const handleStorageChange = (event) => {
       if (event.key === 'hompyInfo') {
@@ -52,6 +54,11 @@ const Layout = ({setActiveMenu}) => {
         const newUserInfo = JSON.parse(event.newValue);
         newUserInfo !== null && setUserInfo(newUserInfo);
       } 
+
+      if(event.key === 'roles'){
+        const newRoles = JSON.parse(event.newValue);
+        newRoles !== null && setRoles(newRoles);
+      }
     };
 
     window.addEventListener('storage', handleStorageChange);

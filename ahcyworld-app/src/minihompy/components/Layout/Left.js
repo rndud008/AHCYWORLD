@@ -24,9 +24,11 @@ const Left = ({ user, hompy }) => {
     const [friendWaitingList, setFriendWaitingList] = useState();
     const { hompyInfo, userInfo } = useContext(LoginContext);
 
+
     const friendIdList = friends.map((item) => {
         return item.friendUser.id;
     });
+
     const FriendCheck =
         hompyInfo?.id !== parseInt(hompyId) &&
         !friendIdList.some((item) => item === userInfo?.id) &&
@@ -44,6 +46,7 @@ const Left = ({ user, hompy }) => {
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
@@ -114,7 +117,7 @@ const Left = ({ user, hompy }) => {
         fetchFriendList();
         friendWaiting();
 
-    }, [user?.username, isModalOpen, hompyInfo, setFriendRequests]);
+    }, [user?.username, isModalOpen, hompyInfo, setFriendWaitingList]);
 
     // 일촌 신청 목록 업데이트 처리
     const handleFriendRequestUpdate = (updateRequests) => {

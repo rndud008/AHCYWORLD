@@ -76,6 +76,7 @@ const PaymentModal = ({ isOpen, onClose }) => {
 
     const selectFriend = (e) => {
         const friend = friends.find(x => x.friendUser.id === parseInt(e.target.value));
+        console.log(friend,'???')
         setFriendData(friend);
     }
 
@@ -101,7 +102,6 @@ const PaymentModal = ({ isOpen, onClose }) => {
                 <select disabled={isDisabled} value={friendData} onChange={selectFriend} style={{ width: '100%' }}>
                     <option value={""} disabled>친구선택</option>
                     {friends.map(friend => <option key={friend.id} value={friend.friendUser.id}>{friend.friendName} ({friend.friendUser.name})</option>)}
-
                 </select>
 
 

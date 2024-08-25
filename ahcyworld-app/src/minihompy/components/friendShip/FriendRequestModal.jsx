@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, ListGroup, Modal } from "react-bootstrap";
 import { friendShipResponse, myFriendRequests } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
-const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
+const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate,}) => {
     const { userInfo,setHompyInfo } = useContext(LoginContext);
     const [friendRequests, setFriendRequests] = useState([]);
     const [updatedRequests, setUpdatedRequests] = useState([]);
@@ -29,6 +32,7 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
         try {
             await friendShipResponse(requestId, reply);
             setUpdatedRequests(updatedRequests.filter((request) => request.id !== requestId));
+
         } catch (error) {
             console.error("friendShipResponse Error: ", error);
         }
@@ -41,7 +45,7 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
                 <Modal.Title>받은 일촌신청 목록</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {updatedRequests.length > 0 ? (
+                {updatedRequests?.length > 0 ? (
                     <ListGroup>
                         {updatedRequests.map(
                             (request) =>

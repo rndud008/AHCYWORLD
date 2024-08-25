@@ -37,6 +37,8 @@ where id between 148 and 152;
 delete from carts
 where id = 35;
 
+delete from friend where id = 22;
+
 delete
 from ah_user
 where id = 13;
