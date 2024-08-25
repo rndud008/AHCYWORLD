@@ -48,7 +48,7 @@ const BgmPlayer = ({  }) => {
 
         let type = "배경음악";
         let musics = [];
-        const response = await axios.get(`${SERVER_HOST}/cart/${hompy.user?.id}/items`);
+        const response = await axios.get(`${SERVER_HOST}/cart/${hompy.user.id}/items`);
         
         response.data.forEach((cart) => {
           if (cart.item.itemType === type) {

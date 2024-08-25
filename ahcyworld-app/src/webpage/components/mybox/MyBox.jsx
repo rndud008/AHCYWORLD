@@ -4,6 +4,7 @@ import { LoginContext } from "../login/context/LoginContextProvider";
 import PaymentModal from "../../payment/PaymentModal";
 import acorn from "../../../upload/acorn.png";
 import {
+    authInfo,
     getHompyInfo,
     getLogedUser,
     getMessageFromAdmin,
@@ -19,6 +20,7 @@ import UpdateUser from "./UpdateUser";
 import * as Swal from "../../../apis/alert";
 import MessageModal from "../Message/MessageModal";
 import PaymentHistory from "../paymentHistory/PaymentHistory";
+
 const MyBox = () => {
     const { isLogin, logout, userInfo, setUserInfo, hompyInfo, setHompyInfo } = useContext(LoginContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +29,7 @@ const MyBox = () => {
     const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
     const [refreshFlag, setRefreshFlag] = useState(false);
-    const [minimiPicture, setMinimiPicture] = useState()
+    const [minimiPicture, setMinimiPicture] = useState();
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -88,11 +90,11 @@ const MyBox = () => {
         navigate(`/cart/${userInfo.id}`);
     };
 
-    useEffect(()=>{
-        if(hompyInfo){
+    useEffect(() => {
+        if (hompyInfo) {
             setMinimiPicture(`${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`);
         }
-    },[hompyInfo])
+    }, [hompyInfo]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -103,7 +105,7 @@ const MyBox = () => {
                 console.error("사용자 정보를 가져오는 중 에러 발생:", error);
             }
         };
-    
+
         if (isLogin) {
             fetchUserData();
         }
@@ -154,8 +156,6 @@ const MyBox = () => {
         fetchMessage();
     }, [isMessageModalOpen, refreshFlag]);
 
-
-
     const openMinihompy = useCallback(() => {
         const newWindow = window.open(
             `${REACT_HOST}/hompy/${hompyInfo.id}`, // 열고 싶은 URL
@@ -164,16 +164,24 @@ const MyBox = () => {
         );
 
         // 새 창이 닫힐 때 MyBox를 새로 로딩
-        const interval = setInterval(() => {
+        const interval = setInterval(async () => {
             if (newWindow.closed) {
                 clearInterval(interval);
-                setRefreshFlag(prevFlag => !prevFlag); // refreshFlag를 토글하여 useEffect를 트리거
+                setRefreshFlag((prevFlag) => !prevFlag); // refreshFlag를 토글하여 useEffect를 트리거
+
+                try {
+                    const hompyData = await getHompyInfo();
+                    // console.log(hompyData.data);
+                    setHompyInfo(hompyData.data);
+                } catch (error) {
+                    console.error("getHompyInfo Error: ", error);
+                }
             }
         }, 1000); // 창이 닫혔는지 확인하기 위해 1초마다 체크
-    }, [hompyInfo.id]);
+    }, [hompyInfo]);
 
     return (
-        <div className='mybox-container'>
+        <div className='mybox-container' key={refreshFlag}>
             <div className='top'>
                 <div className='name-box'>{isLogin ? <span>{userInfo.name}</span> : <span></span>}</div>
 

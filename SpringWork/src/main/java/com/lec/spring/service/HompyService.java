@@ -134,7 +134,7 @@ public class HompyService {
     public String resetHompy(Hompy hompy) {
         String userMinimi;
 
-        hompy.setProfilePicture("/upload/default_profile.png");
+        hompy.setProfilePicture("default_profile.png");
         hompy.setStatusMessage(null);
         hompy.setTodayVisitor(0L);
         hompy.setTotalVisitor(0L);
