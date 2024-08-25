@@ -62,11 +62,12 @@ const DetailModal = ({ show, setShow, postId }) => {
               </div>
             </Form.Group>
             <div className="modalFolderListButton">
-              <Button variant="primary" type="submit">
+              <Button className="diarywriteok-btn"  type="submit">
                 이동
               </Button>
 
               <Button
+                className="diarywriteno-btn"
                 name="folderMove"
                 variant="secondary"
                 onClick={(e) => detailListHandleClose(e, setShow, show)}

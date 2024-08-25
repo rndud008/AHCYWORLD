@@ -52,12 +52,14 @@ const BoardTypeList = () => {
           <div className="board-type-folder">
             {parseInt(hompyId) === hompyInfo?.id &&
             
-            <Button variant="none" onClick={(e) => handleShow(e, dispatch)} value="폴더 생성">
+            <Button className="diarywriteok-btn" variant="none" onClick={(e) => handleShow(e, dispatch)} value="폴더 생성">
               추가
             </Button>
             }
 
-            <Button  variant="none"
+            <Button
+              className="diarywriteno-btn"
+              variant="none"
               onClick={() =>
                 folderDelete(dispatch, hompyId, postName, folder?.id)
               }
