@@ -55,11 +55,11 @@ const Footer = () => {
                         <img src="/image/instagram.png" alt="Instagram" />
                     </a>
                 </div>
+                <div className="footer-bottom">
+                    <p>Copyright © AhCyworld</p>
+                </div>
             </div>
 
-            <div className="footer-bottom">
-                <p>Copyright © AhCyworld</p>
-            </div>
         </footer>
     );
 };
