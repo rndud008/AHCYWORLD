@@ -56,7 +56,7 @@ public class Hompy {
     public void prePersist() {
         // 프로필 기본이미지
         if (this.profilePicture == null) {
-            this.profilePicture = "/upload/default_profile.png";
+            this.profilePicture = "upload/default_profile.png";
         }
 
                 // 미니미 기본이미지

@@ -58,10 +58,10 @@ const Left = ({ user, hompy }) => {
                     console.log("hompyData: ", hompyData);
                     setStatusMessage(hompyData.statusMessage || "");
                     if (hompyData.profilePicture) {
-                        // const profilePicturePath = hompyData.profilePicture.replaceAll(/\\/g, "//");
+                        const profilePicturePath = hompyData.profilePicture.replaceAll(/\\/g, "//");
 
-                        // const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
-                        const imageUrl = hompyData.profilePicture;
+                        const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
+                        // const imageUrl = hompyData.profilePicture;
 
                         setProfilePicture(imageUrl);
                     }
@@ -210,8 +210,8 @@ const Left = ({ user, hompy }) => {
 
     return (
         <div className='left-container'>
-            {/* <img className='profile-img' src={profilePicture || "default_img.png"} alt='유저 이미지' /> */}
-            <img className='profile-img' src={`${process.env.PUBLIC_URL}/image/${profilePicture}`} alt='유저 이미지' />
+            <img className='profile-img' src={profilePicture || "default_img.png"} alt='유저 이미지' />
+            {/* <img className='profile-img' src={`${process.env.PUBLIC_URL}/image/${}`} alt='유저 이미지' /> */}
             <input value={""} type='file' id='fileInput' style={{ display: "none" }} onChange={handleFileChange} />
             {hompyInfo.id === parseInt(hompyId) && (
                 <>
