@@ -7,7 +7,7 @@ import { alert } from "../../../apis/alert";
 import { getMessageFromAdmin, readMessage } from "../../../apis/auth";
 import "./MessageModal.css";
 
-const MessageModal = ({ isOpen, onClose }) => {
+const MessageModal = ({ isOpen, onClose, setAcornPull }) => {
     const { userInfo } = useContext(LoginContext);
     const [updateMessage, setUpdateMessage] = useState([]);
     const [isReloading, setIsReloading] = useState(false);
@@ -61,10 +61,12 @@ const MessageModal = ({ isOpen, onClose }) => {
                 params: { id: id },
             });
             setIsReloading(true);
-            window.location.reload();
+            setAcornPull(true);
         } catch (error) {
             console.error("도토리 추가 실패", error);
         }
+
+
     };
 
     const acceptGift = (id) => {

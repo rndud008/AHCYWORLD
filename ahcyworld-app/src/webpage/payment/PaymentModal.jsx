@@ -18,7 +18,11 @@ const PaymentModal = ({ isOpen, onClose }) => {
         email: "",
     });
     const [friends, setFriends] = useState([]);
-    const [friendData, setFriendData] = useState("");
+    const [friendData, setFriendData] = useState({
+        friendUser: {
+            id: ""
+        }
+    });
     const [acorns, setAcorns] = useState("");
     const [isPayedDisabled, setIsPayedDisabled] = useState(true)
     const [isZeroAcorn, setIsZeroAcorn] = useState(false);
@@ -56,12 +60,18 @@ const PaymentModal = ({ isOpen, onClose }) => {
     };
 
     const checkBoxChange = (e) => {
+        
         e.target.checked === false ? checkfalse() : setIsDisabled(false);
     }
 
     const checkfalse = () => {
         setIsDisabled(true);
-        setFriendData("");
+        const resetFriendData = {
+            friendUser : {
+                id: ""
+            }
+        }
+        setFriendData(resetFriendData);
     }
     const pay = () => {
         if (parseInt(acorns) > 0) {
@@ -89,6 +99,7 @@ const PaymentModal = ({ isOpen, onClose }) => {
         setIsZeroAcorn(false);
 
     }
+
     return (
         <div className='payment-modal-overlay'>
             <div className='payment-modal-content'>
@@ -98,7 +109,7 @@ const PaymentModal = ({ isOpen, onClose }) => {
                     <input type="checkbox" style={{ display: "inline" }} onChange={checkBoxChange} />
                     <p style={{ display: "inline" }}>친구에게 선물</p>
                 </div>
-                <select disabled={isDisabled} value={friendData} onChange={selectFriend} style={{ width: '100%' }}>
+                <select disabled={isDisabled} value={friendData.friendUser.id} onChange={selectFriend} style={{ width: '100%' }}>
                     <option value={""} disabled>친구선택</option>
                     {friends.map(friend => <option key={friend.id} value={friend.friendUser.id}>{friend.friendName} ({friend.friendUser.name})</option>)}
 

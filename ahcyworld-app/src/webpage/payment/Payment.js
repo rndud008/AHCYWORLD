@@ -42,7 +42,13 @@ const Payment = (user, acorns, navigatorFunction, friendData) => {
                 }).then((response) => {
                     const { data, status, error_msg } = response;
                     if (status === 201) {
-                        itemconfirm("구매성공!","아이템을 구매하러 가시겠습니까?","success",()=>{navigatorFunction('/item'); window.location.reload();},()=>{window.location.reload();})
+                        console.log(data);
+                        if(data.friendUser){
+                            alert("구매성공","선물이 보내졌습니다!","success",()=>{window.location.reload();})
+
+                        }else{
+                            itemconfirm("구매성공","아이템을 구매하러 가시겠습니까?","success",()=>{navigatorFunction('/item'); window.location.reload();},()=>{window.location.reload();})
+                        }
                     } else {
                         console.log("실패: " + error_msg);
                     }
