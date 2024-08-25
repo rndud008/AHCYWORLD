@@ -100,7 +100,8 @@
 
 .diarywriteno-btn {
   border: none;
-  border-radius: 5px; /* 모서리를 둥글게 */
+  margin: 20px 15px 10px 0;
+  border-radius: 12px; /* 모서리를 둥글게 */
   font-size: 18px; /* 글자 크기 */
   font-weight: bold; /* 글자 굵기 */
   background: linear-gradient(145deg, #ffb3b3, #ff9999); /* 붉은 계열 그라데이션 배경 */
