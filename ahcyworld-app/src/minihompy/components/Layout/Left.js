@@ -55,13 +55,14 @@ const Left = ({ user, hompy }) => {
                 .get(`${SERVER_HOST}/hompy/${hompyId}`)
                 .then((response) => {
                     const hompyData = response.data;
+                    console.log("hompyData: ", hompyData);
                     setStatusMessage(hompyData.statusMessage || "");
                     if (hompyData.profilePicture) {
-                        const profilePicturePath = hompyData.profilePicture.replaceAll(/\\/g, "//");
+                        // const profilePicturePath = hompyData.profilePicture.replaceAll(/\\/g, "//");
 
-                        const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath
-                            .split("/")
-                            .pop()}`;
+                        // const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
+                        const imageUrl = hompyData.profilePicture;
+
                         setProfilePicture(imageUrl);
                     }
                 })
@@ -137,47 +138,42 @@ const Left = ({ user, hompy }) => {
         }
     };
 
-  // 상태 메시지
-  const updateStatusMessage = () => {
-    if (userId) {
-      axios
-        .post(
-          `${SERVER_HOST}/hompy/${hompyId}/statusMessage`,
-          { statusMessage },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          setTextEdit(false);
-        })
-        .catch((error) => {
-          console.error("상태 메시지 업데이트 실패", error);
-        });
-    }
-  };
+    // 상태 메시지
+    const updateStatusMessage = () => {
+        if (userId) {
+            axios
+                .post(
+                    `${SERVER_HOST}/hompy/${hompyId}/statusMessage`,
+                    { statusMessage },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                )
+                .then((response) => {
+                    setTextEdit(false);
+                })
+                .catch((error) => {
+                    console.error("상태 메시지 업데이트 실패", error);
+                });
+        }
+    };
 
     const updateProfileImg = () => {
         if (userId && selectedFile) {
             const formData = new FormData();
             formData.append("file", selectedFile);
 
-      axios
-        .post(`${SERVER_HOST}/hompy/${hompyId}/profileImg`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          const profilePicturePath = response.data.profilePicture.replaceAll(
-            /\\/g,
-            "//"
-          );
-          const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath
-            .split("/")
-            .pop()}`;
+            axios
+                .post(`${SERVER_HOST}/hompy/${hompyId}/profileImg`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    const profilePicturePath = response.data.profilePicture.replaceAll(/\\/g, "//");
+                    const imageUrl = `${SERVER_HOST}/hompy/profileImg/${profilePicturePath.split("/").pop()}`;
 
                     setProfilePicture(imageUrl);
                     setProfileEdit(false);
@@ -214,8 +210,9 @@ const Left = ({ user, hompy }) => {
 
     return (
         <div className='left-container'>
-            <img className='profile-img' src={profilePicture || "default_profileImg.png"} alt='유저 이미지' />
-            <input value={''} type='file' id='fileInput' style={{ display: "none" }} onChange={handleFileChange} />
+            {/* <img className='profile-img' src={profilePicture || "default_img.png"} alt='유저 이미지' /> */}
+            <img className='profile-img' src={`${process.env.PUBLIC_URL}/image/${profilePicture}`} alt='유저 이미지' />
+            <input value={""} type='file' id='fileInput' style={{ display: "none" }} onChange={handleFileChange} />
             {hompyInfo.id === parseInt(hompyId) && (
                 <>
                     <button
