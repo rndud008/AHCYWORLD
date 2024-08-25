@@ -4,11 +4,12 @@ import { friendShipResponse, myFriendRequests } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 
 const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
-    const { userInfo } = useContext(LoginContext);
+    const { userInfo,setHompyInfo } = useContext(LoginContext);
     const [friendRequests, setFriendRequests] = useState([]);
     const [updatedRequests, setUpdatedRequests] = useState([]);
 
     useEffect(() => {
+
         const fetchFriendRequests = async () => {
             try {
                 const response = await myFriendRequests(userInfo.username);
@@ -22,7 +23,7 @@ const FriendRequestModal = ({ isOpen, onClose, onRequestUpdate }) => {
             }
         };
         fetchFriendRequests();
-    }, []);
+    }, [setHompyInfo]);
 
     const friendShipStatus = async (requestId, reply) => {
         try {
