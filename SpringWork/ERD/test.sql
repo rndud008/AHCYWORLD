@@ -32,7 +32,7 @@ delete from friend
 where id = 61;
 
 delete from item
-where id = 147;
+where id between 148 and 152;
 
 delete from carts
 where id = 35;
@@ -66,7 +66,7 @@ where id = 116;
 
 update ah_user
 set acorn = 10000
-where id = 9;
+where id = 7;
 
 update ah_user
 set role = 'ROLE_MEMBER,ROLE_ADMIN'

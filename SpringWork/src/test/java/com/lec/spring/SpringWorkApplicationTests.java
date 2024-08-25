@@ -11,6 +11,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static org.hibernate.annotations.UuidGenerator.Style.RANDOM;
 
 @SpringBootTest
 class SpringWorkApplicationTests {
@@ -177,6 +186,7 @@ class SpringWorkApplicationTests {
 
     @Test
     void addUser() {
+
 //        User user = User.builder()
 //                .username("admin1")
 //                .password("1234")
@@ -188,12 +198,12 @@ class SpringWorkApplicationTests {
 //                .role("ROLE_ADMIN,ROLE_MEMBER")
 //                .build();
 
-        User user = userRepository.findById(2L).orElse(null);
+//        User user = userRepository.findById(2L).orElse(null);
 
-        user.setAcorn(3000000L);
+//        user.setAcorn(3000000L);
 //        user.setUsername("ADMIN1".toUpperCase());
 //        user.setPassword(passwordEncoder.encode("1234"));
-        userRepository.saveAndFlush(user);
+//        userRepository.saveAndFlush(user);
 
 //        Hompy hompy = Hompy.builder()
 //                .user(user)
@@ -205,5 +215,76 @@ class SpringWorkApplicationTests {
 //
 //        hompyRepository.saveAndFlush(hompy);
 
+        // 테스트 데이터 출력 또는 데이터베이스에 저장
+        LocalDate startDate = LocalDate.of(2024, Month.JANUARY, 1);
+        LocalDate endDate = LocalDate.of(2024, Month.JULY, 31);
+
+
+        for (int i = 114; i < 164; i++) {
+            LocalDateTime createAt = getRandomDateTime(startDate, endDate);
+            LocalDate birthDay = getRandomBirthday();
+            String username = "user" + (i + 1);
+            String email = "user" + (i + 1) + "@mail.com";
+            String name = "Name" + (i + 1);
+            String gender;
+            if (i % 2 == 0) {
+                gender = "MALE";
+            } else gender = "FEMALE";
+
+
+            User user = User.builder()
+                    .username(username)
+                    .password(passwordEncoder.encode("1234"))
+                    .name(name)
+                    .email(email)
+                    .birthDay(birthDay)
+                    .gender(gender)
+                    .acorn(0L)
+                    .role("ROLE_MEMBER")
+//                    .createAt(createAt)
+                    .build();
+
+            user = userRepository.saveAndFlush(user);
+
+            Hompy hompy = new Hompy();
+            hompy.setUser(user);
+            hompy.setProfilePicture("/upload/default_profile.png");
+            hompy.setStatusMessage(null);
+            hompy.setTodayVisitor(0L);
+            hompy.setTotalVisitor(0L);
+            hompy.setMiniHompySkin("background.png");
+            hompy.setMiniRoom("miniroom.png");
+            hompy.setProfile(null);
+            hompy.setMenuColor("#147DAF");
+            hompy.setMenuBorder("#000000");
+            hompy.setMenuText("#FFF");
+            hompy.setMiniHompyBgm("");
+            hompy.setMenuStatus("visible,visible,visible,visible");
+            hompy.setTitle(user.getName()+"의 미니홈피");
+
+            hompyRepository.saveAndFlush(hompy);
+        }
+    }
+
+    private static LocalDateTime getRandomDateTime(LocalDate startDate, LocalDate endDate) {
+        long startEpochDay = startDate.toEpochDay();
+        long endEpochDay = endDate.toEpochDay();
+        long randomEpochDay = ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay + 1);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomEpochDay);
+        return LocalDateTime.of(randomDate, getRandomTime());
+    }
+
+    private static LocalDate getRandomBirthday() {
+        int year = ThreadLocalRandom.current().nextBoolean() ? (ThreadLocalRandom.current().nextInt(1980, 1990)) : (ThreadLocalRandom.current().nextInt(1990, 2000));
+        int month = ThreadLocalRandom.current().nextInt(1, 13);
+        int day = ThreadLocalRandom.current().nextInt(1, 29);
+        return LocalDate.of(year, month, day);
+    }
+
+    private static LocalTime getRandomTime() {
+        int hour = ThreadLocalRandom.current().nextInt(0, 24);
+        int minute = ThreadLocalRandom.current().nextInt(0, 60);
+        int second = ThreadLocalRandom.current().nextInt(0, 60);
+        return LocalTime.of(hour, minute, second);
     }
 }
