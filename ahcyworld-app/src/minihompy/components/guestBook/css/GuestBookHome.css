@@ -24,6 +24,7 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 .form-row {
@@ -52,6 +53,10 @@
 .secret-label {
     cursor: pointer;
     margin-left: 5px;
+}
+
+.secret-checkbox .form-check-label {
+    font-size: 15px;
 }
 
 .submit-button {
@@ -102,17 +107,11 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center;
     margin-top: 10px;
     width: 100%;
-    border: 1px solid #999;
-    border-radius: 8px; /* 모서리를 둥글게 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px; /* 작성 폼과 동일한 최대 너비 설정 */
-    padding: 10px;
     box-sizing: border-box; /* 패딩을 너비에 포함 */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
 .guestbook-table {
@@ -123,8 +122,14 @@
 }
 
 .guestbook-entry {
+    border: 1px solid #999;
+    border-radius: 8px; /* 모서리를 둥글게 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    padding: 6px 10px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .info-row {

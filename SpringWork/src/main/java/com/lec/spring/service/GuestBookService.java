@@ -37,7 +37,7 @@ public class GuestBookService {
         System.out.println("GuestBook User: " + guestBookUser.getId() + ", Hompy Owner: " + targetHompy.getUser().getId());
         System.out.println("Hompy Owner: " + targetHompy);
 
-        if (!friendRepository.existsByUserAndFriendUser(guestBookUser, targetHompy.getUser())) {
+        if (!friendRepository.existsByUserAndFriendUserAndFriendStatus(guestBookUser, targetHompy.getUser(), "accept")) {
             throw new IllegalArgumentException("유저와 일촌 관계가 아닙니다.");
         }
 
@@ -107,7 +107,7 @@ public class GuestBookService {
         if (user == null) {
             throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
         }
-        return friendRepository.existsByUserAndFriendUser(user, hompy.getUser());
+        return friendRepository.existsByUserAndFriendUserAndFriendStatus(user, hompy.getUser(), "accept");
     }
 
     public Hompy findHompyByUserId(Long userId) {
