@@ -40,16 +40,18 @@ const PostDetail = () => {
             <h4>{post?.subject}</h4>
           </div>
           <div>
-            <Button 
+            <Button
+              className="postdetaillist-btn"
               onClick={() => postList(navigate, hompyId, postName, folderId)}
             >
               목록
             </Button>
             {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin)&& (
               <>
-                <Button onClick={() => handleOpen(dispatch)}>이동</Button>
+                <Button className="postmove-btn" onClick={() => handleOpen(dispatch)}>이동</Button>
 
                 <Button
+                className="postedit-btn"
                   onClick={() =>
                     navigate(
                       `/hompy/${hompyId}/${postName}/${folderId}/update/${postId}`
@@ -60,6 +62,7 @@ const PostDetail = () => {
                 </Button>
                 
                 <Button
+                className="postdelete-btn"
                   onClick={() =>
                     postDelete(
                       dispatch,

@@ -163,6 +163,7 @@ const PostUpdate = () => {
                   }
                 />
                 <Button
+                  className="filedel-btn"
                   type="button"
                   variant="danger"
                   name="fileList"

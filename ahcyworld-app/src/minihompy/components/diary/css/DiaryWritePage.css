@@ -1,14 +1,58 @@
-.Modal-header {
-  background: linear-gradient(145deg, #c0d9ff, #a0c4ff);
-  color: #003366;
-  padding: 10px 20px;
-  border-radius: 10px 10px 0 0;
+.custom-modal .modal-content {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
 }
 
-.Modal-title {
-  font-size: 24px;
+.modal-title-custom {
+  font-size: 1.5rem;
   font-weight: bold;
+  color: #343a40;
+}
+
+.modal-body-custom {
+  font-size: 1rem;
+  color: #495057;
+}
+
+.diary-table th, .diary-table td {
   text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.diary-table th:nth-child(1),
+.diary-table td:nth-child(1) {
+  width: 15%; /* 제목 열의 너비 */
+}
+
+.diary-table th:nth-child(2),
+.diary-table td:nth-child(2) {
+  width: 70%; /* 내용 열의 너비 */
+}
+
+.diary-table th:nth-child(3),
+.diary-table td:nth-child(3) {
+  width: 15%; /* 삭제 열의 너비 */
+}
+
+.clickable-cell {
+  cursor: pointer;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.clickable-cell:hover {
+  color: #0056b3;
+}
+
+.delete-btn {
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
 }
 
 .diary-modal-body {

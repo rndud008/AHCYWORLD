@@ -56,10 +56,10 @@ const PostModal = () => {
             </Form.Group>
 
             <div className="modalFolderListButton">
-              <Button variant="primary" type="submit">
+              <Button className="postedit-btn" type="submit">
                 이동
               </Button>
-              <Button variant="secondary" onClick={() => handleClose(dispatch)}>
+              <Button className="postdelete-btn" onClick={() => handleClose(dispatch)}>
                 취소
               </Button>
             </div>

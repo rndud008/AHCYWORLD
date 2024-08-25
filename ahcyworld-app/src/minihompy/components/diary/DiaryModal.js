@@ -54,134 +54,66 @@ const DiaryModal = ({
     };
 
     return (
-        <Modal show={show} onHide={onHide}>
+        <Modal show={show} onHide={onHide} className="custom-modal">
             <Modal.Header closeButton>
-                <div className="Modal-header">
-                    <Modal.Title>
-                        <div className="Modal-title">
-                            {moment(selectedDate).format("YYYY-MM-DD")} 다이어리
-                        </div>
-                    </Modal.Title>
-                </div>
+                <Modal.Title className="modal-title-custom">
+                    {moment(selectedDate).format("YYYY-MM-DD")} 다이어리
+                </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <div className="Modal-body">
-                    {diaryContent && diaryContent.length > 0 ? (
-                        <>
-                            {/* 테이블에 className="diary-modal-body" 추가 */}
-                            <Table bordered hover className="diary-modal-body">
-                                <thead>
-                                    <tr>
-                                        <th style={{ width: "10%" }}>No.</th>
-                                        <th style={{ width: "30%" }}>제목</th>
-                                        <th style={{ width: "50%" }}>내용</th>
-                                        {hompyInfo.user.id ===
-                                            diaryContent[0].hompy.user.id && (
-                                            <th style={{ width: "10%" }}>
-                                                삭제
-                                            </th>
+            <Modal.Body className="modal-body-custom">
+                {diaryContent && diaryContent.length > 0 ? (
+                    <>
+                        <Table striped bordered hover className="diary-table">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>제목</th>
+                                    {hompyInfo.user.id === diaryContent[0].hompy.user.id && <th>삭제</th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {diaryContent.map((diary, index) => (
+                                    <tr key={index} className="diary-row">
+                                        <td
+                                            onClick={() => onUpdateClick(diary)}
+                                            className={diary.hompy.id === hompyInfo.id ? 'clickable-cell' : ''}
+                                        >
+                                            {diary.keyWord}
+                                        </td>
+                                        <td
+                                            onClick={() => onUpdateClick(diary)}
+                                            className={diary.hompy.id === hompyInfo.id ? 'clickable-cell' : ''}
+                                        >
+                                            {diary.content}
+                                        </td>
+                                        {diary.hompy.id === hompyInfo.id && (
+                                            <td className="delete-cell">
+                                                <Button className="diarywriteno-btn" onClick={() => onDeleteClick(diary.id)}>
+                                                    X
+                                                </Button>
+                                            </td>
                                         )}
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {diaryContent.map((diary, index) => (
-                                        <tr key={index}>
-                                            {/* No. 칼럼은 index + 1로 표시하여 1번부터 시작 */}
-                                            <td onClick={() =>
-                                                    onUpdateClick(diary)
-                                                }
-                                                style={{ cursor:
-                                                    diary.hompy.id ===
-                                                    hompyInfo.id
-                                                        ? "pointer"
-                                                        : "default", width: "10%" }}>
-                                                {index + 1}
-                                            </td>
-                                            <td
-                                                onClick={() =>
-                                                    onUpdateClick(diary)
-                                                }
-                                                style={{
-                                                    cursor:
-                                                        diary.hompy.id ===
-                                                        hompyInfo.id
-                                                            ? "pointer"
-                                                            : "default",
-                                                    width: "30%",
-                                                }}
-                                            >
-                                                {diary.keyWord}
-                                            </td>
-                                            <td
-                                                onClick={() =>
-                                                    onUpdateClick(diary)
-                                                }
-                                                style={{
-                                                    cursor:
-                                                        diary.hompy.id ===
-                                                        hompyInfo.id
-                                                            ? "pointer"
-                                                            : "default",
-                                                    width: "50%",
-                                                }}
-                                            >
-                                                {diary.content}
-                                            </td>
-                                            {diary.hompy.id ===
-                                                hompyInfo.id && (
-                                                <td style={{ width: "10%" }}>
-                                                    <Button
-                                                        className="diarywriteno-btn"
-                                                        variant="danger"
-                                                        onClick={() =>
-                                                            onDeleteClick(
-                                                                diary.id
-                                                            )
-                                                        }
-                                                    >
-                                                        X
-                                                    </Button>
-                                                </td>
-                                            )}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                            <Button
-                                className="diarywriteok-btn"
-                                onClick={onWriteClick}
-                                style={{
-                                    display:
-                                        hompyInfo.user.id === userInfo.id
-                                            ? "block"
-                                            : "none",
-                                }}
-                            >
-                                다이어리 작성하기
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <p>일정이 없습니다.</p>
-                            <hr />
-                            <Button
-                                className="diarywriteok-btn"
-                                onClick={onWriteClick}
-                                style={{
-                                    display:
-                                        hompyInfo.user.id === userInfo.id
-                                            ? "block"
-                                            : "none",
-                                }}
-                            >
-                                다이어리 작성하기
-                            </Button>
-                        </>
-                    )}
-                </div>
+                                ))}
+                            </tbody>
+                        </Table>
+                        <Button className="diarywriteok-btn" onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
+                            다이어리 작성하기
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <p>일정이 없습니다.</p>
+                        <hr />
+                        <Button className="diarywriteok-btn" onClick={onWriteClick} style={{ display: hompyInfo.user.id === userInfo.id ? 'block' : 'none'}}>
+                            다이어리 작성하기
+                        </Button>
+                    </>
+                )}
             </Modal.Body>
         </Modal>
     );
 };
+
 
 export default DiaryModal;
