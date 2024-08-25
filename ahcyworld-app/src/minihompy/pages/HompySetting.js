@@ -16,7 +16,7 @@ import { SERVER_HOST } from "../../apis/api";
 
 
 
-const HompySetting = ({activeMenu}) => {
+const HompySetting = ({activeMenu, setIsChangeMinimi}) => {
   const { hompyId } = useParams();
   const [hompy, setHompy] = useState(null);
 
