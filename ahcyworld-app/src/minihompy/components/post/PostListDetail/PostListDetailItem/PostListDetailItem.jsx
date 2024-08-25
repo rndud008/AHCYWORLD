@@ -39,6 +39,7 @@ const PostListDetailItem = ({ item }) => {
         {!(parseInt(hompyId) === hompyInfo?.id) && (
           <>
             <Button
+              className="scrap-btn"
               name="scrapPost"
               onClick={(e) =>
                 detailListHandleOpen(
@@ -58,6 +59,7 @@ const PostListDetailItem = ({ item }) => {
         {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin) && (
           <>
             <Button
+            className="postedit-btn"
               onClick={() =>
                 navigate(
                   `/hompy/${hompyId}/${postName}/${folderId}/update/${postId}`
@@ -67,6 +69,7 @@ const PostListDetailItem = ({ item }) => {
               수정
             </Button>
             <Button
+            className="postmove-btn"
               name="folderMove"
               onClick={(e) =>
                 detailListHandleOpen(
@@ -82,6 +85,7 @@ const PostListDetailItem = ({ item }) => {
               이동
             </Button>
             <Button
+              className="postdelete-btn"
               onClick={() =>
                 postDelete(
                   dispatch,

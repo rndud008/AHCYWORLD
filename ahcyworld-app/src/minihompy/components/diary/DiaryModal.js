@@ -49,46 +49,41 @@ const DiaryModal = ({
 
 
     return (
-        <Modal show={show} onHide={onHide}>
+        <Modal show={show} onHide={onHide} className="custom-modal">
             <Modal.Header closeButton>
-                <div className="Modal-header">
-                    <Modal.Title>
-                        <div className="Modal-title">
-                            {moment(selectedDate).format("YYYY-MM-DD")} 다이어리
-                        </div>
-                    </Modal.Title>
-                </div>
+                <Modal.Title className="modal-title-custom">
+                    {moment(selectedDate).format("YYYY-MM-DD")} 다이어리
+                </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <div className="Modal-body">
+            <Modal.Body className="modal-body-custom">
                 {diaryContent && diaryContent.length > 0 ? (
                     <>
-                        <Table striped bordered hover>
+                        <Table striped bordered hover className="diary-table">
                             <thead>
                                 <tr>
+                                    <th>NO</th>
                                     <th>제목</th>
-                                    <th>내용</th>
                                     {hompyInfo.user.id === diaryContent[0].hompy.user.id && <th>삭제</th>}
                                 </tr>
                             </thead>
                             <tbody>
                                 {diaryContent.map((diary, index) => (
-                                    <tr key={index}>
-                                         <td
+                                    <tr key={index} className="diary-row">
+                                        <td
                                             onClick={() => onUpdateClick(diary)}
-                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default' }}
+                                            className={diary.hompy.id === hompyInfo.id ? 'clickable-cell' : ''}
                                         >
                                             {diary.keyWord}
                                         </td>
                                         <td
                                             onClick={() => onUpdateClick(diary)}
-                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default' }}
+                                            className={diary.hompy.id === hompyInfo.id ? 'clickable-cell' : ''}
                                         >
                                             {diary.content}
                                         </td>
                                         {diary.hompy.id === hompyInfo.id && (
-                                            <td>
-                                                <Button className="diarywriteno-btn" variant="danger" onClick={() => onDeleteClick(diary.id)}>
+                                            <td className="delete-cell">
+                                                <Button className="diarywriteno-btn" onClick={() => onDeleteClick(diary.id)}>
                                                     X
                                                 </Button>
                                             </td>
@@ -110,10 +105,10 @@ const DiaryModal = ({
                         </Button>
                     </>
                 )}
-                </div>
             </Modal.Body>
         </Modal>
     );
 };
+
 
 export default DiaryModal;

@@ -28,13 +28,11 @@
 
 .postDetailListItemHeader1 button {
   margin: 0 5px;
-  background: none;
   border-radius: 30px;
   height: 40px;
-  color: black;
+  color: #fff;
 }
 .postDetailListItemHeader1 button:hover {
-  opacity: 0.6;
   animation: bounce 0.8s infinite;
 }
 @keyframes bounce {
@@ -88,4 +86,140 @@
   margin-bottom: 10px;
   object-fit: cover;
   width: 100%;
+}
+
+.scrap-btn {
+  border: none;
+  margin-right: 15px;
+  border-radius: 12px;
+  font-size: 18px; 
+  font-weight: bold;
+  background: linear-gradient(145deg, #c9a6ff, #a874ff); /* 보라색 계열의 배경색 */
+  color: #4b0082; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(75, 0, 130, 0.15), 
+              -2px -2px 5px rgba(204, 153, 255, 0.7); 
+  transition: all 0.2s ease; 
+  backdrop-filter: blur(10px);
+}
+
+.scrap-btn:hover {
+  background: linear-gradient(145deg, #b589ff, #9356ff); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(75, 0, 130, 0.2), 
+              -1px -1px 4px rgba(204, 153, 255, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.scrap-btn:active {
+  background: linear-gradient(145deg, #9356ff, #7224e0); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(75, 0, 130, 0.2), 
+              inset -1px -1px 4px rgba(204, 153, 255, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.scrap-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); /* 포커스 시 보라색 하이라이트 추가 */
+}
+
+.postedit-btn {
+  border: none;
+  margin-right: 15px;
+  border-radius: 12px;
+  font-size: 18px; 
+  font-weight: bold;
+  background: linear-gradient(145deg, #4da6ff, #007bff); /* 파란색 계열의 배경색 */
+  color: #ffffff; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 102, 0.15), 
+              -2px -2px 5px rgba(173, 216, 230, 0.7); 
+  transition: all 0.2s ease; 
+  backdrop-filter: blur(10px);
+}
+
+.postedit-btn:hover {
+  background: linear-gradient(145deg, #3399ff, #0056b3); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 102, 0.2), 
+              -1px -1px 4px rgba(173, 216, 230, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.postedit-btn:active {
+  background: linear-gradient(145deg, #0056b3, #004080); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 102, 0.2), 
+              inset -1px -1px 4px rgba(173, 216, 230, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.postedit-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 파란색 하이라이트 추가 */
+}
+
+.postmove-btn {
+  border: none;
+  margin-right: 15px;
+  border-radius: 12px;
+  font-size: 18px; 
+  font-weight: bold;
+  background: linear-gradient(145deg, #28a745, #20c997); /* 녹색 계열의 배경색 */
+  color: #ffffff; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(40, 167, 69, 0.15), 
+              -2px -2px 5px rgba(32, 201, 151, 0.7); 
+  transition: all 0.2s ease; 
+  backdrop-filter: blur(10px);
+}
+
+.postmove-btn:hover {
+  background: linear-gradient(145deg, #20c997, #198754); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(40, 167, 69, 0.2), 
+              -1px -1px 4px rgba(32, 201, 151, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.postmove-btn:active {
+  background: linear-gradient(145deg, #198754, #157347); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(40, 167, 69, 0.2), 
+              inset -1px -1px 4px rgba(32, 201, 151, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.postmove-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* 포커스 시 녹색 하이라이트 추가 */
+}
+
+.postdelete-btn {
+  border: none;
+  margin-right: 15px;
+  border-radius: 12px;
+  font-size: 18px; 
+  font-weight: bold;
+  background: linear-gradient(145deg, #ff4d4d, #dc3545); /* 빨간색 계열의 배경색 */
+  color: #ffffff; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 5px rgba(255, 77, 77, 0.15), 
+              -2px -2px 5px rgba(220, 53, 69, 0.7); 
+  transition: all 0.2s ease; 
+  backdrop-filter: blur(10px);
+}
+
+.postdelete-btn:hover {
+  background: linear-gradient(145deg, #dc3545, #c82333); /* 마우스 오버 시 배경 색상 변경 */
+  box-shadow: 1px 1px 4px rgba(255, 77, 77, 0.2), 
+              -1px -1px 4px rgba(220, 53, 69, 0.7); /* 그림자 크기 조정 */
+  transform: translateY(-1px); /* 살짝 위로 이동 */
+}
+
+.postdelete-btn:active {
+  background: linear-gradient(145deg, #c82333, #b21f2d); /* 클릭 시 배경 색상 변경 */
+  box-shadow: inset 1px 1px 4px rgba(255, 77, 77, 0.2), 
+              inset -1px -1px 4px rgba(220, 53, 69, 0.7); /* 눌린 듯한 효과 */
+  transform: translateY(1px); /* 클릭 시 원래 위치로 돌아옴 */
+}
+
+.postdelete-btn:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); /* 포커스 시 빨간색 하이라이트 추가 */
 }
