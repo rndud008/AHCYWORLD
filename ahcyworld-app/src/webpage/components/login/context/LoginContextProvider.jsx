@@ -133,7 +133,8 @@ const LoginContextProvider = ({ children }) => {
             if (status === 200) {
                 Cookies.set("accessToken", accessToken);
 
-                loginSetting(data, accessToken);
+                // loginSetting(data, accessToken);
+                loginCheck();
 
                 Swal.alert("로그인 성공", "관리자페이지로 이동합니다.", "success", () => {
                     navigate("/admin");
