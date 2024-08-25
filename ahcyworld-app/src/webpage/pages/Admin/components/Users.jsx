@@ -8,6 +8,7 @@ import SendMessageModal from "./SendMessageModal";
 import { IoIosSend } from "react-icons/io";
 import * as Swal from "../../../../apis/alert";
 import { BsSearch } from "react-icons/bs";
+import { REACT_HOST } from "../../../../apis/api";
 
 const Users = () => {
     const { isLogin, roles } = useContext(LoginContext);
@@ -91,7 +92,7 @@ const Users = () => {
 
     const goMinihompy = (hompyId) => {
         window.open(
-            `http://43.201.136.217:3000/hompy/${hompyId}`,
+            `${REACT_HOST}/hompy/${hompyId}`,
             "_blank",
             "width=1700,height=825,menubar=no,toolbar=no,scrollbars=no,resizable=no"
         );
