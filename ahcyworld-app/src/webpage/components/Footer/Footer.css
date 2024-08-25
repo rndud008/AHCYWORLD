@@ -10,15 +10,18 @@
 }
 /* Footer.css */
 .footer-container {
-    background-color: #f7f7f7; /* 배경색 조정 */
     padding: 20px 0;
     border-top: 1px solid #e9ecef; /* 상단 경계선 추가 */
     margin-top: 30px;
-    border-radius: 14px;
 }
 
 .footer-content {
     /* outline: 1px solid blue; */
+    background-color: #f7f7f7; /* 배경색 조정 */
+    border-radius: 14px;
+    margin-top: 30px;
+    padding: 20px 0;
+    border-top: 1px solid #e9ecef; /* 상단 경계선 추가 */
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
