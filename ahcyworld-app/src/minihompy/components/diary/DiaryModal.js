@@ -66,9 +66,9 @@ const DiaryModal = ({
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>제목</th>
-                                    <th>내용</th>
-                                    {hompyInfo.user.id === diaryContent[0].hompy.user.id && <th>삭제</th>}
+                                    <th style={{ width: '40%'}}>제목</th>
+                                    <th style={{ width: '50%'}}>내용</th>
+                                    {hompyInfo.user.id === diaryContent[0].hompy.user.id && <th style={{ width: '10%'}}>삭제</th>}
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,18 +76,18 @@ const DiaryModal = ({
                                     <tr key={index}>
                                          <td
                                             onClick={() => onUpdateClick(diary)}
-                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default' }}
+                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default', width: '40%' }}
                                         >
                                             {diary.keyWord}
                                         </td>
                                         <td
                                             onClick={() => onUpdateClick(diary)}
-                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default' }}
+                                            style={{ cursor: diary.hompy.id === hompyInfo.id ? 'pointer' : 'default', width: '50%' }}
                                         >
                                             {diary.content}
                                         </td>
                                         {diary.hompy.id === hompyInfo.id && (
-                                            <td>
+                                            <td style={{ width: '10%'}}>
                                                 <Button className="diarywriteno-btn" variant="danger" onClick={() => onDeleteClick(diary.id)}>
                                                     X
                                                 </Button>

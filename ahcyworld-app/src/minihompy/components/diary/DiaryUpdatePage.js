@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Form, Container, Spinner } from 'react-bootstrap';
 import Layout from '../Layout/Layout';
+import * as Swal from "../../../apis/alert";
 import Cookies from "js-cookie";
 import api, { SERVER_HOST } from '../../../apis/api';
 import { LoginContext } from '../../../webpage/components/login/context/LoginContextProvider';
@@ -72,8 +73,9 @@ const DiaryUpdatePage = () => {
             }
         })
             .then(response => {
-
-                navigate(`/hompy/${hompyInfo.id}/diary`); // 수정 후 리스트 페이지로 이동
+                Swal.alert("다이어리 저장이 완료되었습니다.", "다이어리 저장 성공", "success", () =>{
+                    navigate(`/hompy/${hompyInfo.id}/diary`);
+                })
             })
             .catch(error => {
                 console.error("폼 제출이 안 됐어...", error);
