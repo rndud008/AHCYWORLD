@@ -18,7 +18,7 @@ public class SpringWorkApplication {
     @PostConstruct
     public void init() {
         // timezone 설정
-        TimeZone.setDefault(TimeZone.getTimeZone("KST"));
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
     }
 
 }
