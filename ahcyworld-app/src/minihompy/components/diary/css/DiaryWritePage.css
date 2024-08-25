@@ -11,9 +11,18 @@
   text-align: center;
 }
 
+.diary-modal-body {
+  display: block;
+}
+
+.diary-modal-body table tbody td {
+  text-align: center;
+  vertical-align: middle;
+}
+
 .diarywriteok-btn {
   border: none;
-  margin-right: 15px;
+  margin: 20px 15px 10px 0;
   border-radius: 12px;
   font-size: 18px; 
   font-weight: bold;
