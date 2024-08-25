@@ -35,7 +35,6 @@ const BgmPlayer = ({  }) => {
   const {hompyId} = useParams();
   const hompy = useSelector(state => state.hompy.hompy);
 
-  console.log('bgm 다시 렌더링?',hompyId)
   useEffect(() => {
 
     const fetchBgmData = async () => {

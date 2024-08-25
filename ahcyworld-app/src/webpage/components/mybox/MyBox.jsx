@@ -20,6 +20,7 @@ const MyBox = () => {
     const [friendRequestCnt, setFriendRequestCnt] = useState(0);
     const [messageCnt, setMessageCnt] = useState(0);
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
+    const [minimiPicture, setMinimiPicture] = useState()
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -80,6 +81,12 @@ const MyBox = () => {
         navigate(`/cart/${userInfo.id}`);
     };
 
+    useEffect(()=>{
+        if(hompyInfo){
+            setMinimiPicture(`${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`);
+        }
+    },[hompyInfo])
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -93,6 +100,7 @@ const MyBox = () => {
         if (isLogin) {
             fetchUserData();
         }
+
     }, [isLogin]);
 
     useEffect(() => {
@@ -117,6 +125,7 @@ const MyBox = () => {
         };
 
         fetchFriendRequests();
+
     }, [isLogin, userInfo, isFriendRequstModalOpen, isMessageModalOpen]);
 
     useEffect(() => {
@@ -140,7 +149,7 @@ const MyBox = () => {
         fetchMessage();
     }, [isMessageModalOpen]);
 
-    const minimiPicture = `${process.env.PUBLIC_URL}/image/${hompyInfo.minimiPicture || "default_img.png"}`;
+    
 
     const openMinihompy = () => {
         window.open(
@@ -173,7 +182,7 @@ const MyBox = () => {
 
             <div className='middle'>
                 <div className='minimi-box'>
-                    <img src={minimiPicture} alt='미니홈피 이미지' />
+                    <img src={minimiPicture} alt='미니미 이미지' />
                 </div>
                 <div className='info-box'>
                     <ul>
@@ -203,7 +212,6 @@ const MyBox = () => {
                                 충전
                             </button>
                         </li>
-                        {/* </li> */}
                     </ul>
                 </div>
             </div>

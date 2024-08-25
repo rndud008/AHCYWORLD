@@ -81,7 +81,6 @@ const DiaryHome = () => {
 
     useEffect(()=>{
         if(hompy){
-
             fetchDiaries();   
         }
     },[hompy])

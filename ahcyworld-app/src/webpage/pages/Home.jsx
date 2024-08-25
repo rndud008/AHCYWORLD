@@ -32,7 +32,7 @@ const StyledMyBox = styled.div`
 `;
 
 const Home = ({ itemKind }) => {
-    const { isLogin, userInfo } = useContext(LoginContext);
+    const { isLogin, userInfo ,hompyInfo} = useContext(LoginContext);
 
     const [isFriendListVisible, setIsFriendListVisible] = useState(false);
     const [friends, setFriends] = useState([]);
@@ -97,14 +97,15 @@ const Home = ({ itemKind }) => {
                 }
             }
         };
+
         if (userInfo) {
             fetchUsers();
         } else return;
 
         localStorage.removeItem("openMenu");
         localStorage.removeItem("subMenu");
-    }, [isAddFriendModalOpen, isLogin]);
-
+        
+    }, [isAddFriendModalOpen, isLogin, hompyInfo]);
 
     return (
         <div className='home-container'>

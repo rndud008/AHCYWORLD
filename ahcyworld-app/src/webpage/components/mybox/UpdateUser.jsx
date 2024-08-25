@@ -8,7 +8,7 @@ import "./UpdateUser.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
-    const { userInfo, hompyInfo, setUserInfo } = useContext(LoginContext);
+    const { userInfo, hompyInfo, setUserInfo,setHompyInfo } = useContext(LoginContext);
 
     const [updatedUserInfo, setUpdatedUserInfo] = useState({
         name: "",
@@ -85,6 +85,12 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
                 name: newUser.name,
             });
 
+            (hompyInfo.minimiPicture === "female.png" || hompyInfo.minimiPicture === 'male.png') &&
+            setHompyInfo({...hompyInfo, minimiPicture:newUser.gender.toLowerCase()+'.png', user:newUser }) ||
+            (hompyInfo.minimiPicture !== "female.png" && hompyInfo.minimiPicture !== 'male.png') &&
+            setHompyInfo({...hompyInfo, user:newUser })
+
+
             Swal.alert(
                 "유저 정보 수정에 성공했습니다.",
                 "업데이트 성공",
@@ -105,7 +111,6 @@ const UpdateUser = ({ isEditModalOpen, closeEditModal }) => {
             );
         }
     };
-
     const validateForm = () => {
         let isValid = true;
 
