@@ -30,6 +30,7 @@ const MyBox = () => {
     const [isFriendRequstModalOpen, setIsFriendRequestModalOpen] = useState(false);
     const [refreshFlag, setRefreshFlag] = useState(false);
     const [minimiPicture, setMinimiPicture] = useState();
+    const [acornPull, setAcornPull] = useState(false);
 
     // 내 정보 수정
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -101,6 +102,7 @@ const MyBox = () => {
             try {
                 const response = await getUserInfoByUsername(userInfo.username);
                 setUserInfo(response.data);
+                setAcornPull(false);
             } catch (error) {
                 console.error("사용자 정보를 가져오는 중 에러 발생:", error);
             }
@@ -109,7 +111,7 @@ const MyBox = () => {
         if (isLogin) {
             fetchUserData();
         }
-    }, [isLogin, refreshFlag]);
+    }, [isLogin, refreshFlag,acornPull]);
 
     useEffect(() => {
         const fetchFriendRequests = async () => {
@@ -240,7 +242,7 @@ const MyBox = () => {
                     <button className='hompy-btn' onClick={openMessageModal}>
                         알림 {messageCnt}
                     </button>
-                    <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} />
+                    <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} setAcornPull={setAcornPull} />
                     <button className='hompy-btn' onClick={() => openMinihompy(hompyInfo.id)}>
                         내 미니홈피
                     </button>
