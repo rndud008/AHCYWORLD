@@ -70,7 +70,7 @@ const Left = ({ user, hompy }) => {
                     console.error("데이터 불러오기 실패", error);
                 });
         }
-    }, [hompyId]);
+    }, [hompyId,hompyInfo]);
 
     // 일촌 신청 목록 불러오기
     useEffect(() => {
@@ -113,7 +113,8 @@ const Left = ({ user, hompy }) => {
 
         fetchFriendList();
         friendWaiting();
-    }, [user?.username, isModalOpen]);
+
+    }, [user?.username, isModalOpen, hompyInfo, setFriendRequests]);
 
     // 일촌 신청 목록 업데이트 처리
     const handleFriendRequestUpdate = (updateRequests) => {

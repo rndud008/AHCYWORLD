@@ -4,7 +4,7 @@ import Left from "./Left";
 import Right from "./Right";
 import "./css/Layout.css";
 import axios from "axios";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { json, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Menu from "../menu/Menu";
 import BgmPlayer from "../musicPlayer/BgmPlayer";
 import BoardTypeList from "../post/BoardTypeList/BoardTypeList";
@@ -27,7 +27,7 @@ const Layout = ({setActiveMenu}) => {
   const [miniHompySkin, setMiniHompySkin] = useState();
   const [hompyTitle, setHompyTitle] = useState();
   const [show,setShow] = useState(false);
-  const { hompyInfo, setHompyInfo ,loginCheck} = useContext(LoginContext);
+  const { hompyInfo, setHompyInfo , setUserInfo} = useContext(LoginContext);
   const { postName,hompyId } = useParams();
   const location = useLocation();
   const isSettingPage = location.pathname.includes("/setting"); // 셋팅페이지 경로감지
@@ -46,8 +46,12 @@ const Layout = ({setActiveMenu}) => {
       if (event.key === 'hompyInfo') {
         const newHompyInfo = JSON.parse(event.newValue);
         newHompyInfo !== null && setHompyInfo(newHompyInfo);
-        
       }
+
+      if(event.key === 'userInfo'){
+        const newUserInfo = JSON.parse(event.newValue);
+        newUserInfo !== null && setUserInfo(newUserInfo);
+      } 
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -69,7 +73,7 @@ const Layout = ({setActiveMenu}) => {
      
     }
     
-  }, [hompy,dispatch]);
+  }, [hompy,dispatch,hompyInfo]);
 
   useEffect(() => {
     // 미니홈피에 방문 시 방문자 수 증가 API 호출
@@ -96,7 +100,7 @@ const Layout = ({setActiveMenu}) => {
     };
     increaseVisitCount();
 
-  }, [user]);
+  }, [user,hompyInfo]);
 
   useEffect(() => {
     if (hompyId) {
