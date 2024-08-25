@@ -62,8 +62,6 @@ public class WriteEntityListener {
                 BeanUtils.getBean(UserWriteHistoryRepository.class);
 
         UserWriteHistroy userWriteHistroy = new UserWriteHistroy();
-        System.out.println("userWriteHistory : " + post.getId());
-
         userWriteHistroy.setHompy(post.getFolder().getHompy());
         userWriteHistroy.setPostType(post.getFolder().getBoardType().getName());
         userWriteHistroy.setPostId(post.getId());
@@ -75,9 +73,8 @@ public class WriteEntityListener {
         if (!post.getFileList().isEmpty()) {
             userWriteHistroy.setAttachmentList(post.getFileList());
         }
-
         userWriteHistoryRepository.save(userWriteHistroy);
-        System.out.println(action + "저장 완료." + post.getViewCnt());
+
 
     }
 
@@ -97,9 +94,6 @@ public class WriteEntityListener {
         userWriteHistroy.setStatus(action);
 
         userWriteHistoryRepository.save(userWriteHistroy);
-
-        System.out.println(action + "저장 완료.");
-
 
     }
 
@@ -122,8 +116,6 @@ public class WriteEntityListener {
         userWriteHistroy.setStatus(action);
 
         userWriteHistoryRepository.save(userWriteHistroy);
-
-        System.out.println(action + "저장 완료.");
 
     }
 }

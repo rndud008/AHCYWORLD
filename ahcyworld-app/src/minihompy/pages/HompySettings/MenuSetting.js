@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../css/MenuSetting.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import { BlockPicker, ChromePicker, CirclePicker, SketchPicker, SwatchesPicker }
 import {HompyAction} from "../../../redux/actions/HompyAction"
 import { useDispatch, useSelector } from "react-redux";
 import { SERVER_HOST } from '../../../apis/api';
+import { LoginContext } from '../../../webpage/components/login/context/LoginContextProvider';
 
 
 const MenuSetting = () => {
@@ -20,6 +21,8 @@ const MenuSetting = () => {
     video: "visible",
     guestbook: "visible",
   });
+
+  const {setHompyInfo} = useContext(LoginContext)
 
   const menuLabels = {
     photo: "사진첩",
@@ -84,6 +87,8 @@ const MenuSetting = () => {
           video: statusString.split(',')[2],
           guestbook: statusString.split(',')[3],
         });
+        
+        setHompyInfo(response.data)
         
         dispatch(HompyAction.findByHompyIdAxios(hompyId));
       })

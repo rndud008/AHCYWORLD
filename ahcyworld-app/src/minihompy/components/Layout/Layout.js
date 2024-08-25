@@ -103,7 +103,7 @@ const Layout = ({setActiveMenu}) => {
       return navigate('/')
   }
   dispatch(HompyAction.findByHompyIdAxios(hompyId))
-  }, [userId,hompyId,hompyInfo]);
+  }, [userId,hompyId,hompyInfo,dispatch]);
 
   const hompyTitleChangeValue = (e) => {
     const { value } = e.target;
