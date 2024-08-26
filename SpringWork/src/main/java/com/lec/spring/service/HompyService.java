@@ -53,7 +53,7 @@ public class HompyService {
         originHompy.setMiniHompyFont(hompy.getMiniHompyFont());
         originHompy.setMiniHompyBgm(hompy.getMiniHompyBgm());
 
-        return hompyRepository.save(originHompy);
+        return originHompy;
     }
 
     // 프로필 사진

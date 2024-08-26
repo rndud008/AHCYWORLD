@@ -10,6 +10,7 @@ import AddFriendModal from "../friendShip/AddFriendModal";
 import { useDispatch, useSelector } from "react-redux";
 import { REACT_HOST, SERVER_HOST } from "../../../apis/api";
 import { HompyAction } from "../../../redux/actions/HompyAction";
+import Swal from "sweetalert2";
 
 const Left = ({ user, hompy }) => {
     const { hompyId } = useParams();
@@ -160,9 +161,11 @@ const Left = ({ user, hompy }) => {
                 .then((response) => {
                     setTextEdit(false);
                     dispatch(HompyAction.findByHompyIdAxios(hompyId))
+                    Swal.fire("성공!", "상태 메시지 업데이트 성공!", "success");
                 })
                 .catch((error) => {
                     console.error("상태 메시지 업데이트 실패", error);
+                    Swal.fire("실패!", "상태 메시지 업데이트 실패!", "error");
                 });
         }
     };
@@ -185,9 +188,12 @@ const Left = ({ user, hompy }) => {
                     setProfilePicture(imageUrl);
                     setProfileEdit(false);
                     dispatch(HompyAction.findByHompyIdAxios(hompyId))
+                    Swal.fire("성공!", "프로필 이미지 업데이트 성공!", "success");
+
                 })
                 .catch((error) => {
                     console.error("프로필 사진 업로드 실패", error);
+                    Swal.fire("실패", "프로필 이미지 업데이트에 실패했습니다.", "error");
                 });
         }
     };
