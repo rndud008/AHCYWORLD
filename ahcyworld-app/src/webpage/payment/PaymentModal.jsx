@@ -97,6 +97,12 @@ const PaymentModal = ({ isOpen, onClose }) => {
         setFriendData("");
         setAcorns(0);
         setIsZeroAcorn(false);
+        const resetFriendData = {
+            friendUser : {
+                id: ""
+            }
+        }
+        setFriendData(resetFriendData);
 
     }
 
