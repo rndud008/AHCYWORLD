@@ -19,7 +19,7 @@ public class HompyService {
     private final PostRepository postRepository;
     private final FolderRepository folderRepository;
     private final GuestBookRepository guestBookRepository;
-    private  final DiaryRepository diaryRepository;
+    private final DiaryRepository diaryRepository;
 
 
     public HompyService(HompyRepository hompyRepository
@@ -150,26 +150,28 @@ public class HompyService {
         if (hompy.getUser().getGender().equals("MALE")) {
             userMinimi = "male.png";
         } else {
-            userMinimi="female.png";
+            userMinimi = "female.png";
         }
         hompy.setMinimiPicture(userMinimi);
 
         hompy = hompyRepository.saveAndFlush(hompy);
-//        System.out.println(hompy);
 
         List<Folder> folderList = folderRepository.findAll();
-//        List<Post> postList = postRepository.findAll();
 
         for (Folder folder : folderList) {
             if (folder.getHompy().getId() == hompy.getId()) {
                 folderRepository.delete(folder);
-//                for (Post post : postList) {
-//                    if (post.getFolder().getId() == folder.getId()) {
-//                        postRepository.delete(post);
-//                    }
-//                }
             }
         }
+
+        List<GuestBook> guestBookList = guestBookRepository.findAll();
+
+        for (GuestBook guestBook : guestBookList) {
+            if (guestBook.getHompy().getId() == hompy.getId()) {
+                guestBookRepository.delete(guestBook);
+            }
+        }
+
 
 
         return "success";
@@ -191,7 +193,7 @@ public class HompyService {
 
     // 홈피 타이틀 변경.
     @Transactional
-    public Hompy updateHompyTitle(Hompy hompy, String hompyTitle){
+    public Hompy updateHompyTitle(Hompy hompy, String hompyTitle) {
         hompy.setTitle(hompyTitle);
         return hompy;
     }
@@ -207,21 +209,21 @@ public class HompyService {
         List<String> folderStatus = (action.equals("OWNER") || action.equals("FRIEND")) ? List.of("전체공개", "일촌공개") : List.of("전체공개");
         List<String> boardTypeNames = new ArrayList<>();
 
-        if(photoVisibleCheck){
+        if (photoVisibleCheck) {
             boardTypeNames.add("사진첩");
         }
 
-        if(boardVisibleCheck){
+        if (boardVisibleCheck) {
             boardTypeNames.add("게시판");
         }
 
-        if(videoVisibleCheck){
+        if (videoVisibleCheck) {
             boardTypeNames.add("동영상");
         }
 
-        if(boardTypeNames.size() == 3){
+        if (boardTypeNames.size() == 3) {
             return postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, pageable, folderStatus);
-        }else {
+        } else {
             return postRepository.findByFolderHompyAndFolderBoardTypeNameInAndFolderStatusInOrderByIdDesc
                     (hompy, pageable, boardTypeNames, folderStatus);
         }
@@ -240,12 +242,12 @@ public class HompyService {
         if (action.equals("OWNER") || action.equals("FRIEND")) {
             postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개", "일촌공개"));
         } else {
-            postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개" ));
+            postList = postRepository.findByFolderHompyAndFolderStatusInOrderByIdDesc(hompy, List.of("전체공개"));
         }
 
         MiniHompyInfoCountDTO photo = new MiniHompyInfoCountDTO();
         visiblCheck = hompy.getMenuStatus().split(",")[0].equals("visible");
-        if(visiblCheck){
+        if (visiblCheck) {
             photo.setName("사진첩");
 
             today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("사진첩")).count();
@@ -259,7 +261,7 @@ public class HompyService {
 
         MiniHompyInfoCountDTO board = new MiniHompyInfoCountDTO();
         visiblCheck = hompy.getMenuStatus().split(",")[1].equals("visible");
-        if(visiblCheck) {
+        if (visiblCheck) {
             board.setName("게시판");
 
             today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("게시판")).count();
@@ -272,7 +274,7 @@ public class HompyService {
 
         MiniHompyInfoCountDTO video = new MiniHompyInfoCountDTO();
         visiblCheck = hompy.getMenuStatus().split(",")[2].equals("visible");
-        if(visiblCheck) {
+        if (visiblCheck) {
             video.setName("비디오");
 
             today = postList.stream().filter(post -> post.getCreateAt().toLocalDate().equals(LocalDate.now()) && post.getFolder().getBoardType().getName().equals("동영상")).count();
@@ -286,7 +288,7 @@ public class HompyService {
 
         MiniHompyInfoCountDTO guest = new MiniHompyInfoCountDTO();
         visiblCheck = hompy.getMenuStatus().split(",")[3].equals("visible");
-        if (visiblCheck){
+        if (visiblCheck) {
 
             guest.setName("방명록");
             List<GuestBook> guestBookList = guestBookRepository.findByHompyId(hompy.getId());

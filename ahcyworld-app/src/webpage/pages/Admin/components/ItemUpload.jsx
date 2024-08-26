@@ -63,6 +63,7 @@ const ItemUpload = ({ setSubMenu }) => {
         setShowItemName(false);
         setSuccessName(false);
         setPreview(null);
+        setIsDisabled(false);
     }
 
     const submitItem = (e) => {
@@ -272,7 +273,7 @@ const ItemUpload = ({ setSubMenu }) => {
 
                 <div>
                     <div style={{ display: 'block', textAlign: 'center' }}>
-                        <h3>이미지 미리보기</h3>
+                        <h3>아이템 미리보기</h3>
                         <div style={{ width: '250px', height: '250px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             {preview ? <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', textAlign: 'center' }} /> : <div>미리보기 이미지</div>}
                         </div>

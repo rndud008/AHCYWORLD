@@ -14,7 +14,7 @@ const Users = () => {
     const { isLogin, roles } = useContext(LoginContext);
     const [users, setUsers] = useState([]);
     const [sortedUsers, setSortedUsers] = useState([]);
-    const [sortUserOrder, setSortUserOrder] = useState("asc");
+    const [sortUserOrder, setSortUserOrder] = useState("desc");
     const [sortUserBy, setSortUserBy] = useState("id");
     const [currentPage, setCurrentPage] = useState(1);
     const [userPerPage] = useState(20);
