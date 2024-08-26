@@ -149,7 +149,7 @@ public class KakaoOAuth2Controller {
         User user = userService.findByUsername(username);
         if (user == null) {
             User newUser = User.builder()
-                    .username(username)
+                    .username(username.toUpperCase())
                     .name(name)
                     .password(password)
                     .email(providerId + "@kakao.com")

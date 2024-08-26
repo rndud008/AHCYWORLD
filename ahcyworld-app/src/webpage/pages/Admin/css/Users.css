@@ -47,33 +47,75 @@
 .users-table {
     width: 100%;
     border-collapse: collapse;
-}
-
-.users-thead th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.users-tbody td {
-    border: 1px solid #ddd;
-    vertical-align: middle;
-}
-
-.users-table {
-    width: 100%;
-    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .users-thead th {
     background-color: #f2f2f2;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
 .users-tbody td {
-    padding: 10px;
+    padding: 12px;
+    text-align: center;
     border-bottom: 1px solid #ddd;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.users-tbody td:first-child,
+.users-tbody th:first-child {
+    width: 5%;
+}
+
+.users-tbody td:nth-child(2),
+.users-tbody th:nth-child(2) {
+    width: 20%;
+}
+
+.users-tbody td:nth-child(3),
+.users-tbody th:nth-child(3) {
+    width: 15%;
+}
+
+.users-tbody td:nth-child(4),
+.users-tbody th:nth-child(4) {
+    width: 20%;
+}
+
+.users-tbody td:nth-child(5),
+.users-tbody th:nth-child(5) {
+    width: 10%;
+}
+
+.users-tbody td:nth-child(6),
+.users-tbody th:nth-child(6) {
+    width: 10%;
+}
+
+.users-tbody td:nth-child(7),
+.users-tbody th:nth-child(7) {
+    width: 10%;
+}
+
+.users-tbody td:nth-child(8),
+.users-tbody th:nth-child(8) {
+    width: 15%;
+}
+
+.hompy-btn-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.minihompy-go, .reset-btn {
+    width: 48%;
+    margin: 0;
 }
 
 .minihompy-go {
@@ -83,32 +125,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
     height: 30px;
     border: none;
     border-radius: 5px;
-
-    float: left;
-}
-
-.minihompy-go:hover {
-    background-color: #0d6efd;
-    transform: scale(1.05);
 }
 
 .reset-btn {
     background-color: #dc3545;
     color: #fff;
-    border: 0;
+    border: none;
     height: 30px;
     border-radius: 5px;
-
-    float: right;
-}
-
-.reset-btn:hover {
-    background-color: #dc3545;
-    transform: scale(1.05);
 }
 
 .message-btn-td {
