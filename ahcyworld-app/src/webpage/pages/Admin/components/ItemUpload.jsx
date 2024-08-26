@@ -63,6 +63,7 @@ const ItemUpload = ({ setSubMenu }) => {
         setShowItemName(false);
         setSuccessName(false);
         setPreview(null);
+        setIsDisabled(false);
     }
 
     const submitItem = (e) => {

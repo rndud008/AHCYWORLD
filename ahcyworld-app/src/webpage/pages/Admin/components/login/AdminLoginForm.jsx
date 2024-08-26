@@ -12,7 +12,7 @@ const AdminLoginForm = () => {
     const [rememberUserId, setRememberUserId] = useState(true);
     const [loading, setLoading] = useState(true); // 관리자 권한이 없는경우 로딩 상태체크를 위함
 
-    const onLogin = (e) => {
+    const onLogin = async(e) => {
         e.preventDefault();
         const username = e.target.username.value;
         const password = e.target.password.value;
@@ -25,7 +25,7 @@ const AdminLoginForm = () => {
 
         Cookies.set("rememberId", rememberId ? "true" : "false");
 
-        adminLogin(username, password, rememberId);
+        await adminLogin(username, password, rememberId);
     };
 
     useEffect(() => {
