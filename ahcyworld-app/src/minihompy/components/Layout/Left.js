@@ -7,8 +7,9 @@ import FriendRequestModal from "../friendShip/FriendRequestModal";
 import { hompyInfo, myFriendRequests, userInfo } from "../../../apis/auth";
 import { LoginContext } from "../../../webpage/components/login/context/LoginContextProvider";
 import AddFriendModal from "../friendShip/AddFriendModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REACT_HOST, SERVER_HOST } from "../../../apis/api";
+import { HompyAction } from "../../../redux/actions/HompyAction";
 
 const Left = ({ user, hompy }) => {
     const { hompyId } = useParams();
@@ -23,6 +24,7 @@ const Left = ({ user, hompy }) => {
     const [selectedFriend, setSelectedFriend] = useState("option1");
     const [friendWaitingList, setFriendWaitingList] = useState();
     const { hompyInfo, userInfo } = useContext(LoginContext);
+    const dispatch = useDispatch();
 
 
     const friendIdList = friends.map((item) => {
@@ -157,6 +159,7 @@ const Left = ({ user, hompy }) => {
                 )
                 .then((response) => {
                     setTextEdit(false);
+                    dispatch(HompyAction.findByHompyIdAxios(hompyId))
                 })
                 .catch((error) => {
                     console.error("상태 메시지 업데이트 실패", error);
@@ -181,6 +184,7 @@ const Left = ({ user, hompy }) => {
 
                     setProfilePicture(imageUrl);
                     setProfileEdit(false);
+                    dispatch(HompyAction.findByHompyIdAxios(hompyId))
                 })
                 .catch((error) => {
                     console.error("프로필 사진 업로드 실패", error);

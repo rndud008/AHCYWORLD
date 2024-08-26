@@ -34,6 +34,7 @@ const BoardTypeList = () => {
         <div className="board-type-name">
           <h2>{BoardTypeName}</h2>
         </div>
+        
         <ListGroup className="board-type-list-group">
           {folderList &&
             folderList.map((item) =>{
@@ -48,6 +49,7 @@ const BoardTypeList = () => {
               )
           })}
         </ListGroup>
+
         {(parseInt(hompyId) === hompyInfo?.id || roles.isAdmin) && (
           <div className="board-type-folder">
             {parseInt(hompyId) === hompyInfo?.id &&

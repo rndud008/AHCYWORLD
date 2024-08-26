@@ -217,10 +217,10 @@ public class HompyController {
         Hompy hompy = hompyService.visitCnt(user);
 
         return ResponseEntity.ok(hompy);
-    }
+}
 
-    // 프로필 (간단한 자기소개?)
-    @PostMapping("/{hompyId}/profile")
+// 프로필 (간단한 자기소개?)
+@PostMapping("/{hompyId}/profile")
     @CrossOrigin
     public ResponseEntity<?> profile(@PathVariable Long hompyId, @RequestBody Map<String, String> profile) {
         User user = hompyService.findById(hompyId).getUser();

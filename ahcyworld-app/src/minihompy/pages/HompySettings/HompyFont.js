@@ -55,8 +55,8 @@ const HompyFont = () => {
       const { data, status } = response;
 
       if (status === 200) {
-        dispatch(HompyAction.hompyUpdate(data));
-        // setHompyInfo(data);
+        // dispatch(HompyAction.hompyUpdate(data));
+        setHompyInfo(data);
         Swal.fire({
           icon: "success",
           title: "성공!",
