@@ -138,6 +138,7 @@ const LoginContextProvider = ({ children }) => {
 
                 Swal.alert("로그인 성공", "관리자페이지로 이동합니다.", "success", () => {
                     navigate("/admin");
+                    window.location.reload();
                 });
             }
         } catch (error) {
@@ -176,6 +177,7 @@ const LoginContextProvider = ({ children }) => {
             if (result.isConfirmed) {
                 logoutSetting(); // 로그아웃 세팅
                 navigate("/admin/login");
+                window.location.reload();
             }
         });
     };
