@@ -57,7 +57,7 @@ const AdminLoginForm = () => {
             setLoading(false);
         };
         checkAccess();
-    });
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>; // 로딩 중 표시
