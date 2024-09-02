@@ -1,4 +1,7 @@
-?
+<img src="SpringWork/upload/GIF_20240902_105614_782.gif">
+<img src="SpringWork/upload/KakaoTalk_20240902_110201932.gif">
+<img src="SpringWork/upload/KakaoTalk_20240902_110201932_01.gif">
+<img src="SpringWork/upload/KakaoTalk_20240902_110201932_02.gif">
 
 개요 : 너무나 쉽게 접할 수 있는 현대 문화의 SNS에서 벗어나, 스마트폰이 없던 시절, 웹페이지만으로 SNS를 사용해던때의 추억과, 신선한 재미를 선사하는 커뮤니티 서비스입니다.
 
